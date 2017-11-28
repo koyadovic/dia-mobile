@@ -23,7 +23,7 @@ export class RestProvider {
   }
 
   login(email:string, password:string) {
-    return this.http.post(`${this.apiBaseURL}/api/v1/accounts/token/`, {
+    return this.http.post(`${this.apiBaseURL}/api/v1/accounts/tokens/`, {
       "email": email,
       "password": password
     });

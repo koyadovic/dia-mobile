@@ -17,30 +17,27 @@ export class LoginPage {
     public navCtrl: NavController,
     private storage: Storage,
     private restProvider: RestProvider
-  ) {
-
-  }
+  ) {}
 
   tryLogin(){
     this.working = true;
     let e = this.email;
     let p = this.password;
 
-    this.email = "";
     this.password = "";
 
-    console.log("Trying login with: " + e + " / " + p);
-    this.restProvider.login(this.email, this.password).subscribe(
+    this.restProvider.login(e, p).subscribe(
+
       (resp) => {
         this.working = false;
-        console.log("Ok!: " + resp);
+        this.storage.set("token", resp.json()["token"]);
       },
+
       (err) => {
         this.working = false;
-        console.log("Err!: " + err);
+        console.log("Error: " + JSON.stringify(err));
       }
-    )
-      
-  }
 
+    )
+  }
 }
