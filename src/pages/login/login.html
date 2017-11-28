@@ -1,0 +1,35 @@
+<ion-content padding>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col width-67>
+        <h1>Dia Mobile</h1>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+    <div>
+      <form (ngSubmit)="tryLogin()" #loginForm="ngForm">
+        <ion-row>
+          <ion-col>
+            <ion-list inset>
+
+              <ion-item>
+                <ion-input type="text" placeholder="Email" name="email" [(ngModel)]="email" required></ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="password" required></ion-input>
+              </ion-item>
+              
+            </ion-list>
+          </ion-col>
+        </ion-row>
+        
+        <ion-row>
+          <ion-col>
+            <button [disabled]="working || !loginForm.form.valid" ion-button full type="submit">Login</button>
+          </ion-col>
+        </ion-row>
+        
+      </form>
+    </div>
+  </ion-content>

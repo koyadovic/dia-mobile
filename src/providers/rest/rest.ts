@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/catch';
@@ -18,8 +18,15 @@ export class RestProvider {
   private apiBaseURL = this.apiBaseURLDevelopment;
   //private apiBaseURL = this.apiBaseURLProduction;
 
-  constructor(public http: HttpClient) {
+  constructor(public http: Http) {
     
+  }
+
+  login(email:string, password:string) {
+    return this.http.post(`${this.apiBaseURL}/api/v1/accounts/token/`, {
+      "email": email,
+      "password": password
+    });
   }
 
 }
