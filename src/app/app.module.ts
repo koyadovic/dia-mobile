@@ -16,6 +16,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { LoginPage } from '../pages/login/login';
 import { HttpModule } from '@angular/http';
 
+
 @NgModule({
   declarations: [
     MyApp,
@@ -45,7 +46,7 @@ import { HttpModule } from '@angular/http';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     RestProvider,
-    Storage
+    Storage,
   ]
 })
 export class AppModule {}

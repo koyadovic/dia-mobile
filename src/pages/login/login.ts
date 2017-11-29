@@ -37,7 +37,6 @@ export class LoginPage {
         this.working = false;
         console.log("Error: " + JSON.stringify(err));
       }
-
     )
   }
 }
