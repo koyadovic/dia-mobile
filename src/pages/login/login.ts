@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 import { Storage } from '@ionic/storage';
-import { RestProvider } from '../../providers/rest/rest';
+import { RestBackendService } from '../../providers/rest-backend-service/rest-backend-service';
 
 @Component({
   selector: 'login',
@@ -16,7 +16,7 @@ export class LoginPage {
   constructor(
     public navCtrl: NavController,
     private storage: Storage,
-    private restProvider: RestProvider
+    private restService: RestBackendService
   ) {}
 
   tryLogin(){
@@ -26,7 +26,7 @@ export class LoginPage {
 
     this.password = "";
 
-    this.restProvider.login(e, p).subscribe(
+    this.restService.login(e, p).subscribe(
 
       (resp) => {
         this.working = false;

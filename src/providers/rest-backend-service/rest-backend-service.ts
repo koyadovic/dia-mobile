@@ -11,7 +11,7 @@ import 'rxjs/add/operator/catch';
   and Angular DI.
 */
 @Injectable()
-export class RestProvider {
+export class RestBackendService {
   private apiBaseURLDevelopment = 'http://127.0.0.1:8000';
   private apiBaseURLProduction = 'http://127.0.0.1:8000';
 

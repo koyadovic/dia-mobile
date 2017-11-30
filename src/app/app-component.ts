@@ -9,9 +9,9 @@ import { LoginPage } from '../pages/login/login';
 
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app-component.html'
 })
-export class MyApp {
+export class DiaMobileApp {
   rootPage:any = null;
 
   constructor(

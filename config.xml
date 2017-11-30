@@ -2,7 +2,7 @@
 <widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Dia Mobile</name>
     <description>Official Dia Frontend for Mobile</description>
-    <author email="m.collado.gomez@gmail.com" href="http://fake-domain.com/">Miguel Collado</author>
+    <author email="m.collado.gomez@gmail.com" href="https://github.com/koyadovic">Miguel Collado</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
