@@ -5,20 +5,23 @@ import { DiaMobileApp } from './app-component';
 
 import { AboutPage } from '../pages/about/about';
 import { HomePage } from '../pages/home/home';
+import { ConfigurationPage } from '../pages/configuration/configuration';
 import { TabsPage } from '../pages/tabs/tabs';
+
+import { LoginPage } from '../pages/login/login';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { RestBackendService } from '../providers/rest-backend-service/rest-backend-service';
 
 import { IonicStorageModule } from '@ionic/storage';
-import { LoginPage } from '../pages/login/login';
 import { HttpModule } from '@angular/http';
 
 
 @NgModule({
   declarations: [
     DiaMobileApp,
+    ConfigurationPage,
     AboutPage,
     HomePage,
     TabsPage,
@@ -33,6 +36,7 @@ import { HttpModule } from '@angular/http';
   bootstrap: [IonicApp],
   entryComponents: [
     DiaMobileApp,
+    ConfigurationPage,
     AboutPage,
     HomePage,
     TabsPage,
