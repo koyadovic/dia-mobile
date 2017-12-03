@@ -1,9 +1,10 @@
 <ion-item *ngIf="field">
+
   <ion-label stacked class="title-label" color="primary">{{ field.display }}</ion-label>
 
   <ion-input
     *ngIf="field.type == 'text' || field.type == 'number'"
-    type="{{ field.type }}" [pattern]="field.regex" [(ngModel)]="field.value"
+    type="{{ field.type }}" [pattern]="field.regex" [(ngModel)]="field.value" placeholder="{{ field.hint }}"
     [required]="field.required"></ion-input>
 
   <ion-toggle
@@ -21,10 +22,4 @@
     </ion-option>
   </ion-select>
   
-</ion-item>
-    
-<ion-item *ngFor="let submenu of configurationRoot?.children_nodes">
-  <button menuClose ion-item (click)="myCustomFunction(1)">
-    {{ submenu.display }}<ion-icon item-end name="add-circle"></ion-icon>
-  </button>
 </ion-item>
