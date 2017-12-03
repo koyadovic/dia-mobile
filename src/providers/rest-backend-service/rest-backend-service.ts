@@ -19,17 +19,35 @@ export class RestBackendService {
   private apiBaseURL = this.apiBaseURLDevelopment;
   //private apiBaseURL = this.apiBaseURLProduction;
 
+  private token = "";
+
+  public configuration = null;
+
   constructor(
     public http: Http,
     private storage: Storage
-  ) {}
+  ) {
+    this.refresh();
+  }
+
+  refresh() {
+    this.storage.get('token').then((token) => {
+      this.token = token;
+      this.http.get(`${this.apiBaseURL}/v1/configurations/`, {headers: this.getHeaders()}).subscribe(
+        (resp) => {
+          this.configuration = resp.json();
+        },
+        (err) => {
+          this.storage.set('token', '');
+        }
+      );
+    });
+  }
 
   
   private getHeaders() {
-    let token = this.storage.get('token');
-
     let headers = new Headers();
-    headers.append("Authorization",`Token ${token}`);
+    headers.append("Authorization",`Token ${this.token}`);
     headers.append('Content-Type', 'application/json');
 
     return headers;
@@ -41,10 +59,6 @@ export class RestBackendService {
       "email": email,
       "password": password
     });
-  }
-
-  getConfiguration() {
-    return this.http.get(`${this.apiBaseURL}/v1/configurations/`, {headers: this.getHeaders()});
   }
 
 }

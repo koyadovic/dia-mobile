@@ -8,7 +8,6 @@ export class DynamicRoot {
   @Input() configurationRoot;
 
   constructor() {
-
   }
 
 }

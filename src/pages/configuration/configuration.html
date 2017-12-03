@@ -1,11 +1,12 @@
 <ion-header>
-    <ion-navbar>
-      <ion-title>
-        Configuration
-      </ion-title>
-    </ion-navbar>
-  </ion-header>
+  <ion-navbar>
+    <ion-title>
+      Configuration
+    </ion-title>
+  </ion-navbar>
+</ion-header>
   
-  <ion-content padding>
-  
-  </ion-content>
+<ion-content padding>
+  <dynamic-root [configurationRoot]="configurationPointer">
+  </dynamic-root>
+</ion-content>

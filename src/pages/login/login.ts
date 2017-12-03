@@ -33,6 +33,7 @@ export class LoginPage {
 
         // store the access token
         this.storage.set("token", resp.json()["token"]);
+        this.restService.refresh();
 
         // navigate to TabsPage avoiding back to this login page
         this.navCtrl.push(TabsPage).then(() => {

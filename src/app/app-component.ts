@@ -13,6 +13,7 @@ import { LoginPage } from '../pages/login/login';
 })
 export class DiaMobileApp {
   rootPage:any = null;
+  configuration = null;
 
   constructor(
     platform: Platform,
