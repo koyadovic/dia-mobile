@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { DiaMobileApp } from './app-component';
 
-import { AboutPage } from '../pages/about/about';
+import { TimeLinePage } from '../pages/timeline/timeline';
 import { HomePage } from '../pages/home/home';
 import { ConfigurationPage } from '../pages/configuration/configuration';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -17,30 +17,40 @@ import { RestBackendService } from '../providers/rest-backend-service/rest-backe
 import { IonicStorageModule } from '@ionic/storage';
 import { HttpModule } from '@angular/http';
 
+import { DynamicField } from '../components/dynamic-field/dynamic-field-component';
+import { DynamicRoot } from '../components/dynamic-root/dynamic-root-component';
+
 
 @NgModule({
   declarations: [
     DiaMobileApp,
     ConfigurationPage,
-    AboutPage,
+    TimeLinePage,
     HomePage,
     TabsPage,
-    LoginPage
+    LoginPage,
+
+    DynamicField,
+    DynamicRoot,
   ],
   imports: [
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(DiaMobileApp),
     IonicStorageModule.forRoot(),
+
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     DiaMobileApp,
     ConfigurationPage,
-    AboutPage,
+    TimeLinePage,
     HomePage,
     TabsPage,
-    LoginPage
+    LoginPage,
+    DynamicField,
+    DynamicRoot,
+
   ],
   providers: [
     StatusBar,

@@ -1,0 +1,30 @@
+<ion-item>
+
+  <ion-label floating color="primary">{{ field.display }}</ion-label>
+
+  <ion-input
+    *ngIf="field && (field.type == 'text' || field.type == 'number')"
+    type="{{ field.type }}" [pattern]="field.regex" [(ngModel)]="field.value"
+    [required]="field.required"></ion-input>
+
+  <ion-checkbox
+    *ngIf="field && field.type == 'boolean'" [(ngModel)]="field.value"></ion-checkbox>
+
+  <ion-datetime
+    *ngIf="field && field.type == 'date'"
+    displayFormat="MM/DD/YYYY" [(ngModel)]="field.value"></ion-datetime>
+
+  <ion-select
+    *ngIf="field && field.type == 'select'"
+    [(ngModel)]="field.value">
+
+    <ion-option *ngFor="let option of field.options" value="option.value">
+      {{ option.display }}
+    </ion-option>
+
+  </ion-select>
+
+</ion-item>
+
+    
+      

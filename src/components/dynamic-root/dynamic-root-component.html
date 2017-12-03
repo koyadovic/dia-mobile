@@ -1,0 +1,20 @@
+<ion-list>
+  <!-- the fields as the firsts -->
+  <ion-list-header *ngIf="configurationRoot.fields.length > 0">
+    Fields Available
+  </ion-list-header>
+
+  <ng-container *ngFor="let field of configurationRoot.fields">
+    <dynamic-field [field]="field"></dynamic-field>
+  </ng-container>
+
+  <!-- submenus as the latters -->
+  <ion-list-header *ngIf="configurationRoot.children_nodes.length > 0">
+    Submenus
+  </ion-list-header>
+  
+  <ion-item *ngFor="let submenu of configurationRoot.children_nodes">
+    {{ submenu.display }}
+  </ion-item>
+
+</ion-list>
