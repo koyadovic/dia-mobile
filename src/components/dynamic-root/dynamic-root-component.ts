@@ -6,7 +6,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class DynamicRoot {
   @Input() configurationRoot;
-  @Input() globalDisable;
   @Output() changeRootRequest = new EventEmitter();
   @Output() haveChanges = new EventEmitter();
 

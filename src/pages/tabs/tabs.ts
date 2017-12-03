@@ -9,7 +9,6 @@ import { RestBackendService } from '../../providers/rest-backend-service/rest-ba
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
-
   configuration = null;
 
   tab1Root = HomePage;
@@ -18,5 +17,7 @@ export class TabsPage {
 
   constructor(
     private restService: RestBackendService
-  ) {}
+  ) {
+    this.configuration = this.restService.configuration;
+  }
 }
