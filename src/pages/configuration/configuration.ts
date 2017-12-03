@@ -7,17 +7,22 @@ import { RestBackendService } from '../../providers/rest-backend-service/rest-ba
   templateUrl: 'configuration.html',
 })
 export class ConfigurationPage {
-  configuration = null;
-  configurationPointer = null;
+  configurationPointer = [];
 
   constructor(
     public navCtrl: NavController,
     private restService: RestBackendService
   ) {
     console.log(this.restService.configuration);
-    this.configuration = restService.configuration;
-    this.configurationPointer = this.configuration;
+    this.configurationPointer.push(restService.configuration);
   }
 
+  goBack(){
+    this.configurationPointer.pop();
+  }
+
+  changeRoot(event) {
+    this.configurationPointer.push(event);
+  }
 
 }

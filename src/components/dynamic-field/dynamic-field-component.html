@@ -22,6 +22,9 @@
   </ion-select>
   
 </ion-item>
-
     
-      
+<ion-item *ngFor="let submenu of configurationRoot?.children_nodes">
+  <button menuClose ion-item (click)="myCustomFunction(1)">
+    {{ submenu.display }}<ion-icon item-end name="add-circle"></ion-icon>
+  </button>
+</ion-item>

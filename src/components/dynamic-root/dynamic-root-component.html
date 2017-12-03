@@ -1,10 +1,22 @@
+<!-- the fields as the firsts -->
+<ion-item-divider *ngIf="configurationRoot.fields"> Fields Available</ion-item-divider>
+
 <ion-list>
-  <ng-container *ngFor="let field of configurationRoot.fields">
-    <dynamic-field [field]="field"></dynamic-field>
-  </ng-container>
+  <dynamic-field *ngFor="let field of configurationRoot.fields" [field]="field"></dynamic-field>
+</ion-list>
+
+<!-- submenus as the latters -->
+<ion-item-divider *ngIf="configurationRoot.children_nodes?.length > 0">
+  Submenus
+</ion-item-divider>
+
+<ion-list>
 
   <ion-item *ngFor="let submenu of configurationRoot.children_nodes">
-    {{ submenu.display }}
+    <button menuClose ion-item (click)="requestRootChange(submenu)">
+      {{ submenu.display }}<ion-icon item-end name="add-circle"></ion-icon>
+    </button>
   </ion-item>
 
 </ion-list>
+  
