@@ -27,10 +27,30 @@ export class RestBackendService {
     public http: Http,
     private storage: Storage
   ) {
-    this.refresh();
+    this.refreshConfiguration();
   }
 
-  refresh() {
+  login(email:string, password:string) {
+    return this.http.post(`${this.apiBaseURL}/v1/accounts/tokens/`, {
+      "email": email,
+      "password": password
+    });
+  }
+
+  saveConfiguration(configurationChanges) {
+    console.log("Saving configuration:");
+    console.log(configurationChanges);
+    return this.http.post(`${this.apiBaseURL}/v1/configurations/`, configurationChanges, {headers: this.getHeaders()});
+  }
+
+  private getHeaders() {
+    let headers = new Headers();
+    headers.append("Authorization",`Token ${this.token}`);
+    headers.append('Content-Type', 'application/json');
+    return headers;
+  }
+
+  refreshConfiguration() {
     this.storage.get('token').then((token) => {
       this.token = token;
       this.http.get(`${this.apiBaseURL}/v1/configurations/`, {headers: this.getHeaders()}).subscribe(
@@ -41,23 +61,6 @@ export class RestBackendService {
           this.storage.set('token', '');
         }
       );
-    });
-  }
-
-  
-  private getHeaders() {
-    let headers = new Headers();
-    headers.append("Authorization",`Token ${this.token}`);
-    headers.append('Content-Type', 'application/json');
-
-    return headers;
-  }
-  
-
-  login(email:string, password:string) {
-    return this.http.post(`${this.apiBaseURL}/v1/accounts/tokens/`, {
-      "email": email,
-      "password": password
     });
   }
 

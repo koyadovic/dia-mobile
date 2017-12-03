@@ -1,5 +1,8 @@
 <ion-list>
-  <dynamic-field *ngFor="let field of configurationRoot.fields" [field]="field"></dynamic-field>
+  <dynamic-field
+    *ngFor="let field of configurationRoot.fields"
+    [field]="field"
+    (haveChanges)="emitHaveChanges($event)"></dynamic-field>
 </ion-list>
 
 <!-- submenus as the latters -->

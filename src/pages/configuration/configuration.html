@@ -18,6 +18,7 @@
 <ion-content *ngIf="configurationPointer?.length > 0">
   <dynamic-root
   [configurationRoot]="configurationPointer[configurationPointer.length - 1]"
-  (changeRootRequest)="changeRoot($event)">
+  (changeRootRequest)="changeRoot($event)"
+  (haveChanges)="haveChanges($event)">
   </dynamic-root>
 </ion-content>

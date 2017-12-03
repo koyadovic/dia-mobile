@@ -18,7 +18,5 @@ export class TabsPage {
 
   constructor(
     private restService: RestBackendService
-  ) {
-    this.configuration = this.restService.configuration;
-  }
+  ) {}
 }

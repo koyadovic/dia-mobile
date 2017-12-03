@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'dynamic-field',
@@ -6,14 +6,17 @@ import { Component, Input } from '@angular/core';
 })
 export class DynamicField {
   @Input() field;
+  @Output() haveChanges = new EventEmitter();
 
   constructor() {
   }
 
-  ngOnChanges(changes) {
-    if ("field" in changes) {
-      console.log(JSON.stringify(this.field));
-    }
+  emitHaveChanges(){
+    this.haveChanges.emit(
+      {
+        namespace_key: this.field.namespace_key,
+        value: this.field.value
+      }
+    );
   }
-
 }

@@ -5,21 +5,25 @@
   <ion-input
     *ngIf="field.type == 'text' || field.type == 'number'"
     type="{{ field.type }}" [pattern]="field.regex" [(ngModel)]="field.value" placeholder="{{ field.hint }}"
-    [required]="field.required"></ion-input>
+    (ionChange)="emitHaveChanges()" [required]="field.required"></ion-input>
 
   <ion-toggle
+    (ionChange)="emitHaveChanges()"
     *ngIf="field.type == 'boolean'" [(ngModel)]="field.value">{{ field.display }}</ion-toggle>
 
   <ion-datetime
+    (ionChange)="emitHaveChanges()"
     *ngIf="field.type == 'date'"
     displayFormat="MM/DD/YYYY" [(ngModel)]="field.value"></ion-datetime>
 
   <ion-select
-    [(ngModel)]="field.value"
-    *ngIf="field.type == 'select'">
+    (ionChange)="emitHaveChanges()"
+    [(ngModel)]="field.value" *ngIf="field.type == 'select'">
+
     <ion-option *ngFor="let option of field.options" [value]="option.value">
       {{ option.display }}
     </ion-option>
+
   </ion-select>
   
 </ion-item>
