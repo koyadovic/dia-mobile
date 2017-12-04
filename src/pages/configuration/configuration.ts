@@ -30,9 +30,7 @@ export class ConfigurationPage {
   haveChanges(event) {
     this.configurationChanges[event.namespace_key] = event.value;
 
-    if(this.timerForSave != null){
-      clearTimeout(this.timerForSave);
-    }
+    if(this.timerForSave != null){clearTimeout(this.timerForSave);}
 
     this.timerForSave = setTimeout(() => {
       this.restService.saveConfiguration(this.configurationChanges)

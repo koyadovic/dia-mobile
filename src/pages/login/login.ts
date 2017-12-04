@@ -28,23 +28,18 @@ export class LoginPage {
     this.password = "";
 
     this.restService.login(e, p).subscribe(
-      (resp) => {
-        this.working = false;
-
-        // store the access token
-        this.storage.set("token", resp.json()["token"]);
-        this.restService.refreshConfiguration();
-
-        // navigate to TabsPage avoiding back to this login page
-        this.navCtrl.push(TabsPage).then(() => {
-          let index = this.navCtrl.getActive().index;
-          this.navCtrl.remove(index - 1);
-        });
-      },
-
-      (err) => {
-        this.working = false;
-        console.log("Error: " + JSON.stringify(err));
+      (success) => {
+        if (success) {
+          this.working = false;
+          // navigate to TabsPage avoiding back to this login page
+          this.navCtrl.push(TabsPage).then(() => {
+            let index = this.navCtrl.getActive().index;
+            this.navCtrl.remove(index - 1);
+          });
+        } else {
+          this.working = false;
+          // invalid password
+        }
       }
     )
   }

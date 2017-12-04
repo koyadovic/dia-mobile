@@ -1,5 +1,5 @@
 import { Http, Headers } from '@angular/http';
-import { Observable, Subject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/catch';
@@ -18,9 +18,8 @@ export class RestBackendService {
   private apiBaseURL = this.apiBaseURLDevelopment;
   //private apiBaseURL = this.apiBaseURLProduction;
 
-  private token = new Subject<any>();
-
-  public configuration = null;
+  private token = new ReplaySubject<any>();
+  public configuration = new ReplaySubject<any>();
   
   constructor(
     public http: Http,
@@ -34,19 +33,30 @@ export class RestBackendService {
   }
 
   login(email:string, password:string) {
+    let url = `${this.apiBaseURL}/v1/accounts/tokens/`;
     let data = {"email": email, "password": password};
-    return this.genericPost(`${this.apiBaseURL}/v1/accounts/tokens/`, data);
+
+    let result = Observable.create((observer) => {
+      this.http.post(url, data).subscribe(
+          (resp) => {
+            // store the access token
+            this.storage.set("token", resp.json()["token"]);
+            observer.next(true);
+          },
+          (err) => {
+            observer.next(false);
+          }
+        )
+      });
+    
+    return result;
   }
 
   saveConfiguration(configurationChanges) {
-    this.genericPost(`${this.apiBaseURL}/v1/configurations/`, configurationChanges).subscribe(
-      (resp) => {
-        
-      }
-    );
+    this.genericPost(`${this.apiBaseURL}/v1/configurations/`, configurationChanges).subscribe((resp) => {});
   }
 
-  refreshConfiguration() {
+  private refreshConfiguration() {
       this.genericGet(`${this.apiBaseURL}/v1/configurations/`).subscribe(
         (resp) => {
           this.configuration = resp;
@@ -77,8 +87,7 @@ export class RestBackendService {
   }
 
   private genericPost(url: string, data: object) {
-    return Observable.create(
-      (observer) => {
+    return Observable.create((observer) => {
         this.token.subscribe(
           (token) => {
             this.http.post(url, data, {headers: this.getHeaders(token)}).subscribe(
