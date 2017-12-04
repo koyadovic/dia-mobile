@@ -3,6 +3,7 @@ import { Observable, ReplaySubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/catch';
+import { AlertController } from 'ionic-angular';
 
 
 /*
@@ -23,7 +24,8 @@ export class RestBackendService {
   
   constructor(
     public http: Http,
-    private storage: Storage
+    private storage: Storage,
+    private alertCtrl: AlertController
   ) {
     this.storage.get('token').then((token) => {
       this.token.next(token);
@@ -79,7 +81,23 @@ export class RestBackendService {
             (resp) => {
               observer.next(resp.json());
             },
-            this.handleErrors
+            (err) => {
+              let alert;
+              if (err.error instanceof Error) {
+                alert = this.alertCtrl.create({
+                  title: 'Client Side Error',
+                  subTitle: err.error.message,
+                  buttons: ['OK']
+                });
+              } else {
+                alert = this.alertCtrl.create({
+                  title: 'Server Side Error',
+                  subTitle: `Backend returned code ${err.status}, body was: ${err.error}`,
+                  buttons: ['OK']
+                });
+              }
+              alert.present();
+            }
           );
         }
       )
@@ -94,15 +112,28 @@ export class RestBackendService {
               (resp) => {
                 observer.next(resp.json());
               },
-              this.handleErrors
-            )
+              (err) => {
+                let alert;
+                if (err.error instanceof Error) {
+                  alert = this.alertCtrl.create({
+                    title: 'Client Side Error',
+                    subTitle: err.error.message,
+                    buttons: ['OK']
+                  });
+                } else {
+                  alert = this.alertCtrl.create({
+                    title: 'Server Side Error',
+                    subTitle: `Backend returned code ${err.status}, body was: ${err.error}`,
+                    buttons: ['OK']
+                  });
+                }
+                alert.present();
+              }
+            );
           }
-        )
+        );
       }
     );
   }
 
-  private handleErrors(error) {
-
-  }
 }
