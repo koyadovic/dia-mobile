@@ -11,4 +11,17 @@ export class TimeLinePage {
 
   }
 
+
+  /*
+  For Swipe gesture
+  */
+
+  goRight() {
+    console.log("Right");
+  }
+
+  goLeft() {
+    console.log("Left");
+  }
+
 }

@@ -46,4 +46,12 @@ export class ConfigurationPage {
       )
     }, 2000);
   }
+
+  /*
+  For Swipe gesture
+  */
+  goLeft() {
+    console.log("Left");
+  }
+
 }
