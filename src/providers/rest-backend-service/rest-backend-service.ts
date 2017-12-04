@@ -1,5 +1,5 @@
 import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/catch';
@@ -15,55 +15,85 @@ import 'rxjs/add/operator/catch';
 export class RestBackendService {
   private apiBaseURLDevelopment = 'http://127.0.0.1:8000';
   private apiBaseURLProduction = 'https://api.diamobile.com';
-
   private apiBaseURL = this.apiBaseURLDevelopment;
   //private apiBaseURL = this.apiBaseURLProduction;
 
-  private token = "";
+  private token = new Subject<any>();
 
   public configuration = null;
-
+  
   constructor(
     public http: Http,
     private storage: Storage
   ) {
+    this.storage.get('token').then((token) => {
+      this.token.next(token);
+    });
+
     this.refreshConfiguration();
   }
 
   login(email:string, password:string) {
-    return this.http.post(`${this.apiBaseURL}/v1/accounts/tokens/`, {
-      "email": email,
-      "password": password
-    });
+    let data = {"email": email, "password": password};
+    return this.genericPost(`${this.apiBaseURL}/v1/accounts/tokens/`, data);
   }
 
   saveConfiguration(configurationChanges) {
-    console.log("Saving configuration:");
-    console.log(configurationChanges);
-    return this.http.post(`${this.apiBaseURL}/v1/configurations/`, configurationChanges, {headers: this.getHeaders()});
+    this.genericPost(`${this.apiBaseURL}/v1/configurations/`, configurationChanges).subscribe(
+      (resp) => {
+        
+      }
+    );
   }
 
-  private getHeaders() {
+  refreshConfiguration() {
+      this.genericGet(`${this.apiBaseURL}/v1/configurations/`).subscribe(
+        (resp) => {
+          this.configuration = resp;
+        }
+      );
+  }
+
+  private getHeaders(token: string) {
     let headers = new Headers();
-    headers.append("Authorization",`Token ${this.token}`);
+    headers.append("Authorization",`Token ${token}`);
     headers.append('Content-Type', 'application/json');
     return headers;
   }
 
-  refreshConfiguration() {
-    setTimeout(() => {
-      this.storage.get('token').then((token) => {
-        this.token = token;
-        this.http.get(`${this.apiBaseURL}/v1/configurations/`, {headers: this.getHeaders()}).subscribe(
-          (resp) => {
-            this.configuration = resp.json();
-          },
-          (err) => {
-            this.storage.set('token', '');
-          }
-        );
-      });
-    }, 200)
+  private genericGet(url: string){
+    return Observable.create((observer) => {
+      this.token.subscribe(
+        (token) => {
+          this.http.get(url, {headers: this.getHeaders(token)}).subscribe(
+            (resp) => {
+              observer.next(resp.json());
+            },
+            this.handleErrors
+          );
+        }
+      )
+    });
   }
 
+  private genericPost(url: string, data: object) {
+    return Observable.create(
+      (observer) => {
+        this.token.subscribe(
+          (token) => {
+            this.http.post(url, data, {headers: this.getHeaders(token)}).subscribe(
+              (resp) => {
+                observer.next(resp.json());
+              },
+              this.handleErrors
+            )
+          }
+        )
+      }
+    );
+  }
+
+  private handleErrors(error) {
+
+  }
 }

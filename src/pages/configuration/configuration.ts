@@ -8,7 +8,8 @@ import { RestBackendService } from '../../providers/rest-backend-service/rest-ba
 })
 export class ConfigurationPage {
   configurationPointer = [];
-  configurationChanges = {}
+
+  configurationChanges = {};
   private timerForSave = null;
 
   constructor(
@@ -34,16 +35,7 @@ export class ConfigurationPage {
     }
 
     this.timerForSave = setTimeout(() => {
-      this.restService.saveConfiguration(this.configurationChanges).subscribe(
-        (resp) => {
-            this.configurationChanges = {};
-        },
-        (err) => {
-          console.log(err);
-          this.configurationChanges = {};
-          this.restService.refreshConfiguration();
-        }
-      )
+      this.restService.saveConfiguration(this.configurationChanges)
     }, 2000);
   }
 
