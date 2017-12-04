@@ -51,17 +51,19 @@ export class RestBackendService {
   }
 
   refreshConfiguration() {
-    this.storage.get('token').then((token) => {
-      this.token = token;
-      this.http.get(`${this.apiBaseURL}/v1/configurations/`, {headers: this.getHeaders()}).subscribe(
-        (resp) => {
-          this.configuration = resp.json();
-        },
-        (err) => {
-          this.storage.set('token', '');
-        }
-      );
-    });
+    setTimeout(() => {
+      this.storage.get('token').then((token) => {
+        this.token = token;
+        this.http.get(`${this.apiBaseURL}/v1/configurations/`, {headers: this.getHeaders()}).subscribe(
+          (resp) => {
+            this.configuration = resp.json();
+          },
+          (err) => {
+            this.storage.set('token', '');
+          }
+        );
+      });
+    }, 200)
   }
 
 }

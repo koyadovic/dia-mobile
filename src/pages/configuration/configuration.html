@@ -6,7 +6,7 @@
       </button>
     </ion-buttons>
 
-      <ion-title *ngIf="configurationPointer?.length > 0">
+      <ion-title *ngIf="configurationPointer?.length > 0 && configurationPointer[configurationPointer.length - 1]">
       {{ configurationPointer[configurationPointer.length - 1].display }}
     </ion-title>
     <ion-title *ngIf="configurationPointer?.length == 0">
@@ -15,7 +15,7 @@
   </ion-navbar>
 </ion-header>
   
-<ion-content *ngIf="configurationPointer?.length > 0">
+<ion-content *ngIf="configurationPointer?.length > 0 && configurationPointer[configurationPointer.length - 1]">
   <dynamic-root
   [configurationRoot]="configurationPointer[configurationPointer.length - 1]"
   (changeRootRequest)="changeRoot($event)"
