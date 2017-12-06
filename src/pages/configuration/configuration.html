@@ -23,6 +23,9 @@
   (haveChanges)="haveChanges($event)">
   </dynamic-root>
 
-  <button (click)="logout()" ion-item>Logout<ion-icon item-end name="build"></ion-icon></button>
+  <!-- This only need to be shown if configurationPointer?.length < 2 -->
+  <div *ngIf="configurationPointer?.length < 2">
+    <button (click)="logout()" ion-item>Logout<ion-icon item-end name="build"></ion-icon></button>
+  </div>
 
 </ion-content>

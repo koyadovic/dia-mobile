@@ -5,6 +5,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { DiaConfigurationService } from '../../providers/dia-configuration-service';
 import { DiaAuthService } from '../../providers/dia-auth-service';
+import { DiaMessageService } from '../../providers/dia-message-service';
+import { DiaMessage } from '../../models/messages-model';
 
 
 @Component({
@@ -17,14 +19,13 @@ export class ConfigurationPage {
   configurationChanges = {};
   private timerForSave = null;
 
-  constructor(
-    public navCtrl: NavController,
-    private statusBar: StatusBar,
-    private splashScreen: SplashScreen,
-    private configurationService: DiaConfigurationService,
-    private authenticationService: DiaAuthService,
+  constructor(public navCtrl: NavController,
+              private statusBar: StatusBar,
+              private splashScreen: SplashScreen,
+              private configurationService: DiaConfigurationService,
+              private authenticationService: DiaAuthService,
+              private messageService: DiaMessageService) {
 
-  ) {
     this.configurationService.getConfiguration().subscribe(
       (configuration) => {
         this.configurationPointer.push(configuration);
@@ -51,7 +52,8 @@ export class ConfigurationPage {
   }
 
   logout(){
-    this.authenticationService.logout();
+    let message = new DiaMessage("Logout Confirmation", "info", "Are you sure to close your session?")
+    this.messageService.confirmMessage(message).subscribe((ok) => { if (ok) this.authenticationService.logout(); });
   }
 
 }

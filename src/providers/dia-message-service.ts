@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DiaMessage } from '../models/messages-model';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
+import { Observable } from 'rxjs/Observable';
 
 
 @Injectable()
@@ -24,6 +25,31 @@ export class DiaMessageService {
 
     publishMessage(newMessage: DiaMessage) {
         this._messages.next(newMessage);
+    }
+
+    confirmMessage(newMessage: DiaMessage): Observable<boolean> {
+        return Observable.create((observer) => {
+            let alert = this.alertCtrl.create({
+                title: newMessage.title,
+                message: newMessage.message,
+                buttons: [
+                    {
+                        text: 'Cancel',
+                        role: 'cancel',
+                        handler: () => {
+                            observer.next(false);
+                        }
+                    },
+                    {
+                        text: 'OK',
+                        handler: () => {
+                            observer.next(true);
+                        }
+                    }
+                ]
+            });
+            alert.present();
+        });
     }
 
     // shortcuts

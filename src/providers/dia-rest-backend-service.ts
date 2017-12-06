@@ -12,7 +12,6 @@ export class DiaRestBackendService {
 
   constructor(private http: Http,
               private authService: DiaAuthService,
-              private backendURL: DiaBackendURL,
               private messageServices: DiaMessageService) { }
 
   private getHeaders(token: string) {
