@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, App } from 'ionic-angular';
-import { RestBackendService } from '../../providers/rest-backend-service';
+import { NavController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -24,7 +23,6 @@ export class ConfigurationPage {
     private splashScreen: SplashScreen,
     private configurationService: DiaConfigurationService,
     private authenticationService: DiaAuthService,
-    private app: App,
 
   ) {
     this.configurationService.getConfiguration().subscribe(
@@ -52,10 +50,8 @@ export class ConfigurationPage {
     }, 2000);
   }
 
-
   logout(){
     this.authenticationService.logout();
-    this.navCtrl.setRoot(LoginPage);
   }
 
 }

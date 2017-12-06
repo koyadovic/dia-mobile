@@ -3,17 +3,17 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { DiaAuthService } from './dia-auth-service';
 import { DiaBackendURL } from './dia-backend-urls';
-import { DiaAppState } from './dia-app-state';
+import { DiaMessageService } from './dia-message-service';
 import { DiaMessage } from '../models/messages-model';
 
 
 @Injectable()
-export class RestBackendService {
+export class DiaRestBackendService {
 
   constructor(private http: Http,
               private authService: DiaAuthService,
               private backendURL: DiaBackendURL,
-              private appState: DiaAppState) {
+              private messageServices: DiaMessageService) {
 
     //this.authService.isLoggedIn().subscribe(loggedIn => { if (loggedIn) this.refreshConfiguration() });
   }
@@ -35,7 +35,7 @@ export class RestBackendService {
             },
             (err) => {
               let message = new DiaMessage("Client side error", "error", err.error.message);
-              this.appState.publishMessage(message);
+              this.messageServices.publishMessage(message);
             }
           );
         }
@@ -52,7 +52,7 @@ export class RestBackendService {
               observer.next(resp.json());
             },
             (err) => {
-              this.appState.publishMessage(new DiaMessage(
+              this.messageServices.publishMessage(new DiaMessage(
                 "Server side error", "error", `Backend returned code ${err.status}, body was: ${err.error}`
               ));
             }

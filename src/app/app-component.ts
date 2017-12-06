@@ -26,7 +26,7 @@ export class DiaMobileApp {
       statusBar.styleDefault();
       splashScreen.hide();
 
-      this.authService.isLoggedIn().subscribe((loggedIn) => this.rootPage = loggedIn ? TabsPage : LoginPage);
+      this.authService.loggedIn().subscribe((loggedIn) => this.rootPage = loggedIn ? TabsPage : LoginPage);
     });
   }
 }

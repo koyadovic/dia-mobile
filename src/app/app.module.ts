@@ -20,10 +20,10 @@ import { DynamicField } from '../components/dynamic-field/dynamic-field-componen
 import { DynamicRoot } from '../components/dynamic-root/dynamic-root-component';
 
 // services
-import { RestBackendService } from '../providers/rest-backend-service';
+import { DiaRestBackendService } from '../providers/dia-rest-backend-service';
 import { DiaAuthService } from '../providers/dia-auth-service';
 import { DiaBackendURL } from '../providers/dia-backend-urls';
-import { DiaAppState } from '../providers/dia-app-state';
+import { DiaMessageService } from '../providers/dia-message-service';
 import { DiaConfigurationService } from '../providers/dia-configuration-service';
 
 @NgModule({
@@ -62,10 +62,10 @@ import { DiaConfigurationService } from '../providers/dia-configuration-service'
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Storage,
-    RestBackendService,
+    DiaRestBackendService,
     DiaAuthService,
     DiaBackendURL,
-    DiaAppState,
+    DiaMessageService,
     DiaConfigurationService
   ]
 })
