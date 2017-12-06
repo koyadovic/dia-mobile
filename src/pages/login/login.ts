@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { DiaAuthService } from '../../providers/dia-auth-service';
+import { DiaAuthService } from '../../services/dia-auth-service';
 
 @Component({
   selector: 'login',

@@ -20,11 +20,11 @@ import { DynamicField } from '../components/dynamic-field/dynamic-field-componen
 import { DynamicRoot } from '../components/dynamic-root/dynamic-root-component';
 
 // services
-import { DiaRestBackendService } from '../providers/dia-rest-backend-service';
-import { DiaAuthService } from '../providers/dia-auth-service';
-import { DiaBackendURL } from '../providers/dia-backend-urls';
-import { DiaMessageService } from '../providers/dia-message-service';
-import { DiaConfigurationService } from '../providers/dia-configuration-service';
+import { DiaRestBackendService } from '../services/dia-rest-backend-service';
+import { DiaAuthService } from '../services/dia-auth-service';
+import { DiaBackendURL } from '../services/dia-backend-urls';
+import { DiaMessageService } from '../services/dia-message-service';
+import { DiaConfigurationService } from '../services/dia-configuration-service';
 
 @NgModule({
   declarations: [

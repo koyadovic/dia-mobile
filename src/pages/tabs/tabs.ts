@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { HomePage } from '../home/home';
 import { TimeLinePage } from '../timeline/timeline';
 import { ConfigurationPage } from '../configuration/configuration';
-import { DiaConfigurationService } from '../../providers/dia-configuration-service';
+import { DiaConfigurationService } from '../../services/dia-configuration-service';
 
 
 @Component({

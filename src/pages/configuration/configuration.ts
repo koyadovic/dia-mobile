@@ -3,9 +3,9 @@ import { NavController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { DiaConfigurationService } from '../../providers/dia-configuration-service';
-import { DiaAuthService } from '../../providers/dia-auth-service';
-import { DiaMessageService } from '../../providers/dia-message-service';
+import { DiaConfigurationService } from '../../services/dia-configuration-service';
+import { DiaAuthService } from '../../services/dia-auth-service';
+import { DiaMessageService } from '../../services/dia-message-service';
 import { DiaMessage } from '../../models/messages-model';
 
 
