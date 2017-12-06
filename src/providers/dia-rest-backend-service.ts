@@ -13,10 +13,7 @@ export class DiaRestBackendService {
   constructor(private http: Http,
               private authService: DiaAuthService,
               private backendURL: DiaBackendURL,
-              private messageServices: DiaMessageService) {
-
-    //this.authService.isLoggedIn().subscribe(loggedIn => { if (loggedIn) this.refreshConfiguration() });
-  }
+              private messageServices: DiaMessageService) { }
 
   private getHeaders(token: string) {
     let headers = new Headers();
@@ -27,7 +24,7 @@ export class DiaRestBackendService {
 
   public genericGet(url: string){
     return Observable.create((observer) => {
-      this.authService.token().subscribe(
+      this.authService.token().filter((token) => token !== "" && token !== undefined).subscribe(
         (token) => {
           this.http.get(url, {headers: this.getHeaders(token)}).subscribe(
             (resp) => {
@@ -45,7 +42,7 @@ export class DiaRestBackendService {
 
   public genericPost(url: string, data: object) {
     return Observable.create((observer) => {
-      this.authService.token().subscribe(
+      this.authService.token().filter((token) => token !== "" && token !== undefined).subscribe(
         (token) => {
           this.http.post(url, data, {headers: this.getHeaders(token)}).subscribe(
             (resp) => {

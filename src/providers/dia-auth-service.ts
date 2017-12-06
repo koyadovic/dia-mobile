@@ -60,6 +60,9 @@ export class DiaAuthService {
     }
 
     logout(){
+        this.messageService.publishMessage(
+            new DiaMessage("Logout", "success", "Session was closed successfully.")
+        );
         this.loggedIn$.next(false);
         this.token$.next(""); 
     }

@@ -25,4 +25,17 @@ export class DiaMessageService {
     publishMessage(newMessage: DiaMessage) {
         this._messages.next(newMessage);
     }
+
+    // shortcuts
+    infoMessage(title: string, message: string) {
+        this.publishMessage(new DiaMessage(title, "info", message));
+    }
+
+    warningMessage(title: string, message: string) {
+        this.publishMessage(new DiaMessage(title, "warning", message));
+    }
+
+    errorMessage(title: string, message: string) {
+        this.publishMessage(new DiaMessage(title, "error", message));
+    }
 }
