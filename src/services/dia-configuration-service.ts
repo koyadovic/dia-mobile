@@ -9,12 +9,13 @@ import { DiaAuthService } from './dia-auth-service';
 @Injectable()
 export class DiaConfigurationService {
     private configuration = new ReplaySubject<any>(1);
+    private subscription = null;
 
     constructor(private backendURL: DiaBackendURL,
                 private restBackendService: DiaRestBackendService,
                 private authenticationService: DiaAuthService) {
         
-        this.authenticationService.loggedIn().subscribe(
+        this.subscription = this.authenticationService.loggedIn().subscribe(
             (loggedIn) => {
                 if (loggedIn) {
                     this.restBackendService
@@ -23,6 +24,8 @@ export class DiaConfigurationService {
                             this.configuration.next(resp);
                         }
                     );
+                } else {
+                    this.subscription.unsubscribe();
                 }
             }
         );

@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+
 import { DiaConfigurationService } from '../../services/dia-configuration-service';
 import { DiaAuthService } from '../../services/dia-auth-service';
 import { DiaMessageService } from '../../services/dia-message-service';
@@ -14,21 +13,19 @@ import { DiaMessage } from '../../models/messages-model';
   templateUrl: 'configuration.html',
 })
 export class ConfigurationPage {
-  configurationPointer = [];
+  private configurationPointer = [];
 
-  configurationChanges = {};
+  private configurationChanges = {};
   private timerForSave = null;
 
   constructor(public navCtrl: NavController,
-              private statusBar: StatusBar,
-              private splashScreen: SplashScreen,
               private configurationService: DiaConfigurationService,
               private authenticationService: DiaAuthService,
               private messageService: DiaMessageService) {
 
     this.configurationService.getConfiguration().subscribe(
       (configuration) => {
-        this.configurationPointer.push(configuration);
+        this.configurationPointer = [ configuration ];
       }
     )
   }

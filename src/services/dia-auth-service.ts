@@ -5,14 +5,13 @@ import { BehaviorSubject } from 'rxjs';
 import { Http } from '@angular/http';
 import { DiaBackendURL } from './dia-backend-urls';
 import { DiaMessageService } from './dia-message-service';
-import { DiaMessage } from '../models/messages-model';
 import { observeOn } from 'rxjs/operator/observeOn';
 
 
 @Injectable()
 export class DiaAuthService {
     private token$: BehaviorSubject<string> = new BehaviorSubject<string>("");
-    private loggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+    private loggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
     constructor(private http: Http,
                 private storage: Storage,
@@ -27,7 +26,8 @@ export class DiaAuthService {
         // on token changes
         this.token$.subscribe((token) => {
             // update loggedIn value
-            this.loggedIn$.next(token !== "" && token !== undefined); 
+            let logged = token !== "" && token !== undefined;
+            this.loggedIn$.next(logged); 
 
             // this ensures that every change in the token, if distinct, will be saved
             this.storage.get("token").then(oldtoken => {
@@ -53,19 +53,11 @@ export class DiaAuthService {
                         this.token$.next(token);
                     },
                     (err) => {
-                        this.messageService.publishMessage(
-                            new DiaMessage("Auth Error", "error", "The authentication went bad. :-(")
-                        );
+                        this.messageService.errorMessage("Auth Error", "The authentication went bad. :-(")
                     }
                 )
     }
 
-    logout(){
-        this.messageService.publishMessage(
-            new DiaMessage("Logout", "success", "Session was closed successfully.")
-        );
-        this.loggedIn$.next(false);
-        this.token$.next(""); 
-    }
+    logout(){ this.token$.next(""); }
 
 }

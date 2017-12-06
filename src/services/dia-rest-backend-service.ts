@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 import { DiaAuthService } from './dia-auth-service';
 import { DiaBackendURL } from './dia-backend-urls';
 import { DiaMessageService } from './dia-message-service';
-import { DiaMessage } from '../models/messages-model';
 
 
 @Injectable()
@@ -30,8 +29,7 @@ export class DiaRestBackendService {
               observer.next(resp.json());
             },
             (err) => {
-              let message = new DiaMessage("Client side error", "error", err.error.message);
-              this.messageServices.publishMessage(message);
+              this.messageServices.errorMessage("Client Side Error", err.error.message);
             }
           );
         }
@@ -48,9 +46,10 @@ export class DiaRestBackendService {
               observer.next(resp.json());
             },
             (err) => {
-              this.messageServices.publishMessage(new DiaMessage(
-                "Server side error", "error", `Backend returned code ${err.status}, body was: ${err.error}`
-              ));
+              this.messageServices.errorMessage(
+                "Server side error",
+                `Backend returned code ${err.status}, body was: ${err.error}`
+              );
             }
           );
         }
