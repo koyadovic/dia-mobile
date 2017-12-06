@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-buttons end>
-      <button *ngIf="configurationPointer?.length > 1" ion-button icon-only (click)="goBack()">
+      <button class="button-back" *ngIf="configurationPointer?.length > 1" ion-button icon-only (click)="goBack()">
         <ion-icon name="arrow-back"></ion-icon>
       </button>
     </ion-buttons>
@@ -25,7 +25,7 @@
 
   <!-- This only need to be shown if configurationPointer?.length < 2 -->
   <div *ngIf="configurationPointer?.length < 2">
-    <button (click)="logout()" ion-item>Logout<ion-icon item-end name="build"></ion-icon></button>
+    <button (click)="logout()" ion-item>Logout<ion-icon item-end name="log-out"></ion-icon></button>
   </div>
 
 </ion-content>

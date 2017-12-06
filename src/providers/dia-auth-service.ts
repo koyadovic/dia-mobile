@@ -12,7 +12,7 @@ import { observeOn } from 'rxjs/operator/observeOn';
 @Injectable()
 export class DiaAuthService {
     private token$: BehaviorSubject<string> = new BehaviorSubject<string>("");
-    private loggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    private loggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
     constructor(private http: Http,
                 private storage: Storage,
@@ -31,8 +31,9 @@ export class DiaAuthService {
 
             // this ensures that every change in the token, if distinct, will be saved
             this.storage.get("token").then(oldtoken => {
-                if (oldtoken !== token) {
-                    this.storage.set("token", token);
+                let currentToken = this.token$.getValue();
+                if (oldtoken !== currentToken) {
+                    this.storage.set("token", currentToken);
                 }
             });
         });
