@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { RestBackendService } from '../../providers/rest-backend-service/rest-backend-service';
+import { NavController, App } from 'ionic-angular';
+import { RestBackendService } from '../../providers/rest-backend-service';
+import { LoginPage } from '../login/login';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { DiaConfigurationService } from '../../providers/dia-configuration-service';
+import { DiaAuthService } from '../../providers/dia-auth-service';
+
 
 @Component({
   selector: 'page-configuration',
@@ -14,9 +20,18 @@ export class ConfigurationPage {
 
   constructor(
     public navCtrl: NavController,
-    private restService: RestBackendService
+    private statusBar: StatusBar,
+    private splashScreen: SplashScreen,
+    private configurationService: DiaConfigurationService,
+    private authenticationService: DiaAuthService,
+    private app: App,
+
   ) {
-    this.configurationPointer.push(restService.configuration);
+    this.configurationService.getConfiguration().subscribe(
+      (configuration) => {
+        this.configurationPointer.push(configuration);
+      }
+    )
   }
 
   goBack(){
@@ -33,15 +48,14 @@ export class ConfigurationPage {
     if(this.timerForSave != null){clearTimeout(this.timerForSave);}
 
     this.timerForSave = setTimeout(() => {
-      this.restService.saveConfiguration(this.configurationChanges)
+      this.configurationService.saveConfiguration(this.configurationChanges)
     }, 2000);
   }
 
-  /*
-  For Swipe gesture
-  */
-  goLeft() {
-    console.log("Left");
+
+  logout(){
+    this.authenticationService.logout();
+    this.navCtrl.setRoot(LoginPage);
   }
 
 }

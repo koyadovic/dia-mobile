@@ -16,11 +16,13 @@
 </ion-header>
   
 <ion-content
-*ngIf="configurationPointer?.length > 0 && configurationPointer[configurationPointer.length - 1]"
-(swipeRight)="goLeft()">
+*ngIf="configurationPointer?.length > 0 && configurationPointer[configurationPointer.length - 1]">
   <dynamic-root
   [configurationRoot]="configurationPointer[configurationPointer.length - 1]"
   (changeRootRequest)="changeRoot($event)"
   (haveChanges)="haveChanges($event)">
   </dynamic-root>
+
+  <button (click)="logout()" ion-item>Logout<ion-icon item-end name="build"></ion-icon></button>
+
 </ion-content>

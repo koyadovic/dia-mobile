@@ -11,12 +11,4 @@ export class HomePage {
 
   }
 
-
-  /*
-  For Swipe gesture
-  */
-  
-  goRight() {
-    console.log("Right");
-  }
 }
