@@ -27,7 +27,7 @@ export class DiaAuthService {
         this.token$.subscribe((token) => {
             // update loggedIn value
             let logged = token !== "" && token !== undefined;
-            this.loggedIn$.next(logged); 
+            this.loggedIn$.next(logged);
 
             // this ensures that every change in the token, if distinct, will be saved
             this.storage.get("token").then(oldtoken => {

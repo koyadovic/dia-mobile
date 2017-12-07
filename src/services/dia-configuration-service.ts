@@ -4,18 +4,20 @@ import { DiaRestBackendService } from './dia-rest-backend-service';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observable } from 'rxjs/Observable';
 import { DiaAuthService } from './dia-auth-service';
+import { Subscription } from 'rxjs';
 
 
 @Injectable()
 export class DiaConfigurationService {
     private configuration = new ReplaySubject<any>(1);
-    private subscription = null;
+    private subscriptions = [];
+    private subscription = new Subscription();
 
     constructor(private backendURL: DiaBackendURL,
                 private restBackendService: DiaRestBackendService,
                 private authenticationService: DiaAuthService) {
         
-        this.subscription = this.authenticationService.loggedIn().subscribe(
+        let sub = this.authenticationService.loggedIn().subscribe(
             (loggedIn) => {
                 if (loggedIn) {
                     this.restBackendService
@@ -29,13 +31,17 @@ export class DiaConfigurationService {
                 }
             }
         );
+        this.subscription.add(sub);
     }
 
     saveConfiguration(configurationChanges) {
-        this.restBackendService
+        let sub = this.restBackendService
             .genericPost(`${this.backendURL.baseURL}/v1/configurations/`, configurationChanges)
             .subscribe((resp) => {
             });
+        
+        this.subscription.add(sub);
+
     }
 
     getConfiguration():Observable<any> {
