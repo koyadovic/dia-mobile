@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs';
 import { Http } from '@angular/http';
 import { DiaBackendURL } from './dia-backend-urls';
-import { DiaMessageService } from './dia-message-service';
 import { observeOn } from 'rxjs/operator/observeOn';
 
 
@@ -15,7 +14,6 @@ export class DiaAuthService {
 
     constructor(private http: Http,
                 private storage: Storage,
-                private messageService: DiaMessageService,
                 private backendURL: DiaBackendURL) {
 
         // in startup time we retrieve the token from the store.
@@ -53,7 +51,7 @@ export class DiaAuthService {
                         this.token$.next(token);
                     },
                     (err) => {
-                        this.messageService.errorMessage("Auth Error", "The authentication went bad. :-(")
+                        
                     }
                 )
     }

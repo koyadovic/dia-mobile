@@ -23,6 +23,8 @@ import { DiaAuthService } from '../services/dia-auth-service';
 import { DiaBackendURL } from '../services/dia-backend-urls';
 import { DiaMessageService } from '../services/dia-message-service';
 import { DiaConfigurationService } from '../services/dia-configuration-service';
+import { DiaWebsocketService } from '../services/dia-websockets-service';
+
 
 @NgModule({
   declarations: [
@@ -60,7 +62,8 @@ import { DiaConfigurationService } from '../services/dia-configuration-service';
     DiaAuthService,
     DiaBackendURL,
     DiaMessageService,
-    DiaConfigurationService
+    DiaConfigurationService,
+    DiaWebsocketService
   ]
 })
 export class AppModule {}

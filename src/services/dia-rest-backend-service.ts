@@ -29,7 +29,7 @@ export class DiaRestBackendService {
               observer.next(resp.json());
             },
             (err) => {
-              this.messageServices.errorMessage("Client Side Error", err.error.message);
+              this.messageServices.errorMessage("Client Side Error", err);
             }
           );
         }
@@ -48,7 +48,7 @@ export class DiaRestBackendService {
             (err) => {
               this.messageServices.errorMessage(
                 "Server side error",
-                `Backend returned code ${err.status}, body was: ${err.error}`
+                `Backend returned code ${err.status}, body was: ${err}`
               );
             }
           );

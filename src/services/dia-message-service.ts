@@ -3,13 +3,22 @@ import { Subject } from 'rxjs';
 import { DiaMessage } from '../models/messages-model';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 import { Observable } from 'rxjs/Observable';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { DiaWebsocketService } from './dia-websockets-service';
+import { DiaBackendURL } from './dia-backend-urls';
+import { DiaAuthService } from './dia-auth-service';
+import { Subscription } from 'rxjs/Subscription';
 
 
 @Injectable()
 export class DiaMessageService {
     private _messages: Subject<DiaMessage> = new Subject<DiaMessage>();
 
-    constructor(private alertCtrl: AlertController) {
+    private _backendMessages: Observable<any>;
+
+    constructor(private alertCtrl: AlertController,
+                private wsService: DiaWebsocketService,
+                private backendURLs: DiaBackendURL) {
 
         this._messages.subscribe((message: DiaMessage) => {
             if (message !== undefined) {
@@ -21,6 +30,12 @@ export class DiaMessageService {
                 alert.present();
             }
         });
+
+        this._backendMessages = this.wsService.getMessages();
+        this._backendMessages.subscribe((data) => {
+            console.log(data);
+        });
+
     }
 
     publishMessage(newMessage: DiaMessage) {
