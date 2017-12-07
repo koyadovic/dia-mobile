@@ -5,9 +5,7 @@ import { DiaMobileApp } from './app-component';
 
 // pages
 import { TimeLinePage } from '../pages/timeline/timeline';
-import { HomePage } from '../pages/home/home';
 import { ConfigurationPage } from '../pages/configuration/configuration';
-import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -31,8 +29,6 @@ import { DiaConfigurationService } from '../services/dia-configuration-service';
     DiaMobileApp,
     ConfigurationPage,
     TimeLinePage,
-    HomePage,
-    TabsPage,
     LoginPage,
 
     DynamicField,
@@ -50,8 +46,6 @@ import { DiaConfigurationService } from '../services/dia-configuration-service';
     DiaMobileApp,
     ConfigurationPage,
     TimeLinePage,
-    HomePage,
-    TabsPage,
     LoginPage,
     DynamicField,
     DynamicRoot,
