@@ -18,10 +18,11 @@ export class DiaWebsocketService {
         this.token$.subscribe((token) => {
             // token !== "" means login so we connect websocket
             if(token !== "" && token !== undefined) {
+                
                 if (this.websocket && ! this.websocket.CLOSED)
                     this.websocket.close();
 
-                this.websocket = new WebSocket(backendURLs.wsBaseURL);
+                this.websocket = new WebSocket(backendURLs.wsBaseURL + `?t=${token}`);
 
                 let observable = Observable.create((observer) => {
                     this.websocket.onmessage = observer.next.bind(observer);
@@ -42,13 +43,14 @@ export class DiaWebsocketService {
 
             } else {
                 // token === "" means logout
-                this.websocket.close();
+                if(this.websocket)
+                    this.websocket.close();
             }
         })
     }
 
     public getMessages(){
-        return this.messages.asObservable();
+        return this.messages;
     }
 
 }

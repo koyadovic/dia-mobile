@@ -17,7 +17,6 @@ export class DiaMessageService {
     private _backendMessages: Observable<any>;
 
     constructor(private alertCtrl: AlertController,
-                private wsService: DiaWebsocketService,
                 private backendURLs: DiaBackendURL) {
 
         this._messages.subscribe((message: DiaMessage) => {
@@ -30,12 +29,6 @@ export class DiaMessageService {
                 alert.present();
             }
         });
-
-        this._backendMessages = this.wsService.getMessages();
-        this._backendMessages.subscribe((data) => {
-            console.log(data);
-        });
-
     }
 
     publishMessage(newMessage: DiaMessage) {

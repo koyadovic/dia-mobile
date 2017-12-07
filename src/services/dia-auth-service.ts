@@ -18,13 +18,14 @@ export class DiaAuthService {
 
         // in startup time we retrieve the token from the store.
         this.storage.get("token").then(token => {
+            console.log("DiaAuthService - Constructor, recogemos el valor guardado: " + token);
             this.token$.next(token);
         });
 
         // on token changes
         this.token$.subscribe((token) => {
             // update loggedIn value
-            let logged = token !== "" && token !== undefined;
+            let logged = !!token && token !== "";
             this.loggedIn$.next(logged);
 
             // this ensures that every change in the token, if distinct, will be saved
@@ -57,5 +58,4 @@ export class DiaAuthService {
     }
 
     logout(){ this.token$.next(""); }
-
 }
