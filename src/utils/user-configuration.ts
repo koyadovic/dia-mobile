@@ -1,10 +1,25 @@
+import { TranslateService } from "@ngx-translate/core";
+
 
 
 export class UserConfiguration {
     private data = {}
     
-    constructor(configurationRoot) {
+    constructor(configurationRoot, private translate: TranslateService) {
         this.extractData(configurationRoot);
+        this.refreshUserConfig();
+    }
+
+    updateValues(data) { // namespace_keys and values
+        for(let key in data){
+            this.data[key] = data[key];
+        }
+        this.refreshUserConfig();
+    }
+
+    private refreshUserConfig(){
+        this.translate.use(this.getValue("dia_config__language"));
+        this.translate.setDefaultLang(this.getValue("dia_config__language"));
     }
 
     private extractData(configurationRoot) {
@@ -21,10 +36,11 @@ export class UserConfiguration {
         }
     }
 
-    getValue(key: string) {
+    private getValue(key: string) {
         if(key in this.data) {
             return this.data[key];
         }
         return undefined;
     }
+
 }

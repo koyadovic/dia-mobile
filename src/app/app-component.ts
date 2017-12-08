@@ -67,8 +67,7 @@ export class DiaMobileApp {
   applyUserConfiguration() {
     // get the config
     this.configuration.getConfiguration().subscribe((config) => {
-      let userConfig = new UserConfiguration(config);
-      this.translate.use(userConfig.getValue("dia_config__language"))
+      new UserConfiguration(config, this.translate);
     });
   }
 

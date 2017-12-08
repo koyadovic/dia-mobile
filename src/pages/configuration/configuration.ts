@@ -5,6 +5,7 @@ import { DiaConfigurationService } from '../../services/dia-configuration-servic
 import { DiaAuthService } from '../../services/dia-auth-service';
 import { DiaMessageService } from '../../services/dia-message-service';
 import { DiaMessage } from '../../models/messages-model';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -21,13 +22,14 @@ export class ConfigurationPage {
   constructor(public navCtrl: NavController,
               private configurationService: DiaConfigurationService,
               private authenticationService: DiaAuthService,
-              private messageService: DiaMessageService) {
+              private messageService: DiaMessageService,
+              private translate: TranslateService) {
 
     this.configurationService.getConfiguration().subscribe(
       (configuration) => {
         this.configurationPointer.push(configuration);
       }
-    )
+    );
   }
 
   ionViewDidLoad() {
