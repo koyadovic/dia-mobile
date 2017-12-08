@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs';
-import { Http } from '@angular/http';
 import { DiaBackendURL } from './dia-backend-urls';
 import { observeOn } from 'rxjs/operator/observeOn';
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable()
@@ -12,7 +12,7 @@ export class DiaAuthService {
     private loggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     private token: string = "";
 
-    constructor(private http: Http,
+    constructor(private http: HttpClient,
                 private storage: Storage,
                 private backendURL: DiaBackendURL) {
 
@@ -35,7 +35,7 @@ export class DiaAuthService {
         let url = `${this.backendURL.baseURL}/v1/accounts/tokens/`;
     
         this.http.post(url, data)
-                 .map((resp) => resp.json()["token"])
+                 .map((resp) => resp["token"])
                  .subscribe(
                     (token) => {
                         this.storage.set("token", token);

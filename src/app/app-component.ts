@@ -10,6 +10,7 @@ import { TimeLinePage } from '../pages/timeline/timeline';
 
 import  { DiaAuthService } from '../services/dia-auth-service'
 import { DiaWebsocketService } from '../services/dia-websockets-service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -24,7 +25,8 @@ export class DiaMobileApp {
               private splashScreen: SplashScreen,
               private backgroundMode: BackgroundMode,
               private authService: DiaAuthService,
-              private wsService: DiaWebsocketService) {
+              private wsService: DiaWebsocketService,
+              private translate: TranslateService) {
 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -32,6 +34,12 @@ export class DiaMobileApp {
       statusBar.styleDefault();
       splashScreen.hide();
       backgroundMode.enable();
+      translate.use("en");
+      translate.setDefaultLang('en');
+
+      translate.get("APP_TITLE").subscribe((value) => {
+        console.log(value);
+      })
 
       this.authService.loggedIn().subscribe(
         (loggedIn) => {

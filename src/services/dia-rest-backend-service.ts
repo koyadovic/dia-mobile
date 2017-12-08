@@ -1,17 +1,18 @@
-import { Http, Headers } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { DiaAuthService } from './dia-auth-service';
+import { HttpResponse } from '@angular/common/http';
 
 
 @Injectable()
 export class DiaRestBackendService {
 
-  constructor(private http: Http,
+  constructor(private http: HttpClient,
               private authService: DiaAuthService) { }
 
   private getHeaders(token: string) {
-    let headers = new Headers();
+    let headers = new HttpHeaders();
     headers.append("Authorization",`Token ${token}`);
     headers.append('Content-Type', 'application/json');
     return headers;
@@ -20,7 +21,7 @@ export class DiaRestBackendService {
   public genericGet(url: string){
     return Observable.create((observer) => {
       this.http.get(url, {headers: this.getHeaders(this.authService.getToken())})
-      .map((response) => {
+      .map((response: HttpResponse<any>) => {
         if (response.status == 401) {
           this.authService.logout();
         }
@@ -28,7 +29,7 @@ export class DiaRestBackendService {
       })
       .subscribe(
         (resp) => {
-          observer.next(resp.json());
+          observer.next(resp);
         },
         (err) => {
         }
@@ -39,7 +40,7 @@ export class DiaRestBackendService {
   public genericPost(url: string, data: object) {
     return Observable.create((observer) => {
       this.http.post(url, data, {headers: this.getHeaders(this.authService.getToken())})
-      .map((response) => {
+      .map((response: HttpResponse<any>) => {
         if (response.status == 401) {
           this.authService.logout();
         }
@@ -47,7 +48,7 @@ export class DiaRestBackendService {
       })
       .subscribe(
         (resp) => {
-          observer.next(resp.json());
+          observer.next(resp);
         },
         (err) => {
         }

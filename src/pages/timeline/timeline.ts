@@ -14,4 +14,10 @@ export class TimeLinePage {
     this.navCtrl.push(ConfigurationPage);
   }
 
+  doRefresh(refresher) {
+    setTimeout(() => {
+      refresher.complete();
+    }, 2000)
+  }
+
 }

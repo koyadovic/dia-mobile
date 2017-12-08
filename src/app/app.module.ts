@@ -12,7 +12,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { IonicStorageModule } from '@ionic/storage';
-import { HttpModule } from '@angular/http';
 import { BackgroundMode } from '@ionic-native/background-mode';
 
 import { DynamicField } from '../components/dynamic-field/dynamic-field-component';
@@ -25,6 +24,10 @@ import { DiaBackendURL } from '../services/dia-backend-urls';
 import { DiaMessageService } from '../services/dia-message-service';
 import { DiaConfigurationService } from '../services/dia-configuration-service';
 import { DiaWebsocketService } from '../services/dia-websockets-service';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+
 
 
 @NgModule({
@@ -33,16 +36,21 @@ import { DiaWebsocketService } from '../services/dia-websockets-service';
     ConfigurationPage,
     TimeLinePage,
     LoginPage,
-
     DynamicField,
     DynamicRoot,
   ],
   imports: [
     BrowserModule,
-    HttpModule,
+    HttpClientModule,
     IonicModule.forRoot(DiaMobileApp),
     IonicStorageModule.forRoot(),
-
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
+      }
+    }),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -69,3 +77,7 @@ import { DiaWebsocketService } from '../services/dia-websockets-service';
   ]
 })
 export class AppModule {}
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
