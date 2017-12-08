@@ -4,7 +4,7 @@ import { ConfigurationPage } from '../configuration/configuration';
 
 @Component({
   selector: 'page-timeline',
-  templateUrl: 'timeline.html'
+  templateUrl: 'timeline.html',
 })
 export class TimeLinePage {
 

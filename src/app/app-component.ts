@@ -8,13 +8,16 @@ import { BackgroundMode } from '@ionic-native/background-mode';
 import { LoginPage } from '../pages/login/login';
 import { TimeLinePage } from '../pages/timeline/timeline';
 
-import  { DiaAuthService } from '../services/dia-auth-service'
+import { DiaAuthService } from '../services/dia-auth-service'
 import { DiaWebsocketService } from '../services/dia-websockets-service';
 import { TranslateService } from '@ngx-translate/core';
+import { DiaConfigurationService } from '../services/dia-configuration-service';
+
+import { UserConfiguration } from '../utils/user-configuration';
 
 
 @Component({
-  templateUrl: 'app-component.html'
+  templateUrl: 'app-component.html',
 })
 export class DiaMobileApp {
   rootPage:any = TimeLinePage;
@@ -26,7 +29,8 @@ export class DiaMobileApp {
               private backgroundMode: BackgroundMode,
               private authService: DiaAuthService,
               private wsService: DiaWebsocketService,
-              private translate: TranslateService) {
+              private translate: TranslateService,
+              private configuration: DiaConfigurationService) {
 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -34,12 +38,9 @@ export class DiaMobileApp {
       statusBar.styleDefault();
       splashScreen.hide();
       backgroundMode.enable();
+
       translate.use("en");
       translate.setDefaultLang('en');
-
-      translate.get("APP_TITLE").subscribe((value) => {
-        console.log(value);
-      })
 
       this.authService.loggedIn().subscribe(
         (loggedIn) => {
@@ -48,21 +49,38 @@ export class DiaMobileApp {
             // rootPage is TimeLinePage
             this.rootPage = TimeLinePage;
 
-            // if websockets ready, getMessages observable
-            this.wsService.ready().subscribe((ready) => {
-              if(ready) {
-                this.backendMessages$ = this.wsService.getMessages();
-                this.backendMessages$.subscribe((backendMessage) => {
-                  console.log(backendMessage);
-                });
-              }
-            })
+            // apply the config
+            this.applyUserConfiguration();
+
+            // websockets
+            this.websocketsConnect();
+      
           } else { // not logged in
             // rootPage is LoginPage
             this.rootPage = LoginPage;
           }
         }
       );
+    });
+  }
+
+  applyUserConfiguration() {
+    // get the config
+    this.configuration.getConfiguration().subscribe((config) => {
+      let userConfig = new UserConfiguration(config);
+      this.translate.use(userConfig.getValue("dia_config__language"))
+    });
+  }
+
+  websocketsConnect() {
+    // if websockets ready, getMessages observable
+    this.wsService.ready().subscribe((ready) => {
+      if(ready) {
+        this.backendMessages$ = this.wsService.getMessages();
+        this.backendMessages$.subscribe((backendMessage) => {
+          console.log(backendMessage);
+        });
+      }
     });
   }
 }
