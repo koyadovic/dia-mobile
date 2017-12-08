@@ -27,7 +27,7 @@ import { DiaWebsocketService } from '../services/dia-websockets-service';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-
+import { HttpModule } from '@angular/http';
 
 
 @NgModule({
@@ -41,6 +41,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     HttpClientModule,
     IonicModule.forRoot(DiaMobileApp),
     IonicStorageModule.forRoot(),
