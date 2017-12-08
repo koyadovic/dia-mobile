@@ -12,9 +12,10 @@ export class DiaRestBackendService {
               private authService: DiaAuthService) { }
 
   private getHeaders(token: string) {
-    let headers = new HttpHeaders();
-    headers.append("Authorization",`Token ${token}`);
-    headers.append('Content-Type', 'application/json');
+    let headers = new HttpHeaders({
+      "Authorization":`token ${token}`,
+      'Content-Type': 'application/json'
+    });
     return headers;
   }
 
