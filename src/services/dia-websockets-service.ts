@@ -57,7 +57,7 @@ export class DiaWebsocketService {
     }
 
     public getMessages(){
-        return this.messages;
+        return this.messages.asObservable();
     }
 
 }

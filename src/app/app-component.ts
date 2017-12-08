@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -9,7 +10,6 @@ import { TimeLinePage } from '../pages/timeline/timeline';
 
 import  { DiaAuthService } from '../services/dia-auth-service'
 import { DiaWebsocketService } from '../services/dia-websockets-service';
-import { Subject } from 'rxjs/Subject';
 
 
 @Component({
@@ -17,7 +17,7 @@ import { Subject } from 'rxjs/Subject';
 })
 export class DiaMobileApp {
   rootPage:any = TimeLinePage;
-  private backendMessages$: Subject<any>;
+  private backendMessages$: Observable<any>;
 
   constructor(private platform: Platform,
               private statusBar: StatusBar,
@@ -36,9 +36,11 @@ export class DiaMobileApp {
       this.authService.loggedIn().subscribe(
         (loggedIn) => {
 
-          this.rootPage = loggedIn ? TimeLinePage : LoginPage;
+          if(loggedIn) { // logged in!
+            // rootPage is TimeLinePage
+            this.rootPage = TimeLinePage;
 
-          if(loggedIn) {
+            // if websockets ready, getMessages observable
             this.wsService.ready().subscribe((ready) => {
               if(ready) {
                 this.backendMessages$ = this.wsService.getMessages();
@@ -47,6 +49,9 @@ export class DiaMobileApp {
                 });
               }
             })
+          } else { // not logged in
+            // rootPage is LoginPage
+            this.rootPage = LoginPage;
           }
         }
       );
