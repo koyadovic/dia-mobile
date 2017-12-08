@@ -41,7 +41,6 @@ export class DiaMobileApp {
           if(loggedIn) {
             this.wsService.ready().subscribe((ready) => {
               if(ready) {
-                console.log("Websockets connection ready. Listening to messages");
                 this.backendMessages$ = this.wsService.getMessages();
                 this.backendMessages$.subscribe((backendMessage) => {
                   console.log(backendMessage);

@@ -21,28 +21,26 @@ export class DiaWebsocketService {
                 if (!!this.websocket && ! this.websocket.CLOSED)
                     this.websocket.close();
 
-            let token = this.authenticationService.getToken();
-            this.websocket = new WebSocket(backendURLs.wsBaseURL + `?t=${token}`);
+                let token = this.authenticationService.getToken();
+                this.websocket = new WebSocket(backendURLs.wsBaseURL + `?t=${token}`);
 
-            if (!!this.websocket && ! this.websocket.CLOSED)
-                this.ready$.next(true);
+                let observable = Observable.create((observer) => {
+                    this.websocket.onmessage = observer.next.bind(observer);
+                    this.websocket.onerror = observer.error.bind(observer);
+                    this.websocket.onclose = observer.complete.bind(observer);
+                    return this.websocket.close.bind(this.websocket);
+                });
 
-            let observable = Observable.create((observer) => {
-                this.websocket.onmessage = observer.next.bind(observer);
-                this.websocket.onerror = observer.error.bind(observer);
-                this.websocket.onclose = observer.complete.bind(observer);
-                return this.websocket.close.bind(this.websocket);
-            });
-
-            let observer = {
-                next: (data: Object) => {
-                    if (this.websocket.readyState === WebSocket.OPEN) {
-                        this.websocket.send(JSON.stringify(data));
+                let observer = {
+                    next: (data: Object) => {
+                        if (this.websocket.readyState === WebSocket.OPEN) {
+                            this.websocket.send(JSON.stringify(data));
+                        }
                     }
-                }
-            };
+                };
 
-            this.messages = Subject.create(observer, observable);
+                this.messages = Subject.create(observer, observable);
+                this.ready$.next(true);
 
             } else {
                 // token === "" means logout
@@ -52,7 +50,6 @@ export class DiaWebsocketService {
 
             }
         })
-
     }
 
     public ready(){
