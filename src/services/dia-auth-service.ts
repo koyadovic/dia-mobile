@@ -38,20 +38,17 @@ export class DiaAuthService {
                  .map((resp) => resp.json()["token"])
                  .subscribe(
                     (token) => {
-                        console.log("Auth OK - Token: \'" + token + "\', loggedIn: " + !!token);
+                        this.storage.set("token", token);
                         this.token = token;
                         this.loggedIn$.next(!!token);
                     },
                     (err) => {
-                        console.log("Auth ERR - Token: \'\', loggedIn: " + false);
-                        this.token = "";
-                        this.loggedIn$.next(false);
+                        this.logout();
                     }
                 )
     }
 
     logout(){
-        console.log("Auth OK - Token: \'\', loggedIn: " + false);
         this.storage.set("token", "");
         this.loggedIn$.next(false);
     }

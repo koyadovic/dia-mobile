@@ -19,47 +19,37 @@ export class DiaRestBackendService {
 
   public genericGet(url: string){
     return Observable.create((observer) => {
-      this.authService.loggedIn().subscribe(
-        (loggedIn) => {
-          if (loggedIn) {
-            this.http.get(url, {headers: this.getHeaders(this.authService.getToken())})
-            .map((response) => {
-              if (response.status == 401) {
-                this.authService.logout();
-              }
-              return response;
-            })
-            .subscribe(
-              (resp) => {
-                observer.next(resp.json());
-              },
-              (err) => {
-              }
-            );
-          }
+      this.http.get(url, {headers: this.getHeaders(this.authService.getToken())})
+      .map((response) => {
+        if (response.status == 401) {
+          this.authService.logout();
         }
-      )
+        return response;
+      })
+      .subscribe(
+        (resp) => {
+          observer.next(resp.json());
+        },
+        (err) => {
+        }
+      );
     });
   }
 
   public genericPost(url: string, data: object) {
     return Observable.create((observer) => {
-      this.authService.loggedIn().subscribe(
-        (loggedIn) => {
-          this.http.post(url, data, {headers: this.getHeaders(this.authService.getToken())})
-          .map((response) => {
-            if (response.status == 401) {
-              this.authService.logout();
-            }
-            return response;
-          })
-          .subscribe(
-            (resp) => {
-              observer.next(resp.json());
-            },
-            (err) => {
-            }
-          );
+      this.http.post(url, data, {headers: this.getHeaders(this.authService.getToken())})
+      .map((response) => {
+        if (response.status == 401) {
+          this.authService.logout();
+        }
+        return response;
+      })
+      .subscribe(
+        (resp) => {
+          observer.next(resp.json());
+        },
+        (err) => {
         }
       );
     });
