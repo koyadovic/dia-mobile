@@ -1,5 +1,7 @@
 {
     "APP_TITLE": "Dia Mobile",
     "TIMELINE_TITLE": "Timeline",
-    "Logout": "Logout"
+    "Logout": "Logout",
+    "Logout Confirmation": "Logout Confirmation",
+    "Are you sure to close your session?": "Are you sure to close your session?"
 }

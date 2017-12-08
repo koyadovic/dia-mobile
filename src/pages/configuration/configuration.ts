@@ -6,6 +6,7 @@ import { DiaAuthService } from '../../services/dia-auth-service';
 import { DiaMessageService } from '../../services/dia-message-service';
 import { DiaMessage } from '../../models/messages-model';
 import { TranslateService } from '@ngx-translate/core';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 
 
 @Component({
@@ -58,8 +59,13 @@ export class ConfigurationPage {
   }
 
   logout(){
-    let message = new DiaMessage("Logout Confirmation", "info", "Are you sure to close your session?")
-    this.messageService.confirmMessage(message).subscribe((ok) => { if (ok) this.authenticationService.logout(); });
+    forkJoin(
+      this.translate.get("Logout Confirmation"),
+      this.translate.get("Are you sure to close your session?")
+    ).subscribe(([title, message]) => {
+      let diamessage = new DiaMessage(title, "info", message)
+      this.messageService.confirmMessage(diamessage).subscribe((ok) => { if (ok) this.authenticationService.logout(); });
+    })
   }
 
 }

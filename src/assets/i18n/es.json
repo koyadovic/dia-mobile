@@ -1,5 +1,7 @@
 {
     "APP_TITLE": "Dia Mobile",
     "TIMELINE_TITLE": "Linea temporal",
-    "Logout": "Cerrar sesión"
+    "Logout": "Cerrar sesión",
+    "Logout Confirmation": "Confirmar Cierre de Sesión",
+    "Are you sure to close your session?": "¿Está seguro de cerrar su sesión?"
 }
