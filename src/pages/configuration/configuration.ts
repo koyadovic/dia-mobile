@@ -27,7 +27,7 @@ export class ConfigurationPage {
 
     this.configurationService.getConfiguration().subscribe(
       (configuration) => {
-        this.configurationPointer.push(configuration);
+        this.configurationPointer = [ configuration ];
       }
     );
   }
@@ -37,23 +37,24 @@ export class ConfigurationPage {
      if (this.configurationPointer.length > 1) {
         this.configurationPointer.pop();
       } else {
+        if(Object.keys(this.configurationChanges).length > 0){
+          this.configurationService.saveConfiguration(this.configurationChanges);
+        }
         this.navCtrl.pop();
       }
     }
   }
 
-  changeRoot(event) {
-    this.configurationPointer.push(event);
+  haveChanges(event) { 
+    this.configurationChanges[event.namespace_key] = event.value; 
   }
 
-  haveChanges(event) {
-    this.configurationChanges[event.namespace_key] = event.value;
+  saveConfig() {
+    this.configurationService.saveConfiguration(this.configurationChanges);
+  }
 
-    if(this.timerForSave != null){clearTimeout(this.timerForSave);}
-
-    this.timerForSave = setTimeout(() => {
-      this.configurationService.saveConfiguration(this.configurationChanges)
-    }, 2000);
+  changeRoot(event) {
+    this.configurationPointer.push(event);
   }
 
   logout(){

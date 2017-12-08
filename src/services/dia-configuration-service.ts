@@ -18,21 +18,24 @@ export class DiaConfigurationService {
                 private authenticationService: DiaAuthService,
                 private translate: TranslateService) {
         
-        console.log("DiaConfigurationService - A la escucha de loggedIn para recuperar la configuración");
         let sub = this.authenticationService.loggedIn().subscribe(
             (loggedIn) => {
                 if (loggedIn) {
-                    console.log("DiaConfigurationService - Estamos logados! Recuperamos la config");
-                    this.restBackendService
-                        .genericGet(`${this.backendURL.baseURL}/v1/configurations/`)
-                        .subscribe((configuration) => {
-                            this.configuration.next(configuration);
-                            this.userConfig = new UserConfiguration(configuration, this.translate);
-                        }
-                    );
+                    this.refreshConfiguration();
                 }
             }
         );
+    }
+
+    private refreshConfiguration(){
+        this.restBackendService
+        .genericGet(`${this.backendURL.baseURL}/v1/configurations/`)
+        .subscribe((configuration) => {
+            this.configuration.next(configuration);
+            this.userConfig = new UserConfiguration(configuration, this.translate);
+        }
+    );
+
     }
 
     saveConfiguration(configurationChanges) {
@@ -40,6 +43,7 @@ export class DiaConfigurationService {
             .genericPost(`${this.backendURL.baseURL}/v1/configurations/`, configurationChanges)
             .subscribe((resp) => {
                   this.userConfig.updateValues(configurationChanges);
+                  this.refreshConfiguration();
                 },
                 (error) => {
         
