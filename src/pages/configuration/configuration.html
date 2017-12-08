@@ -1,11 +1,5 @@
 <ion-header>
   <ion-navbar>
-    <ion-buttons end>
-      <button class="button-back" *ngIf="configurationPointer?.length > 1" ion-button icon-only (click)="goBack()">
-        <ion-icon name="arrow-back"></ion-icon>
-      </button>
-    </ion-buttons>
-
       <ion-title *ngIf="configurationPointer?.length > 0 && configurationPointer[configurationPointer.length - 1]">
       {{ configurationPointer[configurationPointer.length - 1].display }}
     </ion-title>
@@ -14,8 +8,8 @@
   </ion-navbar>
 </ion-header>
   
-<ion-content
-*ngIf="configurationPointer?.length > 0 && configurationPointer[configurationPointer.length - 1]">
+<ion-content>
+
   <dynamic-root
   [configurationRoot]="configurationPointer[configurationPointer.length - 1]"
   (changeRootRequest)="changeRoot($event)"

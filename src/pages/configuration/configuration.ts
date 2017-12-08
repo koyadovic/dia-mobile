@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { LoginPage } from '../login/login';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, Navbar } from 'ionic-angular';
 
 import { DiaConfigurationService } from '../../services/dia-configuration-service';
 import { DiaAuthService } from '../../services/dia-auth-service';
@@ -13,6 +12,7 @@ import { DiaMessage } from '../../models/messages-model';
   templateUrl: 'configuration.html',
 })
 export class ConfigurationPage {
+  @ViewChild(Navbar) navBar: Navbar;
   private configurationPointer = [];
 
   private configurationChanges = {};
@@ -25,13 +25,19 @@ export class ConfigurationPage {
 
     this.configurationService.getConfiguration().subscribe(
       (configuration) => {
-        this.configurationPointer = [ configuration ];
+        this.configurationPointer.push(configuration);
       }
     )
   }
 
-  goBack(){
-    this.configurationPointer.pop();
+  ionViewDidLoad() {
+    this.navBar.backButtonClick = (e:UIEvent)=>{
+     if (this.configurationPointer.length > 1) {
+        this.configurationPointer.pop();
+      } else {
+        this.navCtrl.pop();
+      }
+    }
   }
 
   changeRoot(event) {
