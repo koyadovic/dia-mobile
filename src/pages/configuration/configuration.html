@@ -16,7 +16,7 @@
 
   <!-- This only need to be shown if configurationPointer?.length < 2 -->
   <div *ngIf="configurationPointer?.length < 2">
-    <button (click)="logout()" ion-item>Logout<ion-icon item-end name="log-out"></ion-icon></button>
+    <button (click)="logout()" ion-item>{{ "Logout" | translate }}<ion-icon item-end name="log-out"></ion-icon></button>
   </div>
 
 </ion-content>
