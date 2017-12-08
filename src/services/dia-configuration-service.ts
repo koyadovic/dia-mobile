@@ -10,7 +10,6 @@ import { Subscription } from 'rxjs';
 @Injectable()
 export class DiaConfigurationService {
     private configuration = new ReplaySubject<any>(1);
-    private subscriptions = [];
     private subscription = new Subscription();
 
     constructor(private backendURL: DiaBackendURL,

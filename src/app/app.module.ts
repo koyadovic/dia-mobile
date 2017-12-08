@@ -13,6 +13,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { HttpModule } from '@angular/http';
+import { BackgroundMode } from '@ionic-native/background-mode';
 
 import { DynamicField } from '../components/dynamic-field/dynamic-field-component';
 import { DynamicRoot } from '../components/dynamic-root/dynamic-root-component';
@@ -58,6 +59,7 @@ import { DiaWebsocketService } from '../services/dia-websockets-service';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Storage,
+    BackgroundMode,
     DiaRestBackendService,
     DiaAuthService,
     DiaBackendURL,

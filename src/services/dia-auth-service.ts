@@ -9,8 +9,8 @@ import { observeOn } from 'rxjs/operator/observeOn';
 
 @Injectable()
 export class DiaAuthService {
-    private token$: BehaviorSubject<string> = new BehaviorSubject<string>("");
     private loggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    private token: string = "";
 
     constructor(private http: Http,
                 private storage: Storage,
@@ -18,29 +18,18 @@ export class DiaAuthService {
 
         // in startup time we retrieve the token from the store.
         this.storage.get("token").then(token => {
-            console.log("DiaAuthService - Constructor, recogemos el valor guardado: " + token);
-            this.token$.next(token);
-        });
-
-        // on token changes
-        this.token$.subscribe((token) => {
-            // update loggedIn value
-            let logged = !!token && token !== "";
-            this.loggedIn$.next(logged);
-
-            // this ensures that every change in the token, if distinct, will be saved
-            this.storage.get("token").then(oldtoken => {
-                let currentToken = this.token$.getValue();
-                if (oldtoken !== currentToken) {
-                    this.storage.set("token", currentToken);
-                }
-            });
+            console.log("Auth OK - Token: \'" + token + "\', loggedIn: " + !!token);
+            this.token = token;
+            this.loggedIn$.next(!!token);
         });
     }
 
-    // return only observable versions of our subjects
-    token(): Observable<string> { return this.token$.asObservable(); }
+    // return only observable versions of the subject
     loggedIn(): Observable<boolean> { return this.loggedIn$.asObservable(); }
+
+    getToken(){
+        return this.token;
+    }
 
     login(data: {email: string, password: string}) {
         let url = `${this.backendURL.baseURL}/v1/accounts/tokens/`;
@@ -49,13 +38,21 @@ export class DiaAuthService {
                  .map((resp) => resp.json()["token"])
                  .subscribe(
                     (token) => {
-                        this.token$.next(token);
+                        console.log("Auth OK - Token: \'" + token + "\', loggedIn: " + !!token);
+                        this.token = token;
+                        this.loggedIn$.next(!!token);
                     },
                     (err) => {
-                        
+                        console.log("Auth ERR - Token: \'\', loggedIn: " + false);
+                        this.token = "";
+                        this.loggedIn$.next(false);
                     }
                 )
     }
 
-    logout(){ this.token$.next(""); }
+    logout(){
+        console.log("Auth OK - Token: \'\', loggedIn: " + false);
+        this.storage.set("token", "");
+        this.loggedIn$.next(false);
+    }
 }
