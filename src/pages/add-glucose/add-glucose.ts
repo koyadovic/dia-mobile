@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the AddGlucosePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { GlucoseLevel } from '../../models/glucose-model';
+import { DiaTimelineService } from '../../services/dia-timeline-service';
 
 @IonicPage()
 @Component({
@@ -14,12 +9,22 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'add-glucose.html',
 })
 export class AddGlucosePage {
+  private glucose:GlucoseLevel;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private timelineService: DiaTimelineService) {
+
+    this.glucose = { id: 0, instant: 0, level: null };
+
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddGlucosePage');
+  }
+
+  addGlucose() {
+
   }
 
 }

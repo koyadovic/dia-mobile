@@ -38,6 +38,7 @@ import { AddInsulinDosePage } from '../pages/add-insulin-dose/add-insulin-dose';
 import { AddPhysicalActivityPage } from '../pages/add-physical-activity/add-physical-activity';
 import { AddTraitChangePage } from '../pages/add-trait-change/add-trait-change';
 
+
 @NgModule({
   declarations: [
     DiaMobileApp,

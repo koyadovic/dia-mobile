@@ -7,6 +7,22 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+  <ion-grid>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-input text-center type="number" placeholder="mg/dL" [(ngModel)]="glucose.level" name="level"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col>
+        <button (click)="addGlucose()" ion-button full>Add</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

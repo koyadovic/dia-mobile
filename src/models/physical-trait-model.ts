@@ -1,8 +1,7 @@
 
-interface PhysicalTrait {
+export interface PhysicalTrait {
     id: number;
-    user: number;
-    instant: string;
+    instant: number;
 
     trait_type: number;
     value: number;

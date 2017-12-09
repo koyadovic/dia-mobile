@@ -1,8 +1,7 @@
 
-interface PhysicalActivity {
+export interface PhysicalActivity {
     id: number;
-    user: number;
-    instant: string;
+    instant: number;
 
     intensity: number;
     minutes: number;

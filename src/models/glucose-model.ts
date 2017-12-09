@@ -1,9 +1,7 @@
 
 
-interface GlucoseLevel {
+export interface GlucoseLevel {
     id: number;
-    user: number;
-    instant: string;
-
+    instant: number;
     level: number;
 }
