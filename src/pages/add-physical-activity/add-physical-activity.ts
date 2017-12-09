@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 /**
  * Generated class for the AddPhysicalActivityPage page.
@@ -8,7 +8,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-add-physical-activity',
   templateUrl: 'add-physical-activity.html',
@@ -19,7 +18,6 @@ export class AddPhysicalActivityPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddPhysicalActivityPage');
   }
 
 }

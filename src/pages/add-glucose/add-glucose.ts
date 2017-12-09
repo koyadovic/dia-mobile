@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { GlucoseLevel } from '../../models/glucose-model';
 import { DiaTimelineService } from '../../services/dia-timeline-service';
+import { ViewController } from 'ionic-angular';
 
-@IonicPage()
 @Component({
   selector: 'page-add-glucose',
   templateUrl: 'add-glucose.html',
@@ -12,9 +12,10 @@ export class AddGlucosePage {
   private glucose:GlucoseLevel;
 
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    private timelineService: DiaTimelineService) {
+    private navCtrl: NavController,
+    private navParams: NavParams,
+    private timelineService: DiaTimelineService,
+    private viewCtrl: ViewController) {
 
     this.glucose = { id: 0, instant: 0, level: null };
   }
@@ -33,5 +34,8 @@ export class AddGlucosePage {
       }
     )
   }
-
+  
+  closeModal() {
+    this.viewCtrl.dismiss();
+  }
 }
