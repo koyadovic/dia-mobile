@@ -44,35 +44,57 @@ export class TimeLinePage {
     }, 500)
   }
 
+  ionViewDidLoad() {
+  }
+
   addGlucose(){
     this.fab.close();
-    let myModal = this.modalCtrl.create(AddGlucosePage);
-    myModal.present();
+    let modal = this.modalCtrl.create(AddGlucosePage);
+    modal.onDidDismiss((data) => {
+      if(!!data && data["add"])
+        this.timelineService.refreshTimeline();
+    });
+    modal.present();
   }
 
   addPhysicalActivity(){
     this.fab.close();
-    let myModal = this.modalCtrl.create(AddPhysicalActivityPage);
-    myModal.present();
+    let modal = this.modalCtrl.create(AddPhysicalActivityPage);
+    modal.onDidDismiss((data) => {
+      if(!!data && data["add"])
+        this.timelineService.refreshTimeline();
+    });
+    modal.present();
   }
 
   addInsulinDose(){
     this.fab.close();
-    let myModal = this.modalCtrl.create(AddInsulinDosePage);
-    myModal.present();
+    let modal = this.modalCtrl.create(AddInsulinDosePage);
+    modal.onDidDismiss((data) => {
+      if(!!data && data["add"])
+        this.timelineService.refreshTimeline();
+    });
+    modal.present();
   }
 
   addPhysicalTraitChange(){
     this.fab.close();
-    let myModal = this.modalCtrl.create(AddTraitChangePage);
-    myModal.present();
+    let modal = this.modalCtrl.create(AddTraitChangePage);
+    modal.onDidDismiss((data) => {
+      if(!!data && data["add"])
+        this.timelineService.refreshTimeline();
+    });
+    modal.present();
   }
 
-  // this will be a little different
   addFeeding(){
     this.fab.close();
-    let myModal = this.modalCtrl.create(AddFeedingPage);
-    myModal.present();
+    let modal = this.modalCtrl.create(AddFeedingPage);
+    modal.onDidDismiss((data) => {
+      if(!!data && data["add"])
+        this.timelineService.refreshTimeline();
+    });
+    modal.present();
   }
 
   // when a card is clicked must be shown details about it

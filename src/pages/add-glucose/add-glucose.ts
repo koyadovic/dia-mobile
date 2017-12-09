@@ -27,15 +27,16 @@ export class AddGlucosePage {
     this.timelineService.addGlucose(this.glucose).subscribe(
       (resp) => {
         // fuck yeah!
-        this.navCtrl.pop();
+        //this.navCtrl.pop();
+        this.viewCtrl.dismiss({"add": true})
       },
       (err) => {
         // ouch!
       }
     )
   }
-  
+
   closeModal() {
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss({"add": false});
   }
 }
