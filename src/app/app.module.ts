@@ -30,6 +30,11 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 
+import { AddGlucosePage } from '../pages/add-glucose/add-glucose';
+import { AddFeedingPage } from '../pages/add-feeding/add-feeding';
+import { AddInsulinDosePage } from '../pages/add-insulin-dose/add-insulin-dose';
+import { AddPhysicalActivityPage } from '../pages/add-physical-activity/add-physical-activity';
+import { AddTraitChangePage } from '../pages/add-trait-change/add-trait-change';
 
 @NgModule({
   declarations: [
@@ -37,6 +42,13 @@ import { HttpModule } from '@angular/http';
     ConfigurationPage,
     TimeLinePage,
     LoginPage,
+
+    AddGlucosePage,
+    AddFeedingPage,
+    AddInsulinDosePage,
+    AddPhysicalActivityPage,
+    AddTraitChangePage,
+
     DynamicField,
     DynamicRoot,
     DiaInstantCard,
@@ -61,6 +73,13 @@ import { HttpModule } from '@angular/http';
     ConfigurationPage,
     TimeLinePage,
     LoginPage,
+
+    AddGlucosePage,
+    AddFeedingPage,
+    AddInsulinDosePage,
+    AddPhysicalActivityPage,
+    AddTraitChangePage,
+
     DynamicField,
     DynamicRoot,
     DiaInstantCard,
