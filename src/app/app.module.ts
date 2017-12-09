@@ -16,6 +16,7 @@ import { BackgroundMode } from '@ionic-native/background-mode';
 
 import { DynamicField } from '../components/dynamic-field/dynamic-field-component';
 import { DynamicRoot } from '../components/dynamic-root/dynamic-root-component';
+import { DiaInstantCard } from '../components/instant-card/instant-card-component';
 
 // services
 import { DiaRestBackendService } from '../services/dia-rest-backend-service';
@@ -38,6 +39,7 @@ import { HttpModule } from '@angular/http';
     LoginPage,
     DynamicField,
     DynamicRoot,
+    DiaInstantCard,
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,7 @@ import { HttpModule } from '@angular/http';
     LoginPage,
     DynamicField,
     DynamicRoot,
-
+    DiaInstantCard,
   ],
   providers: [
     StatusBar,

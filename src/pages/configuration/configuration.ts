@@ -39,7 +39,7 @@ export class ConfigurationPage {
         this.configurationPointer.pop();
       } else {
         if(Object.keys(this.configurationChanges).length > 0){
-          this.configurationService.saveConfiguration(this.configurationChanges);
+          this.saveConfig();
         }
         this.navCtrl.pop();
       }
