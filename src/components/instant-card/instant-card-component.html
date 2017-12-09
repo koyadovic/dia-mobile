@@ -1,9 +1,10 @@
-<ion-card [ngClass]="instant?.event_type">
+<ion-card>
 
     <!--
     {
         "event_type": "user-event",
         "content": {
+            "type": "glucose"
         },
         "user": 1,
         "id": 2,
@@ -14,17 +15,29 @@
     <ion-item>
     <ion-avatar item-start>
         <!-- <img src="img/marty-avatar.png"> -->
+        <ion-icon *ngIf="instant.content.type == 'glucose'" name="water"></ion-icon>
+        <ion-icon *ngIf="instant.content.type == 'feeding'" name="restaurant"></ion-icon>
+        <ion-icon *ngIf="instant.content.type == 'physical_activity'" name="bicycle"></ion-icon>
+        <ion-icon *ngIf="instant.content.type == 'physical_trait'" name="body"></ion-icon>
+        <ion-icon *ngIf="instant.content.type == 'insulin_dose'" name="thermometer"></ion-icon>
+
     </ion-avatar>
-    <h2>Marty McFly</h2>
-    <p>November 5, 1955</p>
+    <h2 *ngIf="instant.content.type == 'glucose'">Glucose</h2>
+    <h2 *ngIf="instant.content.type == 'feeding'">Feeding</h2>
+    <h2 *ngIf="instant.content.type == 'physical_activity'">Physical Activity</h2>
+    <h2 *ngIf="instant.content.type == 'physical_trait'">Physical Trait Change</h2>
+    <h2 *ngIf="instant.content.type == 'insulin_dose'">Insulin Dose</h2>
+
+    <!-- <p>{{ userConfig?.formatDateTime(instant.datetime) }}</p> -->
+    <p>120mg/dL</p>
     </ion-item>
 
     <!-- <img src="img/advance-card-bttf.png"> -->
 
+    <!--
     <ion-card-content>
-    <p>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a DeLorean?! Whoa. This is heavy.</p>
-    {{ userConfig?.formatDateTime(1512812087) }}
     </ion-card-content>
+    -->
 
     <ion-row>
     <ion-col>
@@ -40,9 +53,9 @@
         </button>
     </ion-col>
     <ion-col center text-center>
-        <ion-note>
-        11h ago
-        </ion-note>
+
+        <ion-note>{{ timePassedString(instant.datetime) }}</ion-note>
+
     </ion-col>
     </ion-row>
 

@@ -28,7 +28,7 @@ export class UserConfiguration {
     private refreshUserConfig(){
         this.translate.use(this.getValue("dia_config__language"));
         this.translate.setDefaultLang(this.getValue("dia_config__language"));
-
+        moment.locale(this.getValue("dia_config__language"));
     }
 
     private extractData(configurationRoot) {
@@ -45,7 +45,7 @@ export class UserConfiguration {
         }
     }
 
-    private getValue(key: string) {
+    public getValue(key: string) {
         if(key in this.data) {
             return this.data[key];
         }

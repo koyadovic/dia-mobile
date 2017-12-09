@@ -18,7 +18,7 @@
     </ion-refresher>
 
     <instant-card *ngFor="let instant of timeline$ | async"
-     [instant]="instant" [userConfig]="userConfig">
+    [ngClass]="instant.event_type" [instant]="instant" [userConfig]="userConfig">
     </instant-card>
     
     <ion-fab bottom right #fab>
