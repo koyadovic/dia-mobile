@@ -14,11 +14,13 @@
 <ion-content>
     <ion-refresher (ionRefresh)="doRefresh($event)">
       <ion-refresher-content>
+        la
       </ion-refresher-content>
     </ion-refresher>
 
     <instant-card *ngFor="let instant of timeline$ | async"
-    [ngClass]="instant.event_type" [instant]="instant" [userConfig]="userConfig">
+      [ngClass]="instant.event_type" [instant]="instant" [userConfig]="userConfig"
+      (click)="cardClicked(instant)">
     </instant-card>
     
     <ion-fab bottom right #fab>

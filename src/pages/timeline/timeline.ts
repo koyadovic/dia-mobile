@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ConfigurationPage } from '../configuration/configuration';
 import { Observable } from 'rxjs/Observable';
@@ -14,6 +14,7 @@ import { DiaTimelineService } from '../../services/dia-timeline-service';
   templateUrl: 'timeline.html',
 })
 export class TimeLinePage {
+  @ViewChild(FabContainer) fab: FabContainer;
   private timeline$: Observable<any>;
   private userConfig: UserConfiguration;
 
@@ -38,6 +39,10 @@ export class TimeLinePage {
   addGlucose(fab: FabContainer){
     fab.close();
     this.navCtrl.push(AddGlucosePage)
+  }
+
+  cardClicked(instant) {
+    console.log(JSON.stringify(instant));
   }
 
 }
