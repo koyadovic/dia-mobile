@@ -1,21 +1,21 @@
 import { TranslateService } from "@ngx-translate/core";
-
+import * as moment from 'moment-timezone';
 
 
 export class UserConfiguration {
+    private translate: TranslateService
     private data = {}
 
-    public language = "en";
-    public timezone = "Europe/Madrid";
-    public dateFormat = "";
-    
-    constructor(configurationRoot, private translate: TranslateService) {
-        this.extractData(configurationRoot);
-        this.refreshUserConfig();
+    static LANGUAGE = "dia_config__language";
+    static TIMEZONE = "dia_config__timezone";
+    static DATE_FORMAT = "dia_config__date_format";
 
-        this.language = this.getValue("dia_config__language");
-        this.timezone = this.getValue("dia_config__timezone");
-        this.dateFormat = this.getValue("dia_config__date_format");
+    constructor() {}
+
+    injectDependencies(configurationRoot, translate: TranslateService) {
+        this.extractData(configurationRoot);
+        this.translate = translate;
+        this.refreshUserConfig();
     }
 
     updateValues(data) { // namespace_keys and values
@@ -52,4 +52,36 @@ export class UserConfiguration {
         return undefined;
     }
 
+
+    /* Helper methods */
+
+    public utcSecondsToMoment(seconds: number){
+        return moment(seconds * 1000);
+    }
+
+    public formatMomentDate(seconds) {
+        let m = this.utcSecondsToMoment(seconds);
+        let tz = this.getValue(UserConfiguration.TIMEZONE);
+        m.tz(tz);
+
+        let dateFormat = this.getValue(UserConfiguration.DATE_FORMAT);
+        if (dateFormat === '%d/%m/%Y') {
+            return m.format("DD/MM/YYYY");
+        } else {
+            return m.format("MM/DD/YYYY");
+        }
+    }
+
+    public formatMomentDateTime(seconds) {
+        let m = this.utcSecondsToMoment(seconds);
+        let tz = this.getValue(UserConfiguration.TIMEZONE);
+        m.tz(tz);
+
+        let dateFormat = this.getValue(UserConfiguration.DATE_FORMAT);
+        if (dateFormat === '%d/%m/%Y') {
+            return m.format("DD/MM/YYYY HH:mm:ss");
+        } else {
+            return m.format("MM/DD/YYYY HH:mm:ss");
+        }
+    }
 }

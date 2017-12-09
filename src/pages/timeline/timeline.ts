@@ -4,6 +4,8 @@ import { ConfigurationPage } from '../configuration/configuration';
 import { Observable } from 'rxjs/Observable';
 import { AddGlucosePage } from '../add-glucose/add-glucose';
 import { FabContainer } from 'ionic-angular/components/fab/fab-container';
+import { UserConfiguration } from '../../utils/user-configuration';
+import { DiaConfigurationService } from '../../services/dia-configuration-service';
 
 @Component({
   selector: 'page-timeline',
@@ -11,8 +13,13 @@ import { FabContainer } from 'ionic-angular/components/fab/fab-container';
 })
 export class TimeLinePage {
   private instants$: Observable<any>;
+  private userConfig: UserConfiguration;
 
-  constructor(public navCtrl: NavController) {}
+  constructor(public navCtrl: NavController,
+              public configurationService: DiaConfigurationService) {
+
+    this.userConfig = this.configurationService.getUserConfiguration();
+  }
 
   goConfiguration() {
     this.navCtrl.push(ConfigurationPage);
