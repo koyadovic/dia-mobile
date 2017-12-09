@@ -3,5 +3,11 @@
     "TIMELINE_TITLE": "Timeline",
     "Logout": "Logout",
     "Logout Confirmation": "Logout Confirmation",
-    "Are you sure to close your session?": "Are you sure to close your session?"
+    "Are you sure to close your session?": "Are you sure to close your session?",
+
+    "Glucose": "Glucose",
+    "Feeding": "Feeding",
+    "Insulin Dose": "Insulin Dose",
+    "Physical Activity": "Physical Activity",
+    "Physical Trait Change": "Trait Change"
 }
