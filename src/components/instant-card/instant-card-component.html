@@ -51,12 +51,14 @@
 
         <ion-col col-4 align-items-start center text-center>
         <ion-note>{{ timePassedString(instant.datetime) }}</ion-note>
+
     </ion-col>
     </ion-row>
 
     <ion-card-content>
         <!-- <img src="img/advance-card-bttf.png"> -->
-        {{ instant.content | json }}
+        <!-- {{ instant.content | json }} -->
+        {{ userConfig.formatDateTime(instant.datetime) }}
     </ion-card-content>
 
 </ion-card>

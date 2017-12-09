@@ -31,6 +31,7 @@ export class TimeLinePage {
   }
 
   doRefresh(refresher) {
+    this.timelineService.refreshTimeline();
     setTimeout(() => {
       refresher.complete();
     }, 2000)

@@ -17,14 +17,21 @@ export class AddGlucosePage {
     private timelineService: DiaTimelineService) {
 
     this.glucose = { id: 0, instant: 0, level: null };
-
   }
 
   ionViewDidLoad() {
   }
 
   addGlucose() {
-
+    this.timelineService.addGlucose(this.glucose).subscribe(
+      (resp) => {
+        // fuck yeah!
+        this.navCtrl.pop();
+      },
+      (err) => {
+        // ouch!
+      }
+    )
   }
 
 }

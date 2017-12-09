@@ -19,7 +19,7 @@ export class DiaRestBackendService {
     return headers;
   }
 
-  public genericGet(url: string){
+  public genericGet(url: string): Observable<any> {
     return Observable.create((observer) => {
       this.http.get(url, {headers: this.getHeaders(this.authService.getToken())})
       .map((response: HttpResponse<any>) => {
@@ -38,7 +38,7 @@ export class DiaRestBackendService {
     });
   }
 
-  public genericPost(url: string, data: object) {
+  public genericPost(url: string, data: object): Observable<any> {
     return Observable.create((observer) => {
       this.http.post(url, data, {headers: this.getHeaders(this.authService.getToken())})
       .map((response: HttpResponse<any>) => {

@@ -29,6 +29,7 @@ export class UserConfiguration {
         this.translate.use(this.getValue("dia_config__language"));
         this.translate.setDefaultLang(this.getValue("dia_config__language"));
         moment.locale(this.getValue("dia_config__language"));
+        moment.tz.setDefault(this.getValue("dia_config__timezone"));
     }
 
     private extractData(configurationRoot) {
@@ -56,14 +57,11 @@ export class UserConfiguration {
     /* Helper methods */
 
     public utcSecondsToMoment(seconds: number){
-        return moment(seconds * 1000);
+        return moment.tz(seconds * 1000, "UTC");
     }
 
     public formatDate(seconds) {
-        let m = this.utcSecondsToMoment(seconds);
-        let tz = this.getValue(UserConfiguration.TIMEZONE);
-        m.tz(tz);
-
+        let m = this.utcSecondsToMoment(seconds).tz(this.getValue(UserConfiguration.TIMEZONE));
         let dateFormat = this.getValue(UserConfiguration.DATE_FORMAT);
         if (dateFormat === '%d/%m/%Y') {
             return m.format("DD/MM/YYYY");
@@ -73,10 +71,7 @@ export class UserConfiguration {
     }
 
     public formatDateTime(seconds) {
-        let m = this.utcSecondsToMoment(seconds);
-        let tz = this.getValue(UserConfiguration.TIMEZONE);
-        m.tz(tz);
-
+        let m = this.utcSecondsToMoment(seconds).tz(this.getValue(UserConfiguration.TIMEZONE));
         let dateFormat = this.getValue(UserConfiguration.DATE_FORMAT);
         if (dateFormat === '%d/%m/%Y') {
             return m.format("DD/MM/YYYY HH:mm:ss");
