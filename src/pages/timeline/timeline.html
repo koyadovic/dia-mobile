@@ -17,7 +17,9 @@
       </ion-refresher-content>
     </ion-refresher>
 
-    <dia-instant-card [userConfig]="userConfig"></dia-instant-card>
+    <instant-card *ngFor="let instant of timeline$ | async"
+     [instant]="instant" [userConfig]="userConfig">
+    </instant-card>
     
     <ion-fab bottom right #fab>
       <button ion-fab mini><ion-icon name="add"></ion-icon></button>

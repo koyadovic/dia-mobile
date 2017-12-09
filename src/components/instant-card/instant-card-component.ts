@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { UserConfiguration } from '../../utils/user-configuration';
 
 @Component({
-  selector: 'dia-instant-card',
+  selector: 'instant-card',
   templateUrl: 'instant-card-component.html'
 })
 export class DiaInstantCard {

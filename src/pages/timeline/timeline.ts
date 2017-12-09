@@ -6,19 +6,23 @@ import { AddGlucosePage } from '../add-glucose/add-glucose';
 import { FabContainer } from 'ionic-angular/components/fab/fab-container';
 import { UserConfiguration } from '../../utils/user-configuration';
 import { DiaConfigurationService } from '../../services/dia-configuration-service';
+import { DiaTimelineService } from '../../services/dia-timeline-service';
+
 
 @Component({
   selector: 'page-timeline',
   templateUrl: 'timeline.html',
 })
 export class TimeLinePage {
-  private instants$: Observable<any>;
+  private timeline$: Observable<any>;
   private userConfig: UserConfiguration;
 
   constructor(public navCtrl: NavController,
-              public configurationService: DiaConfigurationService) {
+              public configurationService: DiaConfigurationService,
+              private timelineService: DiaTimelineService) {
 
     this.userConfig = this.configurationService.getUserConfiguration();
+    this.timeline$ = this.timelineService.getTimeline();
   }
 
   goConfiguration() {

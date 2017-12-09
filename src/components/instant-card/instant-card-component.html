@@ -1,4 +1,15 @@
-<ion-card>
+<ion-card [ngClass]="instant?.event_type">
+
+    <!--
+    {
+        "event_type": "user-event",
+        "content": {
+        },
+        "user": 1,
+        "id": 2,
+        "datetime": "1512755051"
+    },
+    -->
         
     <ion-item>
     <ion-avatar item-start>
@@ -12,7 +23,7 @@
 
     <ion-card-content>
     <p>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a DeLorean?! Whoa. This is heavy.</p>
-    <span *ngIf="!!userConfig">{{ userConfig.formatMomentDateTime(1512812087) }}</span>
+    {{ userConfig?.formatDateTime(1512812087) }}
     </ion-card-content>
 
     <ion-row>

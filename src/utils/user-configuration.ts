@@ -59,7 +59,7 @@ export class UserConfiguration {
         return moment(seconds * 1000);
     }
 
-    public formatMomentDate(seconds) {
+    public formatDate(seconds) {
         let m = this.utcSecondsToMoment(seconds);
         let tz = this.getValue(UserConfiguration.TIMEZONE);
         m.tz(tz);
@@ -72,7 +72,7 @@ export class UserConfiguration {
         }
     }
 
-    public formatMomentDateTime(seconds) {
+    public formatDateTime(seconds) {
         let m = this.utcSecondsToMoment(seconds);
         let tz = this.getValue(UserConfiguration.TIMEZONE);
         m.tz(tz);

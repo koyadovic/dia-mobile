@@ -25,6 +25,8 @@ import { DiaBackendURL } from '../services/dia-backend-urls';
 import { DiaMessageService } from '../services/dia-message-service';
 import { DiaConfigurationService } from '../services/dia-configuration-service';
 import { DiaWebsocketService } from '../services/dia-websockets-service';
+import { DiaTimelineService } from '../services/dia-timeline-service';
+
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -95,7 +97,8 @@ import { AddTraitChangePage } from '../pages/add-trait-change/add-trait-change';
     DiaBackendURL,
     DiaMessageService,
     DiaConfigurationService,
-    DiaWebsocketService
+    DiaWebsocketService,
+    DiaTimelineService
   ]
 })
 export class AppModule {}
