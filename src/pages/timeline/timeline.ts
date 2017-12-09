@@ -99,6 +99,7 @@ export class TimeLinePage {
 
   // when a card is clicked must be shown details about it
   cardClicked(instant) {
+    
     this.fab.close();
     console.log(JSON.stringify(instant));
   }

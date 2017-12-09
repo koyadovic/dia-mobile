@@ -33,10 +33,7 @@ export class AddGlucosePage {
       (err) => {
         // ouch!
       }
-    )
+    );
   }
 
-  closeModal() {
-    this.viewCtrl.dismiss({"add": false});
-  }
 }

@@ -42,6 +42,15 @@ export class DiaTimelineService {
         return this.timeline$.asObservable();
     }
 
+    getInsulinTypes() {
+        let url = `${this.backendURL.baseURL}/v1/instants/timeline/`;
+        this.restBackendService
+            .genericGet(url)
+            .subscribe((timeline) => {
+                this.timeline$.next(timeline);
+            });
+    }
+
 
     addGlucose(glucose: GlucoseLevel) {
         return this.addGeneric(`${this.backendURL.baseURL}/v1/instants/glucoses/`, glucose);

@@ -7,6 +7,30 @@
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content>
+  <ion-grid>
+      
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label stacked color="primary">Intensity</ion-label>
+          <ion-select [(ngModel)]="activity.intensity">
+            <ion-option *ngFor="let option of intensities" [value]="option.value">{{ option.name }}</ion-option>
+          </ion-select>
+          
+        </ion-item>
+        <ion-item>
+            <ion-label stacked color="primary">Duration Minutes</ion-label>
+            <ion-input type="number" [(ngModel)]="activity.minutes"></ion-input>
+      </ion-item>
+      
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col>
+        <button (click)="addActivity()" ion-button full>Add</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
