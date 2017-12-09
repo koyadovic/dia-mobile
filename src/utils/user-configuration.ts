@@ -4,10 +4,18 @@ import { TranslateService } from "@ngx-translate/core";
 
 export class UserConfiguration {
     private data = {}
+
+    public language = "en";
+    public timezone = "Europe/Madrid";
+    public dateFormat = "";
     
     constructor(configurationRoot, private translate: TranslateService) {
         this.extractData(configurationRoot);
         this.refreshUserConfig();
+
+        this.language = this.getValue("dia_config__language");
+        this.timezone = this.getValue("dia_config__timezone");
+        this.dateFormat = this.getValue("dia_config__date_format");
     }
 
     updateValues(data) { // namespace_keys and values
@@ -20,6 +28,7 @@ export class UserConfiguration {
     private refreshUserConfig(){
         this.translate.use(this.getValue("dia_config__language"));
         this.translate.setDefaultLang(this.getValue("dia_config__language"));
+
     }
 
     private extractData(configurationRoot) {

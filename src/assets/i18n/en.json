@@ -5,9 +5,9 @@
     "Logout Confirmation": "Logout Confirmation",
     "Are you sure to close your session?": "Are you sure to close your session?",
 
-    "Glucose": "Glucose",
-    "Feeding": "Feeding",
-    "Insulin Dose": "Insulin Dose",
-    "Physical Activity": "Physical Activity",
-    "Physical Trait Change": "Trait Change"
+    "Add Glucose": "Add Glucose",
+    "Add Feeding": "Add Feeding",
+    "Add Insulin Dose": "Add Insulin Dose",
+    "Add Physical Activity": "Add Physical Activity",
+    "Add Physical Trait Change": "Add Trait Change"
 }
