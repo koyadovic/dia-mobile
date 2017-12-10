@@ -1,0 +1,29 @@
+<ion-header>
+
+  <ion-navbar *ngIf="!!data">
+    <ng-container [ngSwitch]="data.type">
+      <ion-title *ngSwitchCase="'glucose'">{{ "Add Glucose" | translate }}</ion-title>
+      <ion-title *ngSwitchCase="'feeding'">{{ "Add Feeding" | translate }}</ion-title>
+      <ion-title *ngSwitchCase="'activity'">{{ "Add Physical Activity" | translate }}</ion-title>
+      <ion-title *ngSwitchCase="'insulin'">{{ "Add Insulin Dose" | translate }}</ion-title>
+      <ion-title *ngSwitchCase="'trait'">{{ "Add Trait Change" | translate }}</ion-title>
+    </ng-container>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+  <ng-container *ngFor="let incompleteElement of data.incomplete_elements">
+    <ng-container *ngFor="let field of data.fields">
+
+      <dynamic-field
+        *ngIf="!(field.key in incompleteElement)" [field]="field"
+        (haveChanges)="incompleteElement[field.key]=field.value"></dynamic-field>
+    
+    </ng-container>
+  </ng-container>
+
+  <button (click)="save()" ion-button full>Save</button>
+  
+</ion-content>

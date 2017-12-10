@@ -44,52 +44,68 @@ export class TimeLinePage {
     }, 500)
   }
 
-  ionViewDidLoad() {
-  }
-
   addGlucose(){
-    this.fab.close();
-    let modal = this.modalCtrl.create(AddGlucosePage);
-    modal.onDidDismiss((data) => {
-      if(!!data && data["add"])
-        this.timelineService.refreshTimeline();
-    });
-    modal.present();
+    let data = {
+      type: "glucose",
+      url: this.timelineService.getGlucoseEndpoint(),
+      fields: [],
+      incomplete_elements: [
+        {}
+      ]
+    }
+    this.openGenericModal(data);
   }
 
   addPhysicalActivity(){
-    this.fab.close();
-    let modal = this.modalCtrl.create(AddPhysicalActivityPage);
-    modal.onDidDismiss((data) => {
-      if(!!data && data["add"])
-        this.timelineService.refreshTimeline();
-    });
-    modal.present();
+    let data = {
+      type: "activity",
+      url: this.timelineService.getPhysicalActivityEndPoint,
+      fields: [],
+      incomplete_elements: [
+        {}
+      ]
+    }
+    this.openGenericModal(data);
   }
 
   addInsulinDose(){
-    this.fab.close();
-    let modal = this.modalCtrl.create(AddInsulinDosePage);
-    modal.onDidDismiss((data) => {
-      if(!!data && data["add"])
-        this.timelineService.refreshTimeline();
-    });
-    modal.present();
+    let data = {
+      type: "insulin",
+      url: this.timelineService.getInsulinDoseEndPoint(),
+      fields: [],
+      incomplete_elements: [
+        {}
+      ]
+    }
+    this.openGenericModal(data);
   }
 
   addPhysicalTraitChange(){
-    this.fab.close();
-    let modal = this.modalCtrl.create(AddTraitChangePage);
-    modal.onDidDismiss((data) => {
-      if(!!data && data["add"])
-        this.timelineService.refreshTimeline();
-    });
-    modal.present();
+    let data = {
+      type: "trait",
+      url: this.timelineService.getPhysicalTraitChangeEndPoint(),
+      fields: [],
+      incomplete_elements: [
+        {}
+      ]
+    }
+    this.openGenericModal(data);
   }
 
   addFeeding(){
     this.fab.close();
     let modal = this.modalCtrl.create(AddFeedingPage);
+    modal.onDidDismiss((data) => {
+      if(!!data && data["add"])
+        this.timelineService.refreshTimeline();
+    });
+    modal.present();
+  }
+
+  private openGenericModal(data){
+    this.fab.close();
+    let modal = this.modalCtrl.create(AddFeedingPage);
+
     modal.onDidDismiss((data) => {
       if(!!data && data["add"])
         this.timelineService.refreshTimeline();

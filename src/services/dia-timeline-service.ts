@@ -52,24 +52,20 @@ export class DiaTimelineService {
     }
 
 
-    addGlucose(glucose: GlucoseLevel) {
-        return this.addGeneric(`${this.backendURL.baseURL}/v1/instants/glucoses/`, glucose);
+    getGlucoseEndpoint(): string {
+        return `${this.backendURL.baseURL}/v1/instants/glucoses/`;
     }
-    addFeeding(feeding: Feeding) {
-        return this.addGeneric(`${this.backendURL.baseURL}/v1/instants/feedings/`, feeding);
+    getFeedingEndPoint(): string {
+        return `${this.backendURL.baseURL}/v1/instants/feedings/`;
     }
-    addPhysicalActivity(activity: PhysicalActivity) {
-        return this.addGeneric(`${this.backendURL.baseURL}/v1/instants/activities/`, activity);
+    getPhysicalActivityEndPoint(): string {
+        return `${this.backendURL.baseURL}/v1/instants/activities/`;
     }
-    addPhysicalTraitChange(trait: PhysicalTrait) {
-        return this.addGeneric(`${this.backendURL.baseURL}/v1/instants/traits/`, trait);
+    getPhysicalTraitChangeEndPoint(): string {
+        return `${this.backendURL.baseURL}/v1/instants/traits/`;
     }
-    addInsulinDose(insulin: InsulinDose) {
-        return this.addGeneric(`${this.backendURL.baseURL}/v1/instants/insulins/`, insulin);
-    }
-
-    private addGeneric(url:string, data: any) {
-        return this.restBackendService.genericPost(url, data);
+    getInsulinDoseEndPoint(): string {
+        return `${this.backendURL.baseURL}/v1/instants/insulins/`;
     }
 
 }
