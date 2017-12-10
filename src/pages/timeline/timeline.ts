@@ -26,6 +26,7 @@ export class TimeLinePage {
   private insulinTypes = [];
   private lastDateShown = "";
   private oldestElementTimestamp = null;
+  private now;
 
   constructor(private navCtrl: NavController,
               private configurationService: DiaConfigurationService,
@@ -46,9 +47,40 @@ export class TimeLinePage {
     });
   }
 
+  private completeInstants(instants: any[]){
+    let processed;
+
+    let lastInstant = null;
+    for(let instant of instants) {
+      let currentMoment = moment(instant.datetime * 1000);
+      // append day of month
+      instant.day = currentMoment.format('DD')
+
+      // append distance with the next;
+      if (lastInstant !== null) {
+        let lastMoment = moment(lastInstant.datetime * 1000);
+        lastInstant.minutes_diff = lastMoment.diff(currentMoment) / 1000.0 / 60.0
+      }
+
+      // append time passed from now
+      instant.passed_from_now = moment(instant.datetime * 1000).fromNow();
+
+      // append moment instance
+      instant.moment = moment(instant.datetime * 1000);
+
+      lastInstant = instant;
+    }
+
+    // avoiding future errors
+    lastInstant.minutes_diff = 0;
+
+    return instants;
+  }
+
   refreshTimeline() {
-    this.timelineService.getTimeline().subscribe((resp) => {
-      this.timeline = resp;
+    this.timelineService.getTimeline().subscribe((instants) => {
+      this.now = moment();
+      this.timeline = this.completeInstants(instants);
     });
 
   }
@@ -59,8 +91,9 @@ export class TimeLinePage {
 
   // refresh timeline
   doRefresh(refresher) {
-    this.timelineService.getTimeline().subscribe((resp) => {
-      this.timeline = resp;
+    this.timelineService.getTimeline().subscribe((instants) => {
+      this.now = moment();
+      this.timeline = this.completeInstants(instants);
     });
 
     setTimeout(() => {
@@ -305,28 +338,26 @@ export class TimeLinePage {
         if(resp.length === 0) {
           this.oldestElementTimestamp = this.timeline[this.timeline.length - 1].datetime;
         }
-        this.timeline = this.timeline.concat(resp);
+        this.now = moment();
+        let all = this.timeline.concat(resp);
+        this.timeline = this.completeInstants(all);
         infiniteScroll.complete();
       }
     );
   }
 
   dateInfo(index) {
-    let currentMoment = moment(this.timeline[index].datetime * 1000);
-    let nowMoment = moment();
+    let instant = this.timeline[index];
 
     if(index === 0) {
-      if(currentMoment.format('DD') === nowMoment.format('DD')) {
+      if(instant.day === this.now.format('DD'))
         return "Today";
-      } else {
-        return currentMoment.format('LL');
-      }
+      else
+        return instant.moment.format('LL');
     } else {
-      let previousDayMoment = moment(this.timeline[index - 1].datetime * 1000);
 
-      if (currentMoment.format('DD') !== previousDayMoment.format('DD')) {
-        return currentMoment.format('LL');
-      }
+      if (instant.day !== this.timeline[index - 1].day) return instant.moment.format('LL');
+
       return "";
     }
   }
