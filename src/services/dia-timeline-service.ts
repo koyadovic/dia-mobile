@@ -42,13 +42,16 @@ export class DiaTimelineService {
         return this.timeline$.asObservable();
     }
 
-    getInsulinTypes() {
-        let url = `${this.backendURL.baseURL}/v1/instants/timeline/`;
-        this.restBackendService
+    getInsulinTypes():Observable<any> {
+        let url = `${this.backendURL.baseURL}/v1/instants/insulin-types/`;
+        return Observable.create((observer) => {
+            this.restBackendService
             .genericGet(url)
-            .subscribe((timeline) => {
-                this.timeline$.next(timeline);
+            .subscribe((response) => {
+                observer.next(response);
+                observer.complete();
             });
+        });
     }
 
 

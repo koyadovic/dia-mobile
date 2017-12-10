@@ -20,6 +20,7 @@ export class TimeLinePage {
   @ViewChild(FabContainer) fab: FabContainer;
   private timeline$: Observable<any>;
   private userConfig: UserConfiguration;
+  private insulinTypes = [];
 
   constructor(private navCtrl: NavController,
               private configurationService: DiaConfigurationService,
@@ -28,6 +29,9 @@ export class TimeLinePage {
 
     this.userConfig = this.configurationService.getUserConfiguration();
     this.timeline$ = this.timelineService.getTimeline();
+    this.timelineService.getInsulinTypes().subscribe((resp) => {
+      this.insulinTypes = resp;
+    })
   }
 
   goConfiguration() {
@@ -49,7 +53,7 @@ export class TimeLinePage {
       fields: [
         {
 					"display": "Instant",
-					"value": null,
+					"value": 0,
 					"required": false,
 					"hint": "",
 					"type": "date",
@@ -59,7 +63,7 @@ export class TimeLinePage {
         },
         {
 					"display": "Level",
-					"value": null,
+					"value": 0,
 					"required": true,
 					"hint": "",
 					"type": "number",
@@ -78,22 +82,108 @@ export class TimeLinePage {
   addPhysicalActivity(){
     let data = {
       type: "activity",
-      url: this.timelineService.getPhysicalActivityEndPoint,
-      fields: [],
+      url: this.timelineService.getPhysicalActivityEndPoint(),
+      fields: [
+        {
+					"display": "Instant",
+					"value": 0,
+					"required": false,
+					"hint": "",
+					"type": "date",
+					"regex": "",
+					"key": "datetime",
+					"namespace_key": "datetime"
+        },
+        {
+          "display": "Intensity",
+          "value": 1,
+          "required": true,
+          "hint": "",
+          "type": "select",
+          "regex": "",
+          "key": "instensity",
+          "options": [
+            {
+              "display": "Soft",
+              "value": 1
+            },
+            {
+              "display": "Medium",
+              "value": 2
+            },
+            {
+              "display": "High",
+              "value": 3
+            },
+            {
+              "display": "Extreme",
+              "value": 4
+            },
+          ],
+          "namespace_key": "instensity"
+        },
+        {
+					"display": "Minutes",
+					"value": 0,
+					"required": true,
+					"hint": "",
+					"type": "number",
+					"regex": "",
+					"key": "minutes",
+					"namespace_key": "minutes"
+        },
+
+      ],
       incomplete_elements: [
-        {}
+        {datetime: 0}
       ]
     }
     this.openGenericModal(data);
   }
 
   addInsulinDose(){
+    this.timelineService.getInsulinTypes()
     let data = {
       type: "insulin",
       url: this.timelineService.getInsulinDoseEndPoint(),
-      fields: [],
+      fields: [
+        {
+					"display": "Instant",
+					"value": 0,
+					"required": false,
+					"hint": "",
+					"type": "date",
+					"regex": "",
+					"key": "datetime",
+					"namespace_key": "datetime"
+        },
+        {
+          "display": "Type",
+          "value": this.insulinTypes.length > 0 ? this.insulinTypes[0].id : null,
+          "required": true,
+          "hint": "Type",
+          "type": "select",
+          "regex": "^.*$",
+          "key": "insulin_type",
+          "options": this.insulinTypes.map((x) => {
+            return {display: x.name, value: x.id}
+          }),
+          "namespace_key": "insulin_type"
+        },
+        {
+					"display": "Dose",
+					"value": 0,
+					"required": true,
+					"hint": "",
+					"type": "number",
+					"regex": "^.*$",
+					"key": "dose",
+					"namespace_key": "dose"
+        },
+
+      ],
       incomplete_elements: [
-        {}
+        {datetime: 0}
       ]
     }
     this.openGenericModal(data);
@@ -103,9 +193,49 @@ export class TimeLinePage {
     let data = {
       type: "trait",
       url: this.timelineService.getPhysicalTraitChangeEndPoint(),
-      fields: [],
+      fields: [
+        {
+					"display": "Instant",
+					"value": 0,
+					"required": false,
+					"hint": "",
+					"type": "date",
+					"regex": "",
+					"key": "datetime",
+					"namespace_key": "datetime"
+        },
+        {
+          "display": "Type",
+          "value": 0,
+          "required": true,
+          "hint": "Type",
+          "type": "select",
+          "regex": "^.*$",
+          "key": "trait_type",
+          "options": [
+            { "display": "Birth Date", "value": 1 },
+            { "display": "Height (cm)", "value": 2 },
+            { "display": "Weight (kg)", "value": 3 },
+            { "display": "Neck Perimeter (cm)", "value": 4 },
+            { "display": "Abdomen Perimeter (cm)", "value": 5 },
+            { "display": "Waist Perimeter (cm)", "value": 6 },
+            { "display": "Sex", "value": 7 },
+          ],
+          "namespace_key": "trait_type"
+        },
+        {
+					"display": "Value",
+					"value": null,
+					"required": true,
+					"hint": "",
+					"type": "number",
+					"regex": "^.*$",
+					"key": "value",
+					"namespace_key": "value"
+        },
+      ],
       incomplete_elements: [
-        {}
+        {datetime: 0}
       ]
     }
     this.openGenericModal(data);
