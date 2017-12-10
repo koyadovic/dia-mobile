@@ -25,6 +25,7 @@ export class TimeLinePage {
   private userConfig: UserConfiguration;
   private insulinTypes = [];
   private lastDateShown = "";
+  private oldestElementTimestamp = null;
 
   constructor(private navCtrl: NavController,
               private configurationService: DiaConfigurationService,
@@ -294,8 +295,16 @@ export class TimeLinePage {
   }
 
   doInfinite(infiniteScroll) {
+    if(this.timeline.length === 0 || (!!this.oldestElementTimestamp && this.oldestElementTimestamp === this.timeline[this.timeline.length - 1].datetime)) {
+      infiniteScroll.complete();
+      return;
+    }
+
     this.timelineService.getTimeline(this.timeline[this.timeline.length - 1].datetime).subscribe(
       (resp) => {
+        if(resp.length === 0) {
+          this.oldestElementTimestamp = this.timeline[this.timeline.length - 1].datetime;
+        }
         this.timeline = this.timeline.concat(resp);
         infiniteScroll.complete();
       }
