@@ -11,7 +11,7 @@ import { UserConfiguration } from '../utils/user-configuration';
 @Injectable()
 export class DiaConfigurationService {
     private configuration = new ReplaySubject<any>(1);
-    private userConfig: UserConfiguration;
+    private userConfig: UserConfiguration = new UserConfiguration();
 
     constructor(private backendURL: DiaBackendURL,
                 private restBackendService: DiaRestBackendService,
@@ -32,7 +32,7 @@ export class DiaConfigurationService {
         .genericGet(`${this.backendURL.baseURL}/v1/configurations/`)
         .subscribe((configuration) => {
             this.configuration.next(configuration);
-            this.userConfig = new UserConfiguration(configuration, this.translate);
+            this.userConfig.injectDependencies(configuration, this.translate);
         }
     );
 
@@ -52,5 +52,9 @@ export class DiaConfigurationService {
 
     getConfiguration():Observable<any> {
         return this.configuration.asObservable();
+    }
+
+    getUserConfiguration(){
+        return this.userConfig;
     }
 }

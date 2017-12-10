@@ -17,16 +17,32 @@
       </ion-refresher-content>
     </ion-refresher>
 
-    <dia-instant-card></dia-instant-card>
     
-    <ion-fab bottom right>
+
+    <ng-container *ngFor="let instant of timeline; let i = index">
+
+      <ion-note *ngIf="!!dateInfo(i)" class="ion-note-dates" text-center center>{{ dateInfo(i) }}</ion-note>
+
+      <instant-card
+        [ngClass]="instant.event_type" [instant]="instant" [userConfig]="userConfig"
+        (click)="cardClicked(instant)">
+      </instant-card>
+  
+    </ng-container>
+
+    
+    <ion-fab bottom right #fab>
       <button ion-fab mini><ion-icon name="add"></ion-icon></button>
       <ion-fab-list side="left">
-        <button ion-fab><ion-icon name="body"></ion-icon></button> <!-- Trait Change -->
-        <button ion-fab><ion-icon name="thermometer"></ion-icon></button> <!-- Insulin Dose -->
-        <button ion-fab><ion-icon name="bicycle"></ion-icon></button> <!-- Activity -->
-        <button ion-fab><ion-icon name="restaurant"></ion-icon></button> <!-- Feeding -->
-        <button ion-fab><ion-icon name="water"></ion-icon></button> <!-- Glucose -->
+        <button ion-fab (click)="addPhysicalTraitChange()"><ion-icon name="body"></ion-icon></button> <!-- Trait Change -->
+        <button ion-fab (click)="addInsulinDose()"><ion-icon name="thermometer"></ion-icon></button> <!-- Insulin Dose -->
+        <button ion-fab (click)="addPhysicalActivity()"><ion-icon name="bicycle"></ion-icon></button> <!-- Activity -->
+        <button ion-fab (click)="addFeeding()"><ion-icon name="restaurant"></ion-icon></button> <!-- Feeding -->
+        <button ion-fab (click)="addGlucose()"><ion-icon name="water"></ion-icon></button> <!-- Glucose -->
       </ion-fab-list>
     </ion-fab>
+
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 </ion-content>

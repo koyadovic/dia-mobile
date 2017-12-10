@@ -1,8 +1,7 @@
 
-interface Feeding {
+export interface Feeding {
     id: number;
-    user: number;
-    instant: string;
+    instant: number;
 
     total_gr_ml: number;
     carb_gr: number;
@@ -10,5 +9,5 @@ interface Feeding {
     fat_gr: number;
     fiber_gr: number;
     alcohol_gr: number;
-    
+
 }

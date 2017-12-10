@@ -1,12 +1,20 @@
 import { TranslateService } from "@ngx-translate/core";
-
+import * as moment from 'moment-timezone';
 
 
 export class UserConfiguration {
+    private translate: TranslateService
     private data = {}
-    
-    constructor(configurationRoot, private translate: TranslateService) {
+
+    static LANGUAGE = "dia_config__language";
+    static TIMEZONE = "dia_config__timezone";
+    static DATE_FORMAT = "dia_config__date_format";
+
+    constructor() {}
+
+    injectDependencies(configurationRoot, translate: TranslateService) {
         this.extractData(configurationRoot);
+        this.translate = translate;
         this.refreshUserConfig();
     }
 
@@ -20,6 +28,8 @@ export class UserConfiguration {
     private refreshUserConfig(){
         this.translate.use(this.getValue("dia_config__language"));
         this.translate.setDefaultLang(this.getValue("dia_config__language"));
+        moment.locale(this.getValue("dia_config__language"));
+        moment.tz.setDefault(this.getValue("dia_config__timezone"));
     }
 
     private extractData(configurationRoot) {
@@ -36,11 +46,37 @@ export class UserConfiguration {
         }
     }
 
-    private getValue(key: string) {
+    public getValue(key: string) {
         if(key in this.data) {
             return this.data[key];
         }
         return undefined;
     }
 
+
+    /* Helper methods */
+
+    public utcSecondsToMoment(seconds: number){
+        return moment.tz(seconds * 1000, "UTC");
+    }
+
+    public formatDate(seconds) {
+        let m = this.utcSecondsToMoment(seconds).tz(this.getValue(UserConfiguration.TIMEZONE));
+        let dateFormat = this.getValue(UserConfiguration.DATE_FORMAT);
+        if (dateFormat === '%d/%m/%Y') {
+            return m.format("DD/MM/YYYY");
+        } else {
+            return m.format("MM/DD/YYYY");
+        }
+    }
+
+    public formatDateTime(seconds) {
+        let m = this.utcSecondsToMoment(seconds).tz(this.getValue(UserConfiguration.TIMEZONE));
+        let dateFormat = this.getValue(UserConfiguration.DATE_FORMAT);
+        if (dateFormat === '%d/%m/%Y') {
+            return m.format("DD/MM/YYYY HH:mm:ss");
+        } else {
+            return m.format("MM/DD/YYYY HH:mm:ss");
+        }
+    }
 }

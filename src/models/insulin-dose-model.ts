@@ -1,8 +1,7 @@
 
-interface InsulinDose {
+export interface InsulinDose {
     id: number;
-    user: number;
-    instant: string;
+    instant: number;
 
     insulin_type: number;
     dose: number;
