@@ -14,32 +14,21 @@ import { PhysicalTrait } from '../models/physical-trait-model';
 
 @Injectable()
 export class DiaTimelineService {
-    private timeline$ = new ReplaySubject<any>(1);
+    //private timeline$ = new ReplaySubject<any>(1);
 
     constructor(private backendURL: DiaBackendURL,
                 private restBackendService: DiaRestBackendService,
                 private authenticationService: DiaAuthService) {
-        
-        let sub = this.authenticationService.loggedIn().subscribe(
-            (loggedIn) => {
-                if (loggedIn) {
-                    this.refreshTimeline();
-                }
-            }
-        );
     }
 
-    refreshTimeline(){
-        let url = `${this.backendURL.baseURL}/v1/instants/timeline/`;
-        this.restBackendService
-            .genericGet(url)
-            .subscribe((timeline) => {
-                this.timeline$.next(timeline);
-            });
-    }
-
-    getTimeline():Observable<any>  {
-        return this.timeline$.asObservable();
+    getTimeline(before?:number) {
+        let url = '';
+        if(!!before) {
+            url = `${this.backendURL.baseURL}/v1/instants/timeline/?before=${before}`;
+        } else {
+            url = `${this.backendURL.baseURL}/v1/instants/timeline/`;
+        }
+        return this.restBackendService.genericGet(url);
     }
 
     getInsulinTypes():Observable<any> {

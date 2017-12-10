@@ -1,6 +1,6 @@
 <ion-card>
     <ion-row>
-        <ion-col>
+        <ion-col col-9>
             <ion-item>
                 <ion-avatar item-start>
                     <!-- <img src="img/marty-avatar.png"> -->
@@ -24,23 +24,26 @@
                         <h2>Feeding</h2>
                         <p></p>
                     </ng-container>
+
+                    <!-- #eff9fb para menos de una hora, verdecito -->
+                    <!-- #ffeff2 system generated, rojito -->
             
                     <!-- physical_activity -->
                     <ng-container *ngSwitchCase="'physical_activity'">
                         <h2>Physical Activity</h2>
-                        <p></p>
+                        <p>{{activity_intensities[instant.content.intensity]}} intensity. {{ instant.content.minutes }} minutes.</p>
                     </ng-container>
             
                     <!-- physical_trait -->
                     <ng-container *ngSwitchCase="'physical_trait'">
                         <h2>Physical Trait Change</h2>
-                        <p></p>
+                        <p>{{ trait_types[instant.content.trait_type] }} {{ instant.content.value }} {{ trait_types_measure[instant.content.trait_type] }}</p>
                     </ng-container>
                 
                     <!-- insulin_dose -->
                     <ng-container *ngSwitchCase="'insulin_dose'">
-                        <h2>Insulin Dose</h2>
-                        <p></p>
+                        <h2>{{ instant.content.dose }}u Insulin Dose</h2>
+                        <p>{{ instant.content.insulin_type.name }}</p>
                     </ng-container>
                 
                 </ng-container>
@@ -49,15 +52,15 @@
                                 
         </ion-col>
 
-        <ion-col col-4 align-items-start center text-center>
+        <ion-col col-3 align-items-start center text-center>
         <ion-note>{{ timePassedString(instant.datetime) }}</ion-note>
 
     </ion-col>
     </ion-row>
 
-    <ion-card-content>
+    <!-- <ion-card-content> -->
         <!-- <img src="img/advance-card-bttf.png"> -->
         <!-- {{ instant.content | json }} -->
-    </ion-card-content>
+    <!-- </ion-card-content> -->
 
 </ion-card>

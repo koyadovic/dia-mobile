@@ -10,6 +10,9 @@ import { DiaTimelineService } from '../../services/dia-timeline-service';
 
 import { AddFeedingPage } from '../add-feeding/add-feeding';
 import { AddGenericPage } from '../add-generic/add-generic';
+import { DiaAuthService } from '../../services/dia-auth-service';
+
+import * as moment from 'moment-timezone';
 
 
 @Component({
@@ -18,20 +21,35 @@ import { AddGenericPage } from '../add-generic/add-generic';
 })
 export class TimeLinePage {
   @ViewChild(FabContainer) fab: FabContainer;
-  private timeline$: Observable<any>;
+  private timeline = [];
   private userConfig: UserConfiguration;
   private insulinTypes = [];
+  private lastDateShown = "";
 
   constructor(private navCtrl: NavController,
               private configurationService: DiaConfigurationService,
               private timelineService: DiaTimelineService,
-              private modalCtrl: ModalController) {
+              private modalCtrl: ModalController,
+              private authService: DiaAuthService) {
 
     this.userConfig = this.configurationService.getUserConfiguration();
-    this.timeline$ = this.timelineService.getTimeline();
-    this.timelineService.getInsulinTypes().subscribe((resp) => {
-      this.insulinTypes = resp;
-    })
+
+    this.authService.loggedIn().subscribe((loggedin) => {
+      if(!loggedin) return;
+
+      this.refreshTimeline();
+
+      this.timelineService.getInsulinTypes().subscribe((resp) => {
+        this.insulinTypes = resp;
+      });
+    });
+  }
+
+  refreshTimeline() {
+    this.timelineService.getTimeline().subscribe((resp) => {
+      this.timeline = resp;
+    });
+
   }
 
   goConfiguration() {
@@ -40,7 +58,10 @@ export class TimeLinePage {
 
   // refresh timeline
   doRefresh(refresher) {
-    this.timelineService.refreshTimeline();
+    this.timelineService.getTimeline().subscribe((resp) => {
+      this.timeline = resp;
+    });
+
     setTimeout(() => {
       refresher.complete();
     }, 500)
@@ -245,8 +266,10 @@ export class TimeLinePage {
     this.fab.close();
     let modal = this.modalCtrl.create(AddFeedingPage);
     modal.onDidDismiss((data) => {
+      
       if(!!data && data["add"])
-        this.timelineService.refreshTimeline();
+        this.refreshTimeline();
+        
     });
     modal.present();
   }
@@ -256,17 +279,46 @@ export class TimeLinePage {
     let modal = this.modalCtrl.create(AddGenericPage, {data: data});
 
     modal.onDidDismiss((data) => {
+      
       if(!!data && data["add"])
-        this.timelineService.refreshTimeline();
+        this.refreshTimeline();
+        
     });
     modal.present();
   }
 
   // when a card is clicked must be shown details about it
   cardClicked(instant) {
-    
     this.fab.close();
     console.log(JSON.stringify(instant));
   }
 
+  doInfinite(infiniteScroll) {
+    this.timelineService.getTimeline(this.timeline[this.timeline.length - 1].datetime).subscribe(
+      (resp) => {
+        this.timeline = this.timeline.concat(resp);
+        infiniteScroll.complete();
+      }
+    );
+  }
+
+  dateInfo(index) {
+    let currentMoment = moment(this.timeline[index].datetime * 1000);
+    let nowMoment = moment();
+
+    if(index === 0) {
+      if(currentMoment.format('DD') === nowMoment.format('DD')) {
+        return "Today";
+      } else {
+        return currentMoment.format('LL');
+      }
+    } else {
+      let previousDayMoment = moment(this.timeline[index - 1].datetime * 1000);
+
+      if (currentMoment.format('DD') !== previousDayMoment.format('DD')) {
+        return currentMoment.format('LL');
+      }
+      return "";
+    }
+  }
 }
