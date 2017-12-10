@@ -31,6 +31,7 @@ export class DiaRestBackendService {
       .subscribe(
         (resp) => {
           observer.next(resp);
+          observer.complete();
         },
         (err) => {
         }
@@ -50,10 +51,12 @@ export class DiaRestBackendService {
       .subscribe(
         (resp) => {
           observer.next(resp);
+          observer.complete();
         },
         (err) => {
         }
       );
     });
   }
+
 }

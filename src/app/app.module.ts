@@ -32,11 +32,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 
-import { AddGlucosePage } from '../pages/add-glucose/add-glucose';
+import { AddGenericPage } from '../pages/add-generic/add-generic';
 import { AddFeedingPage } from '../pages/add-feeding/add-feeding';
-import { AddInsulinDosePage } from '../pages/add-insulin-dose/add-insulin-dose';
-import { AddPhysicalActivityPage } from '../pages/add-physical-activity/add-physical-activity';
-import { AddTraitChangePage } from '../pages/add-trait-change/add-trait-change';
 
 
 @NgModule({
@@ -46,11 +43,8 @@ import { AddTraitChangePage } from '../pages/add-trait-change/add-trait-change';
     TimeLinePage,
     LoginPage,
 
-    AddGlucosePage,
     AddFeedingPage,
-    AddInsulinDosePage,
-    AddPhysicalActivityPage,
-    AddTraitChangePage,
+    AddGenericPage,
 
     DynamicField,
     DynamicRoot,
@@ -77,11 +71,8 @@ import { AddTraitChangePage } from '../pages/add-trait-change/add-trait-change';
     TimeLinePage,
     LoginPage,
 
-    AddGlucosePage,
     AddFeedingPage,
-    AddInsulinDosePage,
-    AddPhysicalActivityPage,
-    AddTraitChangePage,
+    AddGenericPage,
 
     DynamicField,
     DynamicRoot,

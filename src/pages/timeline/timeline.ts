@@ -2,16 +2,14 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ConfigurationPage } from '../configuration/configuration';
 import { Observable } from 'rxjs/Observable';
-import { AddGlucosePage } from '../add-glucose/add-glucose';
 import { FabContainer } from 'ionic-angular/components/fab/fab-container';
 import { ModalController } from 'ionic-angular';
 import { UserConfiguration } from '../../utils/user-configuration';
 import { DiaConfigurationService } from '../../services/dia-configuration-service';
 import { DiaTimelineService } from '../../services/dia-timeline-service';
+
 import { AddFeedingPage } from '../add-feeding/add-feeding';
-import { AddPhysicalActivityPage } from '../add-physical-activity/add-physical-activity';
-import { AddInsulinDosePage } from '../add-insulin-dose/add-insulin-dose';
-import { AddTraitChangePage } from '../add-trait-change/add-trait-change';
+import { AddGenericPage } from '../add-generic/add-generic';
 
 
 @Component({
@@ -48,9 +46,30 @@ export class TimeLinePage {
     let data = {
       type: "glucose",
       url: this.timelineService.getGlucoseEndpoint(),
-      fields: [],
+      fields: [
+        {
+					"display": "Instant",
+					"value": null,
+					"required": false,
+					"hint": "",
+					"type": "date",
+					"regex": "",
+					"key": "datetime",
+					"namespace_key": "datetime"
+        },
+        {
+					"display": "Level",
+					"value": null,
+					"required": true,
+					"hint": "",
+					"type": "number",
+					"regex": "",
+					"key": "level",
+					"namespace_key": "level"
+				}
+      ],
       incomplete_elements: [
-        {}
+        {datetime: 0}
       ]
     }
     this.openGenericModal(data);
@@ -104,7 +123,7 @@ export class TimeLinePage {
 
   private openGenericModal(data){
     this.fab.close();
-    let modal = this.modalCtrl.create(AddFeedingPage);
+    let modal = this.modalCtrl.create(AddGenericPage, {data: data});
 
     modal.onDidDismiss((data) => {
       if(!!data && data["add"])

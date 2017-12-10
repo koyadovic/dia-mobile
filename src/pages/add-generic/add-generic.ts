@@ -10,25 +10,32 @@ import { ViewController } from 'ionic-angular/navigation/view-controller';
   templateUrl: 'add-generic.html',
 })
 export class AddGenericPage {
-  @Input() data: {
+  private data: {
     type: "feeding" | "glucose" | "trait" | "activity" | "insulin",
     url: string,
     fields: object[],
     incomplete_elements: object[]
   };
 
+  complete_elements: object[];
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private viewCtrl: ViewController,
               private restBackendService: DiaRestBackendService) {
 
+    // get data
+    this.data = this.navParams.get("data");
+
+    // clone the original array
+    this.complete_elements = this.data.incomplete_elements.map(x => Object.assign({}, x));
   }
 
   save(){
     let url = this.data.url;
     let requests = [];
 
-    for(let elem of this.data.incomplete_elements) {
+    for(let elem of this.complete_elements) {
       requests.push(this.restBackendService.genericPost(url, elem));
     }
 
@@ -38,7 +45,11 @@ export class AddGenericPage {
       },
       (err) => {
         console.log(err);
-      }
+      },
     );
+  }
+
+  hasProp(o, name) {
+    return o.hasOwnProperty(name);
   }
 }
