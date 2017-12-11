@@ -18,17 +18,20 @@
     </ion-refresher>
 
     
-
+    <ion-list>
     <ng-container *ngFor="let instant of timeline; let i = index">
 
-      <ion-note *ngIf="!!dateInfo(i)" class="ion-note-dates" text-center center>{{ dateInfo(i) }}</ion-note>
+      <ion-list-header *ngIf="!!dateInfo(i)">{{ dateInfo(i) }}</ion-list-header>
 
       <instant-card
         [ngClass]="instant.event_type" [instant]="instant" [userConfig]="userConfig"
         (click)="cardClicked(instant)">
       </instant-card>
+
+      <ion-icon center name="ios-more" class="icon-more" *ngIf="instant.minutes_diff > 60"></ion-icon>
   
     </ng-container>
+    </ion-list>
 
     
     <ion-fab bottom right #fab>

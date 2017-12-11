@@ -1,17 +1,14 @@
-<ion-card>
-    <ion-row>
-        <ion-col col-9>
-            <ion-item>
-                <ion-avatar item-start>
-                    <!-- <img src="img/marty-avatar.png"> -->
-                    <ion-icon class="icon-avatar" *ngIf="instant.content.type == 'glucose'" name="water"></ion-icon>
-                    <ion-icon class="icon-avatar" *ngIf="instant.content.type == 'feeding'" name="restaurant"></ion-icon>
-                    <ion-icon class="icon-avatar" *ngIf="instant.content.type == 'physical_activity'" name="bicycle"></ion-icon>
-                    <ion-icon class="icon-avatar" *ngIf="instant.content.type == 'physical_trait'" name="body"></ion-icon>
-                    <ion-icon class="icon-avatar" *ngIf="instant.content.type == 'insulin_dose'" name="thermometer"></ion-icon>
-            
-                </ion-avatar>
-            
+<ion-item>
+
+    <ion-icon item-start *ngIf="instant.content.type == 'glucose'" name="water"></ion-icon>
+    <ion-icon item-start *ngIf="instant.content.type == 'feeding'" name="restaurant"></ion-icon>
+    <ion-icon item-start *ngIf="instant.content.type == 'physical_activity'" name="bicycle"></ion-icon>
+    <ion-icon item-start *ngIf="instant.content.type == 'physical_trait'" name="body"></ion-icon>
+    <ion-icon item-start *ngIf="instant.content.type == 'insulin_dose'" name="thermometer"></ion-icon>
+
+    <ion-grid>
+        <ion-row align-items-center>
+            <ion-col col-9>
                 <ng-container [ngSwitch]="instant.content.type">
                     <!-- glucoses -->
                     <ng-container *ngSwitchCase="'glucose'">
@@ -24,7 +21,7 @@
                         <h2>Feeding</h2>
                         <p></p>
                     </ng-container>
-
+            
                     <!-- #eff9fb para menos de una hora, verdecito -->
                     <!-- #ffeff2 system generated, rojito -->
             
@@ -47,20 +44,14 @@
                     </ng-container>
                 
                 </ng-container>
-            </ion-item>
+                    
+            </ion-col>
 
-                                
-        </ion-col>
+            <ion-col col-3>
+                <p class="time-passed">{{ instant.moment.format('HH:mm') }}</p>                
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 
-        <ion-col col-3 align-items-start center text-center>
-        <ion-note>{{ instant.passed_from_now }}</ion-note>
-
-    </ion-col>
-    </ion-row>
-
-    <!-- <ion-card-content> -->
-        <!-- <img src="img/advance-card-bttf.png"> -->
-        <!-- {{ instant.content | json }} -->
-    <!-- </ion-card-content> -->
-
-</ion-card>
+    
+</ion-item>
