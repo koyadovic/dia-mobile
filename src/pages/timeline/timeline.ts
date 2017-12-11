@@ -118,7 +118,7 @@ export class TimeLinePage {
         },
         {
 					"display": "Level",
-					"value": 0,
+					"value": null,
 					"required": true,
 					"hint": "",
 					"type": "number",
@@ -158,22 +158,10 @@ export class TimeLinePage {
           "regex": "",
           "key": "instensity",
           "options": [
-            {
-              "display": "Soft",
-              "value": 1
-            },
-            {
-              "display": "Medium",
-              "value": 2
-            },
-            {
-              "display": "High",
-              "value": 3
-            },
-            {
-              "display": "Extreme",
-              "value": 4
-            },
+            { "display": "Soft", "value": 1 },
+            { "display": "Medium", "value": 2 },
+            { "display": "High", "value": 3 },
+            { "display": "Extreme", "value": 4 },
           ],
           "namespace_key": "instensity"
         },
@@ -203,14 +191,14 @@ export class TimeLinePage {
       url: this.timelineService.getInsulinDoseEndPoint(),
       fields: [
         {
-					"display": "Instant",
-					"value": 0,
-					"required": false,
-					"hint": "",
-					"type": "date",
-					"regex": "",
-					"key": "datetime",
-					"namespace_key": "datetime"
+          "display": "Instant",
+          "value": 0,
+          "required": false,
+          "hint": "",
+          "type": "date",
+          "regex": "",
+          "key": "datetime",
+          "namespace_key": "datetime"
         },
         {
           "display": "Type",
@@ -226,20 +214,35 @@ export class TimeLinePage {
           "namespace_key": "insulin_type"
         },
         {
-					"display": "Dose",
-					"value": 0,
-					"required": true,
-					"hint": "",
-					"type": "number",
-					"regex": "^.*$",
-					"key": "dose",
-					"namespace_key": "dose"
-        },
-
+          "display": "Dose",
+          "value": null,
+          "required": true,
+          "hint": "",
+          "type": "number",
+          "regex": "^.*$",
+          "key": "dose",
+          "namespace_key": "dose"
+        }
       ],
-      incomplete_elements: [
-        {datetime: 0}
-      ]
+      conditional_fields: [
+        {
+          key: "dose",
+          comparator: ">",
+          value: "13",
+          field: "sex"
+        }
+      ],
+      elements: [
+        {
+          name: "Insulina comidas",
+          fixed_fields: [
+            { key: "datetime", value: 0 },
+          ],
+          fields: [
+            { key: "dose" },
+          ],
+        }
+      ],
     }
     this.openGenericModal(data);
   }
@@ -252,16 +255,18 @@ export class TimeLinePage {
         {
 					"display": "Instant",
 					"value": 0,
-					"required": false,
+          "conditional": {},
+          "required": false,
 					"hint": "",
 					"type": "date",
 					"regex": "",
 					"key": "datetime",
-					"namespace_key": "datetime"
+          "namespace_key": "datetime",
         },
         {
           "display": "Type",
-          "value": 0,
+          "value": 1,
+          "conditional": {},
           "required": true,
           "hint": "Type",
           "type": "select",
@@ -279,8 +284,51 @@ export class TimeLinePage {
           "namespace_key": "trait_type"
         },
         {
+					"display": "Select date",
+          "value": null,
+          "conditional": {
+            "$or": [
+              { "trait_type": 1 },
+            ]
+          },
+					"required": true,
+					"hint": "",
+					"type": "date",
+					"regex": "^.*$",
+					"key": "value",
+					"namespace_key": "value"
+        },
+        {
+					"display": "Sex",
+          "value": null,
+          "conditional": {
+            "$or": [
+              { "trait_type": 7 },
+            ]
+          },
+					"required": true,
+					"hint": "",
+					"type": "select",
+					"regex": "^.*$",
+					"key": "value",
+          "namespace_key": "value",
+          "options": [
+            {"display": "Male", "value": 0},
+            {"display": "Female", "value": 1},
+          ]
+        },
+        {
 					"display": "Value",
-					"value": null,
+          "value": null,
+          "conditional": {
+            "$or": [
+              { "trait_type": 2 },
+              { "trait_type": 3 },
+              { "trait_type": 4 },
+              { "trait_type": 5 },
+              { "trait_type": 6 },
+            ]
+          },
 					"required": true,
 					"hint": "",
 					"type": "number",
@@ -289,9 +337,14 @@ export class TimeLinePage {
 					"namespace_key": "value"
         },
       ],
-      incomplete_elements: [
-        {datetime: 0}
-      ]
+      elements: [
+        {
+          "name": "Lalala",
+          "datetime": null,
+          "trait_type": 3,
+          "value": 0
+        },
+      ],
     }
     this.openGenericModal(data);
   }

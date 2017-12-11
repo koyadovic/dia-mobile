@@ -17,17 +17,19 @@
       
     <ion-row> 
       <ion-col> 
-        
-          <ng-container *ngFor="let incompleteElement of data.incomplete_elements; let i = index">
-            <ng-container *ngFor="let field of data.fields">
-        
-              <dynamic-field
-                *ngIf="! hasProp(incompleteElement, field.key)" [field]="field"
-                (haveChanges)="complete_elements[i][field.key]=field.value"></dynamic-field>
-            
-            </ng-container>
-          </ng-container>
+
+        <ng-container *ngFor="let element of complete_elements; let i = index">
+          <h5>{{ element.name }}</h5>
+          <ng-container *ngFor="let field of element.fields">
+
+            <dynamic-field *ngIf="isConditionalTrue(element, field)"
+            [field]="field" (haveChanges)="complete_elements[i][field.key]=field.value">
+            </dynamic-field>
           
+          </ng-container>
+
+        </ng-container>
+
       </ion-col> 
     </ion-row> 
     

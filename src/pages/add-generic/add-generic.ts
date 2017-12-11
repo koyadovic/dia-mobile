@@ -13,7 +13,7 @@ export class AddGenericPage {
     type: "feeding" | "glucose" | "trait" | "activity" | "insulin",
     url: string,
     fields: object[],
-    incomplete_elements: object[]
+    elements: object[]
   };
 
   complete_elements: object[];
@@ -27,15 +27,63 @@ export class AddGenericPage {
     this.data = this.navParams.get("data");
 
     // clone the original array
-    this.complete_elements = this.data.incomplete_elements.map(x => Object.assign({}, x));
+    this.complete_elements = this.data.elements.map(x => Object.assign({}, x));
+    this.complete_elements.forEach((element) => {
+      element["fields"] = this.data.fields.map(x => Object.assign({}, x));
+      for(let field of element["fields"]) {
+        if(field.key in element) {
+          console.log("assign value " + element[field.key] + " to " + field.key);
+          field.value = element[field.key];
+        }
+      }
+    });
+  }
 
-    for(let field of this.data.fields) {
-      for(let element of this.complete_elements) {
-        if(!(field["key"] in element)) {
-          element[field["key"]] = field["value"]
+  isConditionalTrue(element, field){
+    let conditional = field.conditional;
+    if(!conditional || Object.keys(conditional).length === 0){
+      return true;
+    }
+    let evaluate = null;
+    for(let key in conditional) {
+      for(let sentence of conditional[key]){
+        for (let sentenceKey in sentence) {
+
+          let elementValue = element[sentenceKey];
+
+          if (!elementValue) {
+            return false;
+          }
+
+          let conditionalValue = sentence[sentenceKey];
+
+          if(key === "$or"){
+
+            if(evaluate === null) {
+              evaluate = elementValue === conditionalValue;
+            } else {
+              evaluate = evaluate || (elementValue === conditionalValue);
+            }
+
+            if (evaluate) {
+              return true;
+            }
+
+          } else if(key === "$and"){
+            if(evaluate === null) {
+              evaluate = elementValue === conditionalValue;
+            } else {
+              evaluate = evaluate && (elementValue === conditionalValue);
+            }
+
+            if(!evaluate) {
+              return false;
+            }
+          }
         }
       }
     }
+    return evaluate;
   }
 
   save(){
