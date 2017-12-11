@@ -127,8 +127,8 @@ export class TimeLinePage {
 					"namespace_key": "level"
 				}
       ],
-      incomplete_elements: [
-        {datetime: 0}
+      elements: [
+        {"datetime": 0}
       ]
     }
     this.openGenericModal(data);
@@ -177,8 +177,8 @@ export class TimeLinePage {
         },
 
       ],
-      incomplete_elements: [
-        {datetime: 0}
+      elements: [
+        {"datetime": 0}
       ]
     }
     this.openGenericModal(data);
@@ -224,24 +224,11 @@ export class TimeLinePage {
           "namespace_key": "dose"
         }
       ],
-      conditional_fields: [
-        {
-          key: "dose",
-          comparator: ">",
-          value: "13",
-          field: "sex"
-        }
-      ],
       elements: [
         {
-          name: "Insulina comidas",
-          fixed_fields: [
-            { key: "datetime", value: 0 },
-          ],
-          fields: [
-            { key: "dose" },
-          ],
-        }
+          "datetime": null,
+          "dose": 0
+        },
       ],
     }
     this.openGenericModal(data);
@@ -342,7 +329,13 @@ export class TimeLinePage {
           "name": "Lalala",
           "datetime": null,
           "trait_type": 3,
-          "value": 0
+          "value": 30
+        },
+        {
+          "name": "Lelele",
+          "datetime": null,
+          "trait_type": 2,
+          "value": 100
         },
       ],
     }

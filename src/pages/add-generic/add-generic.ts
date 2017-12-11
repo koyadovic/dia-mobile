@@ -28,11 +28,11 @@ export class AddGenericPage {
 
     // clone the original array
     this.complete_elements = this.data.elements.map(x => Object.assign({}, x));
+    
     this.complete_elements.forEach((element) => {
       element["fields"] = this.data.fields.map(x => Object.assign({}, x));
       for(let field of element["fields"]) {
         if(field.key in element) {
-          console.log("assign value " + element[field.key] + " to " + field.key);
           field.value = element[field.key];
         }
       }

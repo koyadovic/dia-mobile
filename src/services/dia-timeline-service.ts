@@ -47,17 +47,23 @@ export class DiaTimelineService {
     getGlucoseEndpoint(): string {
         return `${this.backendURL.baseURL}/v1/instants/glucoses/`;
     }
+
+
     getFeedingEndPoint(): string {
         return `${this.backendURL.baseURL}/v1/instants/feedings/`;
     }
+
+
     getPhysicalActivityEndPoint(): string {
         return `${this.backendURL.baseURL}/v1/instants/activities/`;
     }
+
+
     getPhysicalTraitChangeEndPoint(): string {
         return `${this.backendURL.baseURL}/v1/instants/traits/`;
     }
+
     getInsulinDoseEndPoint(): string {
         return `${this.backendURL.baseURL}/v1/instants/insulins/`;
     }
-
 }

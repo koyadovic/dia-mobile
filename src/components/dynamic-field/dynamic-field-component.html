@@ -12,9 +12,10 @@
     *ngIf="field.type == 'boolean'" [(ngModel)]="field.value">{{ field.display }}</ion-toggle>
 
   <ion-datetime
+    displayFormat="getFormat()" 
     (ionChange)="emitHaveChanges()"
     *ngIf="field.type == 'date'"
-    displayFormat="MM/DD/YYYY" [(ngModel)]="field.value"></ion-datetime>
+    [(ngModel)]="field.value"></ion-datetime>
 
   <ion-select
     (ionChange)="emitHaveChanges()"
