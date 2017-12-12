@@ -9,7 +9,7 @@ import { HttpResponse } from '@angular/common/http';
 export class DiaRestBackendService {
 
   constructor(private http: HttpClient,
-              private authService: DiaAuthService) { }
+              private authService: DiaAuthService) {}
 
   private getHeaders(token: string) {
     let headers = new HttpHeaders({
@@ -23,9 +23,6 @@ export class DiaRestBackendService {
     return Observable.create((observer) => {
       this.http.get(url, {headers: this.getHeaders(this.authService.getToken())})
       .map((response: HttpResponse<any>) => {
-        if (response.status == 401) {
-          this.authService.logout();
-        }
         return response;
       })
       .subscribe(
@@ -34,6 +31,9 @@ export class DiaRestBackendService {
           observer.complete();
         },
         (err) => {
+          if(err.status === 401){
+            this.authService.logout();
+          }
         }
       );
     });
@@ -43,9 +43,6 @@ export class DiaRestBackendService {
     return Observable.create((observer) => {
       this.http.post(url, data, {headers: this.getHeaders(this.authService.getToken())})
       .map((response: HttpResponse<any>) => {
-        if (response.status == 401) {
-          this.authService.logout();
-        }
         return response;
       })
       .subscribe(
@@ -54,6 +51,9 @@ export class DiaRestBackendService {
           observer.complete();
         },
         (err) => {
+          if(err.status === 401){
+            this.authService.logout();
+          }
         }
       );
     });

@@ -72,7 +72,8 @@ export class TimeLinePage {
     }
 
     // avoiding future errors
-    lastInstant.minutes_diff = 0;
+    if (!!lastInstant)
+      lastInstant.minutes_diff = 0;
 
     return instants;
   }
