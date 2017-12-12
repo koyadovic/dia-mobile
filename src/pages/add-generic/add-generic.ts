@@ -9,6 +9,9 @@ import { ViewController } from 'ionic-angular/navigation/view-controller';
   templateUrl: 'add-generic.html',
 })
 export class AddGenericPage {
+  @Input() dateFormat;
+  @Input() timezone;
+
   private data: {
     type: "feeding" | "glucose" | "trait" | "activity" | "insulin",
     url: string,

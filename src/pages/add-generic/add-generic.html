@@ -23,6 +23,8 @@
           <ng-container *ngFor="let field of element.fields">
 
             <dynamic-field *ngIf="isConditionalTrue(element, field)"
+            [dateFormat]="dateFormat || 'MMM DD, YYYY HH:mm'"
+            [timezone]="timezone || 'UTC'"
             [field]="field" (haveChanges)="haveChanges($event, element)">
             </dynamic-field>
           

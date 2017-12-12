@@ -7,9 +7,29 @@ import * as moment from 'moment-timezone';
 })
 export class DynamicField {
   @Input() field;
+
+  @Input() dateFormat;
+  @Input() timezone;
+
   @Output() haveChanges = new EventEmitter();
 
   constructor() {
+  }
+
+  ngOnChanges(changes) {
+    if("field" in changes) {
+      if(this.field.type == 'date'){
+        if (!this.field.value) {
+          this.field.value = moment().format('YYYY-MM-DDTHH:mm:ssZ');
+        }
+        this.haveChanges.emit(
+          {
+            namespace_key: this.field.namespace_key,
+            value: new Date(this.field.value).valueOf() / 1000.
+          }
+        );
+      }      
+    }
   }
 
   emitHaveChanges(){
