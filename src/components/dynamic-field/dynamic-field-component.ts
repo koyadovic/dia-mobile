@@ -14,11 +14,10 @@ export class DynamicField {
 
   emitHaveChanges(){
     if(this.field.type == 'date'){
-      console.log(moment(this.field.value).creationData().format);
       this.haveChanges.emit(
         {
           namespace_key: this.field.namespace_key,
-          value: new Date(this.field.value).getTime() / 1000.
+          value: new Date(this.field.value).valueOf() / 1000.
         }
       );
     } else {

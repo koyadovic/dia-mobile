@@ -12,8 +12,8 @@
     *ngIf="field.type == 'boolean'" [(ngModel)]="field.value">{{ field.display }}</ion-toggle>
 
   <ion-datetime
-    displayFormat="getFormat()" 
     (ionChange)="emitHaveChanges()"
+    displayFormat="MMM DD, YYYY HH:mm"
     *ngIf="field.type == 'date'"
     [(ngModel)]="field.value"></ion-datetime>
 

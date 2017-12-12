@@ -23,7 +23,7 @@
           <ng-container *ngFor="let field of element.fields">
 
             <dynamic-field *ngIf="isConditionalTrue(element, field)"
-            [field]="field" (haveChanges)="complete_elements[i][field.key]=field.value">
+            [field]="field" (haveChanges)="haveChanges($event, element)">
             </dynamic-field>
           
           </ng-container>

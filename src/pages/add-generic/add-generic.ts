@@ -28,7 +28,7 @@ export class AddGenericPage {
 
     // clone the original array
     this.complete_elements = this.data.elements.map(x => Object.assign({}, x));
-    
+
     this.complete_elements.forEach((element) => {
       element["fields"] = this.data.fields.map(x => Object.assign({}, x));
       for(let field of element["fields"]) {
@@ -37,6 +37,10 @@ export class AddGenericPage {
         }
       }
     });
+  }
+
+  haveChanges(event, element) { 
+    element[event.namespace_key] = event.value;
   }
 
   isConditionalTrue(element, field){
@@ -92,6 +96,7 @@ export class AddGenericPage {
 
     // TODO maybe we need to include logic checking if complete elements are already completed.
     for(let elem of this.complete_elements) {
+      delete elem["fields"];
       requests.push(this.restBackendService.genericPost(url, elem));
     }
 
