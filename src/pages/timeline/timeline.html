@@ -21,14 +21,15 @@
     <ion-list>
     <ng-container *ngFor="let instant of timeline; let i = index">
 
-      <ion-list-header *ngIf="!!dateInfo(i)">{{ dateInfo(i) }}</ion-list-header>
+      <ion-list-header text-right padding-right *ngIf="!!dateInfo(i)">{{ dateInfo(i) }}</ion-list-header>
 
       <instant-card
         [ngClass]="instant.event_type" [instant]="instant" [userConfig]="userConfig"
         (click)="cardClicked(instant)">
       </instant-card>
 
-      <ion-icon center name="ios-time-outline" class="icon-more" *ngIf="instant.minutes_diff > 60"></ion-icon>
+      <!-- <ion-icon center name="ios-time-outline" class="icon-more" *ngIf="instant.minutes_diff > 60"></ion-icon> -->
+      <div class="space" *ngIf="instant.minutes_diff > 60"></div>
   
     </ng-container>
     </ion-list>
