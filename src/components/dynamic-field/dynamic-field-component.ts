@@ -14,45 +14,41 @@ export class DynamicField {
   @Output() haveChanges = new EventEmitter();
 
   constructor() {
+    this.updateValue();
   }
 
   ngOnChanges(changes) {
     if("field" in changes) {
+      this.updateValue();
+    }
+  }
+
+  private updateValue() {
+    if(this.field && this.field.type == 'date'){
+      if (!this.field.value) {
+        this.field.value = moment().format('YYYY-MM-DDTHH:mm:ssZ');
+      }
+    }
+    this.emitHaveChanges();
+  }
+
+  private emitHaveChanges(){
+    if(this.field) {
       if(this.field.type == 'date'){
-        if (!this.field.value) {
-          this.field.value = moment().format('YYYY-MM-DDTHH:mm:ssZ');
-        }
         this.haveChanges.emit(
           {
             namespace_key: this.field.namespace_key,
             value: new Date(this.field.value).valueOf() / 1000.
           }
         );
-      }      
+      } else {
+        this.haveChanges.emit(
+          {
+            namespace_key: this.field.namespace_key,
+            value: this.field.value
+          }
+        );
+      }
     }
-  }
-
-  emitHaveChanges(){
-    if(this.field.type == 'date'){
-      this.haveChanges.emit(
-        {
-          namespace_key: this.field.namespace_key,
-          value: new Date(this.field.value).valueOf() / 1000.
-        }
-      );
-    } else {
-      this.haveChanges.emit(
-        {
-          namespace_key: this.field.namespace_key,
-          value: this.field.value
-        }
-      );
-    }
-  }
-
-  getFormat(){
-    let format = moment().creationData().format;
-    console.log(format);
-    return format;
   }
 }

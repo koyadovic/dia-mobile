@@ -121,7 +121,7 @@ export class TimeLinePage {
 					"display": "Level",
 					"value": null,
 					"required": true,
-					"hint": "",
+					"hint": "mg/dL",
 					"type": "number",
 					"regex": "",
 					"key": "level",
@@ -129,7 +129,10 @@ export class TimeLinePage {
 				}
       ],
       elements: [
-        {"datetime": 0}
+        {
+          "name": "Please, provide the following data:",
+          "datetime": null
+        }
       ]
     }
     this.openGenericModal(data);
@@ -157,20 +160,20 @@ export class TimeLinePage {
           "hint": "",
           "type": "select",
           "regex": "",
-          "key": "instensity",
+          "key": "intensity",
           "options": [
             { "display": "Soft", "value": 1 },
             { "display": "Medium", "value": 2 },
             { "display": "High", "value": 3 },
             { "display": "Extreme", "value": 4 },
           ],
-          "namespace_key": "instensity"
+          "namespace_key": "intensity"
         },
         {
 					"display": "Minutes",
 					"value": 0,
 					"required": true,
-					"hint": "",
+					"hint": "Number of minutes",
 					"type": "number",
 					"regex": "",
 					"key": "minutes",
@@ -179,7 +182,11 @@ export class TimeLinePage {
 
       ],
       elements: [
-        {"datetime": 0}
+        {
+          "name": "Introduce intensity and minutes that have spent with the activity.",
+          "datetime": null,
+          "minutes" : null
+        }
       ]
     }
     this.openGenericModal(data);
@@ -218,7 +225,7 @@ export class TimeLinePage {
           "display": "Dose",
           "value": null,
           "required": true,
-          "hint": "",
+          "hint": "Units of insulin dose",
           "type": "number",
           "regex": "^.*$",
           "key": "dose",
@@ -227,8 +234,9 @@ export class TimeLinePage {
       ],
       elements: [
         {
+          "name": "Introduce type and units of insulin administered.",
           "datetime": null,
-          "dose": 0
+          "dose": null
         },
       ],
     }
@@ -243,7 +251,15 @@ export class TimeLinePage {
         {
 					"display": "Instant",
 					"value": 0,
-          "conditional": {},
+          "conditional": {
+            "$or": [
+              { "trait_type": 2 },
+              { "trait_type": 3 },
+              { "trait_type": 4 },
+              { "trait_type": 5 },
+              { "trait_type": 6 },
+            ]
+          },
           "required": false,
 					"hint": "",
 					"type": "date",
@@ -273,14 +289,14 @@ export class TimeLinePage {
         },
         {
 					"display": "Select date",
-          "value": null,
+          "value": 0,
           "conditional": {
             "$or": [
               { "trait_type": 1 },
             ]
           },
 					"required": true,
-					"hint": "",
+					"hint": "Date of birth",
 					"type": "date",
 					"regex": "^.*$",
 					"key": "value",
@@ -288,7 +304,7 @@ export class TimeLinePage {
         },
         {
 					"display": "Sex",
-          "value": null,
+          "value": 0,
           "conditional": {
             "$or": [
               { "trait_type": 7 },
@@ -307,7 +323,7 @@ export class TimeLinePage {
         },
         {
 					"display": "Value",
-          "value": null,
+          "value": 0,
           "conditional": {
             "$or": [
               { "trait_type": 2 },
@@ -318,7 +334,7 @@ export class TimeLinePage {
             ]
           },
 					"required": true,
-					"hint": "",
+					"hint": "Introduce a value",
 					"type": "number",
 					"regex": "^.*$",
 					"key": "value",
@@ -327,16 +343,10 @@ export class TimeLinePage {
       ],
       elements: [
         {
-          "name": "Lalala",
+          "name": "Select type of trait and complete the value:",
           "datetime": null,
-          "trait_type": 3,
-          "value": 30
-        },
-        {
-          "name": "Lelele",
-          "datetime": null,
-          "trait_type": 2,
-          "value": 100
+          "trait_type": 1,
+          "value": null
         },
       ],
     }

@@ -93,6 +93,10 @@ export class AddGenericPage {
     return evaluate;
   }
 
+  dismiss(){
+    this.viewCtrl.dismiss({"add": false});
+  }
+
   save(){
     let url = this.data.url;
     let requests = [];

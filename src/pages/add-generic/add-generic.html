@@ -19,16 +19,17 @@
       <ion-col> 
 
         <ng-container *ngFor="let element of complete_elements; let i = index">
-          <h5>{{ element.name }}</h5>
+          <p padding-right padding-left>{{ element.name }}</p>
           <ng-container *ngFor="let field of element.fields">
 
             <dynamic-field *ngIf="isConditionalTrue(element, field)"
-            [dateFormat]="dateFormat || 'MMM DD, YYYY HH:mm'"
+            [dateFormat]="dateFormat || 'MM DD, YYYY HH:mm'"
             [timezone]="timezone || 'UTC'"
             [field]="field" (haveChanges)="haveChanges($event, element)">
             </dynamic-field>
           
           </ng-container>
+          <hr>
 
         </ng-container>
 
@@ -36,6 +37,10 @@
     </ion-row> 
     
     <ion-row> 
+      <ion-col> 
+        <button (click)="dismiss()" ion-button full>Dismiss</button>
+      </ion-col> 
+
       <ion-col> 
         <button (click)="save()" ion-button full>Save</button>
       </ion-col> 

@@ -12,11 +12,11 @@
 </ion-header>
 
 <ion-content>
+
     <ion-refresher (ionRefresh)="doRefresh($event)">
       <ion-refresher-content>
       </ion-refresher-content>
     </ion-refresher>
-
     
     <ion-list>
     <ng-container *ngFor="let instant of timeline; let i = index">
@@ -28,7 +28,6 @@
         (click)="cardClicked(instant)">
       </instant-card>
 
-      <!-- <ion-icon center name="ios-time-outline" class="icon-more" *ngIf="instant.minutes_diff > 60"></ion-icon> -->
       <div class="space" *ngIf="instant.minutes_diff > 60"></div>
   
     </ng-container>
