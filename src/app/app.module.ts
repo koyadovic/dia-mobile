@@ -3,17 +3,17 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { DiaMobileApp } from './app-component';
 
-// pages
-import { TimeLinePage } from '../pages/timeline/timeline';
-import { ConfigurationPage } from '../pages/configuration/configuration';
-import { LoginPage } from '../pages/login/login';
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
 import { IonicStorageModule } from '@ionic/storage';
 import { BackgroundMode } from '@ionic-native/background-mode';
 
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
+
+// components
 import { DynamicField } from '../components/dynamic-field/dynamic-field-component';
 import { DynamicRoot } from '../components/dynamic-root/dynamic-root-component';
 import { DiaInstantCard } from '../components/instant-card/instant-card-component';
@@ -27,13 +27,13 @@ import { DiaConfigurationService } from '../services/dia-configuration-service';
 import { DiaWebsocketService } from '../services/dia-websockets-service';
 import { DiaTimelineService } from '../services/dia-timeline-service';
 
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { HttpModule } from '@angular/http';
-
+// pages
+import { TimeLinePage } from '../pages/timeline/timeline';
+import { ConfigurationPage } from '../pages/configuration/configuration';
+import { LoginPage } from '../pages/login/login';
 import { AddGenericPage } from '../pages/add-generic/add-generic';
 import { AddFeedingPage } from '../pages/add-feeding/add-feeding';
+import { SearchFoodPage } from '../pages/search-food/search-food';
 
 
 @NgModule({
@@ -45,6 +45,7 @@ import { AddFeedingPage } from '../pages/add-feeding/add-feeding';
 
     AddFeedingPage,
     AddGenericPage,
+    SearchFoodPage,
 
     DynamicField,
     DynamicRoot,
@@ -73,6 +74,7 @@ import { AddFeedingPage } from '../pages/add-feeding/add-feeding';
 
     AddFeedingPage,
     AddGenericPage,
+    SearchFoodPage,
 
     DynamicField,
     DynamicRoot,

@@ -2,11 +2,53 @@
 
   <ion-navbar>
     <ion-title>{{ "Add Feeding" | translate }}</ion-title>
+
+    <ion-buttons end *ngIf="foodSelected.length > 0">
+      <button ion-button icon-only>
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+    </ion-buttons>
+
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content>
+  <ion-fab bottom right #fab>
+    <button (click)="openFoodSelection()" ion-fab mini><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
 </ion-content>
+
+<ion-footer>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <p ion-text text-center>Carbs</p>
+        <h5 ion-text text-center>0.0gr</h5>
+      </ion-col>
+      <ion-col>
+        <p ion-text text-center>Proteins</p>
+        <h5 ion-text text-center>0.0gr</h5>
+      </ion-col>
+      <ion-col>
+        <p ion-text text-center>Fats</p>
+        <h5 ion-text text-center>0.0gr</h5>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <p ion-text text-center>Fiber</p>
+        <h5 ion-text text-center>0.0gr</h5>
+      </ion-col>
+      <ion-col>
+        <p ion-text text-center>Alcohol</p>
+        <h5 ion-text text-center>0.0gr</h5>
+      </ion-col>
+      <ion-col>
+        <p ion-text text-center>Kcal</p>
+        <h5 ion-text text-center>0.0kcal</h5>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

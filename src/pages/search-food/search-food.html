@@ -1,0 +1,19 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Search for Food</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding-top>
+
+  <ion-searchbar
+    [(ngModel)]="searchString"
+    [showCancelButton]="false" [animated]="true" [debounce]="400"
+    (ionInput)="onInput($event)"
+    (ionCancel)="onCancel($event)">
+  </ion-searchbar>
+
+</ion-content>
