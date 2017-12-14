@@ -34,6 +34,7 @@ import { LoginPage } from '../pages/login/login';
 import { AddGenericPage } from '../pages/add-generic/add-generic';
 import { AddFeedingPage } from '../pages/add-feeding/add-feeding';
 import { SearchFoodPage } from '../pages/search-food/search-food';
+import { AddFoodPage } from '../pages/add-food/add-food';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { SearchFoodPage } from '../pages/search-food/search-food';
     AddFeedingPage,
     AddGenericPage,
     SearchFoodPage,
+    AddFoodPage,
 
     DynamicField,
     DynamicRoot,
@@ -75,6 +77,7 @@ import { SearchFoodPage } from '../pages/search-food/search-food';
     AddFeedingPage,
     AddGenericPage,
     SearchFoodPage,
+    AddFoodPage,
 
     DynamicField,
     DynamicRoot,

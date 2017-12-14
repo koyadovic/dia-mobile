@@ -15,5 +15,9 @@
     (ionInput)="onInput($event)"
     (ionCancel)="onCancel($event)">
   </ion-searchbar>
+  
+  <ion-fab bottom right padding-right #fab>
+    <button (click)="addFood()" ion-fab><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
 
 </ion-content>

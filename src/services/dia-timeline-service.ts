@@ -43,6 +43,30 @@ export class DiaTimelineService {
         });
     }
 
+    saveFood(food):Observable<any> {
+        let url = `${this.backendURL.baseURL}/v1/foods/`;
+        return Observable.create((observer) => {
+            this.restBackendService
+            .genericPost(url, food)
+            .subscribe((food) => {
+                observer.next(food);
+                observer.complete();
+            });
+        });
+    }
+
+    searchFood(searchString:string):Observable<any[]> {
+        let url = `${this.backendURL.baseURL}/v1/foods/?search=${searchString}`;
+        return Observable.create((observer) => {
+            this.restBackendService
+            .genericGet(url)
+            .subscribe((foods) => {
+                observer.next(foods);
+                observer.complete();
+            });
+        });
+    }
+
 
     getGlucoseEndpoint(): string {
         return `${this.backendURL.baseURL}/v1/instants/glucoses/`;
