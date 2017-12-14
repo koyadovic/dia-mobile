@@ -10,7 +10,6 @@ import { DiaTimelineService } from '../../services/dia-timeline-service';
   templateUrl: 'search-food.html',
 })
 export class SearchFoodPage {
-  private searchString:string = "";
   private results = [];
 
   constructor(public navCtrl: NavController,
@@ -35,7 +34,6 @@ export class SearchFoodPage {
   }
 
   onCancel($event) {
-
   }
 
   addFood(){
