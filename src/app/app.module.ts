@@ -17,6 +17,7 @@ import { HttpModule } from '@angular/http';
 import { DynamicField } from '../components/dynamic-field/dynamic-field-component';
 import { DynamicRoot } from '../components/dynamic-root/dynamic-root-component';
 import { DiaInstantCard } from '../components/instant-card/instant-card-component';
+import { FoodComponent } from '../components/food/food';
 
 // services
 import { DiaRestBackendService } from '../services/dia-rest-backend-service';
@@ -52,6 +53,7 @@ import { AddFoodPage } from '../pages/add-food/add-food';
     DynamicField,
     DynamicRoot,
     DiaInstantCard,
+    FoodComponent
   ],
   imports: [
     BrowserModule,
@@ -82,6 +84,7 @@ import { AddFoodPage } from '../pages/add-food/add-food';
     DynamicField,
     DynamicRoot,
     DiaInstantCard,
+    FoodComponent
   ],
   providers: [
     StatusBar,
