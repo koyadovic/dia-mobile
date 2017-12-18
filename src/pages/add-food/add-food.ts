@@ -9,6 +9,7 @@ import { ViewController } from 'ionic-angular/navigation/view-controller';
   templateUrl: 'add-food.html',
 })
 export class AddFoodPage {
+  
   private food = {
     name: "",
     manufacturer: "",

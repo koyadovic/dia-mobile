@@ -17,14 +17,7 @@
   </ion-searchbar>
 
   <ion-list>
-    <button ion-item *ngFor="let food of results">
-      <ion-grid>
-        <ion-row>
-          <ion-col>{{ food.name }}, {{ food.manufacturer }}</ion-col>
-        </ion-row>
-      </ion-grid>
-      
-    </button>
+    <food-component *ngFor="let food of results" [food]="food" (foodClick)="foodSelected(food)"></food-component>
   </ion-list>
   
   <ion-fab bottom right padding-right #fab>

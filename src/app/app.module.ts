@@ -36,6 +36,7 @@ import { AddGenericPage } from '../pages/add-generic/add-generic';
 import { AddFeedingPage } from '../pages/add-feeding/add-feeding';
 import { SearchFoodPage } from '../pages/search-food/search-food';
 import { AddFoodPage } from '../pages/add-food/add-food';
+import { IntroduceFoodWeightOrUnitsPage } from '../pages/introduce-food-weight-or-units/introduce-food-weight-or-units';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { AddFoodPage } from '../pages/add-food/add-food';
     AddGenericPage,
     SearchFoodPage,
     AddFoodPage,
+    IntroduceFoodWeightOrUnitsPage,
 
     DynamicField,
     DynamicRoot,
@@ -80,6 +82,7 @@ import { AddFoodPage } from '../pages/add-food/add-food';
     AddGenericPage,
     SearchFoodPage,
     AddFoodPage,
+    IntroduceFoodWeightOrUnitsPage,
 
     DynamicField,
     DynamicRoot,

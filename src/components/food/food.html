@@ -1,2 +1,13 @@
-<div>
-</div>
+<button ion-item (click)="doClick()">
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <h2>{{ food.name }}</h2>
+                <p>{{ food.manufacturer }}</p>
+            </ion-col>
+            
+            <ion-col *ngIf="food.weight">{{ food.weight }}gr</ion-col>
+            <ion-col *ngIf="food.units">{{ food.units }}u</ion-col>
+        </ion-row>
+    </ion-grid>
+</button>
