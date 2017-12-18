@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 import { SearchFoodPage } from '../../pages/search-food/search-food';
+import { DiaMessageService } from '../../services/dia-message-service';
+import { DiaMessage } from '../../models/messages-model';
+import { DiaTimelineService } from '../../services/dia-timeline-service';
+import { ViewController } from 'ionic-angular/navigation/view-controller';
 
 
 @Component({
@@ -20,7 +24,10 @@ export class AddFeedingPage {
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              private modalCtrl: ModalController) {}
+              private modalCtrl: ModalController,
+              private messageService: DiaMessageService,
+              private timelineService: DiaTimelineService,
+              private viewCtrl: ViewController) {}
 
   ionViewDidLoad() {
   }
@@ -69,5 +76,23 @@ export class AddFeedingPage {
     this.alcohol = Math.round(this.alcohol * 10) / 10;
     this.kcal = Math.round(this.kcal);
     
+  }
+
+  finishFeeding(){
+    let message = new DiaMessage("Finish Feeding", null, "Are you sure to finish selecting foods?");
+    this.messageService.confirmMessage(message).subscribe(
+      (ok) => {
+        if(ok) {
+          // confirmed
+          this.timelineService.saveFeeding(this.foodSelected).subscribe(
+            (feeding) => {
+              this.viewCtrl.dismiss({add: true});
+            }
+          );
+        } else {
+          // not confirmed
+        }
+      }
+    )
   }
 }

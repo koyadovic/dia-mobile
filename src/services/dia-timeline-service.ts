@@ -67,6 +67,23 @@ export class DiaTimelineService {
         });
     }
 
+    saveFeeding(foodSelected: object[]):Observable<any> {
+        // we only need id, weight and units
+        let foodMinified = foodSelected.map(
+            (food) => {
+                return {id: food["id"], weight: food["weight"], units: food["units"]} ;
+            }
+        )
+        let url = `${this.backendURL.baseURL}/v1/instants/feedings/`;
+        return Observable.create((observer) => {
+            this.restBackendService
+            .genericPost(url, {foods: foodMinified})
+            .subscribe((feeding) => {
+                observer.next(feeding);
+                observer.complete();
+            });
+        });
+    }
 
     getGlucoseEndpoint(): string {
         return `${this.backendURL.baseURL}/v1/instants/glucoses/`;

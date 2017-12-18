@@ -4,7 +4,7 @@
     <ion-title>{{ "Add Feeding" | translate }}</ion-title>
 
     <ion-buttons end *ngIf="foodSelected.length > 0">
-      <button ion-button icon-only>
+      <button ion-button icon-only (click)="finishFeeding()">
         <ion-icon name="checkmark"></ion-icon>
       </button>
     </ion-buttons>
