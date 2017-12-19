@@ -18,7 +18,6 @@ export class DiaAuthService {
 
         // in startup time we retrieve the token from the store.
         this.storage.get("token").then(token => {
-            console.log("Auth OK - Token: \'" + token + "\', loggedIn: " + !!token);
             this.token = token;
             this.loggedIn$.next(!!token);
         });

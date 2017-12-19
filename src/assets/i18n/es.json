@@ -1,6 +1,6 @@
 {
-    "APP_TITLE": "Dia Mobile",
-    "TIMELINE_TITLE": "Linea temporal",
+    "Dia Mobile": "Dia Mobile",
+    "Timeline": "Línea temporal",
     "Logout": "Cerrar sesión",
     "Logout Confirmation": "Confirmar Cierre de Sesión",
     "Are you sure to close your session?": "¿Está seguro de cerrar su sesión?",
@@ -9,6 +9,51 @@
     "Add Feeding": "Añadir Ingesta",
     "Add Insulin Dose": "Añadir Dosis de Insulina",
     "Add Physical Activity": "Añadir Actividad Física",
-    "Add Physical Trait Change": "Añadir Cambio Física"
+    "Add Trait Change": "Añadir Cambio Físico",
 
+    "Save": "Guardar",
+    "Dismiss": "Desechar",
+
+    "Glucose Level": "Nivel de Glucosa",
+    "Physical Activity": "Actividad Física",
+    "Insulin Dose": "Dosis de Insulina",
+    "Physical Trait Change": "Cambio en Rasgo Físico",
+    "Feeding": "Alimentación",
+
+    "Instant": "Instante",
+    "Level": "Nivel",
+    "Please, provide the following data.": "Por favor, provea los siguientes datos.",
+
+    "Intensity": "Intensidad",
+    "Minutes": "Minutos",
+    "Number of minutes": "Número de minutos",
+    "Introduce intensity and minutes that have spent with the activity.": "Introduzca la intensidad y minutos que pasaste con la actividad.",
+
+    "Soft": "Ligera",
+    "Medium": "Media",
+    "High": "Elevada",
+    "Extreme": "Extrema",
+
+    "Type": "Tipo",
+    "Dose": "Dosis",
+    "Units of insulin": "Unidades de insulina",
+    "Introduce type and units of insulin administered.": "Introduzca tipo y unidades de insulina administrada.",
+
+    "Select date": "Seleccione Fecha",
+    "Date of birth": "Fecha de nacimiento",
+    "Sex": "Sexo",
+    "Value": "Valor",
+    "Introduce a value": "Introduzca un valor",
+    "Select type of trait and complete the value.": "Seleccione tipo de rasgo y complete el valor.",
+
+    "Birth Date": "Fecha de nacimiento",
+
+    "Height (cm)": "Altura (cm)",
+    "Weight (kg)": "Peso (kg)",
+    "Neck Perimeter (cm)": "Perímetro de cuello (cm)",
+    "Abdomen Perimeter (cm)": "Perímetro de abdomen (cm)",
+    "Waist Perimeter (cm)": "Perímetro de cintura (cm)",
+    
+    "Male": "Hombre",
+    "Female": "Mujer"
 }

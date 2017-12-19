@@ -65,7 +65,7 @@ export class ConfigurationPage {
     ).subscribe(([title, message]) => {
       let diamessage = new DiaMessage(title, "info", message)
       this.messageService.confirmMessage(diamessage).subscribe((ok) => { if (ok) this.authenticationService.logout(); });
-    })
+    });
   }
 
 }

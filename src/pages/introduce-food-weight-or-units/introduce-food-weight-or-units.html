@@ -1,0 +1,34 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ food?.name }} / {{ food?.manufacturer }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding-top>
+
+  <ion-item *ngIf="!units">
+    <ion-label stacked color="primary">Weight</ion-label>
+    <ion-input type="number" placeholder="Introduce weight in grams" name="weight" [(ngModel)]="food.weight" required></ion-input>
+  </ion-item>
+
+  <ion-item *ngIf="units">
+    <ion-label stacked color="primary">Units</ion-label>
+    <ion-input type="number" placeholder="Introduce units of food" name="units" [(ngModel)]="food.units" required></ion-input>
+  </ion-item>
+
+  <ion-grid>
+    <ion-row> 
+      <ion-col> 
+        <button (click)="dismiss()" ion-button full>{{ "Dismiss" | translate }}</button>
+      </ion-col> 
+
+      <ion-col> 
+        <button (click)="save()" [disabled]="!valid()" ion-button full>{{ "Save" | translate }}</button>
+      </ion-col> 
+    </ion-row> 
+    
+  </ion-grid>
+</ion-content>

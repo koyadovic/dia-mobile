@@ -57,9 +57,13 @@ export class DiaMobileApp {
     this.wsService.ready().subscribe((ready) => {
       if(ready) {
         this.backendMessages$ = this.wsService.getMessages();
-        this.backendMessages$.subscribe((backendMessage) => {
+        this.backendMessages$.subscribe(
+          (backendMessage) => {
           console.log(backendMessage);
-        });
+        },
+      (error) => {
+        console.log("Websockets connection error.");
+      });
       }
     });
   }

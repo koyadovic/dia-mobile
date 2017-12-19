@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      {{ 'TIMELINE_TITLE' | translate }}
+      {{ 'Timeline' | translate }}
     </ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="goConfiguration()">
@@ -12,31 +12,31 @@
 </ion-header>
 
 <ion-content>
+
     <ion-refresher (ionRefresh)="doRefresh($event)">
       <ion-refresher-content>
       </ion-refresher-content>
     </ion-refresher>
-
     
     <ion-list>
     <ng-container *ngFor="let instant of timeline; let i = index">
 
-      <ion-list-header *ngIf="!!dateInfo(i)">{{ dateInfo(i) }}</ion-list-header>
+      <ion-list-header text-right padding-right *ngIf="!!dateInfo(i)">{{ dateInfo(i) }}</ion-list-header>
 
       <instant-card
         [ngClass]="instant.event_type" [instant]="instant" [userConfig]="userConfig"
         (click)="cardClicked(instant)">
       </instant-card>
 
-      <ion-icon center name="ios-more" class="icon-more" *ngIf="instant.minutes_diff > 60"></ion-icon>
+      <div class="space" *ngIf="instant.minutes_diff > 60"></div>
   
     </ng-container>
     </ion-list>
 
     
-    <ion-fab bottom right #fab>
-      <button ion-fab mini><ion-icon name="add"></ion-icon></button>
-      <ion-fab-list side="left">
+    <ion-fab padding-right bottom right #fab>
+      <button ion-fab><ion-icon name="add"></ion-icon></button>
+      <ion-fab-list side="top">
         <button ion-fab (click)="addPhysicalTraitChange()"><ion-icon name="body"></ion-icon></button> <!-- Trait Change -->
         <button ion-fab (click)="addInsulinDose()"><ion-icon name="thermometer"></ion-icon></button> <!-- Insulin Dose -->
         <button ion-fab (click)="addPhysicalActivity()"><ion-icon name="bicycle"></ion-icon></button> <!-- Activity -->

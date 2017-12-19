@@ -43,21 +43,68 @@ export class DiaTimelineService {
         });
     }
 
+    saveFood(food):Observable<any> {
+        let url = `${this.backendURL.baseURL}/v1/foods/`;
+        return Observable.create((observer) => {
+            this.restBackendService
+            .genericPost(url, food)
+            .subscribe((food) => {
+                observer.next(food);
+                observer.complete();
+            });
+        });
+    }
+
+    searchFood(searchString:string):Observable<any[]> {
+        let url = `${this.backendURL.baseURL}/v1/foods/?search=${searchString}`;
+        return Observable.create((observer) => {
+            this.restBackendService
+            .genericGet(url)
+            .subscribe((foods) => {
+                observer.next(foods);
+                observer.complete();
+            });
+        });
+    }
+
+    saveFeeding(foodSelected: object[]):Observable<any> {
+        // we only need id, weight and units
+        let foodMinified = foodSelected.map(
+            (food) => {
+                return {id: food["id"], weight: food["weight"], units: food["units"]} ;
+            }
+        )
+        let url = `${this.backendURL.baseURL}/v1/instants/feedings/`;
+        return Observable.create((observer) => {
+            this.restBackendService
+            .genericPost(url, {foods: foodMinified})
+            .subscribe((feeding) => {
+                observer.next(feeding);
+                observer.complete();
+            });
+        });
+    }
 
     getGlucoseEndpoint(): string {
         return `${this.backendURL.baseURL}/v1/instants/glucoses/`;
     }
+
+
     getFeedingEndPoint(): string {
         return `${this.backendURL.baseURL}/v1/instants/feedings/`;
     }
+
+
     getPhysicalActivityEndPoint(): string {
         return `${this.backendURL.baseURL}/v1/instants/activities/`;
     }
+
+
     getPhysicalTraitChangeEndPoint(): string {
         return `${this.backendURL.baseURL}/v1/instants/traits/`;
     }
+
     getInsulinDoseEndPoint(): string {
         return `${this.backendURL.baseURL}/v1/instants/insulins/`;
     }
-
 }

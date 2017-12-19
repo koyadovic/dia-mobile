@@ -13,8 +13,9 @@
 
   <ion-datetime
     (ionChange)="emitHaveChanges()"
+    displayFormat="MMM DD, YYYY HH:mm"
     *ngIf="field.type == 'date'"
-    displayFormat="MM/DD/YYYY" [(ngModel)]="field.value"></ion-datetime>
+    [(ngModel)]="field.value"></ion-datetime>
 
   <ion-select
     (ionChange)="emitHaveChanges()"

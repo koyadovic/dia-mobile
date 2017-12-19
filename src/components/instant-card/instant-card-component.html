@@ -1,4 +1,4 @@
-<ion-item>
+<button ion-item>
 
     <ion-icon item-start *ngIf="instant.content.type == 'glucose'" name="water"></ion-icon>
     <ion-icon item-start *ngIf="instant.content.type == 'feeding'" name="restaurant"></ion-icon>
@@ -12,13 +12,13 @@
                 <ng-container [ngSwitch]="instant.content.type">
                     <!-- glucoses -->
                     <ng-container *ngSwitchCase="'glucose'">
-                        <h2>Glucose</h2>
+                        <h2>{{ "Glucose Level" | translate }}</h2>
                         <p>{{ instant.content.level }}mg/dL</p>
                     </ng-container>
                     
                     <!-- feeding -->
                     <ng-container *ngSwitchCase="'feeding'">
-                        <h2>Feeding</h2>
+                        <h2>{{ "Feeding" | translate }}</h2>
                         <p></p>
                     </ng-container>
             
@@ -27,19 +27,19 @@
             
                     <!-- physical_activity -->
                     <ng-container *ngSwitchCase="'physical_activity'">
-                        <h2>Physical Activity</h2>
+                        <h2>{{ "Physical Activity" | translate }}</h2>
                         <p>{{activity_intensities[instant.content.intensity]}} intensity. {{ instant.content.minutes }} minutes.</p>
                     </ng-container>
             
                     <!-- physical_trait -->
                     <ng-container *ngSwitchCase="'physical_trait'">
-                        <h2>Physical Trait Change</h2>
+                        <h2>{{ "Physical Trait Change" | translate }}</h2>
                         <p>{{ trait_types[instant.content.trait_type] }} {{ instant.content.value }} {{ trait_types_measure[instant.content.trait_type] }}</p>
                     </ng-container>
                 
                     <!-- insulin_dose -->
                     <ng-container *ngSwitchCase="'insulin_dose'">
-                        <h2>{{ instant.content.dose }}u Insulin Dose</h2>
+                        <h2>{{ "Insulin Dose" | translate }} {{ instant.content.dose }}u</h2>
                         <p>{{ instant.content.insulin_type.name }}</p>
                     </ng-container>
                 
@@ -54,4 +54,4 @@
     </ion-grid>
 
     
-</ion-item>
+</button>
