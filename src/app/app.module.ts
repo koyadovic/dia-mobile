@@ -8,10 +8,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicStorageModule } from '@ionic/storage';
 import { BackgroundMode } from '@ionic-native/background-mode';
 
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { HttpModule } from '@angular/http';
 
 // components
 import { DynamicField } from '../components/dynamic-field/dynamic-field-component';
@@ -38,6 +37,9 @@ import { SearchFoodPage } from '../pages/search-food/search-food';
 import { AddFoodPage } from '../pages/add-food/add-food';
 import { IntroduceFoodWeightOrUnitsPage } from '../pages/introduce-food-weight-or-units/introduce-food-weight-or-units';
 
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -59,14 +61,13 @@ import { IntroduceFoodWeightOrUnitsPage } from '../pages/introduce-food-weight-o
   ],
   imports: [
     BrowserModule,
-    HttpModule,
     HttpClientModule,
     IonicModule.forRoot(DiaMobileApp),
     IonicStorageModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
+        useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
     }),
@@ -105,7 +106,3 @@ import { IntroduceFoodWeightOrUnitsPage } from '../pages/introduce-food-weight-o
   ]
 })
 export class AppModule {}
-
-export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
-}
