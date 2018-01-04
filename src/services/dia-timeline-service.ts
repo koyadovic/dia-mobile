@@ -68,10 +68,10 @@ export class DiaTimelineService {
     }
 
     saveFeeding(foodSelected: object[]):Observable<any> {
-        // we only need id, weight and units
+        // we only need id, gr_selected and units_selected
         let foodMinified = foodSelected.map(
             (food) => {
-                return {id: food["id"], weight: food["weight"], units: food["units"]} ;
+                return {id: food["id"], gr_selected: food["gr_selected"], units_selected: food["units_selected"]} ;
             }
         )
         let url = `${this.backendURL.baseURL}/v1/instants/feedings/`;

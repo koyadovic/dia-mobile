@@ -13,8 +13,8 @@ export class AddFoodPage {
   private food = {
     name: "",
     manufacturer: "",
-    total_gr_ml: "100",
-    weight_per_unit: null,
+    gr_or_ml: "100",
+    gr_or_ml_per_unit: null,
     carb_gr: null,
     protein_gr: null,
     fat_gr: null,
@@ -38,7 +38,7 @@ export class AddFoodPage {
   valid(){
     let f = this.food;
     if(f.name === "" || f.manufacturer === "") return false;
-    if(+f.total_gr_ml < +f.carb_gr + +f.protein_gr + +f.fat_gr + +f.fiber_gr + +f.alcohol_gr) return false;
+    if(+f.gr_or_ml < +f.carb_gr + +f.protein_gr + +f.fat_gr + +f.fiber_gr + +f.alcohol_gr) return false;
     if(f.carb_gr === null || f.protein_gr === null || f.fat_gr === null) return false;
     return true;
   }

@@ -17,9 +17,9 @@ export class IntroduceFoodWeightOrUnitsPage {
               private viewCtrl: ViewController,) {
 
     this.food = this.navParams.get("food");
-    this.food.weight = null;
-    this.food.units = null;
-    this.units = this.food.weight_per_unit > 0;
+    this.food.gr_selected = null;
+    this.food.units_selected = null;
+    this.units = this.food.gr_or_ml_per_unit > 0;
   }
 
   ionViewDidLoad() {
@@ -34,7 +34,7 @@ export class IntroduceFoodWeightOrUnitsPage {
   }
 
   valid() {
-    return this.food.weight > 0.0 || this.food.units > 0.0;
+    return this.food.gr_selected > 0.0 || this.food.units_selected > 0.0;
   }
 
 }
