@@ -2,22 +2,26 @@
     <ion-row>
       <ion-col></ion-col>
       <ion-col width-67>
-        <h1>Dia Mobile</h1>
+        <img class="logo" src="assets/imgs/logo.png"/>
       </ion-col>
       <ion-col></ion-col>
     </ion-row>
     <div>
       <form (ngSubmit)="tryLogin()" #loginForm="ngForm">
+        
         <ion-row>
           <ion-col>
             <ion-list inset>
 
               <ion-item>
-                <ion-input type="text" placeholder="Email" name="email" [(ngModel)]="email" required></ion-input>
+                <ion-input text-center class="email-input"
+                  type="email" spellcheck="false" placeholder="Email" name="email" [(ngModel)]="email" required>
+                </ion-input>
               </ion-item>
               
               <ion-item>
-                <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="password" required></ion-input>
+                <ion-input text-center type="password" placeholder="Password" name="password" [(ngModel)]="password" required></ion-input>
+                <ion-icon class="password-icon" item-right name="lock"></ion-icon>  
               </ion-item>
               
             </ion-list>
@@ -25,8 +29,11 @@
         </ion-row>
         
         <ion-row>
-          <ion-col>
-            <button [disabled]="!loginForm.form.valid" ion-button full type="submit">Login</button>
+          <ion-col >
+            <button [disabled]="!loginForm.form.valid" ion-button block outline type="submit">
+              
+              Login
+            </button>
           </ion-col>
         </ion-row>
         
