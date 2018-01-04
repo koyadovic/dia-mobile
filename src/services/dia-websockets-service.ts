@@ -32,7 +32,6 @@ export class DiaWebsocketService {
 
     private checkConnectionStatusAndReconnect() {
         if(this.websocket.readyState === WebSocket.CLOSED || this.websocket.readyState === WebSocket.CLOSING) {
-            console.log("Websockets CLOSED or CLOSING. Connecting websockets.");
             this.configureMessagesAndConnection();
         }
         if(this.websocket.readyState === WebSocket.CLOSED || this.websocket.readyState === WebSocket.CLOSING || this.websocket.readyState === WebSocket.CONNECTING) {
@@ -57,7 +56,6 @@ export class DiaWebsocketService {
             this.websocket.onerror = observer.error.bind(observer);
 
             this.websocket.onclose = (event) => {
-                console.log("Websockets Disconnected. Reconnecting in 5 seconds.");
                 setTimeout(this.checkConnectionStatusAndReconnect.bind(this), 10000);
             };
             return this.websocket.close.bind(this.websocket);
