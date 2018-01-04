@@ -12,44 +12,64 @@ export class DiaWebsocketService {
     private messages: Subject<MessageEvent>;
 
     private ready$ = new BehaviorSubject<boolean>(false);
+
+    private reconnectionInterval = null;
     
     constructor(private authenticationService: DiaAuthService,
                 private backendURLs: DiaBackendURL) {
         
         this.authenticationService.loggedIn().subscribe((loggedIn) => {
             if(loggedIn) {
-                if (!!this.websocket && ! this.websocket.CLOSED)
-                    this.websocket.close();
-
-                let token = this.authenticationService.getToken();
-                this.websocket = new WebSocket(backendURLs.wsBaseURL + `?t=${token}`);
-
-                let observable = Observable.create((observer) => {
-                    this.websocket.onmessage = observer.next.bind(observer);
-                    this.websocket.onerror = observer.error.bind(observer);
-                    this.websocket.onclose = observer.complete.bind(observer);
-                    return this.websocket.close.bind(this.websocket);
-                });
-
-                let observer = {
-                    next: (data: Object) => {
-                        if (this.websocket.readyState === WebSocket.OPEN) {
-                            this.websocket.send(JSON.stringify(data));
-                        }
-                    }
-                };
-
-                this.messages = Subject.create(observer, observable);
+                this.configureMessagesAndConnection();
                 this.ready$.next(true);
-
             } else {
                 // token === "" means logout
-                if(this.websocket)
-                this.websocket.close();
+                if(this.websocket) this.websocket.close();
                 this.ready$.next(false);
-
             }
-        })
+        });
+    }
+
+    private checkConnectionStatusAndReconnect() {
+        if(this.websocket.readyState === WebSocket.CLOSED || this.websocket.readyState === WebSocket.CLOSING) {
+            console.log("Websockets CLOSED or CLOSING. Connecting websockets.");
+            this.configureMessagesAndConnection();
+        }
+        if(this.websocket.readyState === WebSocket.CLOSED || this.websocket.readyState === WebSocket.CLOSING || this.websocket.readyState === WebSocket.CONNECTING) {
+            if (this.reconnectionInterval === null)
+                this.reconnectionInterval = setInterval(this.checkConnectionStatusAndReconnect.bind(this), 10000);
+        } else {
+            if (this.reconnectionInterval !== null) {
+                this.reconnectionInterval = null;
+            }
+        }
+    }
+
+    private configureMessagesAndConnection() {
+        if (!!this.websocket && ! this.websocket.CLOSED)
+            this.websocket.close();
+
+        let token = this.authenticationService.getToken();
+        this.websocket = new WebSocket(this.backendURLs.wsBaseURL + `?t=${token}`);
+
+        let observable = Observable.create((observer) => {
+            this.websocket.onmessage = observer.next.bind(observer);
+            this.websocket.onerror = observer.error.bind(observer);
+
+            this.websocket.onclose = (event) => {
+                console.log("Websockets Disconnected. Reconnecting in 5 seconds.");
+                setTimeout(this.checkConnectionStatusAndReconnect.bind(this), 10000);
+            };
+            return this.websocket.close.bind(this.websocket);
+        });
+        let observer = {
+            next: (data: Object) => {
+                if (this.websocket.readyState === WebSocket.OPEN) {
+                    this.websocket.send(JSON.stringify(data));
+                }
+            }
+        };
+        this.messages = Subject.create(observer, observable);
     }
 
     public ready(){
@@ -59,5 +79,4 @@ export class DiaWebsocketService {
     public getMessages(){
         return this.messages.asObservable();
     }
-
 }
