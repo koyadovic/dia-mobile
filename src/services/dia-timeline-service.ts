@@ -73,7 +73,7 @@ export class DiaTimelineService {
             (food) => {
                 return {id: food["id"], gr_selected: food["gr_selected"], units_selected: food["units_selected"]} ;
             }
-        )
+        );
         let url = `${this.backendURL.baseURL}/v1/instants/feedings/`;
         return Observable.create((observer) => {
             this.restBackendService
