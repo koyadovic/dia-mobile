@@ -15,6 +15,7 @@ export class DiaWebsocketService {
 
     private ready$ = new BehaviorSubject<boolean>(false);
     private loggedIn: boolean;
+    private checkConnectionIntervalMillis = 4000;
     
     constructor(private authenticationService: DiaAuthService,
                 private backendURLs: DiaBackendURL) {
@@ -30,7 +31,7 @@ export class DiaWebsocketService {
         });
 
         
-        this.reconnectionInterval = setInterval(this.checkConnectionStatusAndReconnect.bind(this), 10000);
+        this.reconnectionInterval = setInterval(this.checkConnectionStatusAndReconnect.bind(this), this.checkConnectionIntervalMillis);
 
     }
 
