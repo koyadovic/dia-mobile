@@ -26,7 +26,10 @@ export class DynamicField {
   private updateValue() {
     if(this.field && this.field.type == 'date'){
       if (!this.field.value) {
-        this.field.value = moment().format('YYYY-MM-DDTHH:mm:ssZ');
+        //this.field.value = moment().format('YYYY-MM-DDTHH:mm:ssZ');
+        this.field.value = new Date().toISOString();
+      } else {
+        this.field.value = new Date(this.field.value).toISOString();
       }
     }
     this.emitHaveChanges();
@@ -38,7 +41,7 @@ export class DynamicField {
         this.haveChanges.emit(
           {
             namespace_key: this.field.namespace_key,
-            value: new Date(this.field.value).valueOf() / 1000.
+            value: new Date(this.field.value).valueOf()
           }
         );
       } else {
