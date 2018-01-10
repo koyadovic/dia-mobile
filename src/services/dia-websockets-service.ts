@@ -11,8 +11,6 @@ export class DiaWebsocketService {
     private websocket: WebSocket;
     private messages: Subject<MessageEvent>;
 
-    private ready$ = new BehaviorSubject<boolean>(false);
-
     private reconnectionInterval = null;
     
     constructor(private authenticationService: DiaAuthService,
@@ -20,22 +18,22 @@ export class DiaWebsocketService {
         
         this.authenticationService.loggedIn().subscribe((loggedIn) => {
             if(loggedIn === null) return;
+
             if(loggedIn) {
                 this.configureMessagesAndConnection();
-                this.ready$.next(true);
             } else {
-                // token === "" means logout
                 if(this.websocket) this.websocket.close();
-                this.ready$.next(false);
                 if (this.reconnectionInterval !== null) {
                     clearInterval(this.reconnectionInterval);
-                    console.log("Clearing interval");
                 }
             }
         });
     }
 
     private checkConnectionStatusAndReconnect() {
+        let token = this.authenticationService.getToken();
+        if(!token) return;
+
         if(this.websocket.readyState === WebSocket.CLOSED || this.websocket.readyState === WebSocket.CLOSING) {
             this.configureMessagesAndConnection();
         }
@@ -74,10 +72,6 @@ export class DiaWebsocketService {
             }
         };
         this.messages = Subject.create(observer, observable);
-    }
-
-    public ready(){
-        return this.ready$;
     }
 
     public getMessages(){

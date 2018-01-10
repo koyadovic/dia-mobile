@@ -44,34 +44,24 @@ export class DiaMobileApp {
             }
 
             // websockets
-            this.websocketsConnect();
-      
+            this.backendMessages$ = this.wsService.getMessages();
+            this.backendMessages$.subscribe(
+              (backendMessage) => {
+              console.log(backendMessage);
+            },
+            (error) => {
+              console.log("Websockets connection error.");
+            });
+          
           } else { // not logged in
             // rootPage is LoginPage
             if(this.rootPage !== LoginPage) {
               this.rootPage = LoginPage;
             }
 
-            // ws disconnect!
           }
         }
       );
-    });
-  }
-
-  websocketsConnect() {
-    // if websockets ready, getMessages observable
-    this.wsService.ready().subscribe((ready) => {
-      if(ready) {
-        this.backendMessages$ = this.wsService.getMessages();
-        this.backendMessages$.subscribe(
-          (backendMessage) => {
-          console.log(backendMessage);
-        },
-      (error) => {
-        console.log("Websockets connection error.");
-      });
-      }
     });
   }
 }

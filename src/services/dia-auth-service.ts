@@ -50,6 +50,7 @@ export class DiaAuthService {
 
     logout(){
         this.storage.set("token", "");
+        this.token = '';
         this.loggedIn$.next(false);
     }
 }

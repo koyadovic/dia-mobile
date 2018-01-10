@@ -63,7 +63,7 @@ export class UserConfiguration {
     public formatDate(seconds) {
         let m = this.utcSecondsToMoment(seconds).tz(this.getValue(UserConfiguration.TIMEZONE));
         let dateFormat = this.getValue(UserConfiguration.DATE_FORMAT);
-        if (dateFormat === '%d/%m/%Y') {
+        if (dateFormat === 'DD/MM/YYYY') {
             return m.format("DD/MM/YYYY");
         } else {
             return m.format("MM/DD/YYYY");
@@ -73,7 +73,7 @@ export class UserConfiguration {
     public formatDateTime(seconds) {
         let m = this.utcSecondsToMoment(seconds).tz(this.getValue(UserConfiguration.TIMEZONE));
         let dateFormat = this.getValue(UserConfiguration.DATE_FORMAT);
-        if (dateFormat === '%d/%m/%Y') {
+        if (dateFormat === 'DD/MM/YYYY') {
             return m.format("DD/MM/YYYY HH:mm:ss");
         } else {
             return m.format("MM/DD/YYYY HH:mm:ss");
