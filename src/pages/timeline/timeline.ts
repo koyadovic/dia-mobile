@@ -44,6 +44,7 @@ export class TimeLinePage {
 
     this.loggedinSubscription = this.authService.loggedIn().subscribe((loggedin) => {
       if(loggedin === null) return;
+      
       if(loggedin){
         this.refreshTimeline();
         this.timelineService.getInsulinTypes().subscribe((resp) => {
@@ -467,10 +468,9 @@ export class TimeLinePage {
 
   dateInfo(index) {
     let instant = this.timeline[index];
-
     if(index === 0) {
       if(instant.day === this.now.format('DD'))
-        return "Today";
+        return instant.passed_from_now;
       else
         return instant.moment.format('LL');
     } else {
