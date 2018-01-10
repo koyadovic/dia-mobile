@@ -56,9 +56,9 @@ export class AddFeedingPage {
       let weight;
 
       if (+food.units_selected > 0) {
-        weight = +food.gr_or_ml_per_unit * +food.units_selected;
+        weight = +food.g_or_ml_per_unit * +food.units_selected;
       } else {
-        weight = +food.gr_selected;
+        weight = +food.g_or_ml_selected;
       }
 
       this.carbs += +food.carb_factor * weight;

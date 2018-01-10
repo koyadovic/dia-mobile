@@ -36,8 +36,12 @@ export class DiaTimelineService {
         return Observable.create((observer) => {
             this.restBackendService
             .genericGet(url)
-            .subscribe((response) => {
+            .subscribe(
+            (response) => {
                 observer.next(response);
+                observer.complete();
+            },
+            (err) => {
                 observer.complete();
             });
         });
@@ -51,17 +55,23 @@ export class DiaTimelineService {
             .subscribe((food) => {
                 observer.next(food);
                 observer.complete();
+            },
+            (err) => {
+                observer.complete();
             });
         });
     }
 
     searchFood(searchString:string):Observable<any[]> {
-        let url = `${this.backendURL.baseURL}/v1/foods/?search=${searchString}`;
+        let url = `${this.backendURL.baseURL}/v1/foods/sources/?q=${searchString}`;
         return Observable.create((observer) => {
             this.restBackendService
             .genericGet(url)
             .subscribe((foods) => {
                 observer.next(foods);
+                observer.complete();
+            },
+            (err) => {
                 observer.complete();
             });
         });
@@ -80,6 +90,9 @@ export class DiaTimelineService {
             .genericPost(url, {foods: foodMinified})
             .subscribe((feeding) => {
                 observer.next(feeding);
+                observer.complete();
+            },
+            (err) => {
                 observer.complete();
             });
         });
