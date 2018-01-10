@@ -317,15 +317,7 @@ export class TimeLinePage {
           {
             "display": instant,
             "value": 0,
-            "conditional": {
-              "$or": [
-                { "trait_type": 2 },
-                { "trait_type": 3 },
-                { "trait_type": 4 },
-                { "trait_type": 5 },
-                { "trait_type": 6 },
-              ]
-            },
+            "conditional": {},
             "required": false,
             "hint": "",
             "type": "date",
