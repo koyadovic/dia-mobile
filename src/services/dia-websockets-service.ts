@@ -26,6 +26,10 @@ export class DiaWebsocketService {
                 // token === "" means logout
                 if(this.websocket) this.websocket.close();
                 this.ready$.next(false);
+                if (this.reconnectionInterval !== null) {
+                    clearInterval(this.reconnectionInterval);
+                    console.log("Clearing interval")
+                }
             }
         });
     }
@@ -39,6 +43,7 @@ export class DiaWebsocketService {
                 this.reconnectionInterval = setInterval(this.checkConnectionStatusAndReconnect.bind(this), 10000);
         } else {
             if (this.reconnectionInterval !== null) {
+                clearInterval(this.reconnectionInterval);
                 this.reconnectionInterval = null;
             }
         }

@@ -14,8 +14,6 @@ import { PhysicalTrait } from '../models/physical-trait-model';
 
 @Injectable()
 export class DiaTimelineService {
-    //private timeline$ = new ReplaySubject<any>(1);
-
     constructor(private backendURL: DiaBackendURL,
                 private restBackendService: DiaRestBackendService,
                 private authenticationService: DiaAuthService) {
@@ -40,10 +38,6 @@ export class DiaTimelineService {
             .subscribe(
             (response) => {
                 observer.next(response);
-                observer.complete();
-            },
-            (err) => {
-                observer.complete();
             });
         });
     }
@@ -57,9 +51,6 @@ export class DiaTimelineService {
             .subscribe((food) => {
                 observer.next(food);
                 observer.complete();
-            },
-            (err) => {
-                observer.complete();
             });
         });
     }
@@ -71,9 +62,6 @@ export class DiaTimelineService {
             .finally(() => observer.complete())
             .subscribe((foods) => {
                 observer.next(foods);
-            },
-            (err) => {
-                console.log(err);
             });
         });
     }
@@ -86,9 +74,6 @@ export class DiaTimelineService {
             .finally(() => observer.complete())
             .subscribe((foods) => {
                 observer.next(foods);
-            },
-            (err) => {
-                console.log(err);
             });
         });
     }
@@ -100,9 +85,6 @@ export class DiaTimelineService {
             .finally(() => observer.complete())
             .subscribe((food) => {
                 observer.next(food);
-            },
-            (err) => {
-                console.log(err);
             });
         });
     }
@@ -115,9 +97,6 @@ export class DiaTimelineService {
             .finally(() => observer.complete())
             .subscribe((feeding) => {
                 observer.next(feeding);
-            },
-            (err) => {
-                console.log(err);
             });
         });
     }

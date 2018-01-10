@@ -21,16 +21,18 @@ export class DiaRestBackendService {
 
   public genericGet(url: string): Observable<any> {
     return Observable.create((observer) => {
-      this.http.get(url, {headers: this.getHeaders(this.authService.getToken())})
+      this.http
+      .get(url, {headers: this.getHeaders(this.authService.getToken())})
+      .finally(() => observer.complete())
       .map((response: HttpResponse<any>) => {
         return response;
       })
       .subscribe(
         (resp) => {
           observer.next(resp);
-          observer.complete();
         },
         (err) => {
+          console.log(err);
           if(err.status === 401){
             this.authService.logout();
           }
@@ -41,16 +43,18 @@ export class DiaRestBackendService {
 
   public genericPost(url: string, data: object): Observable<any> {
     return Observable.create((observer) => {
-      this.http.post(url, data, {headers: this.getHeaders(this.authService.getToken())})
+      this.http
+      .post(url, data, {headers: this.getHeaders(this.authService.getToken())})
+      .finally(() => observer.complete())
       .map((response: HttpResponse<any>) => {
         return response;
       })
       .subscribe(
         (resp) => {
           observer.next(resp);
-          observer.complete();
         },
         (err) => {
+          console.log(err);
           if(err.status === 401){
             this.authService.logout();
           }

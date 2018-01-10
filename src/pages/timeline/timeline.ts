@@ -31,6 +31,8 @@ export class TimeLinePage {
   private oldestElementTimestamp = null;
   private now;
 
+  private loggedinSubscription;
+
   constructor(private navCtrl: NavController,
               private configurationService: DiaConfigurationService,
               private timelineService: DiaTimelineService,
@@ -40,14 +42,19 @@ export class TimeLinePage {
 
     this.userConfig = this.configurationService.getUserConfiguration();
 
-    this.authService.loggedIn().subscribe((loggedin) => {
-      if(!loggedin) return;
+    this.loggedinSubscription = this.authService.loggedIn().subscribe((loggedin) => {
+      if(loggedin === null) return;
+      if(loggedin){
+        this.refreshTimeline();
+        this.timelineService.getInsulinTypes().subscribe((resp) => {
+          this.insulinTypes = resp;
+        });
 
-      this.refreshTimeline();
-
-      this.timelineService.getInsulinTypes().subscribe((resp) => {
-        this.insulinTypes = resp;
-      });
+      } else {
+        this.userConfig = null;
+        if(!!this.loggedinSubscription)
+          this.loggedinSubscription.unsubscribe();
+      }
     });
   }
 
@@ -87,7 +94,6 @@ export class TimeLinePage {
       this.now = moment();
       this.timeline = this.completeInstants(instants);
     });
-
   }
 
   goConfiguration() {

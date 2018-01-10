@@ -35,17 +35,23 @@ export class DiaMobileApp {
 
       this.authService.loggedIn().subscribe(
         (loggedIn) => {
-
+          if (loggedIn === null) return
           if(loggedIn) { // logged in!
             // rootPage is TimeLinePage
-            this.rootPage = TimeLinePage;
+            if(this.rootPage !== TimeLinePage) {
+              this.rootPage = TimeLinePage;
+            }
 
             // websockets
             this.websocketsConnect();
       
           } else { // not logged in
             // rootPage is LoginPage
-            this.rootPage = LoginPage;
+            if(this.rootPage !== LoginPage) {
+              this.rootPage = LoginPage;
+            }
+
+            // ws disconnect!
           }
         }
       );
