@@ -36,6 +36,7 @@ export class DiaMobileApp {
       this.authService.loggedIn().subscribe(
         (loggedIn) => {
           if (loggedIn === null) return
+
           if(loggedIn) { // logged in!
             // rootPage is TimeLinePage
             if(this.rootPage !== TimeLinePage) {

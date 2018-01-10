@@ -13,6 +13,8 @@ export class DynamicField {
 
   @Output() haveChanges = new EventEmitter();
 
+  private firstChanged: boolean = false;
+
   constructor() {
     this.updateValue();
   }
@@ -20,6 +22,9 @@ export class DynamicField {
   ngOnChanges(changes) {
     if("field" in changes) {
       this.updateValue();
+      if(!this.firstChanged){
+        this.firstChanged = true;
+      }
     }
   }
 
@@ -32,7 +37,9 @@ export class DynamicField {
         this.field.value = new Date(this.field.value).toISOString();
       }
     }
-    this.emitHaveChanges();
+    
+    if(this.firstChanged)
+      this.emitHaveChanges();
   }
 
   private emitHaveChanges(){

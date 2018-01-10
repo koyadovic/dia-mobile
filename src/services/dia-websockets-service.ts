@@ -19,6 +19,7 @@ export class DiaWebsocketService {
                 private backendURLs: DiaBackendURL) {
         
         this.authenticationService.loggedIn().subscribe((loggedIn) => {
+            if(loggedIn === null) return;
             if(loggedIn) {
                 this.configureMessagesAndConnection();
                 this.ready$.next(true);
@@ -28,7 +29,7 @@ export class DiaWebsocketService {
                 this.ready$.next(false);
                 if (this.reconnectionInterval !== null) {
                     clearInterval(this.reconnectionInterval);
-                    console.log("Clearing interval")
+                    console.log("Clearing interval");
                 }
             }
         });
