@@ -12,44 +12,41 @@ export class DiaWebsocketService {
     private messages: Subject<MessageEvent>;
 
     private reconnectionInterval = null;
+
+    private ready$ = new BehaviorSubject<boolean>(false);
+    private loggedIn: boolean;
     
     constructor(private authenticationService: DiaAuthService,
                 private backendURLs: DiaBackendURL) {
         
         this.authenticationService.loggedIn().subscribe((loggedIn) => {
-            if(loggedIn === null) return;
+            this.loggedIn = loggedIn;
 
-            if(loggedIn) {
-                this.configureMessagesAndConnection();
+            if(this.loggedIn) {
+                this.checkConnectionStatusAndReconnect();
             } else {
-                if(this.websocket) this.websocket.close();
-                if (this.reconnectionInterval !== null) {
-                    clearInterval(this.reconnectionInterval);
-                }
+                if (!!this.websocket) this.websocket.close();
             }
         });
+
+        
+        this.reconnectionInterval = setInterval(this.checkConnectionStatusAndReconnect.bind(this), 10000);
+
     }
 
     private checkConnectionStatusAndReconnect() {
-        let token = this.authenticationService.getToken();
-        if(!token) return;
-
-        if(this.websocket.readyState === WebSocket.CLOSED || this.websocket.readyState === WebSocket.CLOSING) {
-            this.configureMessagesAndConnection();
+        if (this.loggedIn === null || this.loggedIn === false) {
+            this.ready$.next(false);
+            return;
         }
-        if(this.websocket.readyState === WebSocket.CLOSED || this.websocket.readyState === WebSocket.CLOSING || this.websocket.readyState === WebSocket.CONNECTING) {
-            if (this.reconnectionInterval === null)
-                this.reconnectionInterval = setInterval(this.checkConnectionStatusAndReconnect.bind(this), 10000);
-        } else {
-            if (this.reconnectionInterval !== null) {
-                clearInterval(this.reconnectionInterval);
-                this.reconnectionInterval = null;
-            }
+
+        if(!this.websocket || this.websocket.readyState === WebSocket.CLOSED || this.websocket.readyState === WebSocket.CLOSING) {
+            this.configureMessagesAndConnection();
         }
     }
 
     private configureMessagesAndConnection() {
-        if (!!this.websocket && ! this.websocket.CLOSED)
+        if (!!this.websocket && this.websocket.readyState !== this.websocket.CLOSED)
             this.websocket.close();
 
         let token = this.authenticationService.getToken();
@@ -58,10 +55,6 @@ export class DiaWebsocketService {
         let observable = Observable.create((observer) => {
             this.websocket.onmessage = observer.next.bind(observer);
             this.websocket.onerror = observer.error.bind(observer);
-
-            this.websocket.onclose = (event) => {
-                setTimeout(this.checkConnectionStatusAndReconnect.bind(this), 10000);
-            };
             return this.websocket.close.bind(this.websocket);
         });
         let observer = {
@@ -72,6 +65,11 @@ export class DiaWebsocketService {
             }
         };
         this.messages = Subject.create(observer, observable);
+        this.ready$.next(true);
+    }
+
+    public isReady(){
+        return this.ready$.asObservable();
     }
 
     public getMessages(){
