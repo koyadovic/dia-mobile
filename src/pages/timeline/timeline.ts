@@ -44,7 +44,7 @@ export class TimeLinePage {
 
     this.loggedinSubscription = this.authService.loggedIn().subscribe((loggedin) => {
       if(loggedin === null) return;
-      
+
       if(loggedin){
         this.refreshTimeline();
         this.timelineService.getInsulinTypes().subscribe((resp) => {
@@ -131,7 +131,10 @@ export class TimeLinePage {
             "type": "date",
             "regex": "",
             "key": "datetime",
-            "namespace_key": "datetime"
+            "namespace_key": "datetime",
+            "additional_options": {
+              "format": `${this.userConfig.getValue(UserConfiguration.DATE_FORMAT)} HH:mm`
+            }
           },
           {
             "display": level,
@@ -180,7 +183,10 @@ export class TimeLinePage {
             "type": "date",
             "regex": "",
             "key": "datetime",
-            "namespace_key": "datetime"
+            "namespace_key": "datetime",
+            "additional_options": {
+              "format": `${this.userConfig.getValue(UserConfiguration.DATE_FORMAT)} HH:mm`
+            }
           },
           {
             "display": intensity,
@@ -243,7 +249,10 @@ export class TimeLinePage {
             "type": "date",
             "regex": "",
             "key": "datetime",
-            "namespace_key": "datetime"
+            "namespace_key": "datetime",
+            "additional_options": {
+              "format": `${this.userConfig.getValue(UserConfiguration.DATE_FORMAT)} HH:mm`
+            }
           },
           {
             "display": type,
@@ -288,24 +297,19 @@ export class TimeLinePage {
       this.translate.get("Instant"),
       this.translate.get("Type"),
       this.translate.get("Select date"),
-      this.translate.get("Date of birth"),
-      this.translate.get("Sex"),
       this.translate.get("Value"),
       this.translate.get("Introduce a value"),
       this.translate.get("Select type of trait and complete the value."),
 
-      this.translate.get("Birth Date"),
       this.translate.get("Height (cm)"),
       this.translate.get("Weight (kg)"),
       this.translate.get("Neck Perimeter (cm)"),
       this.translate.get("Abdomen Perimeter (cm)"),
       this.translate.get("Waist Perimeter (cm)"),
 
-      this.translate.get("Male"),
-      this.translate.get("Female"),
-    ).subscribe(([instant, type, selectDate, dateOfBirth, sex,
-    value, introduceAValue, traitName, birthDate, height, weight,
-    neck, abdomen, waist, male, female]) => {
+    ).subscribe(([instant, type, selectDate,
+    value, introduceAValue, traitName, height, weight,
+    neck, abdomen, waist]) => {
       let data = {
         type: "trait",
         url: this.timelineService.getPhysicalTraitChangeEndPoint(),
@@ -328,6 +332,9 @@ export class TimeLinePage {
             "regex": "",
             "key": "datetime",
             "namespace_key": "datetime",
+            "additional_options": {
+              "format": `${this.userConfig.getValue(UserConfiguration.DATE_FORMAT)} HH:mm`
+            }
           },
           {
             "display": type,
@@ -339,49 +346,13 @@ export class TimeLinePage {
             "regex": "^.*$",
             "key": "trait_type",
             "options": [
-              { "display": birthDate, "value": 1 },
               { "display": height, "value": 2 },
               { "display": weight, "value": 3 },
               { "display": neck, "value": 4 },
               { "display": abdomen, "value": 5 },
               { "display": waist, "value": 6 },
-              { "display": sex, "value": 7 },
             ],
             "namespace_key": "trait_type"
-          },
-          {
-            "display": selectDate,
-            "value": 0,
-            "conditional": {
-              "$or": [
-                { "trait_type": 1 },
-              ]
-            },
-            "required": true,
-            "hint": dateOfBirth,
-            "type": "date",
-            "regex": "^.*$",
-            "key": "value",
-            "namespace_key": "value"
-          },
-          {
-            "display": sex,
-            "value": 0,
-            "conditional": {
-              "$or": [
-                { "trait_type": 7 },
-              ]
-            },
-            "required": true,
-            "hint": "",
-            "type": "select",
-            "regex": "^.*$",
-            "key": "value",
-            "namespace_key": "value",
-            "options": [
-              {"display": male, "value": 0},
-              {"display": female, "value": 1},
-            ]
           },
           {
             "display": value,

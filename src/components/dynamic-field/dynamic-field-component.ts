@@ -30,14 +30,14 @@ export class DynamicField {
 
   private updateValue() {
     if(this.field && this.field.type == 'date'){
+      let tzoffset = (new Date()).getTimezoneOffset() * 60000;
       if (!this.field.value) {
-        //this.field.value = moment().format('YYYY-MM-DDTHH:mm:ssZ');
-        this.field.value = new Date().toISOString();
+        this.field.value  = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
       } else {
-        this.field.value = new Date(this.field.value).toISOString();
+        this.field.value  = (new Date(new Date(this.field.value).getTime() - tzoffset)).toISOString().slice(0, -1);
       }
     }
-    
+
     if(this.firstChanged)
       this.emitHaveChanges();
   }
