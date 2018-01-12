@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TimeLinePage } from '../timeline/timeline';
 import { PlanningsPage } from '../plannings/plannings';
 import { StatsPage } from '../stats/stats';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'page-main',
@@ -14,7 +15,9 @@ export class MainPage {
   tab3 = StatsPage;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private navCtrl: NavController,
+              private navParams: NavParams,
+              private translate: TranslateService) {
   }
 
 

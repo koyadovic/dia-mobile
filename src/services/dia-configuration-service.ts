@@ -6,12 +6,15 @@ import { Observable } from 'rxjs/Observable';
 import { DiaAuthService } from './dia-auth-service';
 import { TranslateService } from '@ngx-translate/core';
 import { UserConfiguration } from '../utils/user-configuration';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 
 @Injectable()
 export class DiaConfigurationService {
     private configuration = new ReplaySubject<any>(1);
     private userConfig: UserConfiguration = new UserConfiguration();
+
+    private ready$ = new BehaviorSubject<boolean>(false);
 
     constructor(private backendURL: DiaBackendURL,
                 private restBackendService: DiaRestBackendService,
@@ -33,6 +36,7 @@ export class DiaConfigurationService {
             .subscribe((configuration) => {
                 this.configuration.next(configuration);
                 this.userConfig.injectDependencies(configuration, this.translate);
+                this.ready$.next(true);
             }
         );
     }
@@ -53,4 +57,9 @@ export class DiaConfigurationService {
     getUserConfiguration(){
         return this.userConfig;
     }
+
+    public isReady(){
+        return this.ready$.asObservable();
+    }
+
 }

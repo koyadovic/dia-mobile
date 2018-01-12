@@ -100,8 +100,6 @@ export class TimeLinePage {
 
   goConfiguration() {
     this.appCtrl.getRootNavs()[0].push(ConfigurationPage);
-    //this.appCtrl.getRootNav().push(ConfigurationPage);
-    //this.navCtrl.push(ConfigurationPage);
   }
 
   // refresh timeline

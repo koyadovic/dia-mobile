@@ -10,6 +10,7 @@ import { LoginPage } from '../pages/login/login';
 import { DiaAuthService } from '../services/dia-auth-service'
 import { DiaWebsocketService } from '../services/dia-websockets-service';
 import { MainPage } from '../pages/main/main';
+import { DiaConfigurationService } from '../services/dia-configuration-service';
 
 
 @Component({
@@ -24,7 +25,8 @@ export class DiaMobileApp {
               private splashScreen: SplashScreen,
               private backgroundMode: BackgroundMode,
               private authService: DiaAuthService,
-              private wsService: DiaWebsocketService) {
+              private wsService: DiaWebsocketService,
+              private configurationService: DiaConfigurationService) {
 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -56,8 +58,14 @@ export class DiaMobileApp {
           if(loggedIn) { // logged in!
             // rootPage is MainPage
             if(this.rootPage !== MainPage) {
-              this.rootPage = MainPage;
-            }         
+              this.configurationService.isReady().subscribe(
+                (ready) => {
+                  if(ready) {
+                    this.rootPage = MainPage;
+                  }
+                }
+              );
+            }
           } else { // not logged in
             // rootPage is LoginPage
             if(this.rootPage !== LoginPage) {

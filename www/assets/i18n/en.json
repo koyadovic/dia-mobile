@@ -1,0 +1,22 @@
+{
+    "Dia Mobile": "Dia Mobile",
+    "Timeline": "Timeline",
+    "Logout": "Logout",
+    "Logout Confirmation": "Logout Confirmation",
+    "Are you sure to close your session?": "Are you sure to close your session?",
+
+    "Add Glucose": "Add Glucose",
+    "Add Feeding": "Add Feeding",
+    "Add Insulin Dose": "Add Insulin Dose",
+    "Add Physical Activity": "Add Physical Activity",
+    "Add Physical Trait Change": "Add Trait Change",
+
+    "Save": "Save",
+    "Dismiss": "Dismiss",
+
+    "Glucose Level": "Glucose Level",
+    "Physical Activity": "Physical Activity",
+    "Insulin Dose": "Insulin Dose",
+    "Physical Trait Change": "Physical Trait Change",
+    "Feeding": "Feeding"
+}
