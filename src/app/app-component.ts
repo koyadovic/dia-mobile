@@ -33,38 +33,40 @@ export class DiaMobileApp {
       splashScreen.hide();
       backgroundMode.enable();
 
-      this.authService.loggedIn().subscribe(
-        (loggedIn) => {
-
-          if(loggedIn) { // logged in!
-            // rootPage is TimeLinePage
-            this.rootPage = TimeLinePage;
-
+      this.wsService.isReady().subscribe(
+        (ready) => {
+          if(ready) {
             // websockets
-            this.websocketsConnect();
-      
-          } else { // not logged in
-            // rootPage is LoginPage
-            this.rootPage = LoginPage;
+            this.backendMessages$ = this.wsService.getMessages();
+            this.backendMessages$.subscribe(
+              (backendMessage) => {
+              console.log(backendMessage);
+            },
+            (error) => {
+              console.log("Websockets connection error.");
+            });
           }
         }
       );
-    });
-  }
 
-  websocketsConnect() {
-    // if websockets ready, getMessages observable
-    this.wsService.ready().subscribe((ready) => {
-      if(ready) {
-        this.backendMessages$ = this.wsService.getMessages();
-        this.backendMessages$.subscribe(
-          (backendMessage) => {
-          console.log(backendMessage);
-        },
-      (error) => {
-        console.log("Websockets connection error.");
-      });
-      }
+      this.authService.loggedIn().subscribe(
+        (loggedIn) => {
+          if (loggedIn === null) return
+
+          if(loggedIn) { // logged in!
+            // rootPage is TimeLinePage
+            if(this.rootPage !== TimeLinePage) {
+              this.rootPage = TimeLinePage;
+            }         
+          } else { // not logged in
+            // rootPage is LoginPage
+            if(this.rootPage !== LoginPage) {
+              this.rootPage = LoginPage;
+            }
+
+          }
+        }
+      );
     });
   }
 }

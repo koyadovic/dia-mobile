@@ -14,8 +14,6 @@ import { PhysicalTrait } from '../models/physical-trait-model';
 
 @Injectable()
 export class DiaTimelineService {
-    //private timeline$ = new ReplaySubject<any>(1);
-
     constructor(private backendURL: DiaBackendURL,
                 private restBackendService: DiaRestBackendService,
                 private authenticationService: DiaAuthService) {
@@ -36,9 +34,10 @@ export class DiaTimelineService {
         return Observable.create((observer) => {
             this.restBackendService
             .genericGet(url)
-            .subscribe((response) => {
+            .finally(() => observer.complete())
+            .subscribe(
+            (response) => {
                 observer.next(response);
-                observer.complete();
             });
         });
     }
@@ -48,39 +47,56 @@ export class DiaTimelineService {
         return Observable.create((observer) => {
             this.restBackendService
             .genericPost(url, food)
+            .finally(() => observer.complete())
             .subscribe((food) => {
                 observer.next(food);
                 observer.complete();
             });
         });
     }
-
-    searchFood(searchString:string):Observable<any[]> {
-        let url = `${this.backendURL.baseURL}/v1/foods/?search=${searchString}`;
+    getFoods(favorite: boolean):Observable<any[]> {
+        let url = `${this.backendURL.baseURL}/v1/foods/?favorite=${favorite}`;
         return Observable.create((observer) => {
             this.restBackendService
             .genericGet(url)
+            .finally(() => observer.complete())
             .subscribe((foods) => {
                 observer.next(foods);
-                observer.complete();
+            });
+        });
+    }
+
+    searchFood(searchString:string):Observable<any[]> {
+        let url = `${this.backendURL.baseURL}/v1/foods/sources/?q=${searchString}`;
+        return Observable.create((observer) => {
+            this.restBackendService
+            .genericGet(url)
+            .finally(() => observer.complete())
+            .subscribe((foods) => {
+                observer.next(foods);
+            });
+        });
+    }
+    searchedFoodDetails(source_name: string, source_id: number){
+        let url = `${this.backendURL.baseURL}/v1/foods/sources/${source_name}/${source_id}/`;
+        return Observable.create((observer) => {
+            this.restBackendService
+            .genericGet(url)
+            .finally(() => observer.complete())
+            .subscribe((food) => {
+                observer.next(food);
             });
         });
     }
 
     saveFeeding(foodSelected: object[]):Observable<any> {
-        // we only need id, weight and units
-        let foodMinified = foodSelected.map(
-            (food) => {
-                return {id: food["id"], weight: food["weight"], units: food["units"]} ;
-            }
-        )
         let url = `${this.backendURL.baseURL}/v1/instants/feedings/`;
         return Observable.create((observer) => {
             this.restBackendService
-            .genericPost(url, {foods: foodMinified})
+            .genericPost(url, {foods: foodSelected})
+            .finally(() => observer.complete())
             .subscribe((feeding) => {
                 observer.next(feeding);
-                observer.complete();
             });
         });
     }

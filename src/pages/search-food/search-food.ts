@@ -13,20 +13,26 @@ import { ViewController } from 'ionic-angular/navigation/view-controller';
 })
 export class SearchFoodPage {
   private results = [];
+  private myFoods = [];
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private modalCtrl: ModalController,
               private viewCtrl: ViewController,
-              private timelineService: DiaTimelineService) {}
+              private timelineService: DiaTimelineService) {
 
-  ionViewDidLoad() {
+    this.timelineService.getFoods(false).subscribe(
+      (foods) => {
+        this.myFoods = foods;
+        this.results = this.myFoods;
+      }
+    );
   }
 
   onInput(event) {
     let searchString = event.target.value;
-    if (searchString === ""){
-      this.results = [];
+    if (!searchString){
+      this.results = this.myFoods;
     } else {
       this.timelineService.searchFood(searchString).subscribe(
         (results) => {
@@ -52,7 +58,19 @@ export class SearchFoodPage {
   }
 
   foodSelected(food) {
-    let modal = this.modalCtrl.create(IntroduceFoodWeightOrUnitsPage, {"food": food});
+    if (food.hasOwnProperty('source_name')) {
+      this.timelineService.searchedFoodDetails(food.source_name, food.source_id).subscribe(
+        (detailedFood) => {
+          this.openSelectionModal(detailedFood);
+        }
+      )
+    } else {
+      this.openSelectionModal(food);
+    }
+  }
+
+  private openSelectionModal(defailedFood) {
+    let modal = this.modalCtrl.create(IntroduceFoodWeightOrUnitsPage, {"food": defailedFood});
     
     modal.onDidDismiss((data) => {
       if(!!data && data.food) {
@@ -60,5 +78,6 @@ export class SearchFoodPage {
       }
     });
     modal.present();
+
   }
 }

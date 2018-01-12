@@ -18,7 +18,7 @@ export class DiaConfigurationService {
                 private authenticationService: DiaAuthService,
                 private translate: TranslateService) {
         
-        let sub = this.authenticationService.loggedIn().subscribe(
+        this.authenticationService.loggedIn().subscribe(
             (loggedIn) => {
                 if (loggedIn) {
                     this.refreshConfiguration();
@@ -29,24 +29,20 @@ export class DiaConfigurationService {
 
     private refreshConfiguration(){
         this.restBackendService
-        .genericGet(`${this.backendURL.baseURL}/v1/configurations/`)
-        .subscribe((configuration) => {
-            this.configuration.next(configuration);
-            this.userConfig.injectDependencies(configuration, this.translate);
-        }
-    );
-
+            .genericGet(`${this.backendURL.baseURL}/v1/configurations/`)
+            .subscribe((configuration) => {
+                this.configuration.next(configuration);
+                this.userConfig.injectDependencies(configuration, this.translate);
+            }
+        );
     }
 
     saveConfiguration(configurationChanges) {
         return this.restBackendService
             .genericPost(`${this.backendURL.baseURL}/v1/configurations/`, configurationChanges)
             .subscribe((resp) => {
-                  this.userConfig.updateValues(configurationChanges);
-                  this.refreshConfiguration();
-                },
-                (error) => {
-        
+                this.userConfig.updateValues(configurationChanges);
+                this.refreshConfiguration();
             });
     }
 

@@ -13,6 +13,8 @@ export class DynamicField {
 
   @Output() haveChanges = new EventEmitter();
 
+  private firstChanged: boolean = false;
+
   constructor() {
     this.updateValue();
   }
@@ -20,16 +22,24 @@ export class DynamicField {
   ngOnChanges(changes) {
     if("field" in changes) {
       this.updateValue();
+      if(!this.firstChanged){
+        this.firstChanged = true;
+      }
     }
   }
 
   private updateValue() {
     if(this.field && this.field.type == 'date'){
-      if (!this.field.value) {
-        this.field.value = moment().format('YYYY-MM-DDTHH:mm:ssZ');
+      let tzoffset = (new Date()).getTimezoneOffset() * 60000;
+      if (!this.field.value || this.field.value === "invalid") {
+        this.field.value  = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
+      } else {
+        this.field.value  = (new Date(new Date(this.field.value).getTime() - tzoffset)).toISOString().slice(0, -1);
       }
     }
-    this.emitHaveChanges();
+
+    if(this.firstChanged)
+      this.emitHaveChanges();
   }
 
   private emitHaveChanges(){
@@ -38,7 +48,7 @@ export class DynamicField {
         this.haveChanges.emit(
           {
             namespace_key: this.field.namespace_key,
-            value: new Date(this.field.value).valueOf() / 1000.
+            value: new Date(this.field.value).valueOf()
           }
         );
       } else {

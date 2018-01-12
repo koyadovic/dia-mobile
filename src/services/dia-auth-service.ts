@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class DiaAuthService {
-    private loggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    private loggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
     private token: string = "";
 
     constructor(private http: HttpClient,
@@ -19,7 +19,8 @@ export class DiaAuthService {
         // in startup time we retrieve the token from the store.
         this.storage.get("token").then(token => {
             this.token = token;
-            this.loggedIn$.next(!!token);
+            if(this.loggedIn$.getValue() !== !!token)
+                this.loggedIn$.next(!!token);
         });
     }
 
@@ -49,6 +50,7 @@ export class DiaAuthService {
 
     logout(){
         this.storage.set("token", "");
+        this.token = '';
         this.loggedIn$.next(false);
     }
 }

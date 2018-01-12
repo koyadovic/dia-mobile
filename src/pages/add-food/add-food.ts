@@ -13,13 +13,13 @@ export class AddFoodPage {
   private food = {
     name: "",
     manufacturer: "",
-    total_gr_ml: "100",
-    weight_per_unit: null,
-    carb_gr: null,
-    protein_gr: null,
-    fat_gr: null,
-    fiber_gr: null,
-    alcohol_gr: null
+    g_or_ml: "100",
+    g_or_ml_per_unit: null,
+    carb_g: null,
+    protein_g: null,
+    fat_g: null,
+    fiber_g: null,
+    alcohol_g: null
   }
 
   constructor(public navCtrl: NavController,
@@ -29,7 +29,7 @@ export class AddFoodPage {
 
   kcal(){
     let f = this.food;
-    return (+f.carb_gr * 4.) + (+f.protein_gr * 4.) + (+f.fat_gr * 9.) + (+f.alcohol_gr * 7.);
+    return (+f.carb_g * 4.) + (+f.protein_g * 4.) + (+f.fat_g * 9.) + (+f.alcohol_g * 7.);
   }
 
   ionViewDidLoad() {
@@ -38,8 +38,8 @@ export class AddFoodPage {
   valid(){
     let f = this.food;
     if(f.name === "" || f.manufacturer === "") return false;
-    if(+f.total_gr_ml < +f.carb_gr + +f.protein_gr + +f.fat_gr + +f.fiber_gr + +f.alcohol_gr) return false;
-    if(f.carb_gr === null || f.protein_gr === null || f.fat_gr === null) return false;
+    if(+f.g_or_ml < +f.carb_g + +f.protein_g + +f.fat_g + +f.fiber_g + +f.alcohol_g) return false;
+    if(f.carb_g === null || f.protein_g === null || f.fat_g === null) return false;
     return true;
   }
 

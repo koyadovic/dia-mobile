@@ -11,53 +11,69 @@ export class DiaWebsocketService {
     private websocket: WebSocket;
     private messages: Subject<MessageEvent>;
 
+    private reconnectionInterval = null;
+
     private ready$ = new BehaviorSubject<boolean>(false);
+    private loggedIn: boolean;
+    private checkConnectionIntervalMillis = 4000;
     
     constructor(private authenticationService: DiaAuthService,
                 private backendURLs: DiaBackendURL) {
         
         this.authenticationService.loggedIn().subscribe((loggedIn) => {
-            if(loggedIn) {
-                if (!!this.websocket && ! this.websocket.CLOSED)
-                    this.websocket.close();
+            this.loggedIn = loggedIn;
 
-                let token = this.authenticationService.getToken();
-                this.websocket = new WebSocket(backendURLs.wsBaseURL + `?t=${token}`);
-
-                let observable = Observable.create((observer) => {
-                    this.websocket.onmessage = observer.next.bind(observer);
-                    this.websocket.onerror = observer.error.bind(observer);
-                    this.websocket.onclose = observer.complete.bind(observer);
-                    return this.websocket.close.bind(this.websocket);
-                });
-
-                let observer = {
-                    next: (data: Object) => {
-                        if (this.websocket.readyState === WebSocket.OPEN) {
-                            this.websocket.send(JSON.stringify(data));
-                        }
-                    }
-                };
-
-                this.messages = Subject.create(observer, observable);
-                this.ready$.next(true);
-
+            if(this.loggedIn) {
+                this.checkConnectionStatusAndReconnect();
             } else {
-                // token === "" means logout
-                if(this.websocket)
-                this.websocket.close();
-                this.ready$.next(false);
-
+                if (!!this.websocket) this.websocket.close();
             }
-        })
+        });
+
+        
+        this.reconnectionInterval = setInterval(this.checkConnectionStatusAndReconnect.bind(this), this.checkConnectionIntervalMillis);
+
     }
 
-    public ready(){
-        return this.ready$;
+    private checkConnectionStatusAndReconnect() {
+        if (this.loggedIn === null || this.loggedIn === false) {
+            this.ready$.next(false);
+            return;
+        }
+
+        if(!this.websocket || this.websocket.readyState === WebSocket.CLOSED || this.websocket.readyState === WebSocket.CLOSING) {
+            this.configureMessagesAndConnection();
+        }
+    }
+
+    private configureMessagesAndConnection() {
+        if (!!this.websocket && this.websocket.readyState !== this.websocket.CLOSED)
+            this.websocket.close();
+
+        let token = this.authenticationService.getToken();
+        this.websocket = new WebSocket(this.backendURLs.wsBaseURL + `?t=${token}`);
+
+        let observable = Observable.create((observer) => {
+            this.websocket.onmessage = observer.next.bind(observer);
+            this.websocket.onerror = observer.error.bind(observer);
+            return this.websocket.close.bind(this.websocket);
+        });
+        let observer = {
+            next: (data: Object) => {
+                if (this.websocket.readyState === WebSocket.OPEN) {
+                    this.websocket.send(JSON.stringify(data));
+                }
+            }
+        };
+        this.messages = Subject.create(observer, observable);
+        this.ready$.next(true);
+    }
+
+    public isReady(){
+        return this.ready$.asObservable();
     }
 
     public getMessages(){
         return this.messages.asObservable();
     }
-
 }

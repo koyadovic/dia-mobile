@@ -11,12 +11,12 @@
 
   <ion-item *ngIf="!units">
     <ion-label stacked color="primary">Weight</ion-label>
-    <ion-input type="number" placeholder="Introduce weight in grams" name="weight" [(ngModel)]="food.weight" required></ion-input>
+    <ion-input type="number" placeholder="Introduce weight in grams" name="g_or_ml_selected" [(ngModel)]="food.g_or_ml_selected" required></ion-input>
   </ion-item>
 
   <ion-item *ngIf="units">
     <ion-label stacked color="primary">Units</ion-label>
-    <ion-input type="number" placeholder="Introduce units of food" name="units" [(ngModel)]="food.units" required></ion-input>
+    <ion-input type="number" placeholder="Introduce units of food" name="units_selected" [(ngModel)]="food.units_selected" required></ion-input>
   </ion-item>
 
   <ion-grid>

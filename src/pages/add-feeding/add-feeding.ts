@@ -53,20 +53,21 @@ export class AddFeedingPage {
     this.kcal = 0.0;
 
     for(let food of this.foodSelected) {
-      console.log(JSON.stringify(food));
-      let weight = +food.weight
-      if (food.weight_per_unit > 0.0) {
-        weight = +food.weight_per_unit * +food.units;
+      let weight;
+
+      if (+food.units_selected > 0) {
+        weight = +food.g_or_ml_per_unit * +food.units_selected;
+      } else {
+        weight = +food.g_or_ml_selected;
       }
 
-      if(food.total_gr_ml > 0.0) {
-        this.carbs += (+food.carb_gr / +food.total_gr_ml) * weight;
-        this.proteins += (+food.protein_gr / +food.total_gr_ml) * weight;
-        this.fats += (+food.fat_gr / +food.total_gr_ml) * weight;
-        this.fiber += (+food.fiber_gr / +food.total_gr_ml) * weight;
-        this.alcohol += (+food.alcohol_gr / +food.total_gr_ml) * weight;
-        this.kcal += (this.carbs * 4.0) + (this.proteins * 4.0) + (this.fats * 9.0) + (this.alcohol * 7.0);
-      }
+      this.carbs += +food.carb_factor * weight;
+      this.proteins += +food.protein_factor * weight;
+      this.fats += +food.fat_factor * weight;
+      this.fiber += +food.fiber_factor * weight;
+      this.alcohol += +food.alcohol_factor * weight;
+
+      this.kcal += (this.carbs * 4.0) + (this.proteins * 4.0) + (this.fats * 9.0) + (this.alcohol * 7.0);
     }
 
     this.carbs = Math.round(this.carbs * 10) / 10;
