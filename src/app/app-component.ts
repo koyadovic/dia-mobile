@@ -6,17 +6,17 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { BackgroundMode } from '@ionic-native/background-mode';
 
 import { LoginPage } from '../pages/login/login';
-import { TimeLinePage } from '../pages/timeline/timeline';
 
 import { DiaAuthService } from '../services/dia-auth-service'
 import { DiaWebsocketService } from '../services/dia-websockets-service';
+import { MainPage } from '../pages/main/main';
 
 
 @Component({
   templateUrl: 'app-component.html',
 })
 export class DiaMobileApp {
-  rootPage:any = TimeLinePage;
+  rootPage:any;
   private backendMessages$: Observable<any>;
 
   constructor(private platform: Platform,
@@ -54,9 +54,9 @@ export class DiaMobileApp {
           if (loggedIn === null) return
 
           if(loggedIn) { // logged in!
-            // rootPage is TimeLinePage
-            if(this.rootPage !== TimeLinePage) {
-              this.rootPage = TimeLinePage;
+            // rootPage is MainPage
+            if(this.rootPage !== MainPage) {
+              this.rootPage = MainPage;
             }         
           } else { // not logged in
             // rootPage is LoginPage
