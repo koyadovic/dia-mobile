@@ -124,6 +124,44 @@ export class DiaTimelineService {
         });
     }
 
+    completeAllGenericTypes(data) {
+        data["types"] = {};
+        data["elements"].forEach(element => {
+            if (!(element["type"] in data["types"])) {
+                data["types"][element["type"]] = this.getGenericType(<"glucose" | "trait" | "activity" | "insulin">element["type"]);
+            }
+        });
+    }
+
+    getGenericType(type:"glucose" | "trait" | "activity" | "insulin") {
+        let url = "";
+        let fields = [];
+
+        switch (type) {
+            case "glucose":
+                url = this.getGlucoseEndpoint();
+                fields = this.getGlucoseFields();
+                break;
+            case "trait":
+                url = this.getPhysicalTraitChangeEndPoint();
+                fields = this.getTraitFields();
+                break;
+            case "activity":
+                url = this.getPhysicalActivityEndPoint();
+                fields = this.getPhysicalActivityFields();
+                break;
+            case "insulin":
+                url = this.getInsulinDoseEndPoint();
+                fields = this.getInsulinFields();
+                break;
+        }
+
+        return {
+            "url": url,
+            "fields": fields
+        }
+    }
+
     getGlucoseEndpoint(): string {
         return `${this.backendURL.baseURL}/v1/instants/glucoses/`;
     }
@@ -176,7 +214,6 @@ export class DiaTimelineService {
                     "display": instant,
                     "value": 0,
                     "required": false,
-                    "enabled": false,
                     "hint": "",
                     "type": "date",
                     "regex": "",

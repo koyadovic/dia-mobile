@@ -29,15 +29,18 @@ export class AddGenericPage {
     // get data
     this.data = this.navParams.get("data");
 
-    // clone the original array
-    this.complete_elements = this.data.elements.map(x => Object.assign({}, x));
+    this.data["elements"].forEach((element) => {
+      let computed_fields = Object.assign([], this.data["types"][element["type"]]["fields"]);
 
-    this.complete_elements.forEach((element) => {
-      element["fields"] = this.data.fields.map(x => Object.assign({}, x));
-      for(let field of element["fields"]) {
-        if(field.key in element) {
-          field.value = element[field.key];
+      for(let computed_field of computed_fields) {
+        for(let field in element["fields"]) {
+
+          if (field === computed_field["key"]) {
+            computed_field["value"] = element["fields"][field]["default_value"];
+            computed_field["disabled"] = element["fields"][field]["disabled"];
+          }
         }
+        element["computed_fields"] = computed_fields;
       }
     });
   }
@@ -54,16 +57,13 @@ export class AddGenericPage {
     let evaluate = null;
     for(let key in conditional) {
       for(let sentence of conditional[key]){
+
         for (let sentenceKey in sentence) {
-
           let elementValue = element[sentenceKey];
-
           if (!elementValue) {
             return false;
           }
-
           let conditionalValue = sentence[sentenceKey];
-
           if(key === "$or"){
 
             if(evaluate === null) {
@@ -115,6 +115,54 @@ export class AddGenericPage {
         console.log(err);
       },
     );
+  }
+
+  doAction(action) {
+    switch(action['type']) {
+      case 'dismiss':
+      if('url' in action) {
+        let url = action['url'];
+        let data = {};
+        if ('data' in action) {
+          data = action['data'];
+        }
+        this.restBackendService.genericPost(url, data).subscribe(
+          (resp) => {
+            this.dismiss();
+          }
+        );
+      }
+      this.dismiss();
+      break;
+
+      case 'add':
+      let requests = [];
+
+      for(let element of this.data['elements']) {
+        let data = {}
+        let url = this.data['types'][element['type']]['url'];
+        
+        for(let field of element['computed_fields']) {
+          if (field['type'] === 'date') {
+            data[field['key']] = new Date(field['value']).valueOf();
+          } else {
+            data[field['key']] = field['value'];
+          }
+        }
+
+        requests.push(this.restBackendService.genericPost(url, data));
+      }
+      
+      forkJoin(...requests).subscribe(
+        (resp) => {
+          this.viewCtrl.dismiss({"add": true});
+        },
+        (err) => {
+          console.log(err);
+        },
+      );
+      break;
+    }
   }
 
   hasProp(o, name) {

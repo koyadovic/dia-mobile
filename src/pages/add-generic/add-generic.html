@@ -1,13 +1,7 @@
 <ion-header>
 
   <ion-navbar *ngIf="!!data">
-    <ng-container [ngSwitch]="data.type">
-      <ion-title *ngSwitchCase="'glucose'">{{ "New Glucose" | translate }}</ion-title>
-      <ion-title *ngSwitchCase="'feeding'">{{ "New Feeding" | translate }}</ion-title>
-      <ion-title *ngSwitchCase="'activity'">{{ "New Physical Activity" | translate }}</ion-title>
-      <ion-title *ngSwitchCase="'insulin'">{{ "New Insulin Dose" | translate }}</ion-title>
-      <ion-title *ngSwitchCase="'trait'">{{ "New Trait Change" | translate }}</ion-title>
-    </ng-container>
+    <ion-title>{{ data['title'] }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -18,14 +12,15 @@
     <ion-row> 
       <ion-col> 
 
-        <ng-container *ngFor="let element of complete_elements; let i = index">
-          <p padding-right padding-left>{{ element.name }}</p>
-          <ng-container *ngFor="let field of element.fields">
+        <ng-container *ngFor="let element of data.elements; let i = index">
+
+          <p padding-right padding-left *ngIf="element.info">{{ element.info }}</p>
+          <ng-container *ngFor="let field of element.computed_fields">
 
             <dynamic-field *ngIf="isConditionalTrue(element, field)"
-            [dateFormat]="dateFormat || 'MM DD, YYYY HH:mm'"
-            [timezone]="timezone || 'UTC'"
-            [field]="field" (haveChanges)="haveChanges($event, element)">
+              [dateFormat]="dateFormat || 'MM DD, YYYY HH:mm'"
+              [timezone]="timezone || 'UTC'"
+              [field]="field" (haveChanges)="haveChanges($event, element)">
             </dynamic-field>
           
           </ng-container>
@@ -34,14 +29,12 @@
       </ion-col>
     </ion-row> 
     
-    <ion-row> 
-      <ion-col> 
-        <button (click)="dismiss()" ion-button full>{{ "Dismiss" | translate }}</button>
-      </ion-col> 
+    <ion-row>
 
-      <ion-col> 
-        <button (click)="save()" ion-button full>{{ "Save" | translate }}</button>
-      </ion-col> 
+      <ion-col *ngFor="let action of data['actions']">
+        <button (click)="doAction(action)" ion-button full>{{ action['display'] }}</button>
+      </ion-col>
+
     </ion-row> 
   </ion-grid> 
 </ion-content>
