@@ -28,7 +28,11 @@ import { DiaWebsocketService } from '../services/dia-websockets-service';
 import { DiaTimelineService } from '../services/dia-timeline-service';
 
 // pages
+import { MainPage } from '../pages/main/main';
 import { TimeLinePage } from '../pages/timeline/timeline';
+import { PlanningsPage } from '../pages/plannings/plannings';
+import { StatsPage } from '../pages/stats/stats';
+
 import { ConfigurationPage } from '../pages/configuration/configuration';
 import { LoginPage } from '../pages/login/login';
 import { AddGenericPage } from '../pages/add-generic/add-generic';
@@ -45,7 +49,12 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     DiaMobileApp,
     ConfigurationPage,
+
+    MainPage,
     TimeLinePage,
+    PlanningsPage,
+    StatsPage,
+
     LoginPage,
 
     AddFeedingPage,
@@ -76,7 +85,12 @@ export function HttpLoaderFactory(http: HttpClient) {
   entryComponents: [
     DiaMobileApp,
     ConfigurationPage,
+
+    MainPage,
     TimeLinePage,
+    PlanningsPage,
+    StatsPage,
+
     LoginPage,
 
     AddFeedingPage,
@@ -94,7 +108,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Storage,
+    IonicStorageModule,
     BackgroundMode,
     DiaRestBackendService,
     DiaAuthService,

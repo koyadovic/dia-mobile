@@ -6,17 +6,18 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { BackgroundMode } from '@ionic-native/background-mode';
 
 import { LoginPage } from '../pages/login/login';
-import { TimeLinePage } from '../pages/timeline/timeline';
 
 import { DiaAuthService } from '../services/dia-auth-service'
 import { DiaWebsocketService } from '../services/dia-websockets-service';
+import { MainPage } from '../pages/main/main';
+import { DiaConfigurationService } from '../services/dia-configuration-service';
 
 
 @Component({
   templateUrl: 'app-component.html',
 })
 export class DiaMobileApp {
-  rootPage:any = TimeLinePage;
+  rootPage:any;
   private backendMessages$: Observable<any>;
 
   constructor(private platform: Platform,
@@ -24,7 +25,8 @@ export class DiaMobileApp {
               private splashScreen: SplashScreen,
               private backgroundMode: BackgroundMode,
               private authService: DiaAuthService,
-              private wsService: DiaWebsocketService) {
+              private wsService: DiaWebsocketService,
+              private configurationService: DiaConfigurationService) {
 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -54,10 +56,16 @@ export class DiaMobileApp {
           if (loggedIn === null) return
 
           if(loggedIn) { // logged in!
-            // rootPage is TimeLinePage
-            if(this.rootPage !== TimeLinePage) {
-              this.rootPage = TimeLinePage;
-            }         
+            // rootPage is MainPage
+            if(this.rootPage !== MainPage) {
+              this.configurationService.isReady().subscribe(
+                (ready) => {
+                  if(ready) {
+                    this.rootPage = MainPage;
+                  }
+                }
+              );
+            }
           } else { // not logged in
             // rootPage is LoginPage
             if(this.rootPage !== LoginPage) {
