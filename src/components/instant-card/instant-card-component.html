@@ -5,6 +5,7 @@
     <ion-icon item-start *ngIf="instant.content.type == 'physical_activity'" name="bicycle"></ion-icon>
     <ion-icon item-start *ngIf="instant.content.type == 'physical_trait'" name="body"></ion-icon>
     <ion-icon item-start *ngIf="instant.content.type == 'insulin_dose'" name="thermometer"></ion-icon>
+    <ion-icon item-start *ngIf="instant.content.type == 'action-request'" name="alert"></ion-icon>
 
     <ion-grid>
         <ion-row align-items-center>
@@ -26,23 +27,29 @@
                     <!-- #ffeff2 system generated, rojito -->
             
                     <!-- physical_activity -->
-                    <ng-container *ngSwitchCase="'physical_activity'">
+                    <ng-container *ngSwitchCase="'activity'">
                         <h2>{{ "Physical Activity" | translate }}</h2>
                         <p>{{activity_intensities[instant.content.intensity]}} intensity. {{ instant.content.minutes }} minutes.</p>
                     </ng-container>
             
                     <!-- physical_trait -->
-                    <ng-container *ngSwitchCase="'physical_trait'">
+                    <ng-container *ngSwitchCase="'trait'">
                         <h2>{{ "Physical Trait Change" | translate }}</h2>
                         <p>{{ trait_types[instant.content.trait_type] }} {{ instant.content.value }} {{ trait_types_measure[instant.content.trait_type] }}</p>
                     </ng-container>
                 
                     <!-- insulin_dose -->
-                    <ng-container *ngSwitchCase="'insulin_dose'">
+                    <ng-container *ngSwitchCase="'insulin'">
                         <h2>{{ "Insulin Dose" | translate }} {{ instant.content.dose }}u</h2>
                         <p>{{ instant.content.insulin_type.name }}</p>
                     </ng-container>
-                
+
+                    <!-- insulin_dose -->
+                    <ng-container *ngSwitchCase="'action-request'">
+                        <h2>{{ "Action Request" | translate }} {{ instant.content.title }}</h2>
+                        <p>{{ instant.content.elements[0].info }}</p>
+                    </ng-container>
+                        
                 </ng-container>
                     
             </ion-col>

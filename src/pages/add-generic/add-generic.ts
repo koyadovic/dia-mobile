@@ -116,7 +116,6 @@ export class AddGenericPage {
 
     switch(action['type']) {
       case 'dismiss':
-      add = false;
       break;
 
       case 'add':
@@ -134,6 +133,8 @@ export class AddGenericPage {
       }
       break;
     }
+
+    add = requests.length > 0;
 
     if(requests.length > 0) {
       forkJoin(...requests).subscribe(

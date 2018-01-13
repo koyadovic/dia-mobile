@@ -278,10 +278,8 @@ export class TimeLinePage {
     let modal = this.modalCtrl.create(AddGenericPage, {data: data});
 
     modal.onDidDismiss((data) => {
-      
       if(!!data && data["add"])
         this.refreshTimeline();
-        
     });
     modal.present();
   }
@@ -289,7 +287,12 @@ export class TimeLinePage {
   // when a card is clicked must be shown details about it
   cardClicked(instant) {
     this.fab.close();
-    console.log(JSON.stringify(instant));
+    if(instant.content.type === 'action-request') {
+      this.openGenericModal(instant.content);
+    } else {
+      console.log(JSON.stringify(instant));
+    }
+    
   }
 
   doInfinite(infiniteScroll) {
