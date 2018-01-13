@@ -29,8 +29,6 @@ export class AddGenericPage {
     // get data
     this.data = this.navParams.get("data");
 
-    console.log(JSON.stringify(this.data));
-
     this.data["elements"].forEach((element) => {
       let computed_fields = Object.assign([], this.data["types"][element["type"]]["fields"]);
 
@@ -61,7 +59,14 @@ export class AddGenericPage {
       for(let sentence of conditional[key]){
 
         for (let sentenceKey in sentence) {
-          let elementValue = element[sentenceKey];
+          
+          let elementValue;
+          for(let rawField of element['computed_fields']) {
+            if(rawField['key'] === sentenceKey) {
+              elementValue = rawField['value'];
+            }
+          }
+
           if (!elementValue) {
             return false;
           }

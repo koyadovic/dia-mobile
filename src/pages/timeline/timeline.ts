@@ -188,43 +188,75 @@ export class TimeLinePage {
 
   addInsulinDose(){
     forkJoin(
+      this.translate.get("New Insulin Dose"),
       this.translate.get("Introduce type and units of insulin administered."),
-    ).subscribe(([doseName]) => {
+    ).subscribe(([doseTitle, doseInfo]) => {
       let data = {
-        type: "insulin",
-        url: this.timelineService.getInsulinDoseEndPoint(),
-        fields: this.timelineService.getInsulinFields(),
-        elements: [
+        "title": doseTitle,
+        "types": {},
+        "elements": [
           {
-            "name": doseName,
-            "datetime": null,
-            "dose": null
-          },
+            "info": doseInfo,
+            "type": "insulin",
+            "fields": {
+              "datetime": {
+                "default_value": "",
+                "disabled": true
+              }
+            }
+          }
         ],
-      }
-      this.openGenericModal(data);
+        "actions": [
+          {
+            "display": "Rechazar",
+            "type": "dismiss",
+          },
+          {
+            "display": "Añadir",
+            "type": "add"
+          },
+        ]
+      };
   
+      this.timelineService.completeAllGenericTypes(data);
+      this.openGenericModal(data);
     });
 
   }
 
   addPhysicalTraitChange(){
     forkJoin(
+      this.translate.get("New Trait Change"),
       this.translate.get("Select type of trait and complete the value."),
-    ).subscribe(([traitName]) => {
+    ).subscribe(([traitTitle, traitInfo]) => {
       let data = {
-        type: "trait",
-        url: this.timelineService.getPhysicalTraitChangeEndPoint(),
-        fields: this.timelineService.getTraitFields(),
-        elements: [
+        "title": traitTitle,
+        "types": {},
+        "elements": [
           {
-            "name": traitName,
-            "datetime": null,
-            "trait_type": 1,
-            "value": null
-          },
+            "info": traitInfo,
+            "type": "trait",
+            "fields": {
+              "datetime": {
+                "default_value": "",
+                "disabled": true
+              }
+            }
+          }
         ],
-      }
+        "actions": [
+          {
+            "display": "Rechazar",
+            "type": "dismiss",
+          },
+          {
+            "display": "Añadir",
+            "type": "add"
+          },
+        ]
+      };
+  
+      this.timelineService.completeAllGenericTypes(data);
       this.openGenericModal(data);
     });
   }

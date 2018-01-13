@@ -187,19 +187,19 @@ export class DiaTimelineService {
 
 
     getGlucoseFields() {
-        return this.glucoseFields;
+        return this.glucoseFields.map((x) => Object.assign({}, x))
     }
 
     getInsulinFields() {
-        return this.insulinFields;
+        return this.insulinFields.map((x) => Object.assign({}, x))
     }
 
     getTraitFields() {
-        return this.traitFields;
+        return this.traitFields.map((x) => Object.assign({}, x))
     }
 
     getPhysicalActivityFields() {
-        return this.activityFields;
+        return this.activityFields.map((x) => Object.assign({}, x))
     }
 
 
@@ -212,7 +212,7 @@ export class DiaTimelineService {
             this.glucoseFields = [
                 {
                     "display": instant,
-                    "value": 0,
+                    "value": "",
                     "required": false,
                     "hint": "",
                     "type": "date",
@@ -225,7 +225,7 @@ export class DiaTimelineService {
                 },
                 {
                     "display": level,
-                    "value": null,
+                    "value": "",
                     "required": true,
                     "hint": "mg/dL",
                     "type": "number",
@@ -253,45 +253,44 @@ export class DiaTimelineService {
       
             this.activityFields = [
                 {
-                "display": instant,
-                "value": 0,
-                "required": false,
-                "hint": "",
-                "type": "date",
-                "regex": "",
-                "key": "datetime",
-                "namespace_key": "datetime",
-                "additional_options": {
-                    "format": `${this.userConfig.getValue(UserConfiguration.DATE_FORMAT)} HH:mm`
-                }
+                    "display": instant,
+                    "value": "",
+                    "required": false,
+                    "hint": "",
+                    "type": "date",
+                    "regex": "",
+                    "key": "datetime",
+                    "namespace_key": "datetime",
+                    "additional_options": {
+                        "format": `${this.userConfig.getValue(UserConfiguration.DATE_FORMAT)} HH:mm`
+                    }
                 },
                 {
-                "display": intensity,
-                "value": 1,
-                "required": true,
-                "hint": "",
-                "type": "select",
-                "regex": "",
-                "key": "intensity",
-                "options": [
-                    { "display": soft, "value": 1 },
-                    { "display": medium, "value": 2 },
-                    { "display": high, "value": 3 },
-                    { "display": extreme, "value": 4 },
-                ],
-                "namespace_key": "intensity"
+                    "display": intensity,
+                    "value": 1,
+                    "required": true,
+                    "hint": "",
+                    "type": "select",
+                    "regex": "",
+                    "key": "intensity",
+                    "options": [
+                        { "display": soft, "value": 1 },
+                        { "display": medium, "value": 2 },
+                        { "display": high, "value": 3 },
+                        { "display": extreme, "value": 4 },
+                    ],
+                    "namespace_key": "intensity"
                 },
                 {
-                "display": minutes,
-                "value": 0,
-                "required": true,
-                "hint": numberMinutes,
-                "type": "number",
-                "regex": "",
-                "key": "minutes",
-                "namespace_key": "minutes"
+                    "display": minutes,
+                    "value": 0,
+                    "required": true,
+                    "hint": numberMinutes,
+                    "type": "number",
+                    "regex": "",
+                    "key": "minutes",
+                    "namespace_key": "minutes"
                 },
-        
             ]
         });
     }
@@ -307,7 +306,7 @@ export class DiaTimelineService {
               this.insulinFields = [
                 {
                   "display": instant,
-                  "value": 0,
+                  "value": "",
                   "required": false,
                   "hint": "",
                   "type": "date",
@@ -333,7 +332,7 @@ export class DiaTimelineService {
                 },
                 {
                   "display": dose,
-                  "value": null,
+                  "value": "",
                   "required": true,
                   "hint": unitsOfDose,
                   "type": "number",
@@ -380,7 +379,7 @@ export class DiaTimelineService {
                 },
                 {
                   "display": type,
-                  "value": 1,
+                  "value": 2,
                   "conditional": {},
                   "required": true,
                   "hint": type,
@@ -398,7 +397,7 @@ export class DiaTimelineService {
                 },
                 {
                   "display": value,
-                  "value": 0,
+                  "value": "",
                   "conditional": {
                     "$or": [
                       { "trait_type": 2 },
