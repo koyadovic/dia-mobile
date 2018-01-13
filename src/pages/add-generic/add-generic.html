@@ -2,11 +2,11 @@
 
   <ion-navbar *ngIf="!!data">
     <ng-container [ngSwitch]="data.type">
-      <ion-title *ngSwitchCase="'glucose'">{{ "Add Glucose" | translate }}</ion-title>
-      <ion-title *ngSwitchCase="'feeding'">{{ "Add Feeding" | translate }}</ion-title>
-      <ion-title *ngSwitchCase="'activity'">{{ "Add Physical Activity" | translate }}</ion-title>
-      <ion-title *ngSwitchCase="'insulin'">{{ "Add Insulin Dose" | translate }}</ion-title>
-      <ion-title *ngSwitchCase="'trait'">{{ "Add Trait Change" | translate }}</ion-title>
+      <ion-title *ngSwitchCase="'glucose'">{{ "New Glucose" | translate }}</ion-title>
+      <ion-title *ngSwitchCase="'feeding'">{{ "New Feeding" | translate }}</ion-title>
+      <ion-title *ngSwitchCase="'activity'">{{ "New Physical Activity" | translate }}</ion-title>
+      <ion-title *ngSwitchCase="'insulin'">{{ "New Insulin Dose" | translate }}</ion-title>
+      <ion-title *ngSwitchCase="'trait'">{{ "New Trait Change" | translate }}</ion-title>
     </ng-container>
   </ion-navbar>
 
@@ -30,10 +30,8 @@
           
           </ng-container>
           <hr>
-
         </ng-container>
-
-      </ion-col> 
+      </ion-col>
     </ion-row> 
     
     <ion-row> 

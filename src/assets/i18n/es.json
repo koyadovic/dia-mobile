@@ -7,11 +7,11 @@
     "Logout Confirmation": "Confirmar Cierre de Sesión",
     "Are you sure to close your session?": "¿Está seguro de cerrar su sesión?",
 
-    "Add Glucose": "Añadir Glucosa",
-    "Add Feeding": "Añadir Ingesta",
-    "Add Insulin Dose": "Añadir Dosis de Insulina",
-    "Add Physical Activity": "Añadir Actividad Física",
-    "Add Trait Change": "Añadir Cambio Físico",
+    "New Glucose": "Nueva Glucosa",
+    "New Feeding": "Nueva Ingesta",
+    "New Insulin Dose": "Nueva Dosis de Insulina",
+    "New Physical Activity": "Nueva Actividad Física",
+    "New Trait Change": "Nuevo Cambio Físico",
 
     "Save": "Guardar",
     "Dismiss": "Desechar",
