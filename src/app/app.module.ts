@@ -108,7 +108,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Storage,
+    IonicStorageModule,
     BackgroundMode,
     DiaRestBackendService,
     DiaAuthService,
