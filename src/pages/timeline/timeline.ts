@@ -110,60 +110,45 @@ export class TimeLinePage {
     }, 500)
   }
 
-  addGlucose2() {
-    let data = {
-      "title": "Añadido múltiple",
-      "types": {},
-      "elements": [
-        {
-          "info": "Introduzca los datos de la glucosa",
-          "type": "glucose",
-          "fields": {
-            "datetime": {
-              "default_value": 200,
-              "disabled": true
-            },
-            "level": {
-              "default_value": 150,
-              "disabled": false
+  addGlucose() {
+    forkJoin(
+      this.translate.get("New Glucose"),
+      this.translate.get("Please, provide the following data."),
+    ).subscribe(([glucoseTitle, glucoseInfo]) => {
+      let data = {
+        "title": glucoseTitle,
+        "types": {},
+        "elements": [
+          {
+            "info": glucoseInfo,
+            "type": "glucose",
+            "fields": {
+              "datetime": {
+                "default_value": "",
+                "disabled": true
+              },
+              "level": {
+                "default_value": "",
+                "disabled": false
+              }
             }
           }
-        }
-      ],
-      "actions": [
-        {
-          "display": "Rechazar",
-          "type": "dismiss",
-          //"url": "/v1/instants/1/dismiss/", optional
-          //"data": {}
-        },
-        {
-          "display": "Añadir",
-          "type": "add"
-        },
-      ]
-    };
-
-    this.timelineService.completeAllGenericTypes(data);
-    this.openGenericModal(data);
-  }
-
-  addGlucose(){
-
-    forkJoin(
-      this.translate.get("Please, provide the following data."),
-    ).subscribe(([message]) => {
-      let data = {
-        type: "glucose",
-        url: this.timelineService.getGlucoseEndpoint(),
-        fields: this.timelineService.getGlucoseFields(),
-        elements: [
+        ],
+        "actions": [
           {
-            "name": message,
-            "datetime": null
-          }
+            "display": "Rechazar",
+            "type": "dismiss",
+            //"url": "/v1/instants/1/dismiss/", optional
+            //"data": {}
+          },
+          {
+            "display": "Añadir",
+            "type": "add"
+          },
         ]
-      }
+      };
+  
+      this.timelineService.completeAllGenericTypes(data);
       this.openGenericModal(data);
     });
   }
