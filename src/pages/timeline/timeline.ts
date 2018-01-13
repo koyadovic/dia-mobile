@@ -126,10 +126,6 @@ export class TimeLinePage {
               "datetime": {
                 "default_value": "",
                 "disabled": true
-              },
-              "level": {
-                "default_value": "",
-                "disabled": false
               }
             }
           }
@@ -155,20 +151,37 @@ export class TimeLinePage {
 
   addPhysicalActivity(){
     forkJoin(
+      this.translate.get("New Physical Activity"),
       this.translate.get("Introduce intensity and minutes that have spent with the activity."),
-    ).subscribe(([activityName]) => {
+    ).subscribe(([activityTitle, activityInfo]) => {
       let data = {
-        type: "activity",
-        url: this.timelineService.getPhysicalActivityEndPoint(),
-        fields: this.timelineService.getPhysicalActivityFields(),
-        elements: [
+        "title": activityTitle,
+        "types": {},
+        "elements": [
           {
-            "name": activityName,
-            "datetime": null,
-            "minutes" : null
+            "info": activityInfo,
+            "type": "activity",
+            "fields": {
+              "datetime": {
+                "default_value": "",
+                "disabled": true
+              }
+            }
           }
+        ],
+        "actions": [
+          {
+            "display": "Rechazar",
+            "type": "dismiss",
+          },
+          {
+            "display": "Añadir",
+            "type": "add"
+          },
         ]
-      }
+      };
+  
+      this.timelineService.completeAllGenericTypes(data);
       this.openGenericModal(data);
     });
   }

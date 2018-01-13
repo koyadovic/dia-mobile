@@ -29,6 +29,8 @@ export class AddGenericPage {
     // get data
     this.data = this.navParams.get("data");
 
+    console.log(JSON.stringify(this.data));
+
     this.data["elements"].forEach((element) => {
       let computed_fields = Object.assign([], this.data["types"][element["type"]]["fields"]);
 
@@ -93,55 +95,29 @@ export class AddGenericPage {
     return evaluate;
   }
 
-  dismiss(){
-    this.viewCtrl.dismiss({"add": false});
-  }
-
-  save(){
-    let url = this.data.url;
+  doAction(action) {
     let requests = [];
 
-    // TODO maybe we need to include logic checking if complete elements are already completed.
-    for(let elem of this.complete_elements) {
-      delete elem["fields"];
-      requests.push(this.restBackendService.genericPost(url, elem));
+    let add: boolean;
+
+    if('url' in action) {
+      let url = action['url'];
+      let data = {};
+      if ('data' in action) {
+        data = action['data'];
+      }
+      requests.push(this.restBackendService.genericPost(url, data));
     }
 
-    forkJoin(...requests).subscribe(
-      (resp) => {
-        this.viewCtrl.dismiss({"add": true});
-      },
-      (err) => {
-        console.log(err);
-      },
-    );
-  }
-
-  doAction(action) {
     switch(action['type']) {
       case 'dismiss':
-      if('url' in action) {
-        let url = action['url'];
-        let data = {};
-        if ('data' in action) {
-          data = action['data'];
-        }
-        this.restBackendService.genericPost(url, data).subscribe(
-          (resp) => {
-            this.dismiss();
-          }
-        );
-      }
-      this.dismiss();
+      add = false;
       break;
 
       case 'add':
-      let requests = [];
-
       for(let element of this.data['elements']) {
         let data = {}
         let url = this.data['types'][element['type']]['url'];
-        
         for(let field of element['computed_fields']) {
           if (field['type'] === 'date') {
             data[field['key']] = new Date(field['value']).valueOf() / 1000.;
@@ -149,20 +125,25 @@ export class AddGenericPage {
             data[field['key']] = field['value'];
           }
         }
-
         requests.push(this.restBackendService.genericPost(url, data));
       }
-      
+      break;
+    }
+
+    if(requests.length > 0) {
       forkJoin(...requests).subscribe(
         (resp) => {
-          this.viewCtrl.dismiss({"add": true});
+          this.viewCtrl.dismiss({"add": add});
         },
         (err) => {
           console.log(err);
         },
       );
-      break;
+
+    } else {
+      this.viewCtrl.dismiss({"add": add});
     }
+    
   }
 
   hasProp(o, name) {
