@@ -105,15 +105,6 @@ export class AddGenericPage {
 
     let add: boolean;
 
-    if('url' in action) {
-      let url = action['url'];
-      let data = {};
-      if ('data' in action) {
-        data = action['data'];
-      }
-      requests.push(this.restBackendService.genericPost(url, data));
-    }
-
     switch(action['type']) {
       case 'dismiss':
       break;
@@ -132,6 +123,15 @@ export class AddGenericPage {
         requests.push(this.restBackendService.genericPost(url, data));
       }
       break;
+    }
+
+    if('url' in action) {
+      let url = action['url'];
+      let data = {};
+      if ('data' in action) {
+        data = action['data'];
+      }
+      requests.push(this.restBackendService.genericPost(url, data));
     }
 
     add = requests.length > 0;

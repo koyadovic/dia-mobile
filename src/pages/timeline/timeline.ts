@@ -287,8 +287,7 @@ export class TimeLinePage {
   // when a card is clicked must be shown details about it
   cardClicked(instant) {
     this.fab.close();
-    if(instant.content.type === 'action-request') {
-      console.log(JSON.stringify(instant));
+    if(instant.content.type === 'action-request' && instant.content.status === 0) { // only if unattended
       this.openGenericModal(instant.content);
     } else {
       console.log(JSON.stringify(instant));
