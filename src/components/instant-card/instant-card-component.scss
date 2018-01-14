@@ -23,15 +23,21 @@
 
 .action-request.done {
     color: green;
-    background: #eff9fb;
+    background: linear-gradient(to right, #fff , #eff9fb);
+    border-bottom: 1px solid #eff9fb;
+    border-top: 1px solid #eff9fb;
 }
 
 .action-request.unattended {
     color: red;
-    background: #ffeff2;
+    background: linear-gradient(to right, #fff , #ffeff2);
+    border-bottom: 1px solid #ffeff2;
+    border-top: 1px solid #ffeff2;
 }
 
 .action-request.ignored {
     color: #999;
-    background: #f7f7f7;
+    background: linear-gradient(to right, #fff , #f7f7f7);
+    border-bottom: 1px solid #f7f7f7;
+    border-top: 1px solid #f7f7f7;
 }

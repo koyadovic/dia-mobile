@@ -94,7 +94,6 @@ export class DynamicField {
           f.valid = true;
         }
       }
-      console.log('Date valid?: ' + f.valid);
     }
 
     else if(f.type === 'text') {
@@ -117,10 +116,6 @@ export class DynamicField {
 
     else if(f.type === 'boolean') {
       f.valid = f.value in [true, false];
-    }
-
-    if(! f.valid) {
-      console.log("_.·^ Invalid field: " + JSON.stringify(f));
     }
   }
 }
