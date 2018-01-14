@@ -11,8 +11,8 @@ export class DiaBackendURL {
   private apiWSHostProduction = 'wss://api.diamobile.com';
 
   // Change this line for production
-  public baseURL = this.apiHostLocal;
-  public wsBaseURL = this.apiWSHostLocal;
+  public baseURL = this.apiHostPreProduction;
+  public wsBaseURL = this.apiWSHostPreProduction;
 
   constructor() {}
 }
