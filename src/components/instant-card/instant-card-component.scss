@@ -14,3 +14,24 @@
 .grid {
     padding: 0;
 }
+
+
+
+.action-request {
+
+}
+
+.action-request.done {
+    color: green;
+    background: #eff9fb;
+}
+
+.action-request.unattended {
+    color: red;
+    background: #ffeff2;
+}
+
+.action-request.ignored {
+    color: #999;
+    background: #f7f7f7;
+}

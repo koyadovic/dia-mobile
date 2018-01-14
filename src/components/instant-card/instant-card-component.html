@@ -1,11 +1,14 @@
-<button ion-item>
+<button ion-item [ngClass]="getInstantClass()">
 
     <ion-icon item-start *ngIf="instant.content.type == 'glucose'" name="water"></ion-icon>
     <ion-icon item-start *ngIf="instant.content.type == 'feeding'" name="restaurant"></ion-icon>
-    <ion-icon item-start *ngIf="instant.content.type == 'physical_activity'" name="bicycle"></ion-icon>
-    <ion-icon item-start *ngIf="instant.content.type == 'physical_trait'" name="body"></ion-icon>
-    <ion-icon item-start *ngIf="instant.content.type == 'insulin_dose'" name="thermometer"></ion-icon>
-    <ion-icon item-start *ngIf="instant.content.type == 'action-request'" name="alert"></ion-icon>
+    <ion-icon item-start *ngIf="instant.content.type == 'activity'" name="bicycle"></ion-icon>
+    <ion-icon item-start *ngIf="instant.content.type == 'trait'" name="body"></ion-icon>
+    <ion-icon item-start *ngIf="instant.content.type == 'insulin'" name="thermometer"></ion-icon>
+
+    <ion-icon item-end *ngIf="instant.content.type == 'action-request' && instant.content.status === 0" name="ios-alert-outline"></ion-icon>
+    <ion-icon item-end *ngIf="instant.content.type == 'action-request' && instant.content.status === 1" name="ios-close-circle-outline"></ion-icon>
+    <ion-icon item-end *ngIf="instant.content.type == 'action-request' && instant.content.status === 2" name="ios-checkmark-circle-outline"></ion-icon>
 
     <ion-grid>
         <ion-row align-items-center>
@@ -44,17 +47,18 @@
                         <p>{{ instant.content.insulin_type.name }}</p>
                     </ng-container>
 
-                    <!-- insulin_dose -->
-                    <ng-container *ngSwitchCase="'action-request'">
-                        <h2>{{ "Action Request" | translate }} {{ instant.content.title }}</h2>
-                        <p>{{ instant.content.elements[0].info }}</p>
-                    </ng-container>
                         
                 </ng-container>
                     
             </ion-col>
 
-            <ion-col col-3>
+            <ion-col *ngIf="instant.content.type === 'action-request'">
+                <!-- action-request -->
+                <h2 text-right>{{ instant.content.title }}</h2>
+                <p *ngIf="instant.content.status === 0" text-right>{{ instant.content.elements[0].info }}</p>
+            </ion-col>
+
+            <ion-col col-3 *ngIf="instant.content.type !== 'action-request'">
                 <p class="time-passed">{{ instant.moment.format('HH:mm') }}</p>                
             </ion-col>
         </ion-row>

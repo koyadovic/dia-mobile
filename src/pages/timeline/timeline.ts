@@ -288,6 +288,7 @@ export class TimeLinePage {
   cardClicked(instant) {
     this.fab.close();
     if(instant.content.type === 'action-request') {
+      console.log(JSON.stringify(instant));
       this.openGenericModal(instant.content);
     } else {
       console.log(JSON.stringify(instant));
