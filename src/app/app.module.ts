@@ -28,6 +28,7 @@ import { DiaWebsocketService } from '../services/dia-websockets-service';
 import { DiaTimelineService } from '../services/dia-timeline-service';
 
 // pages
+import { MenuPage } from '../pages/menu/menu';
 import { MainPage } from '../pages/main/main';
 import { TimeLinePage } from '../pages/timeline/timeline';
 import { PlanningsPage } from '../pages/plannings/plannings';
@@ -50,6 +51,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DiaMobileApp,
     ConfigurationPage,
 
+    MenuPage,
     MainPage,
     TimeLinePage,
     PlanningsPage,
@@ -86,6 +88,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DiaMobileApp,
     ConfigurationPage,
 
+    MenuPage,
     MainPage,
     TimeLinePage,
     PlanningsPage,

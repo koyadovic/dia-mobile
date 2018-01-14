@@ -11,6 +11,7 @@ import { DiaAuthService } from '../services/dia-auth-service'
 import { DiaWebsocketService } from '../services/dia-websockets-service';
 import { MainPage } from '../pages/main/main';
 import { DiaConfigurationService } from '../services/dia-configuration-service';
+import { MenuPage } from '../pages/menu/menu';
 
 
 @Component({
@@ -61,7 +62,7 @@ export class DiaMobileApp {
               this.configurationService.isReady().subscribe(
                 (ready) => {
                   if(ready) {
-                    this.rootPage = MainPage;
+                    this.rootPage = MenuPage;
                   }
                 }
               );

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { App, NavController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { FabContainer } from 'ionic-angular/components/fab/fab-container';
 import { ModalController } from 'ionic-angular';
@@ -34,7 +34,6 @@ export class TimeLinePage {
   private loggedinSubscription;
 
   constructor(private navCtrl: NavController,
-              private appCtrl: App,
               private configurationService: DiaConfigurationService,
               private timelineService: DiaTimelineService,
               private modalCtrl: ModalController,
@@ -95,10 +94,6 @@ export class TimeLinePage {
       this.now = moment();
       this.timeline = this.completeInstants(instants);
     });
-  }
-
-  goConfiguration() {
-    this.appCtrl.getRootNavs()[0].push(ConfigurationPage);
   }
 
   // refresh timeline

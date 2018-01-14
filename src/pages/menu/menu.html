@@ -1,0 +1,16 @@
+<ion-menu [content]="mycontent">
+    <ion-content>
+      <ion-list>
+
+
+        <button (click)="logout()" ion-item>{{ "Logout" | translate }}<ion-icon item-end name="log-out"></ion-icon></button>
+
+        <button ion-button icon-only (click)="menuCtrl.close(); goConfiguration()">
+        <ion-icon class="settings-icon" name="settings"></ion-icon>
+      </button>
+
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  
+  <ion-nav #mycontent [root]="rootPage"></ion-nav>
