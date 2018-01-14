@@ -12,12 +12,7 @@ export class AddGenericPage {
   @Input() dateFormat;
   @Input() timezone;
 
-  private data: {
-    type: "feeding" | "glucose" | "trait" | "activity" | "insulin",
-    url: string,
-    fields: object[],
-    elements: object[]
-  };
+  private data;
 
   complete_elements: object[];
 
@@ -101,9 +96,9 @@ export class AddGenericPage {
   }
 
   doAction(action) {
-    let requests = [];
+    // si hay algún error en los requests, los request de los actions no deberían ser realizados.
 
-    let add: boolean;
+    let requests = [];
 
     switch(action['type']) {
       case 'dismiss':
@@ -125,34 +120,62 @@ export class AddGenericPage {
       break;
     }
 
-    if('url' in action) {
-      let url = action['url'];
-      let data = {};
-      if ('data' in action) {
-        data = action['data'];
-      }
-      requests.push(this.restBackendService.genericPost(url, data));
-    }
-
-    add = requests.length > 0;
-
     if(requests.length > 0) {
       forkJoin(...requests).subscribe(
         (resp) => {
-          this.viewCtrl.dismiss({"add": add});
+          // all ok, so we complete the operation
+
+          if('url' in action) {
+            let url = action['url'];
+            let data = {};
+            if ('data' in action) {
+              data = action['data'];
+            }
+            this.restBackendService.genericPost(url, data).subscribe(
+              (resp) => {
+                this.viewCtrl.dismiss({"add": true});
+              }
+            )
+          } else {
+            this.viewCtrl.dismiss({"add": true});
+          }
         },
         (err) => {
           console.log(err);
         },
       );
-
     } else {
-      this.viewCtrl.dismiss({"add": add});
+      if('url' in action) {
+        let url = action['url'];
+        let data = {};
+        if ('data' in action) {
+          data = action['data'];
+        }
+        this.restBackendService.genericPost(url, data).subscribe(
+          (resp) => {
+            this.viewCtrl.dismiss({"add": true});
+          }
+        )
+      } else {
+        this.viewCtrl.dismiss({"add": false});
+      }
     }
-    
   }
 
   hasProp(o, name) {
     return o.hasOwnProperty(name);
+  }
+
+  isValid(){
+    for(let element of this.data.elements) {
+      for(let field of element.computed_fields) {
+        if((this.hasProp(field, 'disabled') && field['disabled'] === false) || !this.hasProp(field, 'disabled')) {
+          if (!this.hasProp(field, 'valid') || (this.hasProp(field, 'valid') && !field.valid)){
+            return false;
+          }
+        }
+      }
+    }
+    return true;
   }
 }
