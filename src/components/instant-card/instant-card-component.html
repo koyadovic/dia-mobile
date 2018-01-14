@@ -12,7 +12,7 @@
 
     <ion-grid>
         <ion-row align-items-center>
-            <ion-col col-9>
+            <ion-col col-9 *ngIf="instant.content.type !== 'action-request'">
                 <ng-container [ngSwitch]="instant.content.type">
                     <!-- glucoses -->
                     <ng-container *ngSwitchCase="'glucose'">
@@ -54,8 +54,8 @@
 
             <ion-col *ngIf="instant.content.type === 'action-request'">
                 <!-- action-request -->
-                <h2 text-right>{{ instant.content.title }}</h2>
-                <p *ngIf="instant.content.status === 0" text-right>{{ instant.content.elements[0].info }}</p>
+                <h2 text-right padding-right>{{ instant.content.title }}</h2>
+                <p *ngIf="instant.content.status === 0" text-right padding-right>{{ instant.content.elements[0].info }}</p>
             </ion-col>
 
             <ion-col col-3 *ngIf="instant.content.type !== 'action-request'">
