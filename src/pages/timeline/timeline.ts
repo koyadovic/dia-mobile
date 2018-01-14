@@ -25,8 +25,8 @@ import { forkJoin } from 'rxjs/observable/forkJoin';
 export class TimeLinePage {
   @ViewChild(FabContainer) fab: FabContainer;
   private timeline = [];
+  public static unattended:number = null;
   private userConfig: UserConfiguration;
-  private insulinTypes = [];
   private lastDateShown = "";
   private oldestElementTimestamp = null;
   private now;
@@ -48,9 +48,6 @@ export class TimeLinePage {
 
       if(loggedin){
         this.refreshTimeline();
-        this.timelineService.getInsulinTypes().subscribe((resp) => {
-          this.insulinTypes = resp;
-        });
 
       } else {
         this.userConfig = null;
@@ -92,7 +89,9 @@ export class TimeLinePage {
   }
 
   refreshTimeline() {
-    this.timelineService.getTimeline().subscribe((instants) => {
+    this.timelineService.getTimeline().subscribe((response) => {
+      let instants = response['instants'];
+      TimeLinePage.unattended = response['unattended'] > 0 ? response['unattended'] : null;
       this.now = moment();
       this.timeline = this.completeInstants(instants);
     });
@@ -104,278 +103,162 @@ export class TimeLinePage {
 
   // refresh timeline
   doRefresh(refresher) {
-    this.timelineService.getTimeline().subscribe((instants) => {
+    this.timelineService.getTimeline().subscribe((response) => {
+      let instants = response['instants'];
+      TimeLinePage.unattended = response['unattended'] > 0 ? response['unattended'] : null;
       this.now = moment();
       this.timeline = this.completeInstants(instants);
-    });
-
-    setTimeout(() => {
       refresher.complete();
-    }, 500)
+    });
   }
 
-  addGlucose(){
+  addGlucose() {
     forkJoin(
-      this.translate.get("Instant"),
-      this.translate.get("Level"),
+      this.translate.get("New Glucose"),
       this.translate.get("Please, provide the following data."),
-    ).subscribe(([instant, level, glucoseName]) => {
+    ).subscribe(([glucoseTitle, glucoseInfo]) => {
       let data = {
-        type: "glucose",
-        url: this.timelineService.getGlucoseEndpoint(),
-        fields: [
+        "title": glucoseTitle,
+        "types": {},
+        "elements": [
           {
-            "display": instant,
-            "value": 0,
-            "required": false,
-            "hint": "",
-            "type": "date",
-            "regex": "",
-            "key": "datetime",
-            "namespace_key": "datetime",
-            "additional_options": {
-              "format": `${this.userConfig.getValue(UserConfiguration.DATE_FORMAT)} HH:mm`
+            "info": glucoseInfo,
+            "type": "glucose",
+            "fields": {
+              "datetime": {
+                "default_value": "",
+                "disabled": true
+              }
             }
-          },
-          {
-            "display": level,
-            "value": null,
-            "required": true,
-            "hint": "mg/dL",
-            "type": "number",
-            "regex": "",
-            "key": "level",
-            "namespace_key": "level"
           }
         ],
-        elements: [
+        "actions": [
           {
-            "name": glucoseName,
-            "datetime": null
-          }
+            "display": "Rechazar",
+            "type": "dismiss",
+            //"url": "/v1/instants/1/dismiss/", optional
+            //"data": {}
+          },
+          {
+            "display": "Añadir",
+            "type": "add"
+          },
         ]
-      }
+      };
+  
+      this.timelineService.completeAllGenericTypes(data);
       this.openGenericModal(data);
     });
   }
 
   addPhysicalActivity(){
     forkJoin(
-      this.translate.get("Instant"),
-      this.translate.get("Intensity"),
-      this.translate.get("Minutes"),
-      this.translate.get("Number of minutes"),
+      this.translate.get("New Physical Activity"),
       this.translate.get("Introduce intensity and minutes that have spent with the activity."),
-      this.translate.get("Soft"),
-      this.translate.get("Medium"),
-      this.translate.get("High"),
-      this.translate.get("Extreme"),
-    ).subscribe(([instant, intensity, minutes, numberMinutes, activityName,
-    soft, medium, high, extreme]) => {
+    ).subscribe(([activityTitle, activityInfo]) => {
       let data = {
-        type: "activity",
-        url: this.timelineService.getPhysicalActivityEndPoint(),
-        fields: [
+        "title": activityTitle,
+        "types": {},
+        "elements": [
           {
-            "display": instant,
-            "value": 0,
-            "required": false,
-            "hint": "",
-            "type": "date",
-            "regex": "",
-            "key": "datetime",
-            "namespace_key": "datetime",
-            "additional_options": {
-              "format": `${this.userConfig.getValue(UserConfiguration.DATE_FORMAT)} HH:mm`
+            "info": activityInfo,
+            "type": "activity",
+            "fields": {
+              "datetime": {
+                "default_value": "",
+                "disabled": true
+              }
             }
-          },
-          {
-            "display": intensity,
-            "value": 1,
-            "required": true,
-            "hint": "",
-            "type": "select",
-            "regex": "",
-            "key": "intensity",
-            "options": [
-              { "display": soft, "value": 1 },
-              { "display": medium, "value": 2 },
-              { "display": high, "value": 3 },
-              { "display": extreme, "value": 4 },
-            ],
-            "namespace_key": "intensity"
-          },
-          {
-            "display": minutes,
-            "value": 0,
-            "required": true,
-            "hint": numberMinutes,
-            "type": "number",
-            "regex": "",
-            "key": "minutes",
-            "namespace_key": "minutes"
-          },
-  
-        ],
-        elements: [
-          {
-            "name": activityName,
-            "datetime": null,
-            "minutes" : null
           }
+        ],
+        "actions": [
+          {
+            "display": "Rechazar",
+            "type": "dismiss",
+          },
+          {
+            "display": "Añadir",
+            "type": "add"
+          },
         ]
-      }
-      this.openGenericModal(data);
+      };
   
+      this.timelineService.completeAllGenericTypes(data);
+      this.openGenericModal(data);
     });
   }
 
   addInsulinDose(){
     forkJoin(
-      this.translate.get("Instant"),
-      this.translate.get("Type"),
-      this.translate.get("Dose"),
-      this.translate.get("Units of insulin"),
+      this.translate.get("New Insulin Dose"),
       this.translate.get("Introduce type and units of insulin administered."),
-    ).subscribe(([instant, type, dose, unitsOfDose, doseName]) => {
+    ).subscribe(([doseTitle, doseInfo]) => {
       let data = {
-        type: "insulin",
-        url: this.timelineService.getInsulinDoseEndPoint(),
-        fields: [
+        "title": doseTitle,
+        "types": {},
+        "elements": [
           {
-            "display": instant,
-            "value": 0,
-            "required": false,
-            "hint": "",
-            "type": "date",
-            "regex": "",
-            "key": "datetime",
-            "namespace_key": "datetime",
-            "additional_options": {
-              "format": `${this.userConfig.getValue(UserConfiguration.DATE_FORMAT)} HH:mm`
+            "info": doseInfo,
+            "type": "insulin",
+            "fields": {
+              "datetime": {
+                "default_value": "",
+                "disabled": true
+              }
             }
-          },
-          {
-            "display": type,
-            "value": this.insulinTypes.length > 0 ? this.insulinTypes[0].id : null,
-            "required": true,
-            "hint": type,
-            "type": "select",
-            "regex": "^.*$",
-            "key": "insulin_type",
-            "options": this.insulinTypes.map((x) => {
-              return {display: x.name, value: x.id}
-            }),
-            "namespace_key": "insulin_type"
-          },
-          {
-            "display": dose,
-            "value": null,
-            "required": true,
-            "hint": unitsOfDose,
-            "type": "number",
-            "regex": "^.*$",
-            "key": "dose",
-            "namespace_key": "dose"
           }
         ],
-        elements: [
+        "actions": [
           {
-            "name": doseName,
-            "datetime": null,
-            "dose": null
+            "display": "Rechazar",
+            "type": "dismiss",
           },
-        ],
-      }
-      this.openGenericModal(data);
+          {
+            "display": "Añadir",
+            "type": "add"
+          },
+        ]
+      };
   
+      this.timelineService.completeAllGenericTypes(data);
+      this.openGenericModal(data);
     });
 
   }
 
   addPhysicalTraitChange(){
     forkJoin(
-      this.translate.get("Instant"),
-      this.translate.get("Type"),
-      this.translate.get("Select date"),
-      this.translate.get("Value"),
-      this.translate.get("Introduce a value"),
+      this.translate.get("New Trait Change"),
       this.translate.get("Select type of trait and complete the value."),
-
-      this.translate.get("Height (cm)"),
-      this.translate.get("Weight (kg)"),
-      this.translate.get("Neck Perimeter (cm)"),
-      this.translate.get("Abdomen Perimeter (cm)"),
-      this.translate.get("Waist Perimeter (cm)"),
-
-    ).subscribe(([instant, type, selectDate,
-    value, introduceAValue, traitName, height, weight,
-    neck, abdomen, waist]) => {
+    ).subscribe(([traitTitle, traitInfo]) => {
       let data = {
-        type: "trait",
-        url: this.timelineService.getPhysicalTraitChangeEndPoint(),
-        fields: [
+        "title": traitTitle,
+        "types": {},
+        "elements": [
           {
-            "display": instant,
-            "value": 0,
-            "conditional": {},
-            "required": false,
-            "hint": "",
-            "type": "date",
-            "regex": "",
-            "key": "datetime",
-            "namespace_key": "datetime",
-            "additional_options": {
-              "format": `${this.userConfig.getValue(UserConfiguration.DATE_FORMAT)} HH:mm`
+            "info": traitInfo,
+            "type": "trait",
+            "fields": {
+              "datetime": {
+                "default_value": "",
+                "disabled": true
+              }
             }
-          },
-          {
-            "display": type,
-            "value": 1,
-            "conditional": {},
-            "required": true,
-            "hint": type,
-            "type": "select",
-            "regex": "^.*$",
-            "key": "trait_type",
-            "options": [
-              { "display": height, "value": 2 },
-              { "display": weight, "value": 3 },
-              { "display": neck, "value": 4 },
-              { "display": abdomen, "value": 5 },
-              { "display": waist, "value": 6 },
-            ],
-            "namespace_key": "trait_type"
-          },
-          {
-            "display": value,
-            "value": 0,
-            "conditional": {
-              "$or": [
-                { "trait_type": 2 },
-                { "trait_type": 3 },
-                { "trait_type": 4 },
-                { "trait_type": 5 },
-                { "trait_type": 6 },
-              ]
-            },
-            "required": true,
-            "hint": introduceAValue,
-            "type": "number",
-            "regex": "^.*$",
-            "key": "value",
-            "namespace_key": "value"
-          },
+          }
         ],
-        elements: [
+        "actions": [
           {
-            "name": traitName,
-            "datetime": null,
-            "trait_type": 1,
-            "value": null
+            "display": "Rechazar",
+            "type": "dismiss",
           },
-        ],
-      }
+          {
+            "display": "Añadir",
+            "type": "add"
+          },
+        ]
+      };
+  
+      this.timelineService.completeAllGenericTypes(data);
       this.openGenericModal(data);
     });
   }
@@ -397,10 +280,8 @@ export class TimeLinePage {
     let modal = this.modalCtrl.create(AddGenericPage, {data: data});
 
     modal.onDidDismiss((data) => {
-      
       if(!!data && data["add"])
         this.refreshTimeline();
-        
     });
     modal.present();
   }
@@ -408,7 +289,12 @@ export class TimeLinePage {
   // when a card is clicked must be shown details about it
   cardClicked(instant) {
     this.fab.close();
-    console.log(JSON.stringify(instant));
+    if(instant.content.type === 'action-request' && instant.content.status === 0) { // only if unattended
+      this.openGenericModal(instant.content);
+    } else {
+      console.log(JSON.stringify(instant));
+    }
+    
   }
 
   doInfinite(infiniteScroll) {

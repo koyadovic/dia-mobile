@@ -41,6 +41,34 @@ export class DiaInstantCard {
     constructor() {
     }
 
+    private appendClass(classes, newClass) {
+        if(classes === '') {
+            return classes += newClass;
+        } else {
+            return classes += " " + newClass;
+        }
+    }
+
+    getInstantClass() {
+        let classes:string = '';
+
+        if (this.instant.content.type === 'action-request') {
+            classes = this.appendClass(classes, 'action-request');
+
+            if(this.instant.content.status === 0) { // unattended
+                classes = this.appendClass(classes, 'unattended');
+            }
+            else if(this.instant.content.status === 1) { // ignored
+                classes = this.appendClass(classes, 'ignored');
+            }
+            else if(this.instant.content.status === 2) { // done
+                classes = this.appendClass(classes, 'done');
+            }
+        }
+
+        return classes;
+    }
+
     timePassedString(seconds:number){
         return moment(seconds * 1000).fromNow();
     }

@@ -21,7 +21,9 @@ export class DynamicField {
 
   ngOnChanges(changes) {
     if("field" in changes) {
+      this.field["valid"] = false;
       this.updateValue();
+      this.updateValid();
       if(!this.firstChanged){
         this.firstChanged = true;
       }
@@ -43,6 +45,8 @@ export class DynamicField {
   }
 
   private emitHaveChanges(){
+    this.updateValid();
+
     if(this.field) {
       if(this.field.type == 'date'){
         this.haveChanges.emit(
@@ -59,6 +63,59 @@ export class DynamicField {
           }
         );
       }
+    }
+  }
+
+  private updateValid() {
+    let f = this.field;
+
+    if(f.required && !(f.value)) {
+      f.valid = false;
+    }
+
+    if(f.type === 'date') {
+      let d = new Date(f.value);
+      if ( Object.prototype.toString.call(d) === "[object Date]" ) {
+        if ( isNaN( d.getTime() ) ) {
+          if(f.required) {
+            f.valid = false;
+          } else {
+            f.valid = true;
+          }
+        }
+        else {
+          f.valid = true;
+        }
+      }
+      else {
+        if(f.required) {
+          f.valid = false;
+        } else {
+          f.valid = true;
+        }
+      }
+    }
+
+    else if(f.type === 'text') {
+      if(f.regex !== '') {
+        let regex = new RegExp(f.regex);
+        f.valid = regex.test(f.value);
+      }
+      f.valid = true;
+    }
+
+    else if(f.type === 'number') {
+      let n = parseFloat(f.value);
+      f.valid = ! isNaN(n);
+    }
+
+    else if(f.type === 'select') {
+      let options = f.options.map((x) => x.value);
+      f.valid = f.value in options;
+    }
+
+    else if(f.type === 'boolean') {
+      f.valid = f.value in [true, false];
     }
   }
 }

@@ -12,12 +12,7 @@ export class AddGenericPage {
   @Input() dateFormat;
   @Input() timezone;
 
-  private data: {
-    type: "feeding" | "glucose" | "trait" | "activity" | "insulin",
-    url: string,
-    fields: object[],
-    elements: object[]
-  };
+  private data;
 
   complete_elements: object[];
 
@@ -29,15 +24,18 @@ export class AddGenericPage {
     // get data
     this.data = this.navParams.get("data");
 
-    // clone the original array
-    this.complete_elements = this.data.elements.map(x => Object.assign({}, x));
+    this.data["elements"].forEach((element) => {
+      let computed_fields = Object.assign([], this.data["types"][element["type"]]["fields"]);
 
-    this.complete_elements.forEach((element) => {
-      element["fields"] = this.data.fields.map(x => Object.assign({}, x));
-      for(let field of element["fields"]) {
-        if(field.key in element) {
-          field.value = element[field.key];
+      for(let computed_field of computed_fields) {
+        for(let field in element["fields"]) {
+
+          if (field === computed_field["key"]) {
+            computed_field["value"] = element["fields"][field]["default_value"];
+            computed_field["disabled"] = element["fields"][field]["disabled"];
+          }
         }
+        element["computed_fields"] = computed_fields;
       }
     });
   }
@@ -54,16 +52,20 @@ export class AddGenericPage {
     let evaluate = null;
     for(let key in conditional) {
       for(let sentence of conditional[key]){
-        for (let sentenceKey in sentence) {
 
-          let elementValue = element[sentenceKey];
+        for (let sentenceKey in sentence) {
+          
+          let elementValue;
+          for(let rawField of element['computed_fields']) {
+            if(rawField['key'] === sentenceKey) {
+              elementValue = rawField['value'];
+            }
+          }
 
           if (!elementValue) {
             return false;
           }
-
           let conditionalValue = sentence[sentenceKey];
-
           if(key === "$or"){
 
             if(evaluate === null) {
@@ -93,31 +95,87 @@ export class AddGenericPage {
     return evaluate;
   }
 
-  dismiss(){
-    this.viewCtrl.dismiss({"add": false});
-  }
+  doAction(action) {
+    // si hay algún error en los requests, los request de los actions no deberían ser realizados.
 
-  save(){
-    let url = this.data.url;
     let requests = [];
 
-    // TODO maybe we need to include logic checking if complete elements are already completed.
-    for(let elem of this.complete_elements) {
-      delete elem["fields"];
-      requests.push(this.restBackendService.genericPost(url, elem));
+    switch(action['type']) {
+      case 'dismiss':
+      break;
+
+      case 'add':
+      for(let element of this.data['elements']) {
+        let data = {}
+        let url = this.data['types'][element['type']]['url'];
+        for(let field of element['computed_fields']) {
+          if (field['type'] === 'date') {
+            data[field['key']] = new Date(field['value']).valueOf() / 1000.;
+          } else {
+            data[field['key']] = field['value'];
+          }
+        }
+        requests.push(this.restBackendService.genericPost(url, data));
+      }
+      break;
     }
 
-    forkJoin(...requests).subscribe(
-      (resp) => {
-        this.viewCtrl.dismiss({"add": true});
-      },
-      (err) => {
-        console.log(err);
-      },
-    );
+    if(requests.length > 0) {
+      forkJoin(...requests).subscribe(
+        (resp) => {
+          // all ok, so we complete the operation
+
+          if('url' in action) {
+            let url = action['url'];
+            let data = {};
+            if ('data' in action) {
+              data = action['data'];
+            }
+            this.restBackendService.genericPost(url, data).subscribe(
+              (resp) => {
+                this.viewCtrl.dismiss({"add": true});
+              }
+            )
+          } else {
+            this.viewCtrl.dismiss({"add": true});
+          }
+        },
+        (err) => {
+          console.log(err);
+        },
+      );
+    } else {
+      if('url' in action) {
+        let url = action['url'];
+        let data = {};
+        if ('data' in action) {
+          data = action['data'];
+        }
+        this.restBackendService.genericPost(url, data).subscribe(
+          (resp) => {
+            this.viewCtrl.dismiss({"add": true});
+          }
+        )
+      } else {
+        this.viewCtrl.dismiss({"add": false});
+      }
+    }
   }
 
   hasProp(o, name) {
     return o.hasOwnProperty(name);
+  }
+
+  isValid(){
+    for(let element of this.data.elements) {
+      for(let field of element.computed_fields) {
+        if((this.hasProp(field, 'disabled') && field['disabled'] === false) || !this.hasProp(field, 'disabled')) {
+          if (!this.hasProp(field, 'valid') || (this.hasProp(field, 'valid') && !field.valid)){
+            return false;
+          }
+        }
+      }
+    }
+    return true;
   }
 }

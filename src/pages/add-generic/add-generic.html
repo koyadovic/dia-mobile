@@ -1,13 +1,7 @@
 <ion-header>
 
   <ion-navbar *ngIf="!!data">
-    <ng-container [ngSwitch]="data.type">
-      <ion-title *ngSwitchCase="'glucose'">{{ "Add Glucose" | translate }}</ion-title>
-      <ion-title *ngSwitchCase="'feeding'">{{ "Add Feeding" | translate }}</ion-title>
-      <ion-title *ngSwitchCase="'activity'">{{ "Add Physical Activity" | translate }}</ion-title>
-      <ion-title *ngSwitchCase="'insulin'">{{ "Add Insulin Dose" | translate }}</ion-title>
-      <ion-title *ngSwitchCase="'trait'">{{ "Add Trait Change" | translate }}</ion-title>
-    </ng-container>
+    <ion-title>{{ data['title'] }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -18,32 +12,30 @@
     <ion-row> 
       <ion-col> 
 
-        <ng-container *ngFor="let element of complete_elements; let i = index">
-          <p padding-right padding-left>{{ element.name }}</p>
-          <ng-container *ngFor="let field of element.fields">
+        <ng-container *ngFor="let element of data.elements; let i = index">
 
-            <dynamic-field *ngIf="isConditionalTrue(element, field)"
-            [dateFormat]="dateFormat || 'MM DD, YYYY HH:mm'"
-            [timezone]="timezone || 'UTC'"
-            [field]="field" (haveChanges)="haveChanges($event, element)">
+          <p padding-right padding-left *ngIf="!!element.info">{{ element.info }}</p>
+          <ng-container *ngFor="let field of element.computed_fields">
+
+            <dynamic-field *ngIf="isConditionalTrue(element, field) && !(field.disabled !== undefined && field.disabled)"
+              [dateFormat]="dateFormat || 'MM DD, YYYY HH:mm'"
+              [timezone]="timezone || 'UTC'"
+              [field]="field" (haveChanges)="haveChanges($event, element)">
             </dynamic-field>
           
           </ng-container>
           <hr>
-
         </ng-container>
-
-      </ion-col> 
+      </ion-col>
     </ion-row> 
     
-    <ion-row> 
-      <ion-col> 
-        <button (click)="dismiss()" ion-button full>{{ "Dismiss" | translate }}</button>
-      </ion-col> 
+    <ion-row>
 
-      <ion-col> 
-        <button (click)="save()" ion-button full>{{ "Save" | translate }}</button>
-      </ion-col> 
+      <ion-col *ngFor="let action of data['actions']">
+        <button (click)="doAction(action)" *ngIf="action.type === 'add'" [disabled]="! isValid()" ion-button full>{{ action['display'] }}</button>
+        <button (click)="doAction(action)" *ngIf="action.type !== 'add'" ion-button full>{{ action['display'] }}</button>
+      </ion-col>
+
     </ion-row> 
   </ion-grid> 
 </ion-content>
