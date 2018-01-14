@@ -25,6 +25,7 @@ import { forkJoin } from 'rxjs/observable/forkJoin';
 export class TimeLinePage {
   @ViewChild(FabContainer) fab: FabContainer;
   private timeline = [];
+  public static unattended:number = null;
   private userConfig: UserConfiguration;
   private lastDateShown = "";
   private oldestElementTimestamp = null;
@@ -88,7 +89,9 @@ export class TimeLinePage {
   }
 
   refreshTimeline() {
-    this.timelineService.getTimeline().subscribe((instants) => {
+    this.timelineService.getTimeline().subscribe((response) => {
+      let instants = response['instants'];
+      TimeLinePage.unattended = response['unattended'] > 0 ? response['unattended'] : null;
       this.now = moment();
       this.timeline = this.completeInstants(instants);
     });
@@ -100,14 +103,13 @@ export class TimeLinePage {
 
   // refresh timeline
   doRefresh(refresher) {
-    this.timelineService.getTimeline().subscribe((instants) => {
+    this.timelineService.getTimeline().subscribe((response) => {
+      let instants = response['instants'];
+      TimeLinePage.unattended = response['unattended'] > 0 ? response['unattended'] : null;
       this.now = moment();
       this.timeline = this.completeInstants(instants);
-    });
-
-    setTimeout(() => {
       refresher.complete();
-    }, 500)
+    });
   }
 
   addGlucose() {
