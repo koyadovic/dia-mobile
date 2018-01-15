@@ -38,11 +38,14 @@ export class ConfigurationPage {
      if (this.configurationPointer.length > 1) {
         this.configurationPointer.pop();
       } else {
-        if(Object.keys(this.configurationChanges).length > 0){
-          this.saveConfig();
-        }
         this.navCtrl.pop();
       }
+    }
+  }
+
+  ionViewWillLeave() {
+    if(Object.keys(this.configurationChanges).length > 0){
+      this.saveConfig();
     }
   }
 
