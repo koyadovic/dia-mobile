@@ -16,6 +16,7 @@ import { DiaAuthService } from '../../services/dia-auth-service';
 
 import * as moment from 'moment-timezone';
 import { forkJoin } from 'rxjs/observable/forkJoin';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 
 @Component({
@@ -38,7 +39,8 @@ export class TimeLinePage {
               private timelineService: DiaTimelineService,
               private modalCtrl: ModalController,
               private authService: DiaAuthService,
-              private translate: TranslateService) {
+              private translate: TranslateService,
+              private localNotifications: LocalNotifications) {
 
     this.userConfig = this.configurationService.getUserConfiguration();
 
@@ -61,6 +63,21 @@ export class TimeLinePage {
 
     let lastInstant = null;
     for(let instant of instants) {
+      /*
+      Para notificaciones.
+
+      this.localNotifications.schedule({
+        id: 1,
+        title: 'Título ejemplo',
+        text: 'Texto de ejemplo para probar las notificaciones',
+        at: new Date(new Date().getTime() + (10 * 1000)),
+        led: 'FF0000',
+        sound: 'file://assets/resources/notification.mp3',
+        icon: 'https://image.flaticon.com/sprites/new_packs/181501-interface.png'
+      });
+      */
+
+
       let currentMoment = moment(instant.datetime * 1000);
       // append day of month
       instant.day = currentMoment.format('DD')
