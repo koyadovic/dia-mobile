@@ -6,7 +6,6 @@ import { DiaMobileApp } from './app-component';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicStorageModule } from '@ionic/storage';
-import { BackgroundMode } from '@ionic-native/background-mode';
 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -41,6 +40,7 @@ import { AddFeedingPage } from '../pages/add-feeding/add-feeding';
 import { SearchFoodPage } from '../pages/search-food/search-food';
 import { AddFoodPage } from '../pages/add-food/add-food';
 import { IntroduceFoodWeightOrUnitsPage } from '../pages/introduce-food-weight-or-units/introduce-food-weight-or-units';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -112,14 +112,14 @@ export function HttpLoaderFactory(http: HttpClient) {
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     IonicStorageModule,
-    BackgroundMode,
     DiaRestBackendService,
     DiaAuthService,
     DiaBackendURL,
     DiaMessageService,
     DiaConfigurationService,
     DiaWebsocketService,
-    DiaTimelineService
+    DiaTimelineService,
+    LocalNotifications
   ]
 })
 export class AppModule {}

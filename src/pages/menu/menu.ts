@@ -12,6 +12,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { Storage } from '@ionic/storage/dist/storage';
 
+// for tests
+import { LocalNotifications } from '@ionic-native/local-notifications';
+
+
 
 @Component({
   selector: 'page-menu',
@@ -30,12 +34,23 @@ export class MenuPage {
               private authenticationService: DiaAuthService,
               private messageService: DiaMessageService,
               private translate: TranslateService,
-              private storage: Storage) {
+              private storage: Storage,
+              private localNotifications: LocalNotifications) {
 
     this.events.subscribe('response:change:tab', (index) => {
       this.selectedIndex = index;
     });
     this.storage.get('email').then((email) => this.email = email);
+
+    this.localNotifications.schedule({
+      id: 1,
+      title: 'Título ejemplo',
+      text: 'Texto de ejemplo para probar las notificaciones',
+      at: new Date(new Date().getTime() + (10 * 1000)),
+      led: 'FF0000',
+      sound: 'file://assets/resources/notification.mp3',
+      icon: 'https://image.flaticon.com/sprites/new_packs/181501-interface.png'
+   });
 
   }
 
