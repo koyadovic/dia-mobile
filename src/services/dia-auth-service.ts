@@ -39,6 +39,7 @@ export class DiaAuthService {
                  .subscribe(
                     (token) => {
                         this.storage.set("token", token);
+                        this.storage.set("email", data.email);
                         this.token = token;
                         this.loggedIn$.next(!!token);
                     },
@@ -50,6 +51,7 @@ export class DiaAuthService {
 
     logout(){
         this.storage.set("token", "");
+        this.storage.set("email", "");
         this.token = '';
         this.loggedIn$.next(false);
     }
