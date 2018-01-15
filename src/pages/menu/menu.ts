@@ -39,7 +39,6 @@ export class MenuPage {
 
   }
 
-
   goConfiguration() {
     this.appCtrl.getRootNavs()[0].push(ConfigurationPage);
   }
@@ -47,7 +46,6 @@ export class MenuPage {
   eventGoTab(index: number){
     this.events.publish('request:change:tab', index);
   }
-
 
   logout(){
     forkJoin(
