@@ -21,10 +21,7 @@ export class ConfigurationPage {
   private timerForSave = null;
 
   constructor(public navCtrl: NavController,
-              private configurationService: DiaConfigurationService,
-              private authenticationService: DiaAuthService,
-              private messageService: DiaMessageService,
-              private translate: TranslateService) {
+              private configurationService: DiaConfigurationService) {
 
     this.configurationService.getConfiguration().subscribe(
       (configuration) => {
@@ -38,11 +35,14 @@ export class ConfigurationPage {
      if (this.configurationPointer.length > 1) {
         this.configurationPointer.pop();
       } else {
-        if(Object.keys(this.configurationChanges).length > 0){
-          this.saveConfig();
-        }
         this.navCtrl.pop();
       }
+    }
+  }
+
+  ionViewWillLeave() {
+    if(Object.keys(this.configurationChanges).length > 0){
+      this.saveConfig();
     }
   }
 
@@ -58,14 +58,5 @@ export class ConfigurationPage {
     this.configurationPointer.push(event);
   }
 
-  logout(){
-    forkJoin(
-      this.translate.get("Logout Confirmation"),
-      this.translate.get("Are you sure to close your session?")
-    ).subscribe(([title, message]) => {
-      let diamessage = new DiaMessage(title, "info", message)
-      this.messageService.confirmMessage(diamessage).subscribe((ok) => { if (ok) this.authenticationService.logout(); });
-    });
-  }
 
 }
