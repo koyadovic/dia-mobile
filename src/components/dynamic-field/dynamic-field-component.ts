@@ -110,8 +110,12 @@ export class DynamicField {
     }
 
     else if(f.type === 'select') {
-      let options = f.options.map((x) => x.value);
-      f.valid = f.value in options;
+      if(!!f.options && f.options.length > 0) {
+        let options = f.options.map((x) => x.value);
+        f.valid = f.value in options;
+      } else {
+        f.valid = true;
+      }
     }
 
     else if(f.type === 'boolean') {
