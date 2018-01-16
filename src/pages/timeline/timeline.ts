@@ -317,11 +317,11 @@ export class TimeLinePage {
 
     this.timelineService.getTimeline(this.timeline[this.timeline.length - 1].datetime).subscribe(
       (resp) => {
-        if(resp.length === 0) {
+        if(resp['instants'].length === 0) {
           this.oldestElementTimestamp = this.timeline[this.timeline.length - 1].datetime;
         }
         this.now = moment();
-        let all = this.timeline.concat(resp);
+        let all = this.timeline.concat(resp['instants']);
         this.timeline = this.completeInstants(all);
         infiniteScroll.complete();
       }
