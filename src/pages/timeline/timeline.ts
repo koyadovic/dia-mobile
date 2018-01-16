@@ -65,20 +65,18 @@ export class TimeLinePage {
     let resultInstants = [];
 
     for(let instant of instants) {
-      /*
-      Para notificaciones.
-
-      */
-
       let now = new Date().getTime() / 1000;
 
       if(instant.content.type === 'action-request' && instant.datetime > now) {
-        if (instant.content.status === 0 && !this.localNotifications.isScheduled(instant.id)) {
+        if (instant.content.status === 0) {
+          if(this.localNotifications.isScheduled(instant.id)) {
+            this.localNotifications.cancel(instant.id);
+          }
           // status === 0 is unattended, so if it's no scheduled notification we create one.
           this.localNotifications.schedule({
             id: instant.id,
-            title: 'Título ejemplo',
-            text: 'Texto de ejemplo para probar las notificaciones',
+            title: instant.content.title,
+            text: instant.content.elements[0].info,
             at: new Date(instant.datetime * 1000),
             led: 'FF0000',
             sound: 'file://assets/resources/notification.mp3',
