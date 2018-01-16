@@ -1,3 +1,5 @@
+declare var cordova;
+
 import { Component, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
@@ -16,7 +18,6 @@ import { DiaAuthService } from '../../services/dia-auth-service';
 
 import * as moment from 'moment-timezone';
 import { forkJoin } from 'rxjs/observable/forkJoin';
-import { LocalNotifications } from '@ionic-native/local-notifications';
 
 
 @Component({
@@ -39,8 +40,7 @@ export class TimeLinePage {
               private timelineService: DiaTimelineService,
               private modalCtrl: ModalController,
               private authService: DiaAuthService,
-              private translate: TranslateService,
-              private localNotifications: LocalNotifications) {
+              private translate: TranslateService) {
 
     this.userConfig = this.configurationService.getUserConfiguration();
 
@@ -69,23 +69,23 @@ export class TimeLinePage {
 
       if(instant.content.type === 'action-request' && instant.datetime > now) {
         if (instant.content.status === 0) {
-          if(this.localNotifications.isScheduled(instant.id)) {
-            this.localNotifications.cancel(instant.id);
+          if((<any>cordova).plugins.notification.local.isScheduled(instant.id)) {
+            (<any>cordova).plugins.notification.local.cancel(instant.id);
           }
           // status === 0 is unattended, so if it's no scheduled notification we create one.
-          this.localNotifications.schedule({
-            id: instant.id,
-            title: instant.content.title,
-            text: instant.content.elements[0].info,
-            at: new Date(instant.datetime * 1000),
-            led: 'FF0000',
-            sound: 'file://assets/resources/notification.mp3',
-            icon: ''
+
+          (<any>cordova).plugins.notification.local.schedule({
+              id: instant.id,
+              title: instant.content.title,
+              text: instant.content.elements[0].info,
+              priority: 1,
+              vibrate: true,
+              trigger: { at: new Date(instant.datetime * 1000) }
           });
         }
-        if (instant.content.status !== 0 && this.localNotifications.isScheduled(instant.id)) {
+        if (instant.content.status !== 0 && (<any>cordova).plugins.notification.local.isScheduled(instant.id)) {
           // status 1 is ignored and 2 is done, so if there is something scheduled we cancel it.
-          this.localNotifications.cancel(instant.id);
+          (<any>cordova).plugins.notification.local.cancel(instant.id);
         }
       } else {
         let currentMoment = moment(instant.datetime * 1000);

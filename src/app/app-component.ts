@@ -33,6 +33,11 @@ export class DiaMobileApp {
       statusBar.styleDefault();
       splashScreen.hide();
 
+      // only runs on real device
+      if(this.platform.is('cordova')) {
+      }
+
+
       this.wsService.isReady().subscribe(
         (ready) => {
           if(ready) {

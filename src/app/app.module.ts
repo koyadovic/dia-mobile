@@ -40,7 +40,6 @@ import { AddFeedingPage } from '../pages/add-feeding/add-feeding';
 import { SearchFoodPage } from '../pages/search-food/search-food';
 import { AddFoodPage } from '../pages/add-food/add-food';
 import { IntroduceFoodWeightOrUnitsPage } from '../pages/introduce-food-weight-or-units/introduce-food-weight-or-units';
-import { LocalNotifications } from '@ionic-native/local-notifications';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -119,7 +118,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     DiaConfigurationService,
     DiaWebsocketService,
     DiaTimelineService,
-    LocalNotifications
   ]
 })
 export class AppModule {}
