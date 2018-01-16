@@ -62,46 +62,61 @@ export class TimeLinePage {
     let processed;
 
     let lastInstant = null;
+    let resultInstants = [];
+
     for(let instant of instants) {
       /*
       Para notificaciones.
 
-      this.localNotifications.schedule({
-        id: 1,
-        title: 'Título ejemplo',
-        text: 'Texto de ejemplo para probar las notificaciones',
-        at: new Date(new Date().getTime() + (10 * 1000)),
-        led: 'FF0000',
-        sound: 'file://assets/resources/notification.mp3',
-        icon: 'https://image.flaticon.com/sprites/new_packs/181501-interface.png'
-      });
       */
 
+      let now = new Date().getTime() / 1000;
 
-      let currentMoment = moment(instant.datetime * 1000);
-      // append day of month
-      instant.day = currentMoment.format('DD')
-
-      // append distance with the next;
-      if (lastInstant !== null) {
-        let lastMoment = moment(lastInstant.datetime * 1000);
-        lastInstant.minutes_diff = lastMoment.diff(currentMoment) / 1000.0 / 60.0
+      if(instant.content.type === 'action-request' && instant.datetime > now) {
+        if (instant.content.status === 0 && !this.localNotifications.isScheduled(instant.id)) {
+          // status === 0 is unattended, so if it's no scheduled notification we create one.
+          this.localNotifications.schedule({
+            id: instant.id,
+            title: 'Título ejemplo',
+            text: 'Texto de ejemplo para probar las notificaciones',
+            at: new Date(instant.datetime * 1000),
+            led: 'FF0000',
+            sound: 'file://assets/resources/notification.mp3',
+            icon: ''
+          });
+        }
+        if (instant.content.status !== 0 && this.localNotifications.isScheduled(instant.id)) {
+          // status 1 is ignored and 2 is done, so if there is something scheduled we cancel it.
+          this.localNotifications.cancel(instant.id);
+        }
+      } else {
+        let currentMoment = moment(instant.datetime * 1000);
+        // append day of month
+        instant.day = currentMoment.format('DD')
+  
+        // append distance with the next;
+        if (lastInstant !== null) {
+          let lastMoment = moment(lastInstant.datetime * 1000);
+          lastInstant.minutes_diff = lastMoment.diff(currentMoment) / 1000.0 / 60.0
+        }
+  
+        // append time passed from now
+        instant.passed_from_now = moment(instant.datetime * 1000).fromNow();
+  
+        // append moment instance
+        instant.moment = moment(instant.datetime * 1000);
+  
+        lastInstant = instant;
+  
+        resultInstants.push(instant);
       }
-
-      // append time passed from now
-      instant.passed_from_now = moment(instant.datetime * 1000).fromNow();
-
-      // append moment instance
-      instant.moment = moment(instant.datetime * 1000);
-
-      lastInstant = instant;
     }
 
     // avoiding future errors
     if (!!lastInstant)
       lastInstant.minutes_diff = 0;
 
-    return instants;
+    return resultInstants;
   }
 
   refreshTimeline() {
@@ -301,12 +316,10 @@ export class TimeLinePage {
   // when a card is clicked must be shown details about it
   cardClicked(instant) {
     this.fab.close();
+    console.log(JSON.stringify(instant));
     if(instant.content.type === 'action-request' && instant.content.status === 0) { // only if unattended
       this.openGenericModal(instant.content);
-    } else {
-      console.log(JSON.stringify(instant));
     }
-    
   }
 
   doInfinite(infiniteScroll) {
