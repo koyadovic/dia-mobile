@@ -33,3 +33,5 @@ www/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
+
+google-services\.json
