@@ -1,17 +1,19 @@
-import { Observable } from 'rxjs/Observable';
-import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { BackgroundMode } from '@ionic-native/background-mode';
+import { FCM } from '@ionic-native/fcm';
 
+import { Platform } from 'ionic-angular';
+import { Component } from '@angular/core';
+
+import { Observable } from 'rxjs/Observable';
+
+import { MainPage } from '../pages/main/main';
+import { MenuPage } from '../pages/menu/menu';
 import { LoginPage } from '../pages/login/login';
 
 import { DiaAuthService } from '../services/dia-auth-service'
 import { DiaWebsocketService } from '../services/dia-websockets-service';
-import { MainPage } from '../pages/main/main';
 import { DiaConfigurationService } from '../services/dia-configuration-service';
-import { MenuPage } from '../pages/menu/menu';
 
 
 @Component({
@@ -21,10 +23,10 @@ export class DiaMobileApp {
   rootPage:any;
   private backendMessages$: Observable<any>;
 
-  constructor(private platform: Platform,
+  constructor(private fcm: FCM,
+              private platform: Platform,
               private statusBar: StatusBar,
               private splashScreen: SplashScreen,
-              private backgroundMode: BackgroundMode,
               private authService: DiaAuthService,
               private wsService: DiaWebsocketService,
               private configurationService: DiaConfigurationService) {
@@ -34,7 +36,22 @@ export class DiaMobileApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-      backgroundMode.enable();
+
+      // only runs on real device
+      if(this.platform.is('cordova')) {
+        // Firebase Cloud Messaging
+        this.fcm.onTokenRefresh().subscribe(token => {
+          // backend.registerToken(token);
+        });
+        this.fcm.onNotification().subscribe(data => {
+          if(data.wasTapped) {
+           //console.info("Received in background");
+          } else {
+           //console.info("Received in foreground");
+          };
+        });
+      }
+
 
       this.wsService.isReady().subscribe(
         (ready) => {

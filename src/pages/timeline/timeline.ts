@@ -48,6 +48,8 @@ export class TimeLinePage {
       if(loggedin){
         this.refreshTimeline();
 
+ 
+
       } else {
         this.userConfig = null;
         if(!!this.loggedinSubscription)
@@ -60,31 +62,40 @@ export class TimeLinePage {
     let processed;
 
     let lastInstant = null;
+    let resultInstants = [];
+
     for(let instant of instants) {
-      let currentMoment = moment(instant.datetime * 1000);
-      // append day of month
-      instant.day = currentMoment.format('DD')
+      let now = new Date().getTime() / 1000;
 
-      // append distance with the next;
-      if (lastInstant !== null) {
-        let lastMoment = moment(lastInstant.datetime * 1000);
-        lastInstant.minutes_diff = lastMoment.diff(currentMoment) / 1000.0 / 60.0
+      if(instant.content.type === 'action-request' && instant.datetime > now) {
+      } else {
+        let currentMoment = moment(instant.datetime * 1000);
+        // append day of month
+        instant.day = currentMoment.format('DD')
+  
+        // append distance with the next;
+        if (lastInstant !== null) {
+          let lastMoment = moment(lastInstant.datetime * 1000);
+          lastInstant.minutes_diff = lastMoment.diff(currentMoment) / 1000.0 / 60.0
+        }
+  
+        // append time passed from now
+        instant.passed_from_now = moment(instant.datetime * 1000).fromNow();
+  
+        // append moment instance
+        instant.moment = moment(instant.datetime * 1000);
+  
+        lastInstant = instant;
+  
+        resultInstants.push(instant);
       }
-
-      // append time passed from now
-      instant.passed_from_now = moment(instant.datetime * 1000).fromNow();
-
-      // append moment instance
-      instant.moment = moment(instant.datetime * 1000);
-
-      lastInstant = instant;
     }
 
     // avoiding future errors
     if (!!lastInstant)
       lastInstant.minutes_diff = 0;
 
-    return instants;
+    return resultInstants;
   }
 
   refreshTimeline() {
@@ -284,12 +295,10 @@ export class TimeLinePage {
   // when a card is clicked must be shown details about it
   cardClicked(instant) {
     this.fab.close();
+    console.log(JSON.stringify(instant));
     if(instant.content.type === 'action-request' && instant.content.status === 0) { // only if unattended
       this.openGenericModal(instant.content);
-    } else {
-      console.log(JSON.stringify(instant));
     }
-    
   }
 
   doInfinite(infiniteScroll) {
@@ -300,11 +309,11 @@ export class TimeLinePage {
 
     this.timelineService.getTimeline(this.timeline[this.timeline.length - 1].datetime).subscribe(
       (resp) => {
-        if(resp.length === 0) {
+        if(resp['instants'].length === 0) {
           this.oldestElementTimestamp = this.timeline[this.timeline.length - 1].datetime;
         }
         this.now = moment();
-        let all = this.timeline.concat(resp);
+        let all = this.timeline.concat(resp['instants']);
         this.timeline = this.completeInstants(all);
         infiniteScroll.complete();
       }

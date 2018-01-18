@@ -36,7 +36,6 @@ export class MenuPage {
       this.selectedIndex = index;
     });
     this.storage.get('email').then((email) => this.email = email);
-
   }
 
   goConfiguration() {
