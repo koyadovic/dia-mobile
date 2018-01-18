@@ -1,3 +1,4 @@
+import { FCM } from '@ionic-native/fcm';
 import { Observable } from 'rxjs/Observable';
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
@@ -20,7 +21,8 @@ export class DiaMobileApp {
   rootPage:any;
   private backendMessages$: Observable<any>;
 
-  constructor(private platform: Platform,
+  constructor(private fcm: FCM,
+              private platform: Platform,
               private statusBar: StatusBar,
               private splashScreen: SplashScreen,
               private authService: DiaAuthService,
@@ -32,6 +34,21 @@ export class DiaMobileApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+      this.fcm.getToken().then(token => {
+        // backend.registerToken(token);
+      });
+      this.fcm.onTokenRefresh().subscribe(token => {
+        // backend.registerToken(token);
+      });
+      this.fcm.onNotification().subscribe(data => {
+        alert('message received');
+        if(data.wasTapped) {
+         console.info("Received in background");
+        } else {
+         console.info("Received in foreground");
+        };
+      });
+
 
       // only runs on real device
       if(this.platform.is('cordova')) {
