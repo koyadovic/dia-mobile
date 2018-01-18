@@ -9,6 +9,8 @@ import { Tabs } from 'ionic-angular/navigation/nav-interfaces';
 import { Events } from 'ionic-angular';
 import { FCM } from '@ionic-native/fcm';
 import { Platform } from 'ionic-angular/platform/platform';
+import { DiaRestBackendService } from '../../services/dia-rest-backend-service';
+import { DiaBackendURL } from '../../services/dia-backend-urls';
 
 @Component({
   selector: 'page-main',
@@ -30,7 +32,9 @@ export class MainPage {
               private navCtrl: NavController,
               private navParams: NavParams,
               private translate: TranslateService,
-              public events: Events) {
+              public events: Events,
+              private backendURL: DiaBackendURL,
+              private restBackendService: DiaRestBackendService) {
     
     forkJoin(
       this.translate.get('Timeline'),
@@ -48,11 +52,23 @@ export class MainPage {
     if(this.platform.is('cordova')) {
       // Firebase Cloud Messaging
       this.fcm.getToken().then((token) => {
-        this.events.publish('fcm:token', token);
+        let url = `${this.backendURL.baseURL}/v1/notifications/plugins/fcm/register-token/`;
+        this.restBackendService.genericPost(url, {'token': token}).subscribe(
+          (resp) => {
+            alert("getToken(): " + JSON.stringify(resp));
+          }
+        );
       });
+
       this.fcm.onTokenRefresh().subscribe(token => {
-        this.events.publish('fcm:token', token);
+        let url = `${this.backendURL.baseURL}/v1/notifications/plugins/fcm/register-token/`;
+        this.restBackendService.genericPost(url, {'token': token}).subscribe(
+          (resp) => {
+            alert("onTokenRefresh(): " + JSON.stringify(resp));
+          }
+        );
       });
+      
       this.fcm.onNotification().subscribe(data => {
         if(data.wasTapped) {
           //console.info("Received in background");

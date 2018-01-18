@@ -14,7 +14,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { UserConfiguration } from '../utils/user-configuration';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { DiaConfigurationService } from './dia-configuration-service';
-import { Events } from 'ionic-angular/util/events';
 
 
 @Injectable()
@@ -33,19 +32,14 @@ export class DiaTimelineService {
                 private restBackendService: DiaRestBackendService,
                 private configurationService: DiaConfigurationService,
                 private authenticationService: DiaAuthService,
-                private translate: TranslateService,
-                public events: Events) {
+                private translate: TranslateService) {
 
         this.userConfig = this.configurationService.getUserConfiguration();
         this.getInsulinTypes().subscribe((resp) => {
             this.insulinTypes = resp;
         });
 
-        this.events.subscribe('fcm:token', (token) => {
-            let url = `${this.backendURL.baseURL}/v1/notifications/plugins/fcm/register-token/`;
-            this.restBackendService.genericPost(url, {'token': token});
-        });
-  
+ 
         this.buildElementFields();
     }
 
