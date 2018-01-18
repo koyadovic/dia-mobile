@@ -7,6 +7,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { Tabs } from 'ionic-angular/navigation/nav-interfaces';
 import { Events } from 'ionic-angular';
+import { FCM } from '@ionic-native/fcm';
+import { Platform } from 'ionic-angular/platform/platform';
 
 @Component({
   selector: 'page-main',
@@ -23,7 +25,9 @@ export class MainPage {
   planningsTitle = 'Plannings';
   statsTitle = 'Stats';
 
-  constructor(private navCtrl: NavController,
+  constructor(private fcm: FCM,
+              private platform: Platform,
+              private navCtrl: NavController,
               private navParams: NavParams,
               private translate: TranslateService,
               public events: Events) {
@@ -39,6 +43,22 @@ export class MainPage {
         this.statsTitle = stats;
       }
     );
+
+    // only runs on real device and only if loggedin
+    if(this.platform.is('cordova')) {
+      // Firebase Cloud Messaging
+      this.fcm.onTokenRefresh().subscribe(token => {
+        // backend.registerToken(token);
+      });
+      this.fcm.onNotification().subscribe(data => {
+        if(data.wasTapped) {
+          //console.info("Received in background");
+        } else {
+          //console.info("Received in foreground");
+        };
+      });
+    }
+    
 
     this.events.subscribe('request:change:tab', (index) => {
       this.mainTabs.select(index, {}, false);

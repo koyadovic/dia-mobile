@@ -1,6 +1,5 @@
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { FCM } from '@ionic-native/fcm';
 
 import { Platform } from 'ionic-angular';
 import { Component } from '@angular/core';
@@ -23,8 +22,7 @@ export class DiaMobileApp {
   rootPage:any;
   private backendMessages$: Observable<any>;
 
-  constructor(private fcm: FCM,
-              private platform: Platform,
+  constructor(private platform: Platform,
               private statusBar: StatusBar,
               private splashScreen: SplashScreen,
               private authService: DiaAuthService,
@@ -36,22 +34,6 @@ export class DiaMobileApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-
-      // only runs on real device
-      if(this.platform.is('cordova')) {
-        // Firebase Cloud Messaging
-        this.fcm.onTokenRefresh().subscribe(token => {
-          // backend.registerToken(token);
-        });
-        this.fcm.onNotification().subscribe(data => {
-          if(data.wasTapped) {
-           //console.info("Received in background");
-          } else {
-           //console.info("Received in foreground");
-          };
-        });
-      }
-
 
       this.wsService.isReady().subscribe(
         (ready) => {
