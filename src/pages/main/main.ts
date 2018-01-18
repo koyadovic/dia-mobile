@@ -53,20 +53,12 @@ export class MainPage {
       // Firebase Cloud Messaging
       this.fcm.getToken().then((token) => {
         let url = `${this.backendURL.baseURL}/v1/notifications/plugins/fcm/register-token/`;
-        this.restBackendService.genericPost(url, {'token': token}).subscribe(
-          (resp) => {
-            alert("getToken(): " + JSON.stringify(resp));
-          }
-        );
+        this.restBackendService.genericPost(url, {'token': token}).subscribe(resp => {});
       });
 
       this.fcm.onTokenRefresh().subscribe(token => {
         let url = `${this.backendURL.baseURL}/v1/notifications/plugins/fcm/register-token/`;
-        this.restBackendService.genericPost(url, {'token': token}).subscribe(
-          (resp) => {
-            alert("onTokenRefresh(): " + JSON.stringify(resp));
-          }
-        );
+        this.restBackendService.genericPost(url, {'token': token}).subscribe(resp => {});
       });
       
       this.fcm.onNotification().subscribe(data => {
