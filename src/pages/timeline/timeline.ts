@@ -1,5 +1,3 @@
-declare var cordova;
-
 import { Component, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
@@ -50,6 +48,8 @@ export class TimeLinePage {
       if(loggedin){
         this.refreshTimeline();
 
+ 
+
       } else {
         this.userConfig = null;
         if(!!this.loggedinSubscription)
@@ -68,25 +68,6 @@ export class TimeLinePage {
       let now = new Date().getTime() / 1000;
 
       if(instant.content.type === 'action-request' && instant.datetime > now) {
-        if (instant.content.status === 0) {
-          if((<any>cordova).plugins.notification.local.isScheduled(instant.id)) {
-            (<any>cordova).plugins.notification.local.cancel(instant.id);
-          }
-          // status === 0 is unattended, so if it's no scheduled notification we create one.
-
-          (<any>cordova).plugins.notification.local.schedule({
-              id: instant.id,
-              title: instant.content.title,
-              text: instant.content.elements[0].info,
-              priority: 1,
-              vibrate: true,
-              trigger: { at: new Date(instant.datetime * 1000) }
-          });
-        }
-        if (instant.content.status !== 0 && (<any>cordova).plugins.notification.local.isScheduled(instant.id)) {
-          // status 1 is ignored and 2 is done, so if there is something scheduled we cancel it.
-          (<any>cordova).plugins.notification.local.cancel(instant.id);
-        }
       } else {
         let currentMoment = moment(instant.datetime * 1000);
         // append day of month
