@@ -47,8 +47,11 @@ export class MainPage {
     // only runs on real device and only if loggedin
     if(this.platform.is('cordova')) {
       // Firebase Cloud Messaging
+      this.fcm.getToken().then((token) => {
+        this.events.publish('fcm:token', token);
+      });
       this.fcm.onTokenRefresh().subscribe(token => {
-        // backend.registerToken(token);
+        this.events.publish('fcm:token', token);
       });
       this.fcm.onNotification().subscribe(data => {
         if(data.wasTapped) {
