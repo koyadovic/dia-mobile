@@ -38,7 +38,8 @@ export class DiaTimelineService {
         this.getInsulinTypes().subscribe((resp) => {
             this.insulinTypes = resp;
         });
-  
+
+ 
         this.buildElementFields();
     }
 

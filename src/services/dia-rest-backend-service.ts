@@ -23,7 +23,6 @@ export class DiaRestBackendService {
     return Observable.create((observer) => {
       this.http
       .get(url, {headers: this.getHeaders(this.authService.getToken())})
-      .retry(3)
       .finally(() => observer.complete())
       .map((response: HttpResponse<any>) => {
         return response;
@@ -46,7 +45,6 @@ export class DiaRestBackendService {
     return Observable.create((observer) => {
       this.http
       .post(url, data, {headers: this.getHeaders(this.authService.getToken())})
-      .retry(3)
       .finally(() => observer.complete())
       .map((response: HttpResponse<any>) => {
         return response;

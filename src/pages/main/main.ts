@@ -7,6 +7,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { Tabs } from 'ionic-angular/navigation/nav-interfaces';
 import { Events } from 'ionic-angular';
+import { FCM } from '@ionic-native/fcm';
+import { Platform } from 'ionic-angular/platform/platform';
+import { DiaRestBackendService } from '../../services/dia-rest-backend-service';
+import { DiaBackendURL } from '../../services/dia-backend-urls';
+import { Storage } from '@ionic/storage';
+
 
 @Component({
   selector: 'page-main',
@@ -23,10 +29,15 @@ export class MainPage {
   planningsTitle = 'Plannings';
   statsTitle = 'Stats';
 
-  constructor(private navCtrl: NavController,
+  constructor(private fcm: FCM,
+              private platform: Platform,
+              private storage: Storage,
+              private navCtrl: NavController,
               private navParams: NavParams,
               private translate: TranslateService,
-              public events: Events) {
+              private events: Events,
+              private backendURL: DiaBackendURL,
+              private restBackendService: DiaRestBackendService) {
     
     forkJoin(
       this.translate.get('Timeline'),
@@ -40,10 +51,40 @@ export class MainPage {
       }
     );
 
+    // only runs on real device and only if loggedin
+    if(this.platform.is('cordova')) {
+
+      // Firebase Cloud Messaging
+      this.fcm.getToken().then((token) => { this.checkFCMStoredToken(token); });
+      this.fcm.onTokenRefresh().subscribe(token => {this.checkFCMStoredToken(token); });
+      /*
+      this.fcm.onNotification().subscribe(data => {
+        if(data.wasTapped) {
+          console.info("Received in background");
+        } else {
+          console.info("Received in foreground");
+        };
+      });
+      */
+    }
+    
+
     this.events.subscribe('request:change:tab', (index) => {
       this.mainTabs.select(index, {}, false);
       this.events.publish('response:change:tab', index);
     });
+  }
+
+  private checkFCMStoredToken(newToken: string) {
+    if(!!newToken) {
+      this.storage.get('fcm_token').then((fcm_token) => {
+        if(!fcm_token || fcm_token !== newToken) {
+          let url = `${this.backendURL.baseURL}/v1/notifications/plugins/fcm/register-token/`;
+          this.restBackendService.genericPost(url, {'token': newToken}).subscribe(resp => {});
+          this.storage.set('fcm_token', newToken);
+        }
+      });
+    }
   }
 
   tabClicked(index) {
