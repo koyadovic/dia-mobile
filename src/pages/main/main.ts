@@ -11,6 +11,8 @@ import { FCM } from '@ionic-native/fcm';
 import { Platform } from 'ionic-angular/platform/platform';
 import { DiaRestBackendService } from '../../services/dia-rest-backend-service';
 import { DiaBackendURL } from '../../services/dia-backend-urls';
+import { Storage } from '@ionic/storage';
+
 
 @Component({
   selector: 'page-main',
@@ -29,10 +31,11 @@ export class MainPage {
 
   constructor(private fcm: FCM,
               private platform: Platform,
+              private storage: Storage,
               private navCtrl: NavController,
               private navParams: NavParams,
               private translate: TranslateService,
-              public events: Events,
+              private events: Events,
               private backendURL: DiaBackendURL,
               private restBackendService: DiaRestBackendService) {
     
@@ -50,24 +53,19 @@ export class MainPage {
 
     // only runs on real device and only if loggedin
     if(this.platform.is('cordova')) {
-      // Firebase Cloud Messaging
-      this.fcm.getToken().then((token) => {
-        let url = `${this.backendURL.baseURL}/v1/notifications/plugins/fcm/register-token/`;
-        this.restBackendService.genericPost(url, {'token': token}).subscribe(resp => {});
-      });
 
-      this.fcm.onTokenRefresh().subscribe(token => {
-        let url = `${this.backendURL.baseURL}/v1/notifications/plugins/fcm/register-token/`;
-        this.restBackendService.genericPost(url, {'token': token}).subscribe(resp => {});
-      });
-      
+      // Firebase Cloud Messaging
+      this.fcm.getToken().then((token) => { this.checkFCMStoredToken(token); });
+      this.fcm.onTokenRefresh().subscribe(token => {this.checkFCMStoredToken(token); });
+      /*
       this.fcm.onNotification().subscribe(data => {
         if(data.wasTapped) {
-          //console.info("Received in background");
+          console.info("Received in background");
         } else {
-          //console.info("Received in foreground");
+          console.info("Received in foreground");
         };
       });
+      */
     }
     
 
@@ -75,6 +73,18 @@ export class MainPage {
       this.mainTabs.select(index, {}, false);
       this.events.publish('response:change:tab', index);
     });
+  }
+
+  private checkFCMStoredToken(newToken: string) {
+    if(!!newToken) {
+      this.storage.get('fcm_token').then((fcm_token) => {
+        if(!fcm_token || fcm_token !== newToken) {
+          let url = `${this.backendURL.baseURL}/v1/notifications/plugins/fcm/register-token/`;
+          this.restBackendService.genericPost(url, {'token': newToken}).subscribe(resp => {});
+          this.storage.set('fcm_token', newToken);
+        }
+      });
+    }
   }
 
   tabClicked(index) {

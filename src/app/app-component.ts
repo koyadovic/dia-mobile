@@ -15,6 +15,7 @@ import { DiaWebsocketService } from '../services/dia-websockets-service';
 import { DiaConfigurationService } from '../services/dia-configuration-service';
 
 
+
 @Component({
   templateUrl: 'app-component.html',
 })
@@ -32,9 +33,14 @@ export class DiaMobileApp {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      statusBar.styleDefault();
-      splashScreen.hide();
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
 
+      // only runs on real device and only if loggedin
+      if(this.platform.is('cordova')) {
+      }
+
+      /*
       this.wsService.isReady().subscribe(
         (ready) => {
           if(ready) {
@@ -50,6 +56,7 @@ export class DiaMobileApp {
           }
         }
       );
+      */
 
       this.authService.loggedIn().subscribe(
         (loggedIn) => {
@@ -71,7 +78,6 @@ export class DiaMobileApp {
             if(this.rootPage !== LoginPage) {
               this.rootPage = LoginPage;
             }
-
           }
         }
       );
