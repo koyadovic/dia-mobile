@@ -11,7 +11,6 @@ import { MenuPage } from '../pages/menu/menu';
 import { LoginPage } from '../pages/login/login';
 
 import { DiaAuthService } from '../services/dia-auth-service'
-import { DiaWebsocketService } from '../services/dia-websockets-service';
 import { DiaConfigurationService } from '../services/dia-configuration-service';
 
 
@@ -27,7 +26,6 @@ export class DiaMobileApp {
               private statusBar: StatusBar,
               private splashScreen: SplashScreen,
               private authService: DiaAuthService,
-              private wsService: DiaWebsocketService,
               private configurationService: DiaConfigurationService) {
 
     platform.ready().then(() => {
@@ -39,24 +37,6 @@ export class DiaMobileApp {
       // only runs on real device and only if loggedin
       if(this.platform.is('cordova')) {
       }
-
-      /*
-      this.wsService.isReady().subscribe(
-        (ready) => {
-          if(ready) {
-            // websockets
-            this.backendMessages$ = this.wsService.getMessages();
-            this.backendMessages$.subscribe(
-              (backendMessage) => {
-              console.log(backendMessage);
-            },
-            (error) => {
-              console.log("Websockets connection error.");
-            });
-          }
-        }
-      );
-      */
 
       this.authService.loggedIn().subscribe(
         (loggedIn) => {
