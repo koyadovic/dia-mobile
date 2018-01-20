@@ -269,17 +269,10 @@ export class TimeLinePage {
     });
   }
 
-  addFeeding(data?){
+  addFeeding(data){
     this.fab.close();
-    let modal;
+    let modal = this.modalCtrl.create(AddFeedingPage, {data: data});;
 
-    // if data is present, pass it to FeedingPage
-    if(data !== undefined) {
-      modal = this.modalCtrl.create(AddFeedingPage, {data: data});
-    } else {
-      modal = this.modalCtrl.create(AddFeedingPage);
-    }
-    
     modal.onDidDismiss((data) => {
       if(!!data && data["add"])
         this.refreshTimeline();

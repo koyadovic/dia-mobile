@@ -22,12 +22,19 @@ export class AddFeedingPage {
   private alcohol = 0.0;
   private kcal = 0.0;
 
+  private data;
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private modalCtrl: ModalController,
               private messageService: DiaMessageService,
               private timelineService: DiaTimelineService,
-              private viewCtrl: ViewController) {}
+              private viewCtrl: ViewController) {
+  
+    // get data
+    this.data = this.navParams.get("data");
+    console.log(JSON.stringify(this.data));
+  }
 
   ionViewDidLoad() {
   }
@@ -36,7 +43,7 @@ export class AddFeedingPage {
     let modal = this.modalCtrl.create(SearchFoodPage, {});
     
     modal.onDidDismiss((food) => {
-      if(!!food && food) {
+      if(!!food) {
         this.foodSelected.push(food);
         this.recalculateTotals();
       }
