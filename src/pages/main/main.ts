@@ -57,17 +57,7 @@ export class MainPage {
       // Firebase Cloud Messaging
       this.fcm.getToken().then((token) => { this.checkFCMStoredToken(token); });
       this.fcm.onTokenRefresh().subscribe(token => {this.checkFCMStoredToken(token); });
-      /*
-      this.fcm.onNotification().subscribe(data => {
-        if(data.wasTapped) {
-          console.info("Received in background");
-        } else {
-          console.info("Received in foreground");
-        };
-      });
-      */
     }
-    
 
     this.events.subscribe('request:change:tab', (index) => {
       this.mainTabs.select(index, {}, false);
@@ -76,6 +66,8 @@ export class MainPage {
   }
 
   private checkFCMStoredToken(newToken: string) {
+    // here if new token from FCM is different than the last published to our backend
+    // publish it again.
     if(!!newToken) {
       this.storage.get('fcm_token').then((fcm_token) => {
         if(!fcm_token || fcm_token !== newToken) {

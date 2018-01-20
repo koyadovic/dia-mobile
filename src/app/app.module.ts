@@ -25,7 +25,6 @@ import { DiaAuthService } from '../services/dia-auth-service';
 import { DiaBackendURL } from '../services/dia-backend-urls';
 import { DiaMessageService } from '../services/dia-message-service';
 import { DiaConfigurationService } from '../services/dia-configuration-service';
-import { DiaWebsocketService } from '../services/dia-websockets-service';
 import { DiaTimelineService } from '../services/dia-timeline-service';
 
 // pages
@@ -121,7 +120,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     DiaBackendURL,
     DiaMessageService,
     DiaConfigurationService,
-    DiaWebsocketService,
     DiaTimelineService,
   ]
 })
