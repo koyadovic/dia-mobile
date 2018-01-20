@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
-import { AddFoodPage } from '../../pages/add-food/add-food';
-import { IntroduceFoodWeightOrUnitsPage } from '../../pages/introduce-food-weight-or-units/introduce-food-weight-or-units';
+import { AddFoodPage } from '../../pages/add-feeding-search-food-add-food/add-food';
+import { IntroduceFoodWeightOrUnitsPage } from '../../pages/add-feeding-introduce-food-weight-or-units/introduce-food-weight-or-units';
 import { DiaTimelineService } from '../../services/dia-timeline-service';
 import { ViewController } from 'ionic-angular/navigation/view-controller';
 

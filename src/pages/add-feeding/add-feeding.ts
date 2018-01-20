@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
-import { SearchFoodPage } from '../../pages/search-food/search-food';
+import { SearchFoodPage } from '../../pages/add-feeding-search-food/search-food';
 import { DiaMessageService } from '../../services/dia-message-service';
 import { DiaMessage } from '../../models/messages-model';
 import { DiaTimelineService } from '../../services/dia-timeline-service';

@@ -28,20 +28,21 @@ import { DiaConfigurationService } from '../services/dia-configuration-service';
 import { DiaTimelineService } from '../services/dia-timeline-service';
 
 // pages
-import { MenuPage } from '../pages/menu/menu';
+import { MenuPage } from '../pages/main-menu/menu';
 import { MainPage } from '../pages/main/main';
-import { TimeLinePage } from '../pages/timeline/timeline';
-import { PlanningsPage } from '../pages/plannings/plannings';
-import { StatsPage } from '../pages/stats/stats';
+import { TimeLinePage } from '../pages/main-timeline/timeline';
+import { PlanningsPage } from '../pages/main-plannings/plannings';
+import { StatsPage } from '../pages/main-stats/stats';
 
 import { ConfigurationPage } from '../pages/configuration/configuration';
 import { LoginPage } from '../pages/login/login';
 import { AddGenericPage } from '../pages/add-generic/add-generic';
 import { AddFeedingPage } from '../pages/add-feeding/add-feeding';
-import { SearchFoodPage } from '../pages/search-food/search-food';
-import { AddFoodPage } from '../pages/add-food/add-food';
-import { IntroduceFoodWeightOrUnitsPage } from '../pages/introduce-food-weight-or-units/introduce-food-weight-or-units';
+import { SearchFoodPage } from '../pages/add-feeding-search-food/search-food';
+import { AddFoodPage } from '../pages/add-feeding-search-food-add-food/add-food';
+import { IntroduceFoodWeightOrUnitsPage } from '../pages/add-feeding-introduce-food-weight-or-units/introduce-food-weight-or-units';
 
+import { SuperTabsModule } from 'ionic2-super-tabs';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -84,6 +85,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
+    SuperTabsModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

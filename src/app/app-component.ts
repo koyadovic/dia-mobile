@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { MainPage } from '../pages/main/main';
-import { MenuPage } from '../pages/menu/menu';
+import { MenuPage } from '../pages/main-menu/menu';
 import { LoginPage } from '../pages/login/login';
 
 import { DiaAuthService } from '../services/dia-auth-service'
