@@ -269,14 +269,20 @@ export class TimeLinePage {
     });
   }
 
-  addFeeding(){
+  addFeeding(data?){
     this.fab.close();
-    let modal = this.modalCtrl.create(AddFeedingPage);
+    let modal;
+
+    // if data is present, pass it to FeedingPage
+    if(data !== undefined) {
+      modal = this.modalCtrl.create(AddFeedingPage, {data: data});
+    } else {
+      modal = this.modalCtrl.create(AddFeedingPage);
+    }
+    
     modal.onDidDismiss((data) => {
-      
       if(!!data && data["add"])
         this.refreshTimeline();
-        
     });
     modal.present();
   }
@@ -297,7 +303,11 @@ export class TimeLinePage {
     this.fab.close();
     console.log(JSON.stringify(instant));
     if(instant.content.type === 'action-request' && instant.content.status === 0) { // only if unattended
-      this.openGenericModal(instant.content);
+      if (instant.content.elements[0].type === 'feeding') {
+        this.addFeeding(instant.content);
+      } else {
+        this.openGenericModal(instant.content);
+      }
     }
   }
 
