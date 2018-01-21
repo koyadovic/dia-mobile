@@ -14,13 +14,15 @@ import { LoadingController } from 'ionic-angular/components/loading/loading-cont
   templateUrl: 'search-food.html',
 })
 export class SearchFoodPage {
-  private food_tab = 'recent';
-
-  private recentFoods = null;
-  private recentSearchString = '';
+  private food_tab = 'favorite';
 
   private favoriteFoods = null;
+  private favoriteFoodsReload = true;
   private favoriteSearchString = '';
+
+  private recentFoods = null;
+  private recentFoodsReload = true;
+  private recentSearchString = '';
 
   private internetFoods = null;
   private internetSearchString = '';
@@ -35,30 +37,22 @@ export class SearchFoodPage {
               private timelineService: DiaTimelineService,
               public loadingCtrl: LoadingController) {
 
-    this.switchToRecent();
+    this.switchToFavorite();
+  }
+
+  private filterFoods(arrayFoods, string) {
+    return arrayFoods.filter(food => food.name.toLowerCase().indexOf(string.toLowerCase()) >= 0);
   }
 
   onInput(event) {
     let searchString = event.target.value;
     if(this.food_tab === 'recent') {
       this.recentSearchString = searchString;
-      if (!searchString){
-        this.resultFoods = this.recentFoods;
-      } else {
-        this.resultFoods = this.recentFoods.filter((food) => {
-          searchString.toLowerCase().indexOf(food.name.toLowerCase()) >= 0
-        });
-      }
+      this.resultFoods = this.filterFoods(this.recentFoods, this.recentSearchString);
     }
     else if(this.food_tab === 'favorite') {
       this.favoriteSearchString = searchString;
-      if (!searchString){
-        this.resultFoods = this.favoriteFoods;
-      } else {
-        this.resultFoods = this.favoriteFoods.filter((food) => {
-          searchString.toLowerCase().indexOf(food.name.toLowerCase()) >= 0
-        });
-      }
+      this.resultFoods = this.filterFoods(this.favoriteFoods, this.favoriteSearchString);
     }
     else {
       this.internetSearchString = searchString;
@@ -66,57 +60,46 @@ export class SearchFoodPage {
         this.internetFoods = []
         this.resultFoods = this.internetFoods;
       } else {
-        // let loading = this.loadingCtrl.create({showBackdrop: false});
-        // loading.present();
         this.timelineService.searchFood(searchString).subscribe(
           (results) => {
             this.internetFoods = results;
             this.resultFoods = this.internetFoods;
-            // loading.dismiss();
           }
         );
       }
     }
   }
 
-  switchToRecent(forceReload?:boolean) {
+  switchToRecent() {
     this.food_tab = 'recent';
     this.resultSearchString = this.recentSearchString;
 
-    if(this.recentFoods === null || forceReload) {
-      // let loading = this.loadingCtrl.create({showBackdrop: false});
-      // loading.present();
-      // llamada a backend para coger los foods
+    if(this.recentFoods === null || this.recentFoodsReload) {
+      this.recentFoodsReload = false;
       this.timelineService.getFoods(false).subscribe(
         (foods) => {
-          console.log(foods);
           this.recentFoods = foods;
-          this.resultFoods = this.recentFoods;
-          // loading.dismiss();
+          this.resultFoods = this.filterFoods(this.recentFoods, this.recentSearchString);
         }
       )
     } else {
-      this.resultFoods = this.recentFoods;
+      this.resultFoods = this.filterFoods(this.recentFoods, this.recentSearchString);
     }
   }
-  switchToFavorite(forceReload?:boolean) {
+  switchToFavorite() {
     this.food_tab = 'favorite';
     this.resultSearchString = this.favoriteSearchString;
 
-    if(this.favoriteFoods === null || forceReload) {
-      // let loading = this.loadingCtrl.create({showBackdrop: false});
-      // loading.present();
-      // llamada a backend para coger los foods
+    if(this.favoriteFoods === null ||  this.favoriteFoodsReload) {
+      this.favoriteFoodsReload = false;
       this.timelineService.getFoods(true).subscribe(
         (foods) => {
-          console.log(foods);
           this.favoriteFoods = foods;
-          this.resultFoods = this.favoriteFoods;
-          // loading.dismiss();
+          this.resultFoods = this.filterFoods(this.favoriteFoods, this.favoriteSearchString);
         }
       )
     } else {
-      this.resultFoods = this.favoriteFoods;
+      this.resultFoods = this.filterFoods(this.favoriteFoods, this.favoriteSearchString);
     }
   }
   switchToInternet() {
@@ -135,14 +118,12 @@ export class SearchFoodPage {
 
   addFood(){
     let modal = this.modalCtrl.create(AddFoodPage, {});
-    
     modal.onDidDismiss((food) => {
       if(!!food && food["add"]) {
         // aquí hay que añadir el puto alimento.
       }
     });
     modal.present();
-
   }
 
   foodSelected(food) {

@@ -74,7 +74,6 @@ export class AddFeedingPage {
       this.fiber += +food.fiber_factor * weight;
       this.alcohol += +food.alcohol_factor * weight;
 
-      this.kcal += (this.carbs * 4.0) + (this.proteins * 4.0) + (this.fats * 9.0) + (this.alcohol * 7.0);
     }
 
     this.carbs = Math.round(this.carbs * 10) / 10;
@@ -82,7 +81,9 @@ export class AddFeedingPage {
     this.fats = Math.round(this.fats * 10) / 10;
     this.fiber = Math.round(this.fiber * 10) / 10;
     this.alcohol = Math.round(this.alcohol * 10) / 10;
-    this.kcal = Math.round(this.kcal);
+
+    this.kcal = (this.carbs * 4.0) + (this.proteins * 4.0) + (this.fats * 9.0) + (this.alcohol * 7.0);
+    this.kcal = Math.round(this.kcal * 10) / 10;
     
   }
 
