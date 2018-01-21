@@ -1,5 +1,5 @@
 <ion-tabs #mainTabs>
-  <ion-tab [root]="tab1" tabTitle="{{ timelineTitle }}" tabBadge="{{ tab1.unattended }}" tabIcon="time" (ionSelect)="tabClicked(0)"></ion-tab>
+  <ion-tab [root]="tab1" tabTitle="{{ timelineTitle }}" tabBadgeStyle="danger" tabBadge="{{ tab1.unattended }}" tabIcon="time" (ionSelect)="tabClicked(0)"></ion-tab>
   <ion-tab [root]="tab2" tabTitle="{{ planningsTitle }}" tabIcon="list" (ionSelect)="tabClicked(1)"></ion-tab>
   <ion-tab [root]="tab3" tabTitle="{{ statsTitle }}" tabIcon="stats" (ionSelect)="tabClicked(2)"></ion-tab>
  </ion-tabs>

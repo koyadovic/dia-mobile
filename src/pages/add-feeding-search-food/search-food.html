@@ -1,0 +1,30 @@
+<ion-header>
+
+  <ion-toolbar color="light">
+    <ion-searchbar
+    [(ngModel)]="resultSearchString"
+    [showCancelButton]="false" [animated]="true" [debounce]="400"
+    (ionInput)="onInput($event)"
+    (ionCancel)="onCancel($event)"></ion-searchbar>
+  </ion-toolbar>
+  <ion-segment [(ngModel)]="food_tab" color="primary">
+      <ion-segment-button value="recent" (ionSelect)="switchToRecent()">
+        Recent
+      </ion-segment-button>
+      <ion-segment-button value="favorite" (ionSelect)="switchToFavorite()">
+        Favorite
+      </ion-segment-button>
+      <ion-segment-button value="internet" (ionSelect)="switchToInternet()">
+        Internet
+      </ion-segment-button>
+    </ion-segment>
+</ion-header>
+
+
+<ion-content>
+
+  <ion-list>
+    <food-component *ngFor="let food of resultFoods" [food]="food" (foodClick)="foodSelected(food)"></food-component>
+  </ion-list>
+  
+</ion-content>
