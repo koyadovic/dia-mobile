@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 import { AddFoodPage } from '../add-feeding-search-food-add-food/add-food';
 
@@ -41,18 +41,30 @@ export class AddFeedingPage {
               private modalCtrl: ModalController,
               private viewCtrl: ViewController,
               private timelineService: DiaTimelineService,
-              public loadingCtrl: LoadingController) {
+              public loadingCtrl: LoadingController,
+              public toastCtrl: ToastController) {
 
     this.switchToFavorite();
     this.footerState = IonPullUpFooterState.Collapsed;
   }
+
+  foodActionMessage(message:string){
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000,
+      position: 'bottom'
+    });
   
+    toast.onDidDismiss(() => {
+    });
+  
+    toast.present();
+  }
+
   footerExpanded() {
-    console.log('Footer expanded!');
   }
 
   footerCollapsed() {
-    console.log('Footer collapsed!');
   }
 
   toggleFooter() {
@@ -95,12 +107,7 @@ export class AddFeedingPage {
 
     if(this.recentFoods === null || this.recentFoodsReload) {
       this.recentFoodsReload = false;
-      this.timelineService.getFoods(false).subscribe(
-        (foods) => {
-          this.recentFoods = foods;
-          this.resultFoods = this.filterFoods(this.recentFoods, this.recentSearchString);
-        }
-      )
+      this.refreshRecentFood();
     } else {
       this.resultFoods = this.filterFoods(this.recentFoods, this.recentSearchString);
     }
@@ -111,12 +118,7 @@ export class AddFeedingPage {
 
     if(this.favoriteFoods === null ||  this.favoriteFoodsReload) {
       this.favoriteFoodsReload = false;
-      this.timelineService.getFoods(true).subscribe(
-        (foods) => {
-          this.favoriteFoods = foods;
-          this.resultFoods = this.filterFoods(this.favoriteFoods, this.favoriteSearchString);
-        }
-      )
+      this.refreshFavoriteFood();
     } else {
       this.resultFoods = this.filterFoods(this.favoriteFoods, this.favoriteSearchString);
     }
@@ -169,5 +171,36 @@ export class AddFeedingPage {
     modal.present();
     */
 
+  }
+
+
+  refreshRecentFood() {
+    this.timelineService.getFoods(false).subscribe(
+      (foods) => {
+        this.recentFoods = foods;
+        this.recentFoods = this.filterFoods(this.recentFoods, this.recentSearchString);
+        if(this.food_tab === 'recent') {
+          this.resultFoods = this.recentFoods;
+        }
+      }
+    );
+  }
+
+  refreshFavoriteFood(){
+    this.timelineService.getFoods(true).subscribe(
+      (foods) => {
+        this.favoriteFoods = foods;
+        this.favoriteFoods = this.filterFoods(this.favoriteFoods, this.favoriteSearchString);
+        if(this.food_tab === 'favorite') {
+          this.resultFoods = this.favoriteFoods;
+        }
+      }
+    );
+  }
+
+
+  refresh(food) {
+    this.refreshFavoriteFood();
+    this.refreshRecentFood();
   }
 }

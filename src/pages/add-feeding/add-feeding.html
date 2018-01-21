@@ -30,7 +30,7 @@
 
 <ion-content>
   <ion-list>
-    <food-component *ngFor="let food of resultFoods" [food]="food" (foodClick)="foodSelected(food)"></food-component>
+    <food-component *ngFor="let food of resultFoods" (foodChanges)="refresh(food)" (foodMessage)="foodActionMessage($event)" [food]="food"></food-component>
   </ion-list>
 </ion-content>
 

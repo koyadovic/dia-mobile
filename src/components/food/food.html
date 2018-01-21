@@ -1,13 +1,58 @@
-<button ion-item (click)="doClick()">
-    <ion-grid>
-        <ion-row>
-            <ion-col>
-                <h2>{{ food.name }}</h2>
-                <p>{{ food.manufacturer }}</p>
-            </ion-col>
-            
-            <ion-col *ngIf="food.g_or_ml_selected">{{ food.g_or_ml_selected }}gr</ion-col>
-            <ion-col *ngIf="food.units_selected">{{ food.units_selected }}u</ion-col>
-        </ion-row>
-    </ion-grid>
-</button>
+<ion-item-sliding #item>
+    <button ion-item (click)="doClick()">
+            <ion-label>
+                {{ food.name }},  {{ food.manufacturer }}
+            </ion-label>
+
+            <div item-content>
+                
+            </div>
+        <!--
+        <ion-grid>
+            <ion-row>
+                <ion-col>
+                    <h2>{{ food.name }}</h2>
+                    <p>{{ food.manufacturer }}</p>
+                </ion-col>
+                
+                <ion-col *ngIf="food.g_or_ml_selected">{{ food.g_or_ml_selected }}gr</ion-col>
+                <ion-col *ngIf="food.units_selected">{{ food.units_selected }}u</ion-col>
+            </ion-row>
+        </ion-grid>
+        -->
+
+        <!-- Aquí tiene que ir el editor y el selector. Serán ion-cards -->
+
+    </button>
+
+    <ion-item-options side="right">
+
+        <button ion-button color="secondary" (click)="favorite(item, true)" *ngIf="!food.source_name && !food.favorite">
+            <ion-icon name="archive"></ion-icon>
+            Favorite
+        </button> <!-- Only with favorite and recent foods -->
+
+        <button ion-button color="secondary" (click)="favorite(item, false)" *ngIf="!food.source_name && food.favorite">
+            <ion-icon name="archive"></ion-icon>
+            Unfavorite
+        </button> <!-- Only with favorite and recent foods -->
+    
+
+        <button ion-button color="secondary" (click)="edit(item)" *ngIf="!food.source_name">
+            <ion-icon name="archive"></ion-icon>
+            Edit
+        </button> <!-- Only with favorite and recent foods -->
+
+        <button ion-button color="danger" (click)="delete(item)" *ngIf="!food.source_name">
+            <ion-icon name="archive"></ion-icon>
+            Delete
+        </button> <!-- Only with favorite and recent foods -->
+
+        <button ion-button color="secondary" (click)="save(item)" *ngIf="!!food.source_name">
+            <ion-icon name="archive"></ion-icon>
+            Save
+        </button> <!-- Only with Internet Foods -->
+
+    </ion-item-options>
+
+</ion-item-sliding>
