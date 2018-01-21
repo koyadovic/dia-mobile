@@ -13,16 +13,42 @@ export class FoodComponent {
   @Output() foodChanges = new EventEmitter<any>();
   @Output() foodMessage = new EventEmitter<string>();
 
+  @Output() foodSelection = new EventEmitter<any>();
+
+  editMode:boolean = false;
+  selectionMode:boolean = false;
+
   constructor(private timelineService: DiaTimelineService) {
   }
 
   doClick(){
-    // selección del alimento
+    if(!this.selectionMode && !this.editMode)
+      this.selectionMode = true;
+  }
+
+  selectionFinishedCallback(data) {
+    setTimeout(() => this.selectionMode = false, 100);
+
+    if(data !== null) {
+      let food = JSON.parse(JSON.stringify(this.food));
+      this.foodSelection.emit(food);
+    }
+
+    this.food.g_or_ml_selected = null;
+    this.food.units_selected = null;
   }
 
   edit(item) {
     // edición del alimento
     item.close();
+    setTimeout(() => this.editMode = true, 500);
+  }
+
+  editFinishedCallback(save:boolean) {
+    setTimeout(() => this.editMode = false, 100);
+    if(save) {
+      this.save(null);
+    }
   }
 
   delete(item:ItemSliding) {
@@ -54,7 +80,8 @@ export class FoodComponent {
   }
 
   save(item:ItemSliding) {
-    item.close();
+    if(item !== null) item.close();
+
     if(!!this.food.source_name) {
       this.timelineService.searchedFoodDetails(this.food.source_name, this.food.source_id).subscribe(
         (food) => {

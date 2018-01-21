@@ -75,6 +75,10 @@ export class AddFeedingPage {
     return arrayFoods.filter(food => food.name.toLowerCase().indexOf(string.toLowerCase()) >= 0);
   }
 
+  selectedFood(element){
+    this.foodSelected.push(element);
+  }
+
   onInput(event) {
     let searchString = event.target.value;
     if(this.food_tab === 'recent') {
@@ -137,6 +141,7 @@ export class AddFeedingPage {
   onCancel($event) {
   }
 
+
   addFood(){
     let modal = this.modalCtrl.create(AddFoodPage, {});
     modal.onDidDismiss((food) => {
@@ -145,32 +150,6 @@ export class AddFeedingPage {
       }
     });
     modal.present();
-  }
-
-  foodfdsafdsaSelected(food) {
-    if (food.hasOwnProperty('source_name')) {
-      this.timelineService.searchedFoodDetails(food.source_name, food.source_id).subscribe(
-        (detailedFood) => {
-          this.openSelectionModal(detailedFood);
-        }
-      )
-    } else {
-      this.openSelectionModal(food);
-    }
-  }
-
-  private openSelectionModal(defailedFood) {
-    /*
-    let modal = this.modalCtrl.create(IntroduceFoodWeightOrUnitsPage, {"food": defailedFood});
-    
-    modal.onDidDismiss((data) => {
-      if(!!data && data.food) {
-        this.viewCtrl.dismiss(data.food);
-      }
-    });
-    modal.present();
-    */
-
   }
 
 
