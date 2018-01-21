@@ -1,107 +1,173 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
-import { SearchFoodPage } from '../../pages/add-feeding-search-food/search-food';
-import { DiaMessageService } from '../../services/dia-message-service';
-import { DiaMessage } from '../../models/messages-model';
+import { AddFoodPage } from '../add-feeding-search-food-add-food/add-food';
+
 import { DiaTimelineService } from '../../services/dia-timeline-service';
 import { ViewController } from 'ionic-angular/navigation/view-controller';
 
+import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
+
+import { IonPullUpFooterState } from 'ionic-pullup';
 
 @Component({
   selector: 'page-add-feeding',
   templateUrl: 'add-feeding.html',
 })
 export class AddFeedingPage {
+  // For food listings
+  private food_tab = 'favorite';
+
+  private favoriteFoods = null;
+  private favoriteFoodsReload = true;
+  private favoriteSearchString = '';
+
+  private recentFoods = null;
+  private recentFoodsReload = true;
+  private recentSearchString = '';
+
+  private internetFoods = null;
+  private internetSearchString = '';
+
+  private resultFoods = [];
+  private resultSearchString = '';
+
+  // food selections
+  footerState: IonPullUpFooterState;
   private foodSelected = [];
-
-  private carbs = 0.0;
-  private proteins = 0.0;
-  private fats = 0.0;
-  private fiber = 0.0;
-  private alcohol = 0.0;
-  private kcal = 0.0;
-
-  private data;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private modalCtrl: ModalController,
-              private messageService: DiaMessageService,
+              private viewCtrl: ViewController,
               private timelineService: DiaTimelineService,
-              private viewCtrl: ViewController) {
+              public loadingCtrl: LoadingController) {
+
+    this.switchToFavorite();
+    this.footerState = IonPullUpFooterState.Collapsed;
+  }
   
-    // get data
-    this.data = this.navParams.get("data");
-    console.log(JSON.stringify(this.data));
+  footerExpanded() {
+    console.log('Footer expanded!');
   }
 
-  ionViewDidLoad() {
+  footerCollapsed() {
+    console.log('Footer collapsed!');
   }
 
-  openFoodSelection(){
-    let modal = this.modalCtrl.create(SearchFoodPage, {});
-    
+  toggleFooter() {
+    this.footerState = this.footerState == IonPullUpFooterState.Collapsed ? IonPullUpFooterState.Expanded : IonPullUpFooterState.Collapsed;
+  }
+
+  private filterFoods(arrayFoods, string) {
+    return arrayFoods.filter(food => food.name.toLowerCase().indexOf(string.toLowerCase()) >= 0);
+  }
+
+  onInput(event) {
+    let searchString = event.target.value;
+    if(this.food_tab === 'recent') {
+      this.recentSearchString = searchString;
+      this.resultFoods = this.filterFoods(this.recentFoods, this.recentSearchString);
+    }
+    else if(this.food_tab === 'favorite') {
+      this.favoriteSearchString = searchString;
+      this.resultFoods = this.filterFoods(this.favoriteFoods, this.favoriteSearchString);
+    }
+    else {
+      this.internetSearchString = searchString;
+      if (!searchString){
+        this.internetFoods = []
+        this.resultFoods = this.internetFoods;
+      } else {
+        this.timelineService.searchFood(searchString).subscribe(
+          (results) => {
+            this.internetFoods = results;
+            this.resultFoods = this.internetFoods;
+          }
+        );
+      }
+    }
+  }
+
+  switchToRecent() {
+    this.food_tab = 'recent';
+    this.resultSearchString = this.recentSearchString;
+
+    if(this.recentFoods === null || this.recentFoodsReload) {
+      this.recentFoodsReload = false;
+      this.timelineService.getFoods(false).subscribe(
+        (foods) => {
+          this.recentFoods = foods;
+          this.resultFoods = this.filterFoods(this.recentFoods, this.recentSearchString);
+        }
+      )
+    } else {
+      this.resultFoods = this.filterFoods(this.recentFoods, this.recentSearchString);
+    }
+  }
+  switchToFavorite() {
+    this.food_tab = 'favorite';
+    this.resultSearchString = this.favoriteSearchString;
+
+    if(this.favoriteFoods === null ||  this.favoriteFoodsReload) {
+      this.favoriteFoodsReload = false;
+      this.timelineService.getFoods(true).subscribe(
+        (foods) => {
+          this.favoriteFoods = foods;
+          this.resultFoods = this.filterFoods(this.favoriteFoods, this.favoriteSearchString);
+        }
+      )
+    } else {
+      this.resultFoods = this.filterFoods(this.favoriteFoods, this.favoriteSearchString);
+    }
+  }
+  switchToInternet() {
+    this.food_tab = 'internet';
+    this.resultSearchString = this.internetSearchString;
+
+    if (this.internetFoods === null) {
+      this.resultFoods = [];
+    } else {
+      this.resultFoods = this.internetFoods;
+    }
+  }
+
+  onCancel($event) {
+  }
+
+  addFood(){
+    let modal = this.modalCtrl.create(AddFoodPage, {});
     modal.onDidDismiss((food) => {
-      if(!!food) {
-        this.foodSelected.push(food);
-        this.recalculateTotals();
+      if(!!food && food["add"]) {
+        // aquí hay que añadir el puto alimento.
       }
     });
     modal.present();
   }
 
-  recalculateTotals() {
-    this.carbs = 0.0;
-    this.proteins = 0.0;
-    this.fats = 0.0;
-    this.fiber = 0.0;
-    this.alcohol = 0.0;
-    this.kcal = 0.0;
-
-    for(let food of this.foodSelected) {
-      let weight;
-
-      if (+food.units_selected > 0) {
-        weight = +food.g_or_ml_per_unit * +food.units_selected;
-      } else {
-        weight = +food.g_or_ml_selected;
-      }
-
-      this.carbs += +food.carb_factor * weight;
-      this.proteins += +food.protein_factor * weight;
-      this.fats += +food.fat_factor * weight;
-      this.fiber += +food.fiber_factor * weight;
-      this.alcohol += +food.alcohol_factor * weight;
-
+  foodfdsafdsaSelected(food) {
+    if (food.hasOwnProperty('source_name')) {
+      this.timelineService.searchedFoodDetails(food.source_name, food.source_id).subscribe(
+        (detailedFood) => {
+          this.openSelectionModal(detailedFood);
+        }
+      )
+    } else {
+      this.openSelectionModal(food);
     }
-
-    this.carbs = Math.round(this.carbs * 10) / 10;
-    this.proteins = Math.round(this.proteins * 10) / 10;
-    this.fats = Math.round(this.fats * 10) / 10;
-    this.fiber = Math.round(this.fiber * 10) / 10;
-    this.alcohol = Math.round(this.alcohol * 10) / 10;
-
-    this.kcal = (this.carbs * 4.0) + (this.proteins * 4.0) + (this.fats * 9.0) + (this.alcohol * 7.0);
-    this.kcal = Math.round(this.kcal * 10) / 10;
-    
   }
 
-  finishFeeding(){
-    let message = new DiaMessage("Finish Feeding", null, "Are you sure to finish selecting foods?");
-    this.messageService.confirmMessage(message).subscribe(
-      (ok) => {
-        if(ok) {
-          // confirmed
-          this.timelineService.saveFeeding(this.foodSelected).subscribe(
-            (feeding) => {
-              this.viewCtrl.dismiss({add: true});
-            }
-          );
-        } else {
-          // not confirmed
-        }
+  private openSelectionModal(defailedFood) {
+    /*
+    let modal = this.modalCtrl.create(IntroduceFoodWeightOrUnitsPage, {"food": defailedFood});
+    
+    modal.onDidDismiss((data) => {
+      if(!!data && data.food) {
+        this.viewCtrl.dismiss(data.food);
       }
-    )
+    });
+    modal.present();
+    */
+
   }
 }

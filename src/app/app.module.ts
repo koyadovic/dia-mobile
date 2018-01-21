@@ -8,7 +8,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicStorageModule } from '@ionic/storage';
 
-
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -36,11 +35,17 @@ import { StatsPage } from '../pages/main-stats/stats';
 
 import { ConfigurationPage } from '../pages/configuration/configuration';
 import { LoginPage } from '../pages/login/login';
+
 import { AddGenericPage } from '../pages/add-generic/add-generic';
+
 import { AddFeedingPage } from '../pages/add-feeding/add-feeding';
-import { SearchFoodPage } from '../pages/add-feeding-search-food/search-food';
 import { AddFoodPage } from '../pages/add-feeding-search-food-add-food/add-food';
-import { IntroduceFoodWeightOrUnitsPage } from '../pages/add-feeding-introduce-food-weight-or-units/introduce-food-weight-or-units';
+
+import { FoodEditorComponent } from '../components/food-editor/food-editor';
+import { FoodSelectionComponent } from '../components/food-selection/food-selection';
+
+import { IonicSwipeAllModule } from 'ionic-swipe-all';
+import { IonPullupModule } from 'ionic-pullup';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -60,17 +65,16 @@ export function HttpLoaderFactory(http: HttpClient) {
 
     LoginPage,
 
-    AddFeedingPage,
     AddGenericPage,
     AddFoodPage,
-    IntroduceFoodWeightOrUnitsPage,
-
-    SearchFoodPage,
+    AddFeedingPage,
 
     DynamicField,
     DynamicRoot,
     DiaInstantCard,
-    FoodComponent
+    FoodComponent,
+    FoodEditorComponent,
+    FoodSelectionComponent
   ],
   imports: [
     BrowserModule,
@@ -84,6 +88,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
+    IonPullupModule,
+    IonicSwipeAllModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -101,14 +107,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     AddFeedingPage,
     AddGenericPage,
     AddFoodPage,
-    IntroduceFoodWeightOrUnitsPage,
-
-    SearchFoodPage,
 
     DynamicField,
     DynamicRoot,
     DiaInstantCard,
-    FoodComponent
+    FoodComponent,
+    FoodEditorComponent,
+    FoodSelectionComponent
   ],
   providers: [
     FCM,
