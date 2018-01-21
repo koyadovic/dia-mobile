@@ -1,27 +1,30 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Search for Food</ion-title>
-  </ion-navbar>
-
+  <ion-toolbar color="light">
+    <ion-searchbar
+    [(ngModel)]="resultSearchString"
+    [showCancelButton]="false" [animated]="true" [debounce]="400"
+    (ionInput)="onInput($event)"
+    (ionCancel)="onCancel($event)"></ion-searchbar>
+  </ion-toolbar>
+  <ion-segment [(ngModel)]="food_tab" color="primary">
+      <ion-segment-button value="recent" (ionSelect)="switchToRecent()">
+        Recent
+      </ion-segment-button>
+      <ion-segment-button value="favorite" (ionSelect)="switchToFavorite()">
+        Favorite
+      </ion-segment-button>
+      <ion-segment-button value="internet" (ionSelect)="switchToInternet()">
+        Internet
+      </ion-segment-button>
+    </ion-segment>
 </ion-header>
 
 
-<ion-content padding-top>
-
-  <ion-searchbar
-    [(ngModel)]="searchString"
-    [showCancelButton]="false" [animated]="true" [debounce]="400"
-    (ionInput)="onInput($event)"
-    (ionCancel)="onCancel($event)">
-  </ion-searchbar>
+<ion-content>
 
   <ion-list>
-    <food-component *ngFor="let food of results" [food]="food" (foodClick)="foodSelected(food)"></food-component>
+    <food-component *ngFor="let food of resultFoods" [food]="food" (foodClick)="foodSelected(food)"></food-component>
   </ion-list>
   
-  <ion-fab bottom right padding-right #fab>
-    <button (click)="addFood()" ion-fab><ion-icon name="add"></ion-icon></button>
-  </ion-fab>
-
 </ion-content>

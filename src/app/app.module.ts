@@ -42,8 +42,6 @@ import { SearchFoodPage } from '../pages/add-feeding-search-food/search-food';
 import { AddFoodPage } from '../pages/add-feeding-search-food-add-food/add-food';
 import { IntroduceFoodWeightOrUnitsPage } from '../pages/add-feeding-introduce-food-weight-or-units/introduce-food-weight-or-units';
 
-import { SuperTabsModule } from 'ionic2-super-tabs';
-
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -64,9 +62,10 @@ export function HttpLoaderFactory(http: HttpClient) {
 
     AddFeedingPage,
     AddGenericPage,
-    SearchFoodPage,
     AddFoodPage,
     IntroduceFoodWeightOrUnitsPage,
+
+    SearchFoodPage,
 
     DynamicField,
     DynamicRoot,
@@ -85,7 +84,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    SuperTabsModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -102,9 +100,10 @@ export function HttpLoaderFactory(http: HttpClient) {
 
     AddFeedingPage,
     AddGenericPage,
-    SearchFoodPage,
     AddFoodPage,
     IntroduceFoodWeightOrUnitsPage,
+
+    SearchFoodPage,
 
     DynamicField,
     DynamicRoot,
