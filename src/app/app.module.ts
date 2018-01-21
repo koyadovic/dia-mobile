@@ -44,7 +44,6 @@ import { AddFoodPage } from '../pages/add-feeding-search-food-add-food/add-food'
 import { FoodEditorComponent } from '../components/food-editor/food-editor';
 import { FoodSelectionComponent } from '../components/food-selection/food-selection';
 
-import { IonicSwipeAllModule } from 'ionic-swipe-all';
 import { IonPullupModule } from 'ionic-pullup';
 
 
@@ -89,7 +88,6 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     }),
     IonPullupModule,
-    IonicSwipeAllModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

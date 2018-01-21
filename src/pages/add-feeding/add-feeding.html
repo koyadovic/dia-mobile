@@ -38,7 +38,6 @@
 
 <ion-pullup
   *ngIf="foodSelected.length > 0"
-  swipeAll (swipeup)="toggleFooter()" (swipedown)="toggleFooter()"
   (onExpand)="footerExpanded()" (onCollapse)="footerCollapsed()" [(state)]="footerState">
   <ion-pullup-tab (tap)="toggleFooter()"></ion-pullup-tab>
   <ion-toolbar color="primary" (tap)="toggleFooter()">
