@@ -46,6 +46,8 @@ import { FoodSelectionComponent } from '../components/food-selection/food-select
 
 import { IonPullupModule } from 'ionic-pullup';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -77,6 +79,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     IonicModule.forRoot(DiaMobileApp),
     IonicStorageModule.forRoot(),

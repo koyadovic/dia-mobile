@@ -1,42 +1,38 @@
 <ion-item-sliding #item>
     <button ion-item (click)="doClick()">
-        <ion-label>
-            {{ food.name }},  {{ food.manufacturer }}
-        </ion-label>
 
         <div item-content>
-            <food-editor *ngIf="editMode" (editFinished)="editFinishedCallback($event)" [food]="food"></food-editor>
-            <food-selection *ngIf="selectionMode" (selectionFinished)="selectionFinishedCallback($event)" [food]="food"></food-selection>
+            <ion-label>
+                {{ food.name }},  {{ food.manufacturer }}
+            </ion-label>
+            <div *ngIf="editMode" [@fadeInOut]>
+                <food-editor (editFinished)="editFinishedCallback($event)" [food]="food"></food-editor>
+            </div>
+
+            <div *ngIf="selectionMode" [@fadeInOut]>
+                <food-selection (selectionFinished)="selectionFinishedCallback($event)" [food]="food"></food-selection>
+            </div>
+            
         </div>
 
     </button>
 
     <ion-item-options *ngIf="!editMode && !selectionMode" side="right">
 
-        <button ion-button color="secondary" (click)="favorite(item, true)" *ngIf="!food.source_name && !food.favorite">
-            <ion-icon name="archive"></ion-icon>
-            Favorite
-        </button> <!-- Only with favorite and recent foods -->
+        <!-- Only with favorite and recent foods -->
+        <button icon-only ion-button color="light" (click)="favorite(item, true)" *ngIf="!food.source_name && !food.favorite"><ion-icon name="heart"></ion-icon></button>
 
-        <button ion-button color="secondary" (click)="favorite(item, false)" *ngIf="!food.source_name && food.favorite">
-            <ion-icon name="archive"></ion-icon>
-            Unfavorite
-        </button> <!-- Only with favorite and recent foods -->
+        <!-- Only with favorite and recent foods -->
+        <button icon-only ion-button color="light" (click)="favorite(item, false)" *ngIf="!food.source_name && food.favorite"><ion-icon name="heart-outline"></ion-icon></button>
     
+        <!-- Only with favorite and recent foods -->
+        <button icon-only ion-button color="light" (click)="edit(item)" *ngIf="!food.source_name"><ion-icon name="create"></ion-icon></button> 
 
-        <button ion-button color="secondary" (click)="edit(item)" *ngIf="!food.source_name">
-            <ion-icon name="archive"></ion-icon>
-            Edit
-        </button> <!-- Only with favorite and recent foods -->
+        <!-- Only with favorite and recent foods -->
+        <button icon-only ion-button color="danger" (click)="delete(item)" *ngIf="!food.source_name"><ion-icon name="trash"></ion-icon></button> 
 
-        <button ion-button color="danger" (click)="delete(item)" *ngIf="!food.source_name">
-            <ion-icon name="archive"></ion-icon>
-            Delete
-        </button> <!-- Only with favorite and recent foods -->
-
-        <button ion-button color="secondary" (click)="save(item)" *ngIf="!!food.source_name">
-            <ion-icon name="archive"></ion-icon>
-            Save
+        <button icon-only ion-button color="secondary" (click)="save(item)" *ngIf="!!food.source_name">
+            <ion-icon name="cloud-download"></ion-icon>
         </button> <!-- Only with Internet Foods -->
 
     </ion-item-options>

@@ -1,10 +1,8 @@
-import { Component, Input, Output } from '@angular/core';
-import { EventEmitter } from '@angular/core';
-
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'food-editor',
-  templateUrl: 'food-editor.html'
+  templateUrl: 'food-editor.html',
 })
 export class FoodEditorComponent {
   @Input() food;
@@ -29,8 +27,12 @@ export class FoodEditorComponent {
     return true;
   }
 
+  round(n: number){
+    return Math.round(n * 10.) / 10.;
+  }
+
   kcal(){
     let f = this.food;
-    return (+f.carb_g * 4.) + (+f.protein_g * 4.) + (+f.fat_g * 9.) + (+f.alcohol_g * 7.);
+    return this.round((+f.carb_g * 4.) + (+f.protein_g * 4.) + (+f.fat_g * 9.) + (+f.alcohol_g * 7.));
   }
 }
