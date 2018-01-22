@@ -66,17 +66,69 @@ export class DiaTimelineService {
         });
     }
 
-    saveFood(food):Observable<any> {
-        let url = `${this.backendURL.baseURL}/v1/foods/`;
-        return Observable.create((observer) => {
-            this.restBackendService
-            .genericPost(url, food)
-            .finally(() => observer.complete())
-            .subscribe((food) => {
-                observer.next(food);
+    deleteFood(food):Observable<any> {
+        if(!!food.id) {
+            let url = `${this.backendURL.baseURL}/v1/foods/${food.id}/`;
+            return Observable.create((observer) => {
+                this.restBackendService
+                .genericDelete(url)
+                .finally(() => observer.complete())
+                .subscribe((food) => {
+                    observer.next(food);
+                    observer.complete();
+                });
+            });
+        } else {
+            return Observable.create((observer) => {
                 observer.complete();
             });
+        }
+    }
+
+    saveFood(food):Observable<any> {
+        if(!!food.id) {
+            let url = `${this.backendURL.baseURL}/v1/foods/${food.id}/`;
+            return Observable.create((observer) => {
+                this.restBackendService
+                .genericPut(url, food)
+                .finally(() => observer.complete())
+                .subscribe((food) => {
+                    observer.next(food);
+                    observer.complete();
+                });
+            });
+                
+        } else {
+            let url = `${this.backendURL.baseURL}/v1/foods/`;
+            return Observable.create((observer) => {
+                this.restBackendService
+                .genericPost(url, food)
+                .finally(() => observer.complete())
+                .subscribe((food) => {
+                    observer.next(food);
+                    observer.complete();
+                });
+            });
+        }
+    }
+
+    favoriteFood(food, favorite:boolean):Observable<any> {
+        let url;
+        if(favorite) {
+            url = `${this.backendURL.baseURL}/v1/foods/${food.id}/favorite/`;
+        } else {
+            url = `${this.backendURL.baseURL}/v1/foods/${food.id}/unfavorite/`;
+        }
+
+        return Observable.create((observer) => {
+            this.restBackendService
+            .genericPost(url, {})
+            .finally(() => observer.complete())
+            .subscribe((foods) => {
+                observer.next(foods);
+            });
         });
+
     }
     getFoods(favorite: boolean):Observable<any[]> {
         let url = `${this.backendURL.baseURL}/v1/foods/?favorite=${favorite}`;
