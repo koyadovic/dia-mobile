@@ -1,10 +1,12 @@
 <ion-item-sliding #item>
+
     <button ion-item (click)="doClick()">
+        <ion-label>
+            {{ food.name }},  {{ food.manufacturer }}
+        </ion-label>
 
         <div item-content>
-            <ion-label>
-                {{ food.name }},  {{ food.manufacturer }}
-            </ion-label>
+
             <div *ngIf="editMode" [@fadeInOut]>
                 <food-editor (editFinished)="editFinishedCallback($event)" [food]="food"></food-editor>
             </div>
@@ -14,7 +16,6 @@
             </div>
             
         </div>
-
     </button>
 
     <ion-item-options *ngIf="!editMode && !selectionMode" side="right">
