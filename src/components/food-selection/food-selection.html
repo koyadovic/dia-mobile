@@ -21,7 +21,7 @@
     
         <ion-row>
           <ion-col col-4>
-            <ion-item *ngIf="food.carb_factor">
+            <ion-item>
               <ion-label stacked color="primary">Carbs</ion-label>
               <ion-input type="number" disabled placeholder="Grams of Carbs" name="carb_g" value="{{ round(weight() * food.carb_factor) }}" required></ion-input>
             </ion-item>
