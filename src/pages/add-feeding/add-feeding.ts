@@ -16,7 +16,7 @@ import { IonPullUpFooterState } from 'ionic-pullup';
 })
 export class AddFeedingPage {
   // For food listings
-  private food_tab = 'favorite';
+  private food_tab = 'recent';
 
   private favoriteFoods = null;
   private favoriteFoodsReload = true;
@@ -36,6 +36,8 @@ export class AddFeedingPage {
   footerState: IonPullUpFooterState;
   private foodSelected = [];
 
+  private footerCurrentlyExpanded: boolean = false;
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private modalCtrl: ModalController,
@@ -44,7 +46,7 @@ export class AddFeedingPage {
               public loadingCtrl: LoadingController,
               public toastCtrl: ToastController) {
 
-    this.switchToFavorite();
+    this.switchToRecent();
     this.footerState = IonPullUpFooterState.Collapsed;
   }
 
@@ -62,9 +64,11 @@ export class AddFeedingPage {
   }
 
   footerExpanded() {
+    this.footerCurrentlyExpanded = true;
   }
 
   footerCollapsed() {
+    this.footerCurrentlyExpanded = false;
   }
 
   toggleFooter() {
@@ -155,13 +159,12 @@ export class AddFeedingPage {
   addFood(){
     let modal = this.modalCtrl.create(AddFoodPage, {});
     modal.onDidDismiss((food) => {
-      if(!!food && food["add"]) {
-        // aquí hay que añadir el puto alimento.
+      if(!!food) {
+        this.refreshRecentFood();
       }
     });
     modal.present();
   }
-
 
   refreshRecentFood() {
     this.timelineService.getFoods(false).subscribe(

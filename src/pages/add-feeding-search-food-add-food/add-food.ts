@@ -46,11 +46,12 @@ export class AddFoodPage {
   save() {
     this.timelineService.saveFood(this.food).subscribe(
       (food) => {
-        this.viewCtrl.dismiss();
+        this.viewCtrl.dismiss({food: this.food});
       }
     )
   }
+  
   dismiss() {
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss(null);
   }
 }
