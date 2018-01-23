@@ -7,12 +7,12 @@
 
         <div item-content>
 
-            <div *ngIf="editMode" [@fadeInOut]>
+            <div *ngIf="editMode && !currentlySelected" [@fadeInOut]>
                 <food-editor (editFinished)="editFinishedCallback($event)" [food]="food"></food-editor>
             </div>
 
             <div *ngIf="selectionMode" [@fadeInOut]>
-                <food-selection (selectionFinished)="selectionFinishedCallback($event)" [food]="food"></food-selection>
+                <food-selection [currentlySelected]="currentlySelected" (selectionFinished)="selectionFinishedCallback($event)" [food]="food"></food-selection>
             </div>
             
         </div>
@@ -20,21 +20,25 @@
 
     <ion-item-options *ngIf="!editMode && !selectionMode" side="right">
 
-        <!-- Only with favorite and recent foods -->
-        <button icon-only ion-button color="light" (click)="favorite(item, true)" *ngIf="!food.source_name && !food.favorite"><ion-icon name="heart"></ion-icon></button>
+        <!-- Favorite food -->
+        <button icon-only ion-button color="light" (click)="favorite(item, true)" *ngIf="!food.source_name && !food.favorite && !currentlySelected"><ion-icon name="heart"></ion-icon></button>
 
-        <!-- Only with favorite and recent foods -->
-        <button icon-only ion-button color="light" (click)="favorite(item, false)" *ngIf="!food.source_name && food.favorite"><ion-icon name="heart-outline"></ion-icon></button>
+        <!-- Unfavorite food -->
+        <button icon-only ion-button color="light" (click)="favorite(item, false)" *ngIf="!food.source_name && food.favorite && !currentlySelected"><ion-icon name="heart-outline"></ion-icon></button>
     
-        <!-- Only with favorite and recent foods -->
-        <button icon-only ion-button color="light" (click)="edit(item)" *ngIf="!food.source_name"><ion-icon name="create"></ion-icon></button> 
+        <!-- Edit food -->
+        <button icon-only ion-button color="light" (click)="edit(item)" *ngIf="!food.source_name && !currentlySelected"><ion-icon name="create"></ion-icon></button> 
 
-        <!-- Only with favorite and recent foods -->
-        <button icon-only ion-button color="danger" (click)="delete(item)" *ngIf="!food.source_name"><ion-icon name="trash"></ion-icon></button> 
+        <!-- Delete food -->
+        <button icon-only ion-button color="danger" (click)="delete(item)" *ngIf="!food.source_name && !currentlySelected"><ion-icon name="trash"></ion-icon></button> 
 
-        <button icon-only ion-button color="secondary" (click)="save(item)" *ngIf="!!food.source_name">
+        <!-- Save remove food to local foods -->
+        <button icon-only ion-button color="secondary" (click)="save(item)" *ngIf="!!food.source_name && !food.id && !currentlySelected">
             <ion-icon name="cloud-download"></ion-icon>
-        </button> <!-- Only with Internet Foods -->
+        </button>
+
+        <!-- Remove from food selected list -->
+        <button icon-only ion-button color="danger" (click)="unselect(item)" *ngIf="currentlySelected"><ion-icon name="remove"></ion-icon></button> 
 
     </ion-item-options>
 

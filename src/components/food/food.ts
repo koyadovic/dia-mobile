@@ -29,27 +29,44 @@ export class FoodComponent {
 
   @Output() foodSelection = new EventEmitter<any>();
 
+  @Input() currentlySelected: boolean;
+  @Output() foodUnSelection = new EventEmitter<any>();
+
   editMode:boolean = false;
   selectionMode:boolean = false;
 
   constructor(private timelineService: DiaTimelineService) {
   }
 
-  doClick(){
-    if(!this.selectionMode && !this.editMode)
-      this.selectionMode = true;
+  getFoodDetails() {
+    if (!!this.food.source_name && !!this.food.source_id && Object.keys(this.food).length == 4) {
+      this.timelineService.searchedFoodDetails(this.food.source_name, this.food.source_id).subscribe(
+        (foodResponse) => {
+          this.food = foodResponse;
+        }
+      )
+    }
   }
 
-  selectionFinishedCallback(data) {
+  doClick(){ // selection
+    if(!this.selectionMode && !this.editMode) {
+      this.getFoodDetails();
+      this.selectionMode = true;
+    }
+  }
+  unselect(item) {
+    item.close();
+    this.foodUnSelection.emit(this.food);
+  }
+
+  selectionFinishedCallback(food) {
+    // food here it's a copy, not a reference
     setTimeout(() => this.selectionMode = false, 100);
 
-    if(data !== null) {
-      let food = JSON.parse(JSON.stringify(this.food));
+    if(food !== null) {
+      this.foodMessage.emit('Food added to food selected list');
       this.foodSelection.emit(food);
     }
-
-    this.food.g_or_ml_selected = null;
-    this.food.units_selected = null;
   }
 
   edit(item) {
