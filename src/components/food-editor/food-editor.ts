@@ -9,6 +9,7 @@ export class FoodEditorComponent {
   @Output() editFinished:EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor() {
+
   }
 
   save() {

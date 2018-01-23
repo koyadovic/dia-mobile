@@ -1,10 +1,6 @@
-page-search-food {
-
-}
-
 ion-toolbar {
-    -webkit-box-shadow: 0px 0px 2px #aaa !important;
-    box-shadow: 0px 0px 2px #aaa !important;
+    -webkit-box-shadow: 0px -1px 2px #aaa !important;
+    box-shadow: 0px -1px 2px #aaa !important;
 }
 
 ion-footer > div {
@@ -12,10 +8,15 @@ ion-footer > div {
 }
 
 ion-pullup .toolbar-icon {
-    color: #888;
+    color: #555;
 }
 
 
 .result-food-list {
     margin-bottom: 56px;
+}
+
+.fabextramargin {
+    margin-bottom: 66px;
+    z-index: 2;
 }

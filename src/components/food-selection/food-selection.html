@@ -21,7 +21,7 @@
     
         <ion-row>
           <ion-col col-4>
-            <ion-item>
+            <ion-item *ngIf="food.carb_factor">
               <ion-label stacked color="primary">Carbs</ion-label>
               <ion-input type="number" disabled placeholder="Grams of Carbs" name="carb_g" value="{{ round(weight() * food.carb_factor) }}" required></ion-input>
             </ion-item>
@@ -62,7 +62,7 @@
           </ion-col>
         </ion-row>
     
-        <ion-row> 
+        <ion-row *ngIf="!currentlySelected">
           <ion-col> 
             <button (click)="closeSelection()" ion-button full>{{ "Dismiss" | translate }}</button>
           </ion-col> 
@@ -71,7 +71,12 @@
             <button (click)="select()" [disabled]="!valid()" ion-button full>{{ "Save" | translate }}</button>
           </ion-col> 
         </ion-row> 
-        
+        <ion-row *ngIf="currentlySelected">
+          <ion-col> 
+            <button (click)="closeSelection()" ion-button full>{{ "Close" | translate }}</button>
+          </ion-col> 
+        </ion-row> 
+          
       </ion-grid>
     </ion-card-content>
   </ion-card>

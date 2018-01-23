@@ -16,7 +16,7 @@ import { IonPullUpFooterState } from 'ionic-pullup';
 })
 export class AddFeedingPage {
   // For food listings
-  private food_tab = 'favorite';
+  private food_tab = 'recent';
 
   private favoriteFoods = null;
   private favoriteFoodsReload = true;
@@ -36,6 +36,8 @@ export class AddFeedingPage {
   footerState: IonPullUpFooterState;
   private foodSelected = [];
 
+  private footerCurrentlyExpanded: boolean = false;
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private modalCtrl: ModalController,
@@ -44,7 +46,7 @@ export class AddFeedingPage {
               public loadingCtrl: LoadingController,
               public toastCtrl: ToastController) {
 
-    this.switchToFavorite();
+    this.switchToRecent();
     this.footerState = IonPullUpFooterState.Collapsed;
   }
 
@@ -52,7 +54,7 @@ export class AddFeedingPage {
     let toast = this.toastCtrl.create({
       message: message,
       duration: 3000,
-      position: 'bottom'
+      position: 'top'
     });
   
     toast.onDidDismiss(() => {
@@ -62,9 +64,11 @@ export class AddFeedingPage {
   }
 
   footerExpanded() {
+    this.footerCurrentlyExpanded = true;
   }
 
   footerCollapsed() {
+    this.footerCurrentlyExpanded = false;
   }
 
   toggleFooter() {
@@ -75,8 +79,18 @@ export class AddFeedingPage {
     return arrayFoods.filter(food => food.name.toLowerCase().indexOf(string.toLowerCase()) >= 0);
   }
 
-  selectedFood(element){
-    this.foodSelected.push(element);
+  selectedFood(foodSelected){
+    // foodSelected here it's a copy
+    this.foodSelected.push(foodSelected);
+  }
+
+  unselectedFood(food) {
+    let i = this.foodSelected.indexOf(food);
+    if (i > -1) {
+      this.foodSelected.splice(i, 1);
+      this.foodActionMessage('Removed from list');
+    }
+      
   }
 
   onInput(event) {
@@ -145,13 +159,12 @@ export class AddFeedingPage {
   addFood(){
     let modal = this.modalCtrl.create(AddFoodPage, {});
     modal.onDidDismiss((food) => {
-      if(!!food && food["add"]) {
-        // aquí hay que añadir el puto alimento.
+      if(!!food) {
+        this.refreshRecentFood();
       }
     });
     modal.present();
   }
-
 
   refreshRecentFood() {
     this.timelineService.getFoods(false).subscribe(
