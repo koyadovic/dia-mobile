@@ -52,7 +52,7 @@ export class AddFeedingPage {
     let toast = this.toastCtrl.create({
       message: message,
       duration: 3000,
-      position: 'bottom'
+      position: 'top'
     });
   
     toast.onDidDismiss(() => {
@@ -79,11 +79,14 @@ export class AddFeedingPage {
     // foodSelected here it's a copy
     this.foodSelected.push(foodSelected);
   }
-  
+
   unselectedFood(food) {
     let i = this.foodSelected.indexOf(food);
-    if (i > -1)
+    if (i > -1) {
       this.foodSelected.splice(i, 1);
+      this.foodActionMessage('Removed from list');
+    }
+      
   }
 
   onInput(event) {

@@ -3,6 +3,7 @@ import { EventEmitter } from '@angular/core';
 import { DiaTimelineService } from '../../services/dia-timeline-service';
 import { ItemSliding } from 'ionic-angular';
 import { style, state, animate, transition, trigger } from '@angular/animations';
+import { AlertController } from 'ionic-angular';
 
 
 @Component({
@@ -35,7 +36,8 @@ export class FoodComponent {
   editMode:boolean = false;
   selectionMode:boolean = false;
 
-  constructor(private timelineService: DiaTimelineService) {
+  constructor(private timelineService: DiaTimelineService,
+              private alertCtrl: AlertController) {
   }
 
   getFoodDetails() {
@@ -64,7 +66,7 @@ export class FoodComponent {
     setTimeout(() => this.selectionMode = false, 100);
 
     if(food !== null) {
-      this.foodMessage.emit('Food added to food selected list');
+      this.foodMessage.emit('Added to food selected list');
       this.foodSelection.emit(food);
     }
   }
@@ -84,13 +86,31 @@ export class FoodComponent {
 
   delete(item:ItemSliding) {
     item.close();
-    // alimento a tomar por culo
-    this.timelineService.deleteFood(this.food).subscribe(
-      (result) => {
-        this.foodMessage.emit('Food deleted');
-        this.foodChanges.emit();
-      }
-    )
+    let alert = this.alertCtrl.create({
+      title: 'Confirm delete',
+      message: 'Do you want to delete this food?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            // alimento a tomar por culo
+            this.timelineService.deleteFood(this.food).subscribe(
+              (result) => {
+                this.foodMessage.emit('Food deleted');
+                this.foodChanges.emit();
+              }
+            );
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   favorite(item:ItemSliding, fav:boolean) {
