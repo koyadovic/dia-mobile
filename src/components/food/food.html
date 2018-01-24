@@ -1,9 +1,21 @@
-<ion-item-sliding #item>
+<ion-item-sliding #item padding-top>
 
-    <button ion-item (click)="doClick()">
-        <ion-label>
-            {{ food.name }},  {{ food.manufacturer }}
-        </ion-label>
+    <button ion-item (click)="doClick()" class="food-item">
+        <h1>{{ food.name }}</h1>
+        <p>{{ food.manufacturer }}</p>
+        <ion-grid class="nutrition">
+            <ion-row>
+                <ion-col *ngIf="food.carb_factor >= 0.0 && food.carb_factor <= 1.0">
+                    Carbs: {{ round(food.carb_factor * 100.0) }}%
+                </ion-col>
+                <ion-col *ngIf="selection()">
+                    {{ selection() }}
+                </ion-col>
+                <ion-col *ngIf="selection()">
+                    {{ kcal() }}kcal
+                </ion-col>
+            </ion-row>
+        </ion-grid>
 
         <div item-content>
 
@@ -14,9 +26,10 @@
             <div *ngIf="selectionMode" [@fadeInOut]>
                 <food-selection [currentlySelected]="currentlySelected" (selectionFinished)="selectionFinishedCallback($event)" [food]="food"></food-selection>
             </div>
-            
+
         </div>
     </button>
+
 
     <ion-item-options *ngIf="!editMode && !selectionMode" side="right">
 
@@ -41,5 +54,6 @@
         <button ion-button color="danger" (click)="unselect(item)" *ngIf="currentlySelected"><ion-icon name="remove"></ion-icon>Remove</button> 
 
     </ion-item-options>
+
 
 </ion-item-sliding>
