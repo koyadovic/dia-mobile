@@ -166,7 +166,7 @@ export class FoodComponent {
 
   selection(){
     if(!!this.food.g_or_ml_selected) {
-      return `${this.food.g_or_ml_selected}g/ml`;
+      return `${this.food.g_or_ml_selected}g`;
     } else if(!!this.food.units_selected) {
       return `${this.food.units_selected}u`;
     }

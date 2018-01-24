@@ -1,19 +1,45 @@
-<ion-item-sliding #item padding-top>
+<ion-item-sliding #item margin-top>
 
-    <button ion-item (click)="doClick()" class="food-item">
-        <h1>{{ food.name }}</h1>
+    <button ion-item (click)="doClick()" class="food-item card">
+        <h2>{{ food.name }} <span *ngIf="selection()">({{ selection() }})</span></h2>
         <p>{{ food.manufacturer }}</p>
         <ion-grid class="nutrition">
             <ion-row>
-                <ion-col *ngIf="food.carb_factor >= 0.0 && food.carb_factor <= 1.0">
-                    Carbs: {{ round(food.carb_factor * 100.0) }}%
-                </ion-col>
-                <ion-col *ngIf="selection()">
-                    {{ selection() }}
-                </ion-col>
-                <ion-col *ngIf="selection()">
-                    {{ kcal() }}kcal
-                </ion-col>
+                <ng-container *ngIf="food.carb_factor >= 0.0 && food.carb_factor <= 1.0 && !selection()">
+                    <ion-col>
+                        Carb {{ round(food.carb_factor * 100.0) }}%
+                    </ion-col>
+                    <ion-col>
+                        Prot {{ round(food.protein_factor * 100.0) }}%
+                    </ion-col>
+                    <ion-col>
+                        Fat {{ round(food.fat_factor * 100.0) }}%
+                    </ion-col>
+                    <ion-col>
+                        Fib {{ round(food.fiber_factor * 100.0) }}%
+                    </ion-col>
+                    <ion-col>
+                        Alc {{ round(food.alcohol_factor * 100.0) }}%
+                    </ion-col>
+        
+                </ng-container>
+
+                <ng-container *ngIf="selection()">
+                    <ion-col>
+                        Carb<br/>{{ round(weight() * food.carb_factor) }}g
+                    </ion-col>
+                    <ion-col>
+                        Prot<br/>{{ round(weight() * food.protein_factor) }}g
+                    </ion-col>
+                    <ion-col>
+                        Fat<br/>{{ round(weight() * food.fat_factor) }}g
+                    </ion-col>
+                            
+                    <ion-col>
+                        Kcal<br/>{{ kcal() }}
+                    </ion-col>
+            
+                </ng-container>
             </ion-row>
         </ion-grid>
 
