@@ -4,7 +4,7 @@ import { DiaTimelineService } from '../../services/dia-timeline-service';
 import { ItemSliding } from 'ionic-angular';
 import { style, state, animate, transition, trigger } from '@angular/animations';
 import { AlertController } from 'ionic-angular';
-
+import { FoodListable } from '../../models/food-model';
 
 @Component({
   selector: 'food-component',
@@ -23,7 +23,7 @@ import { AlertController } from 'ionic-angular';
 
 })
 export class FoodComponent {
-  @Input() food;
+  @Input() food: FoodListable;
 
   @Input() showCarbs:boolean = false;
   @Input() showProteins:boolean = false;

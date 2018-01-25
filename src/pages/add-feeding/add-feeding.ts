@@ -9,6 +9,7 @@ import { ViewController } from 'ionic-angular/navigation/view-controller';
 import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
 
 import { IonPullUpFooterState } from 'ionic-pullup';
+import { InternetFoodList } from '../../models/food-model';
 
 @Component({
   selector: 'page-add-feeding',
