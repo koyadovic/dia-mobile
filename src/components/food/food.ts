@@ -25,6 +25,13 @@ import { AlertController } from 'ionic-angular';
 export class FoodComponent {
   @Input() food;
 
+  @Input() showCarbs:boolean = false;
+  @Input() showProteins:boolean = false;
+  @Input() showFats:boolean = false;
+  @Input() showFiber:boolean = false;
+  @Input() showAlcohol:boolean = false;
+  @Input() showKCal:boolean = false;
+
   @Output() foodChanges = new EventEmitter<any>();
   @Output() foodMessage = new EventEmitter<string>();
 

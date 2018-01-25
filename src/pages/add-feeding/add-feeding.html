@@ -29,7 +29,11 @@
 
 <ion-content>
   <ion-list class="result-food-list">
-    <food-component [currentlySelected]="false" *ngFor="let food of resultFoods" (foodSelection)="selectedFood($event)" (foodChanges)="refresh(food)" (foodMessage)="foodActionMessage($event)" [food]="food"></food-component>
+    <food-component [currentlySelected]="false" *ngFor="let food of resultFoods"
+      (foodSelection)="selectedFood($event)" (foodChanges)="refresh(food)" (foodMessage)="foodActionMessage($event)"
+      [showCarbs]="true" [showProteins]="true" [showFats]="true" [showKCal]="true"
+      [food]="food">
+    </food-component>
   </ion-list>
 
   <ion-fab *ngIf="food_tab == 'recent'" padding-right bottom right [class.fabextramargin]="true">
@@ -56,9 +60,13 @@
       <ion-list-header>
         Food selected
       </ion-list-header>
+
       <food-component [currentlySelected]="true" 
-      *ngFor="let food of foodSelected" [food]="food" (foodClick)="foodSelected(food)"
-      (foodUnSelection)="unselectedFood($event)"></food-component>
+        *ngFor="let food of foodSelected" [food]="food" (foodClick)="foodSelected(food)"
+        [showCarbs]="true" [showProteins]="true" [showFats]="true" [showKCal]="true"
+        (foodUnSelection)="unselectedFood($event)">
+      </food-component>
+      
     </ion-list>
   </ion-content>
 </ion-pullup>

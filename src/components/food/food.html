@@ -3,44 +3,29 @@
     <button ion-item (click)="doClick()" class="food-item card">
         <h2>{{ food.name }} <span *ngIf="selection()">({{ selection() }})</span></h2>
         <p>{{ food.manufacturer }}</p>
+        <div class="nutrition-container" item-end>
+        </div>
+
         <ion-grid class="nutrition">
             <ion-row>
-                <ng-container *ngIf="food.carb_factor >= 0.0 && food.carb_factor <= 1.0 && !selection()">
-                    <ion-col>
-                        Carb {{ round(food.carb_factor * 100.0) }}%
-                    </ion-col>
-                    <ion-col>
-                        Prot {{ round(food.protein_factor * 100.0) }}%
-                    </ion-col>
-                    <ion-col>
-                        Fat {{ round(food.fat_factor * 100.0) }}%
-                    </ion-col>
-                    <ion-col>
-                        Fib {{ round(food.fiber_factor * 100.0) }}%
-                    </ion-col>
-                    <ion-col>
-                        Alc {{ round(food.alcohol_factor * 100.0) }}%
-                    </ion-col>
-        
+                <ng-container class="nutrition" *ngIf="food.carb_factor >= 0.0 && food.carb_factor <= 1.0 && !selection() && !editMode && !selectionMode" item-end>
+                    <ion-col><ion-badge *ngIf="showCarbs" color="light">Carb {{ round(food.carb_factor * 100.0) }}%</ion-badge></ion-col>
+                    <ion-col><ion-badge *ngIf="showProteins" color="light">Prot {{ round(food.protein_factor * 100.0) }}%</ion-badge></ion-col>
+                    <ion-col><ion-badge *ngIf="showFats" color="light">Fats {{ round(food.fat_factor * 100.0) }}%</ion-badge></ion-col>
+                    <ion-col><ion-badge *ngIf="showFiber" color="light">Fibe {{ round(food.fiber_factor * 100.0) }}%</ion-badge></ion-col>
+                    <ion-col><ion-badge *ngIf="showAlcohol" color="light">Alco {{ round(food.alcohol_factor * 100.0) }}%</ion-badge></ion-col>
                 </ng-container>
 
-                <ng-container *ngIf="selection()">
+                <ng-container class="nutrition" *ngIf="selection()">
                     <ion-col>
-                        Carb<br/>{{ round(weight() * food.carb_factor) }}g
+                        <ion-badge *ngIf="showCarbs" color="secondary">Carb<br/>{{ round(weight() * food.carb_factor) }}g</ion-badge>
+                        <ion-badge *ngIf="showProteins" color="secondary">Prot<br/>{{ round(weight() * food.protein_factor) }}g</ion-badge>
+                        <ion-badge *ngIf="showFats" color="secondary">Fats<br/>{{ round(weight() * food.fat_factor) }}g</ion-badge>
+                        <ion-badge *ngIf="showKCal" color="secondary">Kcal<br/>{{ kcal() }}</ion-badge>
                     </ion-col>
-                    <ion-col>
-                        Prot<br/>{{ round(weight() * food.protein_factor) }}g
-                    </ion-col>
-                    <ion-col>
-                        Fat<br/>{{ round(weight() * food.fat_factor) }}g
-                    </ion-col>
-                            
-                    <ion-col>
-                        Kcal<br/>{{ kcal() }}
-                    </ion-col>
-            
                 </ng-container>
             </ion-row>
+
         </ion-grid>
 
         <div item-content>
