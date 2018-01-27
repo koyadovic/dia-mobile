@@ -80,12 +80,12 @@ export class AddFeedingPage {
     return arrayFoods.filter(food => food.name.toLowerCase().indexOf(string.toLowerCase()) >= 0);
   }
 
-  selectedFood(foodSelected){
+  selectedFood(foodSelected: FoodSelected){
     // foodSelected here it's a copy
     this.foodSelected.push(foodSelected);
   }
 
-  unselectedFood(food) {
+  unselectedFood(food: FoodSelected) {
     let i = this.foodSelected.indexOf(food);
     if (i > -1) {
       this.foodSelected.splice(i, 1);

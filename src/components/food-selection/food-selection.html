@@ -1,82 +1,32 @@
 <ion-card>
-    <ion-card-content>
-        <ion-card-title text-center>
-          {{ food.name }}, {{ food.manufacturer }}
-        </ion-card-title>
+  <ion-card-content>
+    <ion-card-title text-center>
+      {{ food.food.name }}, {{ food.food.manufacturer }}
+    </ion-card-title>
     <ion-grid>
-        <ion-row>
-          <ion-col>
-            <ion-item text-center *ngIf="!units">
-              <ion-label stacked color="primary">Weight</ion-label>
-              <ion-input text-center type="number" placeholder="Introduce weight in grams" name="g_or_ml_selected" [(ngModel)]="food.g_or_ml_selected" required></ion-input>
-            </ion-item>
-    
-            <ion-item text-center *ngIf="units">
-              <ion-label stacked color="primary">Units</ion-label>
-              <ion-input text-center type="number" placeholder="Introduce units of food" name="units_selected" [(ngModel)]="food.units_selected" required></ion-input>
-            </ion-item>
-    
-          </ion-col>
-        </ion-row>
-    
-        <ion-row>
-          <ion-col col-4>
-            <ion-item>
-              <ion-label stacked color="primary">Carbs</ion-label>
-              <ion-input type="number" disabled placeholder="Grams of Carbs" name="carb_g" value="{{ round(weight() * food.carb_factor) }}" required></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col col-4>
-            <ion-item>
-              <ion-label stacked color="primary">Proteins</ion-label>
-              <ion-input type="number" disabled placeholder="Grams of Proteins" name="protein_g" value="{{ round(weight() * food.protein_factor) }}" required></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col col-4>
-              <ion-item>
-                <ion-label stacked color="primary">Fats</ion-label>
-                <ion-input type="number" disabled placeholder="Grams of Fats" name="fat_g" value="{{ round(weight() * food.fat_factor) }}" required></ion-input>
-              </ion-item>
-            </ion-col>
+      <ion-row>
+        <ion-col>
+          <ion-item text-center *ngIf="!food?.food?.g_or_ml_per_unit">
+            <ion-label stacked color="primary">Weight</ion-label>
+            <ion-input text-center type="number" placeholder="Introduce weight in grams" name="g_or_ml_selected" [(ngModel)]="food.selection" required></ion-input>
+          </ion-item>
   
-        </ion-row>
-    
-        <ion-row>
-          <ion-col col-4>
-            <ion-item>
-              <ion-label stacked color="primary">Fiber</ion-label>
-              <ion-input type="number" disabled placeholder="Grams of Fiber" name="fiber_g" value="{{ round(weight() * food.fiber_factor) }}" required></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col col-4>
-            <ion-item>
-              <ion-label stacked color="primary">Alcohol</ion-label>
-              <ion-input type="number" disabled placeholder="Grams of Alcohol" name="alcohol_g" value="{{ round(weight() * food.alcohol_factor) }}" required></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col col-4>
-            <ion-item>
-              <ion-label stacked color="primary">Kcal</ion-label>
-              <ion-input type="number" [value]="food.kcal()" disabled></ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-    
-        <ion-row>
-          <ion-col> 
-            <button (click)="closeSelection()" ion-button full>{{ "Dismiss" | translate }}</button>
-          </ion-col> 
-    
-          <ion-col> 
-            <button (click)="select()" [disabled]="!valid()" ion-button full>{{ "Save" | translate }}</button>
-          </ion-col> 
-        </ion-row> 
-        <ion-row>
-          <ion-col> 
-            <button (click)="closeSelection()" ion-button full>{{ "Close" | translate }}</button>
-          </ion-col> 
-        </ion-row> 
-          
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
+          <ion-item text-center *ngIf="food?.food?.g_or_ml_per_unit > 0">
+            <ion-label stacked color="primary">Units</ion-label>
+            <ion-input text-center type="number" placeholder="Introduce units of food" name="units_selected" [(ngModel)]="food.selection" required></ion-input>
+          </ion-item>
+  
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <button (click)="closeSelection()" ion-button full>{{ "Close" | translate }}</button>
+        </ion-col> 
+        <ion-col> 
+          <button (click)="finishSelection()" [disabled]="!valid()" ion-button full>{{ "Save" | translate }}</button>
+        </ion-col>
+      </ion-row> 
+    </ion-grid>
+  </ion-card-content>
+</ion-card>

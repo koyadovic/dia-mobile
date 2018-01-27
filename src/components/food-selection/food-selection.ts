@@ -1,6 +1,6 @@
 import { Component, Input, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
-import { FoodDetailable, FoodSelected, weight } from '../../models/food-model';
+import { FoodDetailable, FoodSelected, weight, selection_kcal } from '../../models/food-model';
 
 
 @Component({
@@ -8,30 +8,14 @@ import { FoodDetailable, FoodSelected, weight } from '../../models/food-model';
   templateUrl: 'food-selection.html'
 })
 export class FoodSelectionComponent {
-  @Input() food: FoodDetailable;
-  @Output() selectionFinished:EventEmitter<any> = new EventEmitter<any>();
-  private foodSelected: FoodSelected
+  @Input() food: FoodSelected;
+  @Output() selectionFinished:EventEmitter<FoodSelected> = new EventEmitter<FoodSelected>();
 
   constructor() {
-    this.foodSelected = {
-      food: null,
-      carb_g: 0.0,
-      protein_g: 0.0,
-      fat_g: 0.0,
-      fiber_g: 0.0,
-      alcohol_g: 0.0,
-      selection: 0.0
-    };
-  }
-
-  ngOnChanges(changes) {
-    if('food' in changes) {
-      this.foodSelected.food = this.food;
-    }
   }
 
   valid() {
-    return this.foodSelected.selection > 0.0;
+    return this.food.selection > 0.0;
   }
 
   round(n: number){
@@ -39,22 +23,21 @@ export class FoodSelectionComponent {
   }
 
   weight() {
-    return weight(this.foodSelected);
+    return weight(this.food);
   }
 
-  select() {
-    let food = JSON.parse(JSON.stringify(this.foodSelected));
+  kcal() {
+    return selection_kcal(this.food);
+  }
+
+  finishSelection() {
+    // select is ok
+    let food = JSON.parse(JSON.stringify(this.food));
     this.selectionFinished.emit(food);
   }
 
-  changeSelection(newSelection: number) {
-
-    if(this.foodSelected.food.g_or_ml_per_unit > 0.0) {
-
-    }
-  }
-
   closeSelection() {
+    // close without selection
     this.selectionFinished.emit(null);
   }
 }

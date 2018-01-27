@@ -1,14 +1,12 @@
 <ion-item-sliding #item margin-top>
 
     <button ion-item (click)="doClick()" class="food-item card">
-        <h2>{{ food.name }} <span *ngIf="selection()">({{ selection() }})</span></h2>
+        <h2>{{ food.name }}</h2>
         <p>{{ food.manufacturer }}</p>
-        <div class="nutrition-container" item-end>
-        </div>
 
         <ion-grid class="nutrition">
             <ion-row>
-                <ng-container class="nutrition" *ngIf="food.carb_factor >= 0.0 && food.carb_factor <= 1.0 && !selection() && !editMode && !selectionMode" item-end>
+                <ng-container class="nutrition" *ngIf="food.carb_factor >= 0.0 && food.carb_factor <= 1.0" item-end>
                     <ion-col><ion-badge *ngIf="showCarbs" color="light">Carb {{ round(food.carb_factor * 100.0) }}%</ion-badge></ion-col>
                     <ion-col><ion-badge *ngIf="showProteins" color="light">Prot {{ round(food.protein_factor * 100.0) }}%</ion-badge></ion-col>
                     <ion-col><ion-badge *ngIf="showFats" color="light">Fats {{ round(food.fat_factor * 100.0) }}%</ion-badge></ion-col>
@@ -25,9 +23,6 @@
                 <food-editor (editFinished)="editFinishedCallback($event)" [food]="food"></food-editor>
             </div>
 
-            <div *ngIf="selectionMode" [@fadeInOut]>
-                <food-selection (selectionFinished)="selectionFinishedCallback($event)" [food]="food"></food-selection>
-            </div>
 
         </div>
     </button>
@@ -56,3 +51,8 @@
 
 
 </ion-item-sliding>
+
+
+<ion-item *ngIf="selectionMode" [@fadeInOut]>
+        <food-selection (selectionFinished)="selectionFinishedCallback($event)" [food]="selectionModeFood"></food-selection>
+</ion-item>

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
 import { DiaTimelineService } from '../../services/dia-timeline-service';
 import { ViewController } from 'ionic-angular/navigation/view-controller';
 import { DiaFood } from '../../models/food-model';
@@ -10,7 +9,20 @@ import { DiaFood } from '../../models/food-model';
   templateUrl: 'add-food.html',
 })
 export class AddFoodPage {
+  // new food as the template understands
+  private food = {
+    name: "",
+    manufacturer: "",
+    g_or_ml: null,
+    g_or_ml_per_unit: null,
+    carb_g: null,
+    protein_g: null,
+    fat_g: null,
+    fiber_g: null,
+    alcohol_g: null
+  }
   
+  // this is the result that dia-backend understands
   private resultFood = {
     id: 0,
     name: "",
@@ -23,21 +35,7 @@ export class AddFoodPage {
     alcohol_factor: 0
   }
 
-  private food = {
-    name: "",
-    manufacturer: "",
-    g_or_ml: null,
-    g_or_ml_per_unit: null,
-    carb_g: null,
-    protein_g: null,
-    fat_g: null,
-    fiber_g: null,
-    alcohol_g: null
-  }
-
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              private viewCtrl: ViewController,
+  constructor(private viewCtrl: ViewController,
               private timelineService: DiaTimelineService) {}
 
   valid(){
@@ -61,6 +59,7 @@ export class AddFoodPage {
     this.viewCtrl.dismiss(null);
   }
 
+  // This method translate food as the template understands it to the interface understood by dia backend
   updateResult() {
     this.resultFood.name = this.food.name;
     this.resultFood.manufacturer = this.food.manufacturer;
