@@ -4,7 +4,7 @@ import { DiaTimelineService } from '../../services/dia-timeline-service';
 import { ItemSliding } from 'ionic-angular';
 import { style, state, animate, transition, trigger } from '@angular/animations';
 import { AlertController } from 'ionic-angular';
-
+import { FoodListable, InternetFoodList, DiaFood, selection_kcal, weight, FoodDetailable, FoodSelected } from '../../models/food-model';
 
 @Component({
   selector: 'food-component',
@@ -12,63 +12,74 @@ import { AlertController } from 'ionic-angular';
   animations: [
     trigger('fadeInOut', [
       transition(':enter', [   // :enter is alias to 'void => *'
-        style({opacity: 0, height: 0}),
-        animate(300, style({opacity: 1, height:'*'})) 
+        style({opacity: 0}),
+        animate(300, style({opacity: 1})) 
       ]),
       transition(':leave', [   // :leave is alias to '* => void'
-        animate(300, style({opacity: 0, height: 0})) 
+        animate(300, style({opacity: 0})) 
       ])
     ])
   ]
 
 })
 export class FoodComponent {
-  @Input() food;
+  @Input() food: FoodListable | FoodDetailable;
+
+  @Input() showCarbs:boolean = false;
+  @Input() showProteins:boolean = false;
+  @Input() showFats:boolean = false;
+  @Input() showFiber:boolean = false;
+  @Input() showAlcohol:boolean = false;
+  @Input() showKCal:boolean = false;
 
   @Output() foodChanges = new EventEmitter<any>();
   @Output() foodMessage = new EventEmitter<string>();
-
-  @Output() foodSelection = new EventEmitter<any>();
-
-  @Input() currentlySelected: boolean;
-  @Output() foodUnSelection = new EventEmitter<any>();
+  @Output() foodSelection = new EventEmitter<FoodSelected>();
 
   editMode:boolean = false;
   selectionMode:boolean = false;
+  selectionModeFood: FoodSelected = null;
 
   constructor(private timelineService: DiaTimelineService,
               private alertCtrl: AlertController) {
   }
 
-  getFoodDetails() {
-    if (!!this.food.source_name && !!this.food.source_id && Object.keys(this.food).length == 4) {
-      this.timelineService.searchedFoodDetails(this.food.source_name, this.food.source_id).subscribe(
-        (foodResponse) => {
-          this.food = foodResponse;
-        }
-      )
-    }
-  }
-
   doClick(){ // selection
     if(!this.selectionMode && !this.editMode) {
-      this.getFoodDetails();
-      this.selectionMode = true;
+      if(!('carb_factor' in this.food) || !('protein_factor' in this.food) || !('fat_factor' in this.food)) {
+        // it's FoodListable
+        this.timelineService.searchedFoodDetails(<InternetFoodList>this.food).subscribe(
+          food => {
+            this.food = food;
+            this.openSelection();
+          }
+        )
+      } else {
+        this.openSelection();
+      }
     }
   }
-  unselect(item) {
-    item.close();
-    this.foodUnSelection.emit(this.food);
+
+  openSelection() {
+    this.selectionModeFood = {
+      food: <FoodDetailable>this.food,
+      carb_g: 0,
+      protein_g: 0,
+      fat_g: 0,
+      fiber_g: 0,
+      alcohol_g: 0,
+      selection: "",
+    }
+    this.selectionMode = true;
   }
 
-  selectionFinishedCallback(food) {
+  selectionFinishedCallback(foodSelected: FoodSelected) {
     // food here it's a copy, not a reference
-    setTimeout(() => this.selectionMode = false, 100);
-
-    if(food !== null) {
+    if(foodSelected !== null) {
       this.foodMessage.emit('Added to food selected list');
-      this.foodSelection.emit(food);
+      this.foodSelection.emit(foodSelected);
     }
+    setTimeout(() => { this.selectionMode = false; this.selectionModeFood = null; }, 100);
   }
 
   edit(item) {
@@ -99,8 +110,7 @@ export class FoodComponent {
         {
           text: 'Delete',
           handler: () => {
-            // alimento a tomar por culo
-            this.timelineService.deleteFood(this.food).subscribe(
+            this.timelineService.deleteFood(<DiaFood>this.food).subscribe(
               (result) => {
                 this.foodMessage.emit('Food deleted');
                 this.foodChanges.emit();
@@ -115,7 +125,7 @@ export class FoodComponent {
 
   favorite(item:ItemSliding, fav:boolean) {
     item.close();
-    this.timelineService.favoriteFood(this.food, fav).subscribe(
+    this.timelineService.favoriteFood(<DiaFood>this.food, fav).subscribe(
       (resp) => {
         if(fav) {
           this.foodMessage.emit('Food favorited');
@@ -130,33 +140,48 @@ export class FoodComponent {
     )
   }
 
+  private saveDiaFood(food: DiaFood) {
+    this.timelineService.saveFood(<DiaFood>this.food).subscribe(
+      (food) => {
+        this.foodMessage.emit('Food saved');
+        this.foodChanges.emit();
+      },
+      (err) => {console.log(err)}
+    );
+  }
+
   save(item:ItemSliding) {
     if(item !== null) item.close();
 
-    if(!!this.food.source_name) {
-      this.timelineService.searchedFoodDetails(this.food.source_name, this.food.source_id).subscribe(
-        (food) => {
-          this.timelineService.saveFood(food).subscribe(
-            (food) => {
-              this.foodMessage.emit('Food saved');
-              this.foodChanges.emit();
-            },
-            (err) => {
-              console.log(err);
-            }
-          );
-        }
-      );
+    if('source_name' in this.food && 'source_id' in this.food) {
+      // it's a  InternetFood
+      if('carb_g' in this.food) {
+        // it's a InternetFoodDetail, direct saving ...
+        this.saveDiaFood(<DiaFood>this.food);
+      } else {
+        // it's InternetFoodList, first retrieving details of the food.
+        this.timelineService.searchedFoodDetails(<InternetFoodList>this.food).subscribe(
+          (foodResponse) => {
+            this.food = foodResponse;
+            // saving
+            this.saveDiaFood(<DiaFood>this.food);
+          }
+        );
+      }
     } else {
-      this.timelineService.saveFood(this.food).subscribe(
-        (food) => {
-          this.foodMessage.emit('Food saved');
-          this.foodChanges.emit();
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+      // It's DiaFood, direct save
+      this.saveDiaFood(<DiaFood>this.food);
     }
+  }
+
+  // useful for templates. Maybe we can code a pipe for this type of round
+  round(n: number){ return Math.round(n * 10.) / 10.; }
+
+  isDiaFood() {
+    return 'id' in this.food;
+  }
+
+  isDetailedFood() {
+    return this.isDiaFood() || 'carb_factor' in this.food;
   }
 }

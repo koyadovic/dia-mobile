@@ -1,39 +1,25 @@
 import { Component, Input, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
+import { FoodDetailable, FoodSelected, weight, selection_kcal } from '../../models/food-model';
+
 
 @Component({
   selector: 'food-selection',
   templateUrl: 'food-selection.html'
 })
 export class FoodSelectionComponent {
-  @Input() food;
-  @Output() selectionFinished:EventEmitter<any> = new EventEmitter<any>();
+  /*
+  This component is for food selections. After food clicked, it's openned a dialog prompting for units or weight.
+  This is the component for this dialog
+  */
+  @Input() food: FoodSelected;
+  @Output() selectionFinished:EventEmitter<FoodSelected> = new EventEmitter<FoodSelected>();
 
-  private units:boolean = null;
-
-  @Input() currentlySelected: boolean;
-
-  constructor() {}
-
-  ngOnChanges(changes) {
-    if("food" in changes && this.units === null) {
-      if(!this.food.g_or_ml_selected)
-        this.food.g_or_ml_selected = null;
-      if(!this.food.units_selected)
-        this.food.units_selected = null;
-      
-      this.units = this.food.g_or_ml_per_unit > 0;
-    }
-  }
-
-  kcal(){
-    let f = this.food;
-    let weight = this.weight();
-    return this.round((+f.carb_factor * weight * 4.) + (+f.protein_factor * weight * 4.) + (+f.fat_factor * weight * 9.) + (+f.alcohol_factor * weight * 7.));
+  constructor() {
   }
 
   valid() {
-    return this.food.g_or_ml_selected > 0.0 || this.food.units_selected > 0.0;
+    return this.food.selection > 0.0;
   }
 
   round(n: number){
@@ -41,37 +27,39 @@ export class FoodSelectionComponent {
   }
 
   weight() {
-    let f = this.food;
-    let weight;
-    if(this.units) {
-      if(!f.units_selected) {
-        weight = 0.0;
-      } else {
-        weight = +f.units_selected * f.g_or_ml_per_unit;
-      }
-    } else {
-      if(!f.g_or_ml_selected) {
-        weight = 0.0;
-      } else {
-        weight = +f.g_or_ml_selected;
-      }
-      
-    }
-    return weight;
+    return weight(this.food);
   }
 
-  select() {
-    if(!this.currentlySelected) {
-      let food = JSON.parse(JSON.stringify(this.food));
-      this.food.g_or_ml_selected = null;
-      this.food.units_selected = null;
-      this.selectionFinished.emit(food);
-    } else {
-      this.selectionFinished.emit(null);
-    }
+  kcal() {
+    return selection_kcal(this.food);
+  }
+
+  finishSelection() {
+    // select is ok
+    let food = JSON.parse(JSON.stringify(this.food));
+    this.selectionFinished.emit(food);
   }
 
   closeSelection() {
+    // close without selection
     this.selectionFinished.emit(null);
+  }
+
+  updateValues() {
+    if(!!this.food.selection) {
+      let w = weight(this.food);
+
+      this.food.carb_g = w * this.food.food.carb_factor;
+      this.food.protein_g = w * this.food.food.protein_factor;
+      this.food.fat_g = w * this.food.food.fat_factor;
+      this.food.fiber_g = w * this.food.food.fiber_factor;
+      this.food.alcohol_g = w * this.food.food.alcohol_factor;
+    } else {
+      this.food.carb_g = 0;
+      this.food.protein_g = 0;
+      this.food.fat_g = 0;
+      this.food.fiber_g = 0;
+      this.food.alcohol_g = 0;
+    }
   }
 }
