@@ -16,15 +16,6 @@
             </ion-row>
 
         </ion-grid>
-
-        <div item-content>
-
-            <div *ngIf="editMode" [@fadeInOut]>
-                <food-editor (editFinished)="editFinishedCallback($event)" [food]="food"></food-editor>
-            </div>
-
-
-        </div>
     </button>
 
 
@@ -56,3 +47,7 @@
 <ion-item *ngIf="selectionMode" [@fadeInOut]>
         <food-selection (selectionFinished)="selectionFinishedCallback($event)" [food]="selectionModeFood"></food-selection>
 </ion-item>
+
+<div *ngIf="editMode" [@fadeInOut]>
+    <food-editor (editFinished)="editFinishedCallback($event)" [food]="food"></food-editor>
+</div>

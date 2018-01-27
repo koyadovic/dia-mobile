@@ -72,6 +72,11 @@ export class FoodSelectedComponent {
   round(n: number){ return Math.round(n * 10.) / 10.; }
 
   selection(){
+    if(this.foodSelected.food.g_or_ml_per_unit > 0.0) {
+      return `${this.foodSelected.selection}u`;
+    } else {
+      return `${this.foodSelected.selection}g`;
+    }
   }
 
   kcal(){ 
