@@ -4,7 +4,7 @@ import { DiaTimelineService } from '../../services/dia-timeline-service';
 import { ItemSliding } from 'ionic-angular';
 import { style, state, animate, transition, trigger } from '@angular/animations';
 import { AlertController } from 'ionic-angular';
-import { FoodListable, FoodDetailable, FoodSelectable, InternetFoodList, DiaFood, InternetFoodDetail, Food } from '../../models/food-model';
+import { FoodListable, FoodSelectable, InternetFoodList, DiaFood, selection_kcal, weight } from '../../models/food-model';
 
 @Component({
   selector: 'food-component',
@@ -48,13 +48,11 @@ export class FoodComponent {
   }
 
   getFoodDetails() {
-    if(this.food instanceof InternetFoodList) {
-      this.timelineService.searchedFoodDetails(this.food).subscribe(
-        (foodResponse) => {
-          this.food = foodResponse;
-        }
-      )
-    }
+    this.timelineService.searchedFoodDetails(<InternetFoodList>this.food).subscribe(
+      (foodResponse) => {
+        this.food = foodResponse;
+      }
+    );
   }
 
   doClick(){ // selection
@@ -106,7 +104,7 @@ export class FoodComponent {
         {
           text: 'Delete',
           handler: () => {
-            this.timelineService.deleteFood(<FoodSelectable>this.food).subscribe(
+            this.timelineService.deleteFood(<DiaFood>this.food).subscribe(
               (result) => {
                 this.foodMessage.emit('Food deleted');
                 this.foodChanges.emit();
@@ -121,7 +119,7 @@ export class FoodComponent {
 
   favorite(item:ItemSliding, fav:boolean) {
     item.close();
-    this.timelineService.favoriteFood(<FoodSelectable>this.food, fav).subscribe(
+    this.timelineService.favoriteFood(<DiaFood>this.food, fav).subscribe(
       (resp) => {
         if(fav) {
           this.foodMessage.emit('Food favorited');
@@ -136,44 +134,52 @@ export class FoodComponent {
     )
   }
 
+  private saveDiaFood(food: DiaFood) {
+    this.timelineService.saveFood(<DiaFood>this.food).subscribe(
+      (food) => {
+        this.foodMessage.emit('Food saved');
+        this.foodChanges.emit();
+      },
+      (err) => {console.log(err)}
+    );
+  }
+
   save(item:ItemSliding) {
     if(item !== null) item.close();
-    if(this.food instanceof InternetFoodList) {
-      this.timelineService.searchedFoodDetails(this.food).subscribe(
-        (foodResponse) => {
-          this.food = foodResponse;
-          this.timelineService.saveFood(<FoodSelectable>this.food).subscribe(
-            (food) => {
-              this.food = food;
-              this.foodMessage.emit('Food saved');
-              this.foodChanges.emit();
-            },
-            (err) => {
-              console.log(err);
-            }
-          );
-        }
-      )
-    } else if(this.food instanceof DiaFood) {
-      this.timelineService.saveFood(<FoodSelectable>this.food).subscribe(
-        (food) => {
-          this.food = food;
-          this.foodMessage.emit('Food saved');
-          this.foodChanges.emit();
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+
+    if('source_name' in this.food && 'source_id' in this.food) {
+      // it's a  InternetFood
+      if('carb_g' in this.food) {
+        // it's a InternetFoodDetail, direct saving ...
+        this.saveDiaFood(<DiaFood>this.food);
+      } else {
+        // it's InternetFoodList, first retrieving details of the food.
+        this.timelineService.searchedFoodDetails(<InternetFoodList>this.food).subscribe(
+          (foodResponse) => {
+            this.food = foodResponse;
+            // saving
+            this.saveDiaFood(<DiaFood>this.food);
+          }
+        );
+      }
+    } else {
+      // It's DiaFood, direct save
+      this.saveDiaFood(<DiaFood>this.food);
     }
   }
 
   // useful for templates. Maybe we can code a pipe for this type of round
   round(n: number){ return Math.round(n * 10.) / 10.; }
 
-  selection(){ return (<FoodSelectable>this.food).getSelection();}
+  selection(){
 
-  kcal(){ return (<Food>this.food).kcal(); }
+  }
 
-  weight() { return (<FoodSelectable>this.food).weight(); }
+  kcal(){ 
+    return selection_kcal(<FoodSelectable>this.food);
+  }
+
+  weight() {
+    return weight(<FoodSelectable>this.food);
+  }
 }

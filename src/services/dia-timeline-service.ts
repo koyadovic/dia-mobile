@@ -68,112 +68,102 @@ export class DiaTimelineService {
         });
     }
 
-    deleteFood(food: FoodSelectable):Observable<any> {
-        if (food instanceof DiaFood) {
-            if(!!food.id) {
-                let url = `${this.backendURL.baseURL}/v1/foods/${food.id}/`;
-                return Observable.create((observer) => {
-                    this.restBackendService
-                    .genericDelete(url)
-                    .finally(() => observer.complete())
-                    .subscribe((resp) => {
-                        observer.next({});
-                        observer.complete();
-                    });
-                });
-            } else {
-                return Observable.create((observer) => {
-                    observer.complete();
-                });
-            }
-        } else {
-            throw new Error('Invalid type for delete operation');
-        }
-    }
-
-    saveFood(food: FoodSelectable):Observable<FoodSelectable> {
-        if (food instanceof DiaFood) {
-            if(!!food.id) {
-                let url = `${this.backendURL.baseURL}/v1/foods/${food.id}/`;
-                return Observable.create((observer) => {
-                    this.restBackendService
-                    .genericPut(url, food)
-                    .finally(() => observer.complete())
-                    .subscribe((food) => {
-                        observer.next(new DiaFood(food));
-                        observer.complete();
-                    });
-                });
-                    
-            } else {
-                let url = `${this.backendURL.baseURL}/v1/foods/`;
-                return Observable.create((observer) => {
-                    this.restBackendService
-                    .genericPost(url, food)
-                    .finally(() => observer.complete())
-                    .subscribe((food) => {
-                        observer.next(new DiaFood(food));
-                        observer.complete();
-                    });
-                });
-            }
-        }
-    }
-
-    favoriteFood(food: FoodSelectable, favorite:boolean):Observable<FoodSelectable> {
-        if (food instanceof DiaFood) {
-            let url;
-            if(favorite) {
-                url = `${this.backendURL.baseURL}/v1/foods/${food.id}/favorite/`;
-            } else {
-                url = `${this.backendURL.baseURL}/v1/foods/${food.id}/unfavorite/`;
-            }
-
+    deleteFood(food: DiaFood):Observable<any> {
+        if(!!food.id) {
+            let url = `${this.backendURL.baseURL}/v1/foods/${food.id}/`;
             return Observable.create((observer) => {
                 this.restBackendService
-                .genericPost(url, {})
+                .genericDelete(url)
+                .finally(() => observer.complete())
+                .subscribe((resp) => {
+                    observer.next({});
+                    observer.complete();
+                });
+            });
+        } else {
+            return Observable.create((observer) => {
+                observer.complete();
+            });
+        }
+    }
+
+    saveFood(food: DiaFood):Observable<DiaFood> {
+        if(!!food.id) {
+            let url = `${this.backendURL.baseURL}/v1/foods/${food.id}/`;
+            return Observable.create((observer) => {
+                this.restBackendService
+                .genericPut(url, food)
                 .finally(() => observer.complete())
                 .subscribe((food) => {
-                    observer.next(new DiaFood(food));
+                    observer.next(food);
+                    observer.complete();
+                });
+            });
+                
+        } else {
+            let url = `${this.backendURL.baseURL}/v1/foods/`;
+            return Observable.create((observer) => {
+                this.restBackendService
+                .genericPost(url, food)
+                .finally(() => observer.complete())
+                .subscribe((food) => {
+                    observer.next(food);
+                    observer.complete();
                 });
             });
         }
     }
+
+    favoriteFood(food: DiaFood, favorite:boolean):Observable<DiaFood> {
+        let url;
+        if(favorite) {
+            url = `${this.backendURL.baseURL}/v1/foods/${food.id}/favorite/`;
+        } else {
+            url = `${this.backendURL.baseURL}/v1/foods/${food.id}/unfavorite/`;
+        }
+
+        return Observable.create((observer) => {
+            this.restBackendService
+            .genericPost(url, {})
+            .finally(() => observer.complete())
+            .subscribe((food) => {
+                observer.next(food);
+            });
+        });
+    }
     
-    getFoods(favorite: boolean):Observable<FoodSelectable[]> {
+    getFoods(favorite: boolean):Observable<DiaFood[]> {
         let url = `${this.backendURL.baseURL}/v1/foods/?favorite=${favorite}`;
         return Observable.create((observer) => {
             this.restBackendService
             .genericGet(url)
             .finally(() => observer.complete())
-            .map(f => new DiaFood(f))
             .subscribe((foods) => {
                 observer.next(foods);
             });
         });
     }
 
-    searchFood(searchString:string):Observable<FoodListable[]> {
+    searchFood(searchString:string):Observable<InternetFoodList[]> {
         let url = `${this.backendURL.baseURL}/v1/foods/sources/?q=${searchString}`;
         return Observable.create((observer) => {
             this.restBackendService
             .genericGet(url)
             .finally(() => observer.complete())
-            .map(f => new InternetFoodList(f))
             .subscribe((foods) => {
                 observer.next(foods);
             });
         });
     }
 
-    searchedFoodDetails(food: InternetFoodList): Observable<FoodSelectable> {
+    searchedFoodDetails(food: InternetFoodList): Observable<InternetFoodDetail> {
         let url = `${this.backendURL.baseURL}/v1/foods/sources/${food.source_name}/${food.source_id}/`;
         return Observable.create((observer) => {
             this.restBackendService
             .genericGet(url)
             .finally(() => observer.complete())
             .subscribe((food) => {
-                observer.next(new InternetFoodDetail(food));
+                observer.next(food);
             });
         });
     }
