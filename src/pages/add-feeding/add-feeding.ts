@@ -9,6 +9,7 @@ import { ViewController } from 'ionic-angular/navigation/view-controller';
 import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
 
 import { IonPullUpFooterState } from 'ionic-pullup';
+import { InternetFoodList, FoodSelected } from '../../models/food-model';
 
 @Component({
   selector: 'page-add-feeding',
@@ -34,7 +35,7 @@ export class AddFeedingPage {
 
   // food selections
   footerState: IonPullUpFooterState;
-  private foodSelected = [];
+  private foodSelected:FoodSelected[] = [];
 
   private footerCurrentlyExpanded: boolean = false;
 
@@ -79,14 +80,16 @@ export class AddFeedingPage {
     return arrayFoods.filter(food => food.name.toLowerCase().indexOf(string.toLowerCase()) >= 0);
   }
 
-  selectedFood(foodSelected){
+  selectedFood(foodSelected: FoodSelected){
     // foodSelected here it's a copy
+    console.log("New food selected: " + JSON.stringify(foodSelected));
     this.foodSelected.push(foodSelected);
   }
 
-  unselectedFood(food) {
+  unselectedFood(food: FoodSelected) {
     let i = this.foodSelected.indexOf(food);
     if (i > -1) {
+      console.log("Food unselected: " + JSON.stringify(food));
       this.foodSelected.splice(i, 1);
       this.foodActionMessage('Removed from list');
     }
