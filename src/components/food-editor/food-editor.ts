@@ -1,16 +1,15 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { FoodSelectable, Food, DiaFood } from '../../models/food-model';
 
 @Component({
   selector: 'food-editor',
   templateUrl: 'food-editor.html',
 })
 export class FoodEditorComponent {
-  @Input() food;
+  @Input() food: DiaFood;
   @Output() editFinished:EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor() {
-
-  }
+  constructor() {}
 
   save() {
     this.editFinished.emit(true);
@@ -30,10 +29,5 @@ export class FoodEditorComponent {
 
   round(n: number){
     return Math.round(n * 10.) / 10.;
-  }
-
-  kcal(){
-    let f = this.food;
-    return this.round((+f.carb_g * 4.) + (+f.protein_g * 4.) + (+f.fat_g * 9.) + (+f.alcohol_g * 7.));
   }
 }

@@ -45,7 +45,6 @@ import { FoodEditorComponent } from '../components/food-editor/food-editor';
 import { FoodSelectionComponent } from '../components/food-selection/food-selection';
 
 import { IonPullupModule } from 'ionic-pullup';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 

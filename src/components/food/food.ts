@@ -4,7 +4,7 @@ import { DiaTimelineService } from '../../services/dia-timeline-service';
 import { ItemSliding } from 'ionic-angular';
 import { style, state, animate, transition, trigger } from '@angular/animations';
 import { AlertController } from 'ionic-angular';
-import { FoodListable } from '../../models/food-model';
+import { FoodListable, FoodDetailable, FoodSelectable, InternetFoodList, DiaFood, InternetFoodDetail, Food } from '../../models/food-model';
 
 @Component({
   selector: 'food-component',
@@ -23,7 +23,7 @@ import { FoodListable } from '../../models/food-model';
 
 })
 export class FoodComponent {
-  @Input() food: FoodListable;
+  @Input() food: FoodListable | FoodSelectable;
 
   @Input() showCarbs:boolean = false;
   @Input() showProteins:boolean = false;
@@ -48,8 +48,8 @@ export class FoodComponent {
   }
 
   getFoodDetails() {
-    if (!!this.food.source_name && !!this.food.source_id && Object.keys(this.food).length == 4) {
-      this.timelineService.searchedFoodDetails(this.food.source_name, this.food.source_id).subscribe(
+    if(this.food instanceof InternetFoodList) {
+      this.timelineService.searchedFoodDetails(this.food).subscribe(
         (foodResponse) => {
           this.food = foodResponse;
         }
@@ -106,8 +106,7 @@ export class FoodComponent {
         {
           text: 'Delete',
           handler: () => {
-            // alimento a tomar por culo
-            this.timelineService.deleteFood(this.food).subscribe(
+            this.timelineService.deleteFood(<FoodSelectable>this.food).subscribe(
               (result) => {
                 this.foodMessage.emit('Food deleted');
                 this.foodChanges.emit();
@@ -122,7 +121,7 @@ export class FoodComponent {
 
   favorite(item:ItemSliding, fav:boolean) {
     item.close();
-    this.timelineService.favoriteFood(this.food, fav).subscribe(
+    this.timelineService.favoriteFood(<FoodSelectable>this.food, fav).subscribe(
       (resp) => {
         if(fav) {
           this.foodMessage.emit('Food favorited');
@@ -139,12 +138,13 @@ export class FoodComponent {
 
   save(item:ItemSliding) {
     if(item !== null) item.close();
-
-    if(!!this.food.source_name) {
-      this.timelineService.searchedFoodDetails(this.food.source_name, this.food.source_id).subscribe(
-        (food) => {
-          this.timelineService.saveFood(food).subscribe(
+    if(this.food instanceof InternetFoodList) {
+      this.timelineService.searchedFoodDetails(this.food).subscribe(
+        (foodResponse) => {
+          this.food = foodResponse;
+          this.timelineService.saveFood(<FoodSelectable>this.food).subscribe(
             (food) => {
+              this.food = food;
               this.foodMessage.emit('Food saved');
               this.foodChanges.emit();
             },
@@ -153,10 +153,11 @@ export class FoodComponent {
             }
           );
         }
-      );
-    } else {
-      this.timelineService.saveFood(this.food).subscribe(
+      )
+    } else if(this.food instanceof DiaFood) {
+      this.timelineService.saveFood(<FoodSelectable>this.food).subscribe(
         (food) => {
+          this.food = food;
           this.foodMessage.emit('Food saved');
           this.foodChanges.emit();
         },
@@ -167,41 +168,12 @@ export class FoodComponent {
     }
   }
 
-  round(n: number){
-    return Math.round(n * 10.) / 10.;
-  }
+  // useful for templates. Maybe we can code a pipe for this type of round
+  round(n: number){ return Math.round(n * 10.) / 10.; }
 
-  selection(){
-    if(!!this.food.g_or_ml_selected) {
-      return `${this.food.g_or_ml_selected}g`;
-    } else if(!!this.food.units_selected) {
-      return `${this.food.units_selected}u`;
-    }
-  }
+  selection(){ return (<FoodSelectable>this.food).getSelection();}
 
-  kcal(){
-    let f = this.food;
-    let weight = this.weight();
-    return this.round((+f.carb_factor * weight * 4.) + (+f.protein_factor * weight * 4.) + (+f.fat_factor * weight * 9.) + (+f.alcohol_factor * weight * 7.));
-  }
+  kcal(){ return (<Food>this.food).kcal(); }
 
-  weight() {
-    let f = this.food;
-    let weight;
-    if(this.food.g_or_ml_per_unit > 0) { // units
-      if(!f.units_selected) {
-        weight = 0.0;
-      } else {
-        weight = +f.units_selected * f.g_or_ml_per_unit;
-      }
-    } else {
-      if(!f.g_or_ml_selected) {
-        weight = 0.0;
-      } else {
-        weight = +f.g_or_ml_selected;
-      }
-      
-    }
-    return weight;
-  }
+  weight() { return (<FoodSelectable>this.food).weight(); }
 }
