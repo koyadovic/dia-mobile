@@ -82,12 +82,14 @@ export class AddFeedingPage {
 
   selectedFood(foodSelected: FoodSelected){
     // foodSelected here it's a copy
+    console.log("New food selected: " + JSON.stringify(foodSelected));
     this.foodSelected.push(foodSelected);
   }
 
   unselectedFood(food: FoodSelected) {
     let i = this.foodSelected.indexOf(food);
     if (i > -1) {
+      console.log("Food unselected: " + JSON.stringify(food));
       this.foodSelected.splice(i, 1);
       this.foodActionMessage('Removed from list');
     }

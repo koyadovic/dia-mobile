@@ -63,6 +63,7 @@
 
       <food-selected
         *ngFor="let food of foodSelected" [foodSelected]="food"
+        (unselectFood)="unselectedFood(food)"
         [showCarbs]="true" [showProteins]="true" [showFats]="true" [showKCal]="true"
         (foodUnSelection)="unselectedFood($event)">
       </food-selected>
