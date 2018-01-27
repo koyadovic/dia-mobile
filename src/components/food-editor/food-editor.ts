@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { FoodSelectable, Food, DiaFood } from '../../models/food-model';
+import { DiaFood } from '../../models/food-model';
 
 @Component({
   selector: 'food-editor',
@@ -22,8 +22,8 @@ export class FoodEditorComponent {
   valid(){
     let f = this.food;
     if(f.name === "" || f.manufacturer === "") return false;
-    if(+f.g_or_ml < +f.carb_g + +f.protein_g + +f.fat_g + +f.fiber_g + +f.alcohol_g) return false;
-    if(f.carb_g === null || f.protein_g === null || f.fat_g === null) return false;
+    if((f.carb_factor + f.protein_factor + f.fat_factor + f.fiber_factor + f.alcohol_factor) > 1.0) return false;
+    if(f.carb_factor === null || f.protein_factor === null || f.fat_factor === null) return false;
     return true;
   }
 

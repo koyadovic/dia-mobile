@@ -4,7 +4,7 @@ import { DiaTimelineService } from '../../services/dia-timeline-service';
 import { ItemSliding } from 'ionic-angular';
 import { style, state, animate, transition, trigger } from '@angular/animations';
 import { AlertController } from 'ionic-angular';
-import { FoodListable, FoodSelectable, InternetFoodList, DiaFood, selection_kcal, weight } from '../../models/food-model';
+import { FoodListable, InternetFoodList, DiaFood, selection_kcal, weight, FoodDetailable, FoodSelected } from '../../models/food-model';
 
 @Component({
   selector: 'food-component',
@@ -23,7 +23,7 @@ import { FoodListable, FoodSelectable, InternetFoodList, DiaFood, selection_kcal
 
 })
 export class FoodComponent {
-  @Input() food: FoodListable | FoodSelectable;
+  @Input() food: FoodListable | FoodDetailable;
 
   @Input() showCarbs:boolean = false;
   @Input() showProteins:boolean = false;
@@ -34,11 +34,7 @@ export class FoodComponent {
 
   @Output() foodChanges = new EventEmitter<any>();
   @Output() foodMessage = new EventEmitter<string>();
-
   @Output() foodSelection = new EventEmitter<any>();
-
-  @Input() currentlySelected: boolean;
-  @Output() foodUnSelection = new EventEmitter<any>();
 
   editMode:boolean = false;
   selectionMode:boolean = false;
@@ -60,10 +56,6 @@ export class FoodComponent {
       this.getFoodDetails();
       this.selectionMode = true;
     }
-  }
-  unselect(item) {
-    item.close();
-    this.foodUnSelection.emit(this.food);
   }
 
   selectionFinishedCallback(food) {
@@ -175,11 +167,11 @@ export class FoodComponent {
 
   }
 
-  kcal(){ 
-    return selection_kcal(<FoodSelectable>this.food);
+  isDiaFood() {
+    return 'id' in this.food;
   }
 
-  weight() {
-    return weight(<FoodSelectable>this.food);
+  isDetailedFood() {
+    return this.isDiaFood() || 'carb_factor' in this.food;
   }
 }

@@ -9,7 +9,7 @@ import { ViewController } from 'ionic-angular/navigation/view-controller';
 import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
 
 import { IonPullUpFooterState } from 'ionic-pullup';
-import { InternetFoodList } from '../../models/food-model';
+import { InternetFoodList, FoodSelected } from '../../models/food-model';
 
 @Component({
   selector: 'page-add-feeding',
@@ -35,7 +35,7 @@ export class AddFeedingPage {
 
   // food selections
   footerState: IonPullUpFooterState;
-  private foodSelected = [];
+  private foodSelected:FoodSelected[] = [];
 
   private footerCurrentlyExpanded: boolean = false;
 

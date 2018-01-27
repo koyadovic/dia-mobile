@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { DiaTimelineService } from '../../services/dia-timeline-service';
 import { ViewController } from 'ionic-angular/navigation/view-controller';
+import { DiaFood } from '../../models/food-model';
 
 
 @Component({
@@ -11,15 +12,15 @@ import { ViewController } from 'ionic-angular/navigation/view-controller';
 export class AddFoodPage {
   
   private food = {
+    id: null,
     name: "",
     manufacturer: "",
-    g_or_ml: "100",
     g_or_ml_per_unit: null,
-    carb_g: null,
-    protein_g: null,
-    fat_g: null,
-    fiber_g: null,
-    alcohol_g: null
+    carb_factor: null,
+    protein_factor: null,
+    fat_factor: null,
+    fiber_factor: null,
+    alcohol_factor: null
   }
 
   constructor(public navCtrl: NavController,
@@ -27,10 +28,6 @@ export class AddFoodPage {
               private viewCtrl: ViewController,
               private timelineService: DiaTimelineService) {}
 
-  kcal(){
-    let f = this.food;
-    return (+f.carb_g * 4.) + (+f.protein_g * 4.) + (+f.fat_g * 9.) + (+f.alcohol_g * 7.);
-  }
 
   ionViewDidLoad() {
   }
@@ -38,13 +35,13 @@ export class AddFoodPage {
   valid(){
     let f = this.food;
     if(f.name === "" || f.manufacturer === "") return false;
-    if(+f.g_or_ml < +f.carb_g + +f.protein_g + +f.fat_g + +f.fiber_g + +f.alcohol_g) return false;
-    if(f.carb_g === null || f.protein_g === null || f.fat_g === null) return false;
+    if(+f.carb_factor + +f.protein_factor + +f.fat_factor + +f.fiber_factor + +f.alcohol_factor > 1.0) return false;
+    if(f.carb_factor === null || f.protein_factor === null || f.fat_factor === null) return false;
     return true;
   }
 
   save() {
-    this.timelineService.saveFood(this.food).subscribe(
+    this.timelineService.saveFood(<DiaFood>this.food).subscribe(
       (food) => {
         this.viewCtrl.dismiss({food: this.food});
       }

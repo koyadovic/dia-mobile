@@ -15,7 +15,7 @@ import { UserConfiguration } from '../utils/user-configuration';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { DiaConfigurationService } from './dia-configuration-service';
 
-import { DiaFood, FoodSelectable, FoodListable, InternetFoodList, InternetFoodDetail } from '../models/food-model';
+import { DiaFood, FoodListable, InternetFoodList, InternetFoodDetail, FoodSelected } from '../models/food-model';
 
 
 @Injectable()
@@ -168,7 +168,7 @@ export class DiaTimelineService {
         });
     }
 
-    saveFeeding(foodSelected: FoodSelectable[]): Observable<any> {
+    saveFeeding(foodSelected: FoodSelected[]): Observable<any> {
         let url = `${this.backendURL.baseURL}/v1/instants/feedings/`;
         return Observable.create((observer) => {
             this.restBackendService

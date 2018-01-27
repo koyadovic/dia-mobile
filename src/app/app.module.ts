@@ -43,6 +43,7 @@ import { AddFoodPage } from '../pages/add-feeding-search-food-add-food/add-food'
 
 import { FoodEditorComponent } from '../components/food-editor/food-editor';
 import { FoodSelectionComponent } from '../components/food-selection/food-selection';
+import { FoodSelectedComponent } from '../components/food-selected/food-selected';
 
 import { IonPullupModule } from 'ionic-pullup';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -74,7 +75,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DiaInstantCard,
     FoodComponent,
     FoodEditorComponent,
-    FoodSelectionComponent
+    FoodSelectionComponent,
+    FoodSelectedComponent,
   ],
   imports: [
     BrowserModule,
@@ -113,7 +115,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DiaInstantCard,
     FoodComponent,
     FoodEditorComponent,
-    FoodSelectionComponent
+    FoodSelectionComponent,
+    FoodSelectedComponent,
   ],
   providers: [
     FCM,
