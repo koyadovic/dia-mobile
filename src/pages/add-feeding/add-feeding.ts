@@ -82,18 +82,19 @@ export class AddFeedingPage {
 
   selectedFood(foodSelected: FoodSelected){
     // foodSelected here it's a copy
-    console.log("New food selected: " + JSON.stringify(foodSelected));
     this.foodSelected.push(foodSelected);
+
+    // if we does not clone the array, angular does not detect changes
+    this.foodSelected = this.foodSelected.slice();
   }
 
   unselectedFood(food: FoodSelected) {
     let i = this.foodSelected.indexOf(food);
     if (i > -1) {
-      console.log("Food unselected: " + JSON.stringify(food));
       this.foodSelected.splice(i, 1);
       this.foodActionMessage('Removed from list');
+      this.foodSelected = this.foodSelected.slice();
     }
-      
   }
 
   onInput(event) {
@@ -193,9 +194,18 @@ export class AddFeedingPage {
     );
   }
 
-
   refresh(food) {
     this.refreshFavoriteFood();
     this.refreshRecentFood();
+  }
+
+
+  finishFeeding() {
+    this.timelineService.saveFeeding(this.foodSelected).subscribe(
+      (resp) => {
+        this.foodActionMessage('Feeding added correctly.');
+        this.viewCtrl.dismiss({'add': true});
+      }
+    )
   }
 }
