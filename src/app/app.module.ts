@@ -46,9 +46,12 @@ import { FoodSelectionComponent } from '../components/food-selection/food-select
 import { FoodSelectedComponent } from '../components/food-selected/food-selected';
 import { FoodSummaryComponent } from '../components/food-summary/food-summary';
 
+import { PlanningListComponent } from '../components/planning-list/planning-list';
+
 import { IonPullupModule } from 'ionic-pullup';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { DiaPlanningsService } from '../services/dia-plannings-service';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -79,6 +82,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     FoodSelectionComponent,
     FoodSelectedComponent,
     FoodSummaryComponent,
+
+    PlanningListComponent,
   ],
   imports: [
     BrowserModule,
@@ -120,6 +125,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     FoodSelectionComponent,
     FoodSelectedComponent,
     FoodSummaryComponent,
+
+    PlanningListComponent,
   ],
   providers: [
     FCM,
@@ -133,6 +140,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DiaMessageService,
     DiaConfigurationService,
     DiaTimelineService,
+    DiaPlanningsService,
   ]
 })
 export class AppModule {}
