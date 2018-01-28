@@ -22,13 +22,10 @@ export class FoodSummaryComponent {
   private total_alcohol_g = 0.0;
   private total_kcal = 0.0;
 
-  constructor() {
-    console.log("summary constructor");
-  }
+  constructor() {}
 
   ngOnChanges(changes) {
     if('foodSelected' in changes) {
-      console.log("summary ngOnChanges");
       this.recalculateTotals();
     }
   }
