@@ -63,4 +63,49 @@ export class DiaRestBackendService {
     });
   }
 
+  public genericPut(url: string, data: object): Observable<any> {
+    return Observable.create((observer) => {
+      this.http
+      .put(url, data, {headers: this.getHeaders(this.authService.getToken())})
+      .finally(() => observer.complete())
+      .map((response: HttpResponse<any>) => {
+        return response;
+      })
+      .subscribe(
+        (resp) => {
+          observer.next(resp);
+        },
+        (err) => {
+          console.log(err);
+          if(err.status === 401){
+            this.authService.logout();
+          }
+        }
+      );
+    });
+  }
+
+  public genericDelete(url: string): Observable<any> {
+    return Observable.create((observer) => {
+      this.http
+      .delete(url, {headers: this.getHeaders(this.authService.getToken())})
+      .finally(() => observer.complete())
+      .map((response: HttpResponse<any>) => {
+        return response;
+      })
+      .subscribe(
+        (resp) => {
+          observer.next(resp);
+        },
+        (err) => {
+          console.log(err);
+          if(err.status === 401){
+            this.authService.logout();
+          }
+        }
+      );
+    });
+  }
+
+
 }

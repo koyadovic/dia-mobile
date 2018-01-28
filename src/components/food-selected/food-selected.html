@@ -1,0 +1,30 @@
+<ion-item-sliding #item margin-top>
+
+    <button ion-item (click)="doClick()" class="food-item card">
+        <h2>{{ foodSelected.food.name }}, {{ selection() }}</h2>
+        <p>{{ foodSelected.food.manufacturer }}</p>
+
+        <ion-grid class="nutrition">
+            <ion-row>
+                <ion-col>
+                    <ion-badge *ngIf="showCarbs" color="secondary">Carb<br/>{{ round(foodSelected.carb_g) }}g</ion-badge>
+                    <ion-badge *ngIf="showProteins" color="secondary">Prot<br/>{{ round(foodSelected.protein_g) }}g</ion-badge>
+                    <ion-badge *ngIf="showFats" color="secondary">Fats<br/>{{ round(foodSelected.fat_g) }}g</ion-badge>
+                    <ion-badge *ngIf="showKCal" color="secondary">Kcal<br/>{{ round(kcal()) }}</ion-badge>
+                </ion-col>
+            </ion-row>
+
+        </ion-grid>
+
+    </button>
+
+    <ion-item-options *ngIf="!editMode && !selectionMode" side="right">
+        <!-- Remove from food selected list -->
+        <button ion-button color="danger" (click)="unselect(item)"><ion-icon name="remove"></ion-icon>Remove</button> 
+    </ion-item-options>
+</ion-item-sliding>
+
+
+<ion-item *ngIf="selectionMode" [@fadeInOut]>
+    <food-selection (selectionFinished)="selectionFinishedCallback($event)" [food]="foodSelected"></food-selection>
+</ion-item>

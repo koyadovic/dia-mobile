@@ -15,6 +15,8 @@ import { UserConfiguration } from '../utils/user-configuration';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { DiaConfigurationService } from './dia-configuration-service';
 
+import { DiaFood, FoodListable, InternetFoodList, InternetFoodDetail, FoodSelected } from '../models/food-model';
+
 
 @Injectable()
 export class DiaTimelineService {
@@ -66,19 +68,71 @@ export class DiaTimelineService {
         });
     }
 
-    saveFood(food):Observable<any> {
-        let url = `${this.backendURL.baseURL}/v1/foods/`;
+    deleteFood(food: DiaFood):Observable<any> {
+        if(!!food.id) {
+            let url = `${this.backendURL.baseURL}/v1/foods/${food.id}/`;
+            return Observable.create((observer) => {
+                this.restBackendService
+                .genericDelete(url)
+                .finally(() => observer.complete())
+                .subscribe((resp) => {
+                    observer.next({});
+                    observer.complete();
+                });
+            });
+        } else {
+            return Observable.create((observer) => {
+                observer.complete();
+            });
+        }
+    }
+
+    saveFood(food: DiaFood):Observable<DiaFood> {
+        if(!!food.id) {
+            let url = `${this.backendURL.baseURL}/v1/foods/${food.id}/`;
+            return Observable.create((observer) => {
+                this.restBackendService
+                .genericPut(url, food)
+                .finally(() => observer.complete())
+                .subscribe((food) => {
+                    observer.next(food);
+                    observer.complete();
+                });
+            });
+                
+        } else {
+            let url = `${this.backendURL.baseURL}/v1/foods/`;
+            return Observable.create((observer) => {
+                this.restBackendService
+                .genericPost(url, food)
+                .finally(() => observer.complete())
+                .subscribe((food) => {
+                    observer.next(food);
+                    observer.complete();
+                });
+            });
+        }
+    }
+
+    favoriteFood(food: DiaFood, favorite:boolean):Observable<DiaFood> {
+        let url;
+        if(favorite) {
+            url = `${this.backendURL.baseURL}/v1/foods/${food.id}/favorite/`;
+        } else {
+            url = `${this.backendURL.baseURL}/v1/foods/${food.id}/unfavorite/`;
+        }
+
         return Observable.create((observer) => {
             this.restBackendService
-            .genericPost(url, food)
+            .genericPost(url, {})
             .finally(() => observer.complete())
             .subscribe((food) => {
                 observer.next(food);
-                observer.complete();
             });
         });
     }
-    getFoods(favorite: boolean):Observable<any[]> {
+    
+    getFoods(favorite: boolean):Observable<DiaFood[]> {
         let url = `${this.backendURL.baseURL}/v1/foods/?favorite=${favorite}`;
         return Observable.create((observer) => {
             this.restBackendService
@@ -90,7 +144,7 @@ export class DiaTimelineService {
         });
     }
 
-    searchFood(searchString:string):Observable<any[]> {
+    searchFood(searchString:string):Observable<InternetFoodList[]> {
         let url = `${this.backendURL.baseURL}/v1/foods/sources/?q=${searchString}`;
         return Observable.create((observer) => {
             this.restBackendService
@@ -101,8 +155,9 @@ export class DiaTimelineService {
             });
         });
     }
-    searchedFoodDetails(source_name: string, source_id: number){
-        let url = `${this.backendURL.baseURL}/v1/foods/sources/${source_name}/${source_id}/`;
+
+    searchedFoodDetails(food: InternetFoodList): Observable<InternetFoodDetail> {
+        let url = `${this.backendURL.baseURL}/v1/foods/sources/${food.source_name}/${food.source_id}/`;
         return Observable.create((observer) => {
             this.restBackendService
             .genericGet(url)
@@ -113,7 +168,7 @@ export class DiaTimelineService {
         });
     }
 
-    saveFeeding(foodSelected: object[]):Observable<any> {
+    saveFeeding(foodSelected: FoodSelected[]): Observable<any> {
         let url = `${this.backendURL.baseURL}/v1/instants/feedings/`;
         return Observable.create((observer) => {
             this.restBackendService

@@ -1,0 +1,92 @@
+<ion-card>
+    <ion-card-content>
+      <ion-grid>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label stacked color="primary">Name</ion-label>
+              <ion-input type="text" placeholder="Name of new Food" name="name" [(ngModel)]="templateFood.name" required></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label stacked color="primary">Manufacturer</ion-label>
+              <ion-input type="text" placeholder="Brand or Manufacturer" name="manufacturer" [(ngModel)]="templateFood.manufacturer" required></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col><hr/></ion-col>
+        </ion-row>
+        
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label stacked color="primary">Grams or ml</ion-label>
+              <ion-input type="number" placeholder="Grams or ml" name="g_or_ml" [(ngModel)]="templateFood.g_or_ml" (ionChange)='updateValues()' required></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label stacked color="primary">Carbs<span *ngIf="!!templateFood.g_or_ml"> / {{ templateFood.g_or_ml }}</span></ion-label>
+              <ion-input type="number" placeholder="Grams of Carbs" name="carb_g" [(ngModel)]="templateFood.carb_g" (ionChange)='updateValues()' required></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+    
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label stacked color="primary">Proteins<span *ngIf="!!templateFood.g_or_ml"> / {{ templateFood.g_or_ml }}</span></ion-label>
+              <ion-input type="number" placeholder="Grams of Proteins" name="protein_g" [(ngModel)]="templateFood.protein_g" (ionChange)='updateValues()' required></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label stacked color="primary">Fats<span *ngIf="!!templateFood.g_or_ml"> / {{ templateFood.g_or_ml }}</span></ion-label>
+              <ion-input type="number" placeholder="Grams of Fats" name="fat_g" [(ngModel)]="templateFood.fat_g" (ionChange)='updateValues()' required></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+    
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label stacked color="primary">Fiber<span *ngIf="!!templateFood.g_or_ml"> / {{ templateFood.g_or_ml }}</span></ion-label>
+              <ion-input type="number" placeholder="Grams of Fiber" name="fiber_g" [(ngModel)]="templateFood.fiber_g" (ionChange)='updateValues()' required></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label stacked color="primary">Alcohol<span *ngIf="!!templateFood.g_or_ml"> / {{ templateFood.g_or_ml }}</span></ion-label>
+              <ion-input type="number" placeholder="Grams of Alcohol" name="alcohol_g" [(ngModel)]="templateFood.alcohol_g" (ionChange)='updateValues()' required></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+    
+        <ion-row>
+            
+          <ion-col>
+            <ion-item>
+              <ion-label stacked color="primary">Weight per unit</ion-label>
+              <ion-input type="number" placeholder="For cookies, slices of bread, and so on" name="g_or_ml_per_unit" [(ngModel)]="templateFood.g_or_ml_per_unit" (ionChange)='updateValues()' required></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+    
+        <ion-row> 
+          <ion-col> 
+            <button (click)="dismiss()" ion-button full>{{ "Dismiss" | translate }}</button>
+          </ion-col> 
+    
+          <ion-col> 
+            <button (click)="save()" [disabled]="!valid()" ion-button full>{{ "Save" | translate }}</button>
+          </ion-col> 
+        </ion-row> 
+      
+      </ion-grid>
+      
+    </ion-card-content>
+  </ion-card>
