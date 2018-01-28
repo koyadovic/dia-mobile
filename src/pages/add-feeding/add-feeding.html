@@ -57,9 +57,6 @@
   </ion-toolbar>
   <ion-content>
     <ion-list>
-      <ion-list-header>
-        Food selected
-      </ion-list-header>
 
       <food-selected
         *ngFor="let food of foodSelected" [foodSelected]="food"
@@ -69,6 +66,10 @@
       </food-selected>
 
     </ion-list>
+    
   </ion-content>
+
+  <food-summary (addFeeding)="finishFeeding()" [foodSelected]="foodSelected"></food-summary>
+
 </ion-pullup>
   
