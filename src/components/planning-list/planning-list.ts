@@ -12,4 +12,10 @@ export class PlanningListComponent {
   constructor() {
   }
 
+  local_hour() {
+    let hour = this.planning.local_hour < 10 ? `0${this.planning.local_hour}` : `${this.planning.local_hour}`;
+    let minute = this.planning.local_minute < 10 ? `0${this.planning.local_minute}` : `${this.planning.local_minute}`;
+    return `${hour}:${minute}`;
+  }
+
 }
