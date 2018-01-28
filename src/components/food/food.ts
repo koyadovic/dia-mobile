@@ -36,6 +36,9 @@ export class FoodComponent {
   @Output() foodMessage = new EventEmitter<string>();
   @Output() foodSelection = new EventEmitter<FoodSelected>();
 
+  @Output() selectingFood = new EventEmitter<boolean>();
+  @Output() editingFood = new EventEmitter<boolean>();
+
   editMode:boolean = false;
   selectionMode:boolean = false;
   selectionModeFood: FoodSelected = null;
@@ -61,6 +64,7 @@ export class FoodComponent {
   }
 
   openSelection() {
+    this.selectingFood.emit(true);
     this.selectionModeFood = {
       food: <FoodDetailable>this.food,
       carb_g: 0,
@@ -80,11 +84,13 @@ export class FoodComponent {
       this.foodSelection.emit(foodSelected);
     }
     setTimeout(() => { this.selectionMode = false; this.selectionModeFood = null; }, 100);
+    this.selectingFood.emit(false);
   }
 
   edit(item) {
     // edición del alimento
     item.close();
+    this.editingFood.emit(true);
     setTimeout(() => this.editMode = true, 500);
   }
 
@@ -93,6 +99,7 @@ export class FoodComponent {
     if(save) {
       this.save(null);
     }
+    this.editingFood.emit(false);
   }
 
   delete(item:ItemSliding) {

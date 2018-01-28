@@ -39,6 +39,11 @@ export class AddFeedingPage {
 
   private footerCurrentlyExpanded: boolean = false;
 
+  // this two is to hjide the ribbon for add food.
+  // if selecting or editing, the ribbon must be hide
+  private editingFood: boolean = false;
+  private selectingFood: boolean = false;
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private modalCtrl: ModalController,

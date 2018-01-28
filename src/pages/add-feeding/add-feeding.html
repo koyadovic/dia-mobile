@@ -31,12 +31,13 @@
   <ion-list class="result-food-list">
     <food-component *ngFor="let food of resultFoods"
       (foodSelection)="selectedFood($event)" (foodChanges)="refresh(food)" (foodMessage)="foodActionMessage($event)"
+      (selectingFood)="selectingFood = $event" (editingFood)="editingFood = $event"
       [showCarbs]="true" [showProteins]="true" [showFats]="true" [showKCal]="true"
       [food]="food">
     </food-component>
   </ion-list>
 
-  <ion-fab *ngIf="food_tab == 'recent'" padding-right bottom right [class.fabextramargin]="true">
+  <ion-fab *ngIf="food_tab == 'recent' && !selectingFood && !editingFood" padding-right bottom right [class.fabextramargin]="true">
     <button ion-fab (click)="addFood()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 
@@ -60,7 +61,7 @@
 
       <food-selected
         *ngFor="let food of foodSelected" [foodSelected]="food"
-        (unselectFood)="unselectedFood(food)"
+        (unselectFood)="unselectedFood(food)" (selectingFood)="selectingFood = $event"
         [showCarbs]="true" [showProteins]="true" [showFats]="true" [showKCal]="true"
         (foodUnSelection)="unselectedFood($event)">
       </food-selected>
