@@ -5,10 +5,10 @@ import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
-  selector: 'tab-stats',
-  templateUrl: 'stats.html',
+  selector: 'tab-insights',
+  templateUrl: 'insights.html',
 })
-export class StatsPage {
+export class InsightsPage {
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,

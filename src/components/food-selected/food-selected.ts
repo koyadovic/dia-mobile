@@ -36,6 +36,8 @@ export class FoodSelectedComponent {
   @Output() foodMessage = new EventEmitter<string>();
   @Output() unselectFood = new EventEmitter<any>();
 
+  @Output() selectingFood = new EventEmitter<boolean>();
+
   selectionMode:boolean = false;
   selectionModeFood: FoodSelected = null;
 
@@ -48,6 +50,7 @@ export class FoodSelectedComponent {
   }
 
   openSelection() {
+    this.selectingFood.emit(true);
     this.selectionModeFood = {
       food: <FoodDetailable>this.foodSelected.food,
       carb_g: 0,
@@ -66,6 +69,7 @@ export class FoodSelectedComponent {
       this.foodMessage.emit('Selected food Modified');
     }
     setTimeout(() => { this.selectionMode = false; this.selectionModeFood = null; }, 100);
+    this.selectingFood.emit(false);
   }
 
   // useful for templates. Maybe we can code a pipe for this

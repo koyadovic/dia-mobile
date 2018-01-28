@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TimeLinePage } from '../main-timeline/timeline';
 import { PlanningsPage } from '../main-plannings/plannings';
-import { StatsPage } from '../main-stats/stats';
+import { InsightsPage } from '../main-insights/insights';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { Tabs } from 'ionic-angular/navigation/nav-interfaces';
@@ -23,11 +23,11 @@ export class MainPage {
 
   tab1 = TimeLinePage;
   tab2 = PlanningsPage;
-  tab3 = StatsPage;
+  tab3 = InsightsPage;
 
   timelineTitle = 'Timeline';
   planningsTitle = 'Plannings';
-  statsTitle = 'Stats';
+  insightsTitle = 'Insights';
 
   constructor(private fcm: FCM,
               private platform: Platform,
@@ -42,12 +42,12 @@ export class MainPage {
     forkJoin(
       this.translate.get('Timeline'),
       this.translate.get('Plannings'),
-      this.translate.get('Stats'),
+      this.translate.get('Insights'),
     ).subscribe(
-      ([timeline, plannings, stats]) => {
+      ([timeline, plannings, insights]) => {
         this.timelineTitle = timeline;
         this.planningsTitle = plannings;
-        this.statsTitle = stats;
+        this.insightsTitle = insights;
       }
     );
 

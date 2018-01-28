@@ -10,10 +10,10 @@ import { Feeding } from '../models/feeding-model';
 import { PhysicalActivity } from '../models/physical-activity-model';
 import { InsulinDose } from '../models/insulin-dose-model';
 import { PhysicalTrait } from '../models/physical-trait-model';
-import { TranslateService } from '@ngx-translate/core';
-import { UserConfiguration } from '../utils/user-configuration';
 import { forkJoin } from 'rxjs/observable/forkJoin';
+import { UserConfiguration } from '../utils/user-configuration';
 import { DiaConfigurationService } from './dia-configuration-service';
+import { TranslateService } from '@ngx-translate/core';
 
 import { DiaFood, FoodListable, InternetFoodList, InternetFoodDetail, FoodSelected } from '../models/food-model';
 

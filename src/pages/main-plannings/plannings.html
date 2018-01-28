@@ -9,6 +9,8 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding-top>
+
+  <planning-list *ngFor="let planning of plannings" [planning]="planning"></planning-list>
 
 </ion-content>
