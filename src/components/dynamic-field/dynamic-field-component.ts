@@ -112,7 +112,7 @@ export class DynamicField {
     else if(f.type === 'select') {
       if(!!f.options && f.options.length > 0) {
         let options = f.options.map((x) => x.value);
-        f.valid = f.value in options;
+        f.valid = options.indexOf(f.value) > -1;
       } else {
         f.valid = true;
       }
