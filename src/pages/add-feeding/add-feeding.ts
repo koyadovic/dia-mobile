@@ -77,7 +77,12 @@ export class AddFeedingPage {
   }
 
   private filterFoods(arrayFoods, string) {
-    return arrayFoods.filter(food => food.name.toLowerCase().indexOf(string.toLowerCase()) >= 0);
+    if(string !== undefined) {
+      return arrayFoods.filter(food => food.name.toLowerCase().indexOf(string.toLowerCase()) >= 0);
+    }
+    else {
+      return arrayFoods;
+    }
   }
 
   selectedFood(foodSelected: FoodSelected){
@@ -100,15 +105,15 @@ export class AddFeedingPage {
   onInput(event) {
     let searchString = event.target.value;
     if(this.food_tab === 'recent') {
-      this.recentSearchString = searchString;
+      this.recentSearchString = searchString === undefined ? '' : searchString;
       this.resultFoods = this.filterFoods(this.recentFoods, this.recentSearchString);
     }
     else if(this.food_tab === 'favorite') {
-      this.favoriteSearchString = searchString;
+      this.favoriteSearchString = searchString === undefined ? '' : searchString;
       this.resultFoods = this.filterFoods(this.favoriteFoods, this.favoriteSearchString);
     }
     else {
-      this.internetSearchString = searchString;
+      this.internetSearchString = searchString === undefined ? '' : searchString;
       if (!searchString){
         this.internetFoods = []
         this.resultFoods = this.internetFoods;
@@ -122,6 +127,10 @@ export class AddFeedingPage {
       }
     }
   }
+
+  onCancel($event) {
+  }
+
 
   switchToRecent() {
     this.food_tab = 'recent';
@@ -155,10 +164,6 @@ export class AddFeedingPage {
       this.resultFoods = this.internetFoods;
     }
   }
-
-  onCancel($event) {
-  }
-
 
   addFood(){
     let modal = this.modalCtrl.create(AddFoodPage, {});
