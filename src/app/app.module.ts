@@ -31,7 +31,7 @@ import { MenuPage } from '../pages/main-menu/menu';
 import { MainPage } from '../pages/main/main';
 import { TimeLinePage } from '../pages/main-timeline/timeline';
 import { PlanningsPage } from '../pages/main-plannings/plannings';
-import { StatsPage } from '../pages/main-stats/stats';
+import { InsightsPage } from '../pages/main-insights/insights';
 
 import { ConfigurationPage } from '../pages/configuration/configuration';
 import { LoginPage } from '../pages/login/login';
@@ -63,7 +63,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MainPage,
     TimeLinePage,
     PlanningsPage,
-    StatsPage,
+    InsightsPage,
 
     LoginPage,
 
@@ -104,7 +104,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MainPage,
     TimeLinePage,
     PlanningsPage,
-    StatsPage,
+    InsightsPage,
 
     LoginPage,
 
