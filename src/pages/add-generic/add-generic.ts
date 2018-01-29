@@ -120,6 +120,9 @@ export class AddGenericPage {
       break;
     }
 
+    
+
+
     if(requests.length > 0) {
       forkJoin(...requests).subscribe(
         (resp) => {
