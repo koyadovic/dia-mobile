@@ -7,7 +7,7 @@
       </ion-col>
 
       <ion-col>
-          <ion-toggle float-right [(ngModel)]="planning.enabled"></ion-toggle>
+          <ion-toggle class="plannings-toggle" float-right [(ngModel)]="planning.enabled"></ion-toggle>
           <div float-right>
               <ion-badge color="light" [ngClass]="{ 'enabled': planning.mon}">Mo</ion-badge>
               <ion-badge color="light" [ngClass]="{ 'enabled': planning.tue}">Tu</ion-badge>
