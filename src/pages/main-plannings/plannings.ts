@@ -4,6 +4,8 @@ import { ConfigurationPage } from '../configuration/configuration';
 import { TranslateService } from '@ngx-translate/core';
 import { DiaPlanningsService } from '../../services/dia-plannings-service';
 import { Planning } from '../../models/plannings-model';
+import { ModalController } from 'ionic-angular/components/modal/modal-controller';
+import { PlanningsEditorPage } from '../plannings-editor/plannings-editor';
 
 @Component({
   selector: 'tab-plannings',
@@ -16,8 +18,25 @@ export class PlanningsPage {
   constructor(private navCtrl: NavController,
               private navParams: NavParams,
               private translate: TranslateService,
-              private planningsService: DiaPlanningsService) {
+              private planningsService: DiaPlanningsService,
+              private modalCtrl: ModalController) {
 
+    this.refresh();
+  }
+
+
+  editPlanning(planning){
+    let modal = this.modalCtrl.create(PlanningsEditorPage, {planning: planning});
+
+    modal.onDidDismiss((result) => {
+      if(!!result && 'refresh' in Object.keys(result) && result['refresh']) {
+        this.refresh();
+      }
+    });
+    modal.present();
+  }
+
+  refresh() {
     this.planningsService.getPlannings().subscribe(
       plannings => this.plannings = plannings
     );
