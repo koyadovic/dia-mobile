@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Planning } from '../../models/plannings-model';
 
 
@@ -9,6 +9,12 @@ import { Planning } from '../../models/plannings-model';
 export class PlanningListComponent {
   @Input() planning: Planning;
 
+  @Output() editRequestEvent = new EventEmitter();
+  @Output() deleteRequestEvent = new EventEmitter();
+  @Output() saveRequestEvent = new EventEmitter();
+
+  timerForSaving = null;
+
   constructor() {
   }
 
@@ -18,4 +24,24 @@ export class PlanningListComponent {
     return `${hour}:${minute}`;
   }
 
+  toggleChange(){
+    if(this.timerForSaving !== null) {
+      clearTimeout(this.timerForSaving);
+    }
+    this.timerForSaving = setTimeout(this.save.bind(this), 500);
+  }
+
+  private save() {
+    this.saveRequestEvent.emit();
+  }
+
+  deleteRequest(item) {
+    item.close();
+    this.deleteRequestEvent.emit();
+  }
+
+  editRequest(item) {
+    item.close();
+    this.editRequestEvent.emit();
+  }
 }

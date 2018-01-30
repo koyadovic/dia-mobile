@@ -24,6 +24,15 @@ export class PlanningsPage {
     this.refresh();
   }
 
+  savePlanning(planning) {
+    let req;
+    if(planning.id !== null){
+      req = this.planningsService.modifyPlanning(planning.id, planning);
+    } else {
+      req = this.planningsService.savePlanning(planning);
+    }
+    req.subscribe((resp) => this.refresh, (err) => console.log(err));
+  }
 
   editPlanning(planning){
     let modal = this.modalCtrl.create(PlanningsEditorPage, {planning: planning});
@@ -34,6 +43,17 @@ export class PlanningsPage {
       }
     });
     modal.present();
+  }
+
+  deletePlanning(planning) {
+    this.planningsService.deletePlanning(planning.id).subscribe(
+      (resp) => {
+        this.refresh();
+      },
+      (err) => {
+        console.log(err);
+      }
+    )
   }
 
   refresh() {
