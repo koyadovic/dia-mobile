@@ -1,0 +1,103 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Planning Editor</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="save()">
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid *ngIf="planning">
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label stacked>Name</ion-label>
+          <ion-input type="text" [(ngModel)]="planning.name"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+          <ion-item>
+        <ion-label stacked>Type</ion-label>
+        <ion-select [(ngModel)]="planning.type">
+          <ion-option [value]="'physical_activity'">Physical Activity</ion-option>
+          <ion-option [value]="'insulin_dose'">Insulin Dose</ion-option>
+        </ion-select>
+      </ion-item>
+      </ion-col>
+
+      <ion-col>
+        <button ion-item (click)="definePlanning()">
+          Definition
+        </button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+        <ion-label stacked>Hour</ion-label>
+        <ion-input type="number" max="23" min="0" [(ngModel)]="planning.local_hour" placeholder="Hour"></ion-input>
+      </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+        <ion-label stacked>Minute</ion-label>
+        <ion-input type="number" max="59" min="0" [(ngModel)]="planning.local_minute" placeholder="Minute"></ion-input>
+      </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label stacked>Monday</ion-label>
+          <ion-toggle [(ngModel)]="planning.mon"></ion-toggle>
+        </ion-item>
+          
+        <ion-item>
+          <ion-label stacked>Tuesday</ion-label>
+          <ion-toggle [(ngModel)]="planning.tue"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label stacked>Wednesday</ion-label>
+          <ion-toggle [(ngModel)]="planning.wed"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label stacked>Thursday</ion-label>
+          <ion-toggle [(ngModel)]="planning.thu"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label stacked>Friday</ion-label>
+          <ion-toggle [(ngModel)]="planning.fri"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label stacked>Saturday</ion-label>
+          <ion-toggle [(ngModel)]="planning.sat"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label stacked>Sunday</ion-label> 
+          <ion-toggle [(ngModel)]="planning.sun"></ion-toggle>
+        </ion-item>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

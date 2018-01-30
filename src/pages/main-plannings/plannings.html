@@ -10,7 +10,16 @@
 </ion-header>
 
 <ion-content padding-top>
+  <ion-list>
+    <planning-list
+    (editRequestEvent)="editPlanning(planning)"
+    (deleteRequestEvent)="deletePlanning(planning)"
+    (saveRequestEvent)="savePlanning(planning)"
+    *ngFor="let planning of plannings" [planning]="planning"></planning-list>
+  </ion-list>
 
-  <planning-list *ngFor="let planning of plannings" [planning]="planning"></planning-list>
+  <ion-fab padding-right bottom right #fab>
+    <button ion-fab (click)="editPlanning(null)"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
 
 </ion-content>

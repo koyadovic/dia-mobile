@@ -52,6 +52,12 @@ export class ConfigurationPage {
 
   saveConfig() {
     this.configurationService.saveConfiguration(this.configurationChanges);
+    // in case of language change, restart application
+    // this is because into the main page, tabs labels at the bottom of the page does not refresh its texts
+    // so with this method, we force the reload.
+    if(Object.keys(this.configurationChanges).indexOf('dia_config__language') > -1) {
+      document.location.href = '';
+    }
   }
 
   changeRoot(event) {

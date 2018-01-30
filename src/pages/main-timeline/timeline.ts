@@ -16,6 +16,7 @@ import { DiaAuthService } from '../../services/dia-auth-service';
 
 import * as moment from 'moment-timezone';
 import { forkJoin } from 'rxjs/observable/forkJoin';
+import { DiaRestBackendService } from '../../services/dia-rest-backend-service';
 
 
 @Component({
@@ -38,7 +39,8 @@ export class TimeLinePage {
               private timelineService: DiaTimelineService,
               private modalCtrl: ModalController,
               private authService: DiaAuthService,
-              private translate: TranslateService) {
+              private translate: TranslateService,
+              private restBackendService: DiaRestBackendService) {
 
     this.userConfig = this.configurationService.getUserConfiguration();
 
@@ -282,11 +284,18 @@ export class TimeLinePage {
 
   private openGenericModal(data){
     this.fab.close();
+
     let modal = this.modalCtrl.create(AddGenericPage, {data: data});
 
-    modal.onDidDismiss((data) => {
-      if(!!data && data["add"])
-        this.refreshTimeline();
+    modal.onDidDismiss((requests) => {
+      if(!!requests && requests["requests"] && requests["requests"].length > 0) {
+        let rs = requests["requests"].map(x => this.restBackendService.genericPost(x.url, x.data));
+        forkJoin(...rs).subscribe(
+          (resp) => {
+            this.refreshTimeline();
+          }
+        );
+      }
     });
     modal.present();
   }

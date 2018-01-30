@@ -52,6 +52,7 @@ import { IonPullupModule } from 'ionic-pullup';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { DiaPlanningsService } from '../services/dia-plannings-service';
+import { PlanningsEditorPage } from '../pages/plannings-editor/plannings-editor';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -84,6 +85,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FoodSummaryComponent,
 
     PlanningListComponent,
+    PlanningsEditorPage
   ],
   imports: [
     BrowserModule,
@@ -127,6 +129,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FoodSummaryComponent,
 
     PlanningListComponent,
+    PlanningsEditorPage,
   ],
   providers: [
     FCM,

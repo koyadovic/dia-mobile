@@ -1,18 +1,34 @@
-<button ion-item>
-  <ion-grid item-content>
-    <ion-row>
-        <ion-label class="planning-hour">{{ local_hour() }}</ion-label>
-        <ion-toggle [(ngModel)]="planning.enabled"></ion-toggle>
-    </ion-row>
+<ion-item-sliding #item margin-top>
 
-    <ion-row>
-      <ion-badge color="light" [ngClass]="{ 'enabled': planning.mon}">Mo</ion-badge>
-      <ion-badge color="light" [ngClass]="{ 'enabled': planning.tue}">Tu</ion-badge>
-      <ion-badge color="light" [ngClass]="{ 'enabled': planning.wed}">We</ion-badge>
-      <ion-badge color="light" [ngClass]="{ 'enabled': planning.thu}">Th</ion-badge>
-      <ion-badge color="light" [ngClass]="{ 'enabled': planning.fri}">Fr</ion-badge>
-      <ion-badge color="light" [ngClass]="{ 'enabled': planning.sat}">Sa</ion-badge>
-      <ion-badge color="light" [ngClass]="{ 'enabled': planning.sun}">Su</ion-badge>
-    </ion-row>
-  </ion-grid>
-</button>
+  <button ion-item>
+    <ion-grid item-content>
+      <ion-row>
+        <ion-col col-4>
+            <ion-label class="planning-hour">{{ local_hour() }}</ion-label>
+            <p item-end>{{ planning.name }}</p>
+        </ion-col>
+  
+        <ion-col>
+            <ion-toggle class="plannings-toggle" (ionChange)="toggleChange()"
+              float-right [(ngModel)]="planning.enabled"></ion-toggle>
+
+            <div float-right>
+                <ion-badge color="light" [ngClass]="{ 'enabled': planning.mon}">Mo</ion-badge>
+                <ion-badge color="light" [ngClass]="{ 'enabled': planning.tue}">Tu</ion-badge>
+                <ion-badge color="light" [ngClass]="{ 'enabled': planning.wed}">We</ion-badge>
+                <ion-badge color="light" [ngClass]="{ 'enabled': planning.thu}">Th</ion-badge>
+                <ion-badge color="light" [ngClass]="{ 'enabled': planning.fri}">Fr</ion-badge>
+                <ion-badge color="light" [ngClass]="{ 'enabled': planning.sat}">Sa</ion-badge>
+                <ion-badge color="light" [ngClass]="{ 'enabled': planning.sun}">Su</ion-badge>
+              </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </button>
+  
+  <ion-item-options side="right">
+    <button ion-button color="secondary" (click)="editRequest(item)"><ion-icon name="create"></ion-icon>Edit</button> 
+    <button ion-button color="danger" (click)="deleteRequest(item)"><ion-icon name="trash"></ion-icon>Delete</button> 
+  </ion-item-options>
+  
+</ion-item-sliding>

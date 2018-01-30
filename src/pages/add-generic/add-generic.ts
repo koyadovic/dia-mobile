@@ -115,50 +115,24 @@ export class AddGenericPage {
             data[field['key']] = field['value'];
           }
         }
-        requests.push(this.restBackendService.genericPost(url, data));
+        requests.push({url: url, data: data});
       }
       break;
     }
 
-    if(requests.length > 0) {
-      forkJoin(...requests).subscribe(
-        (resp) => {
-          // all ok, so we complete the operation
-
-          if('url' in action) {
-            let url = action['url'];
-            let data = {};
-            if ('data' in action) {
-              data = action['data'];
-            }
-            this.restBackendService.genericPost(url, data).subscribe(
-              (resp) => {
-                this.viewCtrl.dismiss({"add": true});
-              }
-            )
-          } else {
-            this.viewCtrl.dismiss({"add": true});
-          }
-        },
-        (err) => {
-          console.log(err);
-        },
-      );
-    } else {
-      if('url' in action) {
-        let url = action['url'];
-        let data = {};
-        if ('data' in action) {
-          data = action['data'];
-        }
-        this.restBackendService.genericPost(url, data).subscribe(
-          (resp) => {
-            this.viewCtrl.dismiss({"add": true});
-          }
-        )
-      } else {
-        this.viewCtrl.dismiss({"add": false});
+    if('url' in action) {
+      let url = action['url'];
+      let data = {};
+      if ('data' in action) {
+        data = action['data'];
       }
+      requests.push({url: url, data: data})
+    }
+
+    if (requests.length === 0) {
+      this.viewCtrl.dismiss();
+    } else {
+      this.viewCtrl.dismiss({"requests": requests});
     }
   }
 
