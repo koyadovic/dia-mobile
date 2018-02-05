@@ -1,0 +1,15 @@
+<ng-container [ngSwitch]="chartData['type']">
+
+  <insights-chart-pie *ngSwitchCase="pie" [chartData]="chartData"></insights-chart-pie>
+
+  <insights-chart-lines *ngSwitchCase="lines" [chartData]="chartData"></insights-chart-lines>
+
+  <insights-chart-columns *ngSwitchCase="columns" [chartData]="chartData"></insights-chart-columns>
+
+  <insights-chart-donut *ngSwitchCase="donut" [chartData]="chartData"></insights-chart-donut>
+
+  <insights-chart-table *ngSwitchCase="table" [chartData]="chartData"></insights-chart-table>
+
+  <insights-chart-key-values *ngSwitchCase="key-values" [chartData]="chartData"></insights-chart-key-values>
+
+</ng-container>
