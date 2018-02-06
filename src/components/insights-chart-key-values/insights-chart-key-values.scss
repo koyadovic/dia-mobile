@@ -1,0 +1,21 @@
+.insights-key-value > .header .col {
+    background-color:lightgrey;
+}
+
+.insights-key-value .row:nth-child(odd) {
+    background-color:#f7f7f7;
+}
+
+.insights-key-value .col {
+    border: solid 1px grey;
+    border-bottom-style: none;
+    border-right-style: none;
+}
+
+.insights-key-value .col:last-child {
+    border-right: solid 1px grey;
+}
+
+.insights-key-value .row:last-child .col {
+    border-bottom: solid 1px grey;
+}
