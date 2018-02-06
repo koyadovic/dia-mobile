@@ -1,0 +1,10 @@
+<div class="insights-table" *ngIf="!!keyValuesConcreteData">
+    <div class="row header">
+        <div class="col"*ngFor="let head of keyValuesConcreteData['head']">{{ head }}</div>
+    </div>
+    
+    <div class="row" *ngFor="let element of keyValuesConcreteData['data']">
+        <div class="col">{{ element['label'] }}</div>
+        <div class="col">{{ element['value'] }}</div>
+    </div>
+</div>
