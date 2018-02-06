@@ -6,10 +6,9 @@ import { Component, Input } from '@angular/core';
   templateUrl: 'insights-chart-table.html'
 })
 export class InsightsChartTableComponent {
-  @Input() chartData;
+  @Input() tableConcreteData;
 
-  constructor() {
-  }
+  constructor() {}
 
 
 }

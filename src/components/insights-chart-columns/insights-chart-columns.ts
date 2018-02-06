@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'insights-chart-columns',
@@ -6,9 +7,28 @@ import { Component, Input } from '@angular/core';
 })
 export class InsightsChartColumnsComponent {
 
-  @Input() chartData;
+  @ViewChild('columnsChartCanvas') columnsChartCanvas;
+  columnsChart: any;
 
-  constructor() {
+  @Input() columnsConcreteData = null;
+
+  constructor() {}
+
+  ngOnChanges(changes) {
+    if('columnsConcreteData' in changes && !!this.columnsConcreteData) {
+
+      let chartData = {
+        type: 'bar',
+        data: {
+          labels: this.columnsConcreteData["labels"],
+          datasets: this.columnsConcreteData["datasets"].map((x) => { return {data: x['data'], label: x['label']} })
+        },
+        options: {
+          responsive: false
+        }
+      };
+
+      this.columnsChart = new Chart(this.columnsChartCanvas.nativeElement, chartData);
+    }
   }
-
 }

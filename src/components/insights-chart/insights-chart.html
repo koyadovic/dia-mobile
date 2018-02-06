@@ -1,15 +1,37 @@
-<ng-container [ngSwitch]="chartData['type']">
 
-  <insights-chart-pie *ngSwitchCase="pie" [chartData]="chartData"></insights-chart-pie>
+<ion-card *ngIf="show">
+  <ion-card-header text-center>
+    {{ chartData['name'] }}
+  </ion-card-header>
 
-  <insights-chart-lines *ngSwitchCase="lines" [chartData]="chartData"></insights-chart-lines>
+  <ion-card-content>
 
-  <insights-chart-columns *ngSwitchCase="columns" [chartData]="chartData"></insights-chart-columns>
+    <insights-chart-pie *ngIf="!!pieConcreteData" [pieConcreteData]="pieConcreteData"></insights-chart-pie>
+  
+    <insights-chart-lines *ngIf="!!linesConcreteData" [linesConcreteData]="linesConcreteData"></insights-chart-lines>
+  
+    <insights-chart-columns *ngIf="!!columnsConcreteData" [columnsConcreteData]="columnsConcreteData"></insights-chart-columns>
+  
+    <insights-chart-donut *ngIf="!!donutConcreteData" [donutConcreteData]="donutConcreteData"></insights-chart-donut>
+  
+    <insights-chart-table *ngIf="!!tableConcreteData" [tableConcreteData]="tableConcreteData"></insights-chart-table>
+  
+    <insights-chart-key-values *ngIf="!!keyValuesConcreteData" [keyValuesConcreteData]="keyValuesConcreteData"></insights-chart-key-values>
+    
+  </ion-card-content>
+</ion-card>
 
-  <insights-chart-donut *ngSwitchCase="donut" [chartData]="chartData"></insights-chart-donut>
+<!-- 
+<div *ngIf="show">
+  <h3 text-center>
+    {{ chartData['name'] }}
+  </h3>
 
-  <insights-chart-table *ngSwitchCase="table" [chartData]="chartData"></insights-chart-table>
-
-  <insights-chart-key-values *ngSwitchCase="key-values" [chartData]="chartData"></insights-chart-key-values>
-
-</ng-container>
+  <insights-chart-pie *ngIf="!!pieConcreteData" [pieConcreteData]="pieConcreteData"></insights-chart-pie>
+  <insights-chart-lines *ngIf="!!linesConcreteData" [linesConcreteData]="linesConcreteData"></insights-chart-lines>
+  <insights-chart-columns *ngIf="!!columnsConcreteData" [columnsConcreteData]="columnsConcreteData"></insights-chart-columns>
+  <insights-chart-donut *ngIf="!!donutConcreteData" [donutConcreteData]="donutConcreteData"></insights-chart-donut>
+  <insights-chart-table *ngIf="!!tableConcreteData" [tableConcreteData]="tableConcreteData"></insights-chart-table>
+  <insights-chart-key-values *ngIf="!!keyValuesConcreteData" [keyValuesConcreteData]="keyValuesConcreteData"></insights-chart-key-values>
+</div>
+-->

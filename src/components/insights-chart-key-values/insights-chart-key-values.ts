@@ -7,10 +7,9 @@ import { Component, Input } from '@angular/core';
 })
 export class InsightsChartKeyValuesComponent {
 
-  @Input() chartData;
+  @Input() keyValuesConcreteData;
 
-  constructor() {
-  }
+  constructor() {}
 
 
 }

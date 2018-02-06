@@ -1,3 +1,17 @@
-insights-chart-table {
+.insights-table > .header .col {
+    background-color:lightgrey;
+}
 
+.insights-table .col {
+    border: solid 1px grey;
+    border-bottom-style: none;
+    border-right-style: none;
+}
+
+.insights-table .col:last-child {
+    border-right: solid 1px grey;
+}
+
+.insights-table .row:last-child .col {
+    border-bottom: solid 1px grey;
 }

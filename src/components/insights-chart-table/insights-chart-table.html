@@ -1,4 +1,11 @@
-<!-- Generated template for the InsightsChartTableComponent component -->
-<div>
-  {{text}}
+<div class="insights-table">
+  <div class="row header">
+    <div class="col"></div>
+    <div class="col"*ngFor="let hlabel of tableConcreteData['labels']">{{ hlabel }}</div>
+  </div>
+
+  <div class="row" *ngFor="let dataset of tableConcreteData['datasets']">
+    <div class="col">{{ dataset['label'] }}</div>
+    <div class="col" *ngFor="let data of dataset['data']">{{ data }}</div>
+  </div>
 </div>

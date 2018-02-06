@@ -8,23 +8,21 @@ import { DiaInsightsService } from '../../services/dia-insights-service';
 export class InsightsChartComponent {
 
   @Input() chartData;
-  /*
-    {
-      "name": "General View Columns",
-      "url": "http://api-test.diamobile.com/v1/insights/general/view-columns/"
-    }
-  */
   @Input() show: boolean = false;
   @Input() loadDelayInSeconds: number = 1;
 
-  chartConcreteData;
+  private pieConcreteData = null;
+  private linesConcreteData = null;
+  private columnsConcreteData = null;
+  private donutConcreteData = null;
+  private tableConcreteData = null;
+  private keyValuesConcreteData = null;
 
   constructor(private insightsService: DiaInsightsService) {
   }
 
   ngOnChanges(changes) {
     if("chartData" in changes) {
-      console.log("sleeping " + this.loadDelayInSeconds);
       setTimeout(this.loadChartData.bind(this), this.loadDelayInSeconds * 1000);
     }
   }
@@ -33,8 +31,26 @@ export class InsightsChartComponent {
     if (!!this.chartData && this.chartData['url']) {
       this.insightsService.getConcreteInsight(this.chartData['url']).subscribe(
         (resp) => {
-          console.log(JSON.stringify(resp));
-          this.chartConcreteData = resp;
+          switch(resp['type']){
+            case 'pie':
+            this.pieConcreteData = resp;
+            break;
+            case 'lines':
+            this.linesConcreteData = resp;
+            break;
+            case 'columns':
+            this.columnsConcreteData = resp;
+            break;
+            case 'donut':
+            this.donutConcreteData = resp;
+            break;
+            case 'table':
+            this.tableConcreteData = resp;
+            break;
+            case 'key-values':
+            this.keyValuesConcreteData = resp;
+            break;
+          }
         },
         (err) => {
           console.log(err);

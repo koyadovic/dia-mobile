@@ -1,27 +1,23 @@
 <ion-header>
+  <ion-navbar>
+
+    <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
+
+    <ion-title>
+      {{ 'Insights' | translate }}
+    </ion-title>
+  </ion-navbar>
+  
 </ion-header>
 
+<ion-content>
+  <ion-segment [(ngModel)]="activeInsightSegment" color="primary">
+    <ion-segment-button *ngFor="let segment of insightsData" value="{{ segment['title'] }}" (ionSelect)="tabChanged(segment)">
+      {{ segment['title'] }}
+    </ion-segment-button>
+  </ion-segment>
 
-<ion-header>
-    <ion-navbar>
-
-      <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
-  
-      <ion-title>
-        {{ 'Insights' | translate }}
-      </ion-title>
-    </ion-navbar>
-    
-    <ion-segment [(ngModel)]="activeInsightSegment" color="primary">
-      <ion-segment-button *ngFor="let segment of insightsData" value="{{ segment['title'] }}" (ionSelect)="tabChanged(segment)">
-        {{ segment['title'] }}
-      </ion-segment-button>
-    </ion-segment>
-  </ion-header>
-
-<ion-content padding>
-
-  <ng-container *ngFor="let segment of insightsData">
+  <ng-container *ngFor="let segment of insightsData" padding>
 
     <insights-chart
         *ngFor="let insightData of segment['insights']; let i = index"
