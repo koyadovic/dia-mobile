@@ -13,10 +13,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 // components
-import { DynamicField } from '../components/dynamic-field/dynamic-field-component';
-import { DynamicRoot } from '../components/dynamic-root/dynamic-root-component';
-import { DiaInstantCard } from '../components/instant-card/instant-card-component';
-import { FoodComponent } from '../components/food/food';
+import { ComponentsModule } from '../components/components.module';
 
 // services
 import { DiaRestBackendService } from '../services/dia-rest-backend-service';
@@ -41,18 +38,13 @@ import { AddGenericPage } from '../pages/add-generic/add-generic';
 import { AddFeedingPage } from '../pages/add-feeding/add-feeding';
 import { AddFoodPage } from '../pages/add-feeding-search-food-add-food/add-food';
 
-import { FoodEditorComponent } from '../components/food-editor/food-editor';
-import { FoodSelectionComponent } from '../components/food-selection/food-selection';
-import { FoodSelectedComponent } from '../components/food-selected/food-selected';
-import { FoodSummaryComponent } from '../components/food-summary/food-summary';
-
-import { PlanningListComponent } from '../components/planning-list/planning-list';
 
 import { IonPullupModule } from 'ionic-pullup';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { DiaPlanningsService } from '../services/dia-plannings-service';
 import { PlanningsEditorPage } from '../pages/plannings-editor/plannings-editor';
+import { DiaInsightsService } from '../services/dia-insights-service';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -75,16 +67,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     AddFoodPage,
     AddFeedingPage,
 
-    DynamicField,
-    DynamicRoot,
-    DiaInstantCard,
-    FoodComponent,
-    FoodEditorComponent,
-    FoodSelectionComponent,
-    FoodSelectedComponent,
-    FoodSummaryComponent,
-
-    PlanningListComponent,
     PlanningsEditorPage
   ],
   imports: [
@@ -101,6 +83,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     }),
     IonPullupModule,
+    ComponentsModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -119,16 +102,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     AddGenericPage,
     AddFoodPage,
 
-    DynamicField,
-    DynamicRoot,
-    DiaInstantCard,
-    FoodComponent,
-    FoodEditorComponent,
-    FoodSelectionComponent,
-    FoodSelectedComponent,
-    FoodSummaryComponent,
-
-    PlanningListComponent,
     PlanningsEditorPage,
   ],
   providers: [
@@ -144,6 +117,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DiaConfigurationService,
     DiaTimelineService,
     DiaPlanningsService,
+    DiaInsightsService,
   ]
 })
 export class AppModule {}

@@ -7,10 +7,25 @@
       {{ 'Insights' | translate }}
     </ion-title>
   </ion-navbar>
+  
 </ion-header>
 
+<ion-content>
+  <ion-segment [(ngModel)]="activeInsightSegment" color="primary">
+    <ion-segment-button *ngFor="let segment of insightsData" value="{{ segment['title'] }}" (ionSelect)="tabChanged(segment)">
+      {{ segment['title'] }}
+    </ion-segment-button>
+  </ion-segment>
 
+  <ng-container *ngFor="let segment of insightsData" padding>
 
-<ion-content padding>
+    <insights-chart
+        *ngFor="let insightData of segment['insights']; let i = index"
+        [chartData]="insightData"
+        [show]="activeInsightSegment === segment['title']"
+        [loadDelayInSeconds]="i">
+      </insights-chart>
+
+  </ng-container>
 
 </ion-content>

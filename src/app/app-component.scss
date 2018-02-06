@@ -20,3 +20,13 @@
     border-bottom-color: transparent !important;
     box-shadow: none !important;
 }
+
+
+.toolbar-background {
+    background-color: map-get($colors, primary);
+}
+
+.toolbar-title { color: map-get($colors, light); }
+
+
+.bar-buttons { color: map-get($colors, light); }
