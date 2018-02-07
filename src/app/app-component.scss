@@ -30,3 +30,9 @@
 
 
 .bar-buttons { color: map-get($colors, light); }
+
+
+.bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default {
+    color: map-get($colors, light);
+    background-color: transparent;
+}
