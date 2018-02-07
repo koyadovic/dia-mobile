@@ -6,32 +6,35 @@
 
   <ion-card-content>
 
-    <insights-chart-pie *ngIf="!!pieConcreteData" [pieConcreteData]="pieConcreteData"></insights-chart-pie>
+    <insights-chart-pie
+      *ngIf="!!concreteChartData && concreteChartData['type'] === 'pie'"
+      [pieConcreteData]="concreteChartData">
+    </insights-chart-pie>
   
-    <insights-chart-lines *ngIf="!!linesConcreteData" [linesConcreteData]="linesConcreteData"></insights-chart-lines>
+    <insights-chart-lines
+      *ngIf="!!concreteChartData && concreteChartData['type'] === 'lines'"
+      [linesConcreteData]="concreteChartData">
+    </insights-chart-lines>
   
-    <insights-chart-columns *ngIf="!!columnsConcreteData" [columnsConcreteData]="columnsConcreteData"></insights-chart-columns>
+    <insights-chart-columns
+      *ngIf="!!concreteChartData && concreteChartData['type'] === 'columns'"
+      [columnsConcreteData]="concreteChartData">
+    </insights-chart-columns>
   
-    <insights-chart-donut *ngIf="!!donutConcreteData" [donutConcreteData]="donutConcreteData"></insights-chart-donut>
+    <insights-chart-donut
+      *ngIf="!!concreteChartData && concreteChartData['type'] === 'donut'"
+      [donutConcreteData]="concreteChartData">
+    </insights-chart-donut>
   
-    <insights-chart-table *ngIf="!!tableConcreteData" [tableConcreteData]="tableConcreteData"></insights-chart-table>
+    <insights-chart-table
+      *ngIf="!!concreteChartData && concreteChartData['type'] === 'table'"
+      [tableConcreteData]="concreteChartData">
+    </insights-chart-table>
   
-    <insights-chart-key-values *ngIf="!!keyValuesConcreteData" [keyValuesConcreteData]="keyValuesConcreteData"></insights-chart-key-values>
+    <insights-chart-key-values
+      *ngIf="!!concreteChartData && concreteChartData['type'] === 'key-values'"
+      [keyValuesConcreteData]="concreteChartData">
+    </insights-chart-key-values>
     
   </ion-card-content>
 </ion-card>
-
-<!-- 
-<div *ngIf="show">
-  <h3 text-center>
-    {{ chartData['name'] }}
-  </h3>
-
-  <insights-chart-pie *ngIf="!!pieConcreteData" [pieConcreteData]="pieConcreteData"></insights-chart-pie>
-  <insights-chart-lines *ngIf="!!linesConcreteData" [linesConcreteData]="linesConcreteData"></insights-chart-lines>
-  <insights-chart-columns *ngIf="!!columnsConcreteData" [columnsConcreteData]="columnsConcreteData"></insights-chart-columns>
-  <insights-chart-donut *ngIf="!!donutConcreteData" [donutConcreteData]="donutConcreteData"></insights-chart-donut>
-  <insights-chart-table *ngIf="!!tableConcreteData" [tableConcreteData]="tableConcreteData"></insights-chart-table>
-  <insights-chart-key-values *ngIf="!!keyValuesConcreteData" [keyValuesConcreteData]="keyValuesConcreteData"></insights-chart-key-values>
-</div>
--->
