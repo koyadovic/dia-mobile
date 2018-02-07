@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ConfigurationPage } from '../configuration/configuration';
 import { TranslateService } from '@ngx-translate/core';
 import { DiaInsightsService } from '../../services/dia-insights-service';
+import { Content } from 'ionic-angular';
 
 
 @Component({
@@ -10,6 +11,8 @@ import { DiaInsightsService } from '../../services/dia-insights-service';
   templateUrl: 'insights.html',
 })
 export class InsightsPage {
+  @ViewChild(Content) content: Content;
+
   insightsData = []
   activeInsightSegment:string = '';
   activeInsightSegmentChartData: any[] = [];
@@ -28,6 +31,10 @@ export class InsightsPage {
         }
       }
     )
+  }
+
+  resize() {
+    this.content.resize();
   }
 
   tabChanged(segment){
