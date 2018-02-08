@@ -1,25 +1,31 @@
-<ion-item-sliding #item margin-top>
-
+<ion-item-sliding #item>
   <button ion-item>
     <ion-grid item-content>
       <ion-row>
-        <ion-col col-4>
+        <ion-col col-6>
             <ion-label class="planning-hour">{{ local_hour() }}</ion-label>
-            <p item-end>{{ planning.name }}</p>
         </ion-col>
-  
-        <ion-col>
-            <ion-toggle class="plannings-toggle" (ionChange)="toggleChange()"
-              float-right [(ngModel)]="planning.enabled"></ion-toggle>
 
-            <div float-right>
-                <ion-badge color="light" [ngClass]="{ 'enabled': planning.mon}">Mo</ion-badge>
-                <ion-badge color="light" [ngClass]="{ 'enabled': planning.tue}">Tu</ion-badge>
-                <ion-badge color="light" [ngClass]="{ 'enabled': planning.wed}">We</ion-badge>
-                <ion-badge color="light" [ngClass]="{ 'enabled': planning.thu}">Th</ion-badge>
-                <ion-badge color="light" [ngClass]="{ 'enabled': planning.fri}">Fr</ion-badge>
-                <ion-badge color="light" [ngClass]="{ 'enabled': planning.sat}">Sa</ion-badge>
-                <ion-badge color="light" [ngClass]="{ 'enabled': planning.sun}">Su</ion-badge>
+        <ion-col col-6>
+          <ion-toggle class="plannings-toggle" (ionChange)="toggleChange()"
+          float-right  [(ngModel)]="planning.enabled"></ion-toggle>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col col-4>
+            <p class="planning-name" item-end>{{ planning.name }}</p>
+        </ion-col>
+
+        <ion-col>
+            <div class="weekdays-container">
+                <ion-badge color="light" class="badge-weekday" [ngClass]="{ 'enabled': planning.mon}">Mo</ion-badge>
+                <ion-badge color="light" class="badge-weekday" [ngClass]="{ 'enabled': planning.tue}">Tu</ion-badge>
+                <ion-badge color="light" class="badge-weekday" [ngClass]="{ 'enabled': planning.wed}">We</ion-badge>
+                <ion-badge color="light" class="badge-weekday" [ngClass]="{ 'enabled': planning.thu}">Th</ion-badge>
+                <ion-badge color="light" class="badge-weekday" [ngClass]="{ 'enabled': planning.fri}">Fr</ion-badge>
+                <ion-badge color="light" class="badge-weekday" [ngClass]="{ 'enabled': planning.sat}">Sa</ion-badge>
+                <ion-badge color="light" class="badge-weekday" [ngClass]="{ 'enabled': planning.sun}">Su</ion-badge>
               </div>
         </ion-col>
       </ion-row>

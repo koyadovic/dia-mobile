@@ -27,12 +27,12 @@ export class InsightsChartColumnsComponent {
                 data: x['data'],
                 label: x['label'],
                 backgroundColor: [
-                  'rgba(102,211,255,0.2)',
-                  'rgba(255,102,211,0.2)',
-                  'rgba(211,255,102,0.2)',
-                  'rgba(102,135,255,0.2)',
-                  'rgba(255,102,135,0.2)',
-                  'rgba(135,255,102,0.2)'
+                  'rgba(102,211,255,0.8)',
+                  'rgba(255,102,211,0.8)',
+                  'rgba(211,255,102,0.8)',
+                  'rgba(102,135,255,0.8)',
+                  'rgba(255,102,135,0.8)',
+                  'rgba(135,255,102,0.8)'
                 ],
                 borderColor: [
                   'rgba(102,211,255,1)',

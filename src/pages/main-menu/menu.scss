@@ -9,5 +9,5 @@ page-menu {
 }
 
 button.selected {
-    color: #7eadff;
+    color: map-get($colors, primary);;
 }
