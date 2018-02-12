@@ -1,5 +1,6 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
+import { InsightsChartComponent } from '../insights-chart/insights-chart';
 
 @Component({
   selector: 'insights-chart-lines',
@@ -20,25 +21,18 @@ export class InsightsChartLinesComponent {
         type: 'line',
         data: {
           labels: this.linesConcreteData["labels"],
-          datasets: this.linesConcreteData["datasets"].map((x) => { return {data: x['data'], label: x['label'],
-          backgroundColor: [
-            'rgba(102,211,255,0.8)',
-            'rgba(255,102,211,0.8)',
-            'rgba(211,255,102,0.8)',
-            'rgba(102,135,255,0.8)',
-            'rgba(255,102,135,0.8)',
-            'rgba(135,255,102,0.8)'
-          ],
-          borderColor: [
-            'rgba(102,211,255,1)',
-            'rgba(255,102,211,1)',
-            'rgba(211,255,102,1)',
-            'rgba(102,135,255,1)',
-            'rgba(255,102,135,1)',
-            'rgba(135,255,102,1)'
-          ],
-          borderWidth: 1
-        } })
+          datasets: this.linesConcreteData["datasets"].map((x) => {
+            let color = InsightsChartComponent.getCurrentColor('0.8');
+            let bgColor = InsightsChartComponent.getCurrentColor('0.2');
+            InsightsChartComponent.increaseCurrentColor();
+            return {
+              data: x['data'],
+              label: x['label'],
+              backgroundColor: bgColor,
+              borderColor: color,
+              borderWidth: 2,
+            }
+          })
         },
         options: {
           responsive: false,

@@ -39,4 +39,24 @@ export class InsightsChartComponent {
     }
   }
 
+  private static currentColor = 0;
+  private static availableColors = [
+    'rgba(102,211,255,',
+    'rgba(255,102,211,',
+    'rgba(211,255,102,',
+    'rgba(102,135,255,',
+    'rgba(255,102,135,',
+    'rgba(135,255,102,'
+  ]
+  public static getCurrentColor(alpha:string) {
+    return InsightsChartComponent.availableColors[InsightsChartComponent.currentColor] + alpha + ')';
+  }
+
+  public static increaseCurrentColor() {
+    if (InsightsChartComponent.currentColor >= InsightsChartComponent.availableColors.length - 1) {
+      InsightsChartComponent.currentColor = 0;
+    } else {
+      InsightsChartComponent.currentColor ++;
+    }
+  }
 }

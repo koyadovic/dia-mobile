@@ -1,5 +1,6 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js';
+import { InsightsChartComponent } from '../insights-chart/insights-chart';
 
 @Component({
   selector: 'insights-chart-donut',
@@ -15,30 +16,30 @@ export class InsightsChartDonutComponent {
 
   ngOnChanges(changes) {
     if('donutConcreteData' in changes && !!this.donutConcreteData) {
+      let bgColors = [];
+      let colors = [];
+
+      for (let n = 0; n < this.donutConcreteData["datasets"].length; n ++) {
+        for(let j = 0; j < this.donutConcreteData["datasets"][n]["data"].length; j ++) {
+          bgColors.push(InsightsChartComponent.getCurrentColor('0.5'));
+          colors.push(InsightsChartComponent.getCurrentColor('0.8'));
+          InsightsChartComponent.increaseCurrentColor();
+        }
+      }
 
       let chartData = {
         type: 'doughnut',
         data: {
           labels: this.donutConcreteData["labels"],
-          datasets: this.donutConcreteData["datasets"].map((x) => { return {data: x['data'], label: x['label'],
-          backgroundColor: [
-            'rgba(102,211,255,0.8)',
-            'rgba(255,102,211,0.8)',
-            'rgba(211,255,102,0.8)',
-            'rgba(102,135,255,0.8)',
-            'rgba(255,102,135,0.8)',
-            'rgba(135,255,102,0.8)'
-          ],
-          borderColor: [
-            'rgba(102,211,255,1)',
-            'rgba(255,102,211,1)',
-            'rgba(211,255,102,1)',
-            'rgba(102,135,255,1)',
-            'rgba(255,102,135,1)',
-            'rgba(135,255,102,1)'
-          ],
-          borderWidth: 1
-        } })
+          datasets: this.donutConcreteData["datasets"].map((x) => {
+            return {
+              data: x['data'],
+              label: x['label'],
+              backgroundColor: bgColors,
+              borderColor: colors,
+              borderWidth: 2
+            }
+          })
         },
         options: {
           responsive: false
