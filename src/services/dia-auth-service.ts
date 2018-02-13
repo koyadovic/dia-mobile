@@ -50,6 +50,10 @@ export class DiaAuthService {
     }
 
     logout(){
+        setTimeout(() => {
+            document.location.href = '';
+        }, 400);
+
         this.storage.set("token", "");
         this.storage.set("email", "");
         this.token = '';
