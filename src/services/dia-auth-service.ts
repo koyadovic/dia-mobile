@@ -3,7 +3,6 @@ import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs';
 import { DiaBackendURL } from './dia-backend-urls';
-import { observeOn } from 'rxjs/operator/observeOn';
 import { HttpClient } from '@angular/common/http';
 
 
