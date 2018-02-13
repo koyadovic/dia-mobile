@@ -9,5 +9,10 @@ page-menu {
 }
 
 button.selected {
-    color: map-get($colors, primary);;
+    color: map-get($colors, primary);
+}
+
+.profile-container {
+    background-color: map-get($colors, light);
+    padding-bottom: 20px;
 }

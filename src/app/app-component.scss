@@ -36,3 +36,28 @@
     color: map-get($colors, light);
     background-color: transparent;
 }
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus
+input:-webkit-autofill, 
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px map-get($colors, light) inset;
+}
+
+
+/* Segments for insights and feedings page */
+.segment-button.segment-activated {
+    border-color: #999 !important;
+}
+
+
+.segment-button {
+    color: #222 !important;
+}
