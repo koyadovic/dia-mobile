@@ -5,8 +5,16 @@ ion-icon.password-icon {
 }
 
 .root-container {
-    background-color: color($colors, primary);
+    background-color: color($colors, primary-light);
 }
+
+.img-logo {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+}
+
 
 .login-container {
     visibility: hidden;
@@ -39,17 +47,18 @@ ion-icon.password-icon {
   .login-input {
 
     //background-color: transparentize(map-get($colors, primary), 0.5);
+    background-color: map-get($colors, primary-dark);
     border: 0;
-    outline: 0;
-    box-shadow: 0;
+    outline: 2;
+    box-shadow: 2;
     padding: 0.75em;
     width: 100%;
-    border-radius: 3px;
+    border-radius: 4px;
   }
   
   .z-label {
-    color: white;
-    font-size: 0.95em;
+    //color: white;
+    font-size: 0.90em;
     text-transform: uppercase;
     font-weight: 700;
     margin-bottom: 3px;
@@ -57,7 +66,7 @@ ion-icon.password-icon {
   
   .login-button {
     margin-top: 40px;
-    background-color: white;
-    color: color($colors, dark);
+    //background-color: white;
+    //color: color($colors, dark);
   }
   

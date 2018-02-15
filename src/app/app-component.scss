@@ -48,8 +48,8 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0px 1000px map-get($colors, light) inset;
-  -webkit-text-fill-color: map-get($colors, dark);
+  -webkit-box-shadow: 0 0 0px 1000px map-get($colors, primary-dark) inset;
+  -webkit-text-fill-color: map-get($colors, light);
 }
 
 
