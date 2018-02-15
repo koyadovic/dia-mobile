@@ -4,15 +4,29 @@
 
 .label {
     margin: 0;
-
 }
 
-.time-passed {
+p.time-passed {
     text-align: right;
+    color: map-get($colors, grey);
 }
 
 .grid {
     padding: 0;
+}
+
+h2.instant-card-title {
+//    font-size: 1.3em;
+//    font-weight: 100;
+}
+
+p.instant-card-subtitle{
+    color: map-get($colors, primary-dark);
+    //font-weight: 800;
+}
+
+ion-icon.instant-card-icon {
+    color: map-get($colors, primary);
 }
 
 

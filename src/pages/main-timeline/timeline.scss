@@ -11,3 +11,12 @@
     height: 2em;
     background: #fff;
 }
+
+.instants-list {
+    .item {
+        padding-top: 0px;
+    }
+    .instant-date-info {
+        color: map-get($colors, grey);
+    }
+}

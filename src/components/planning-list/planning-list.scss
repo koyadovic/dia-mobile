@@ -1,11 +1,10 @@
 ion-badge.enabled {
-    color: #488aff !important;
+    color: map-get($colors, primary-dark) !important;
 }
 
 ion-label.planning-hour {
     font-weight: 100;
     font-size: 1.5em;
-
 }
 
 
@@ -14,7 +13,7 @@ ion-toggle.plannings-toggle {
 }
 
 .badge-weekday {
-    font-size: 0.7em;
+    font-size: 0.6em;
     padding: 3px 5px;
 }
 
@@ -27,6 +26,7 @@ ion-toggle.plannings-toggle {
     display: block;
     height: 100%;
     vertical-align: middle;
+    color: map-get($colors, primary-dark);
 }
 
 .item-md {

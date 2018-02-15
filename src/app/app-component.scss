@@ -55,10 +55,10 @@ select:-webkit-autofill:focus {
 
 /* Segments for insights and feedings page */
 .segment-button.segment-activated {
-    border-color: #999 !important;
+    border-color: map-get($colors, primary-dark) !important;
 }
 
 
 .segment-button {
-    color: #222 !important;
+    color: map-get($colors, primary-dark) !important;
 }

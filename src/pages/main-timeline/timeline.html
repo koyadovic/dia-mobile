@@ -14,10 +14,10 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <ion-list>
+  <ion-list class="instants-list">
     <ng-container *ngFor="let instant of timeline; let i = index">
 
-      <ion-list-header text-right padding-right *ngIf="!!dateInfo(i)">{{ dateInfo(i) }}
+      <ion-list-header class="instant-date-info" text-right padding-right *ngIf="!!dateInfo(i)">{{ dateInfo(i) }}
       </ion-list-header>
 
       <instant-card
