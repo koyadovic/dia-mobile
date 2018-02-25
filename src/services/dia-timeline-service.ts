@@ -465,7 +465,7 @@ export class DiaTimelineService {
                   "namespace_key": "value"
                 },
               ]
-          });      
+          });
     }
 
     buildElementFields() {

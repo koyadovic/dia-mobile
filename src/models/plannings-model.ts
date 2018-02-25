@@ -3,7 +3,7 @@ export enum PLANNING_TYPES {
     //PHYSICAL_TRAIT_CHANGE = 'physical_trait',
     //FEEDING = 'feeding',
     //GLUCOSE = 'glucose',
-    INSULIN_DOSE = 'insulin_dose',
+    MEDICATION_TAKE = 'medication_take',
 }
 
 export interface Planning {
