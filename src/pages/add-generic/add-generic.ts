@@ -35,8 +35,8 @@ export class AddGenericPage {
             computed_field["disabled"] = element["fields"][field]["disabled"];
           }
         }
-        element["computed_fields"] = computed_fields;
       }
+      element["computed_fields"] = computed_fields;
     });
   }
 
