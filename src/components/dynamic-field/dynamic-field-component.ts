@@ -122,7 +122,7 @@ export class DynamicField {
     else if(f.type === 'select' || f.type === 'radio') {
       if(!!f.options && f.options.length > 0) {
         let options = f.options.map((x) => '' + x.value);
-        f.valid = options.indexOf(f.value) > -1;
+        f.valid = options.indexOf('' + f.value) > -1;
       } else {
         f.valid = true;
       }
