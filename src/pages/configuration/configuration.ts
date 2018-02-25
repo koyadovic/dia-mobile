@@ -63,6 +63,4 @@ export class ConfigurationPage {
   changeRoot(event) {
     this.configurationPointer.push(event);
   }
-
-
 }

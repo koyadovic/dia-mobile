@@ -1,6 +1,4 @@
-<ng-container *ngIf="field">
-
-  <ion-item *ngIf="field.type != 'radio'">
+<ion-item *ngIf="field && field.type != 'radio'">
     <ion-label *ngIf="field.display" stacked class="title-label" color="primary">{{ field.display }}</ion-label>
 
     <ion-input
@@ -33,19 +31,15 @@
       </ion-option>
   
     </ion-select>
-  
-  </ion-item>
-  
-  <ion-list
-    *ngIf="field.type == 'radio'" radio-group
-    [disabled]="field.disabled !== undefined && field.disabled"
-    [(ngModel)]="field.value">
-  
-    <ion-item *ngFor="let option of field.options">
-      <ion-label>{{ option.display }}</ion-label>
-      <ion-radio value="{{ option.value }}" (ionSelect)="emitHaveChanges()" checked></ion-radio>
-    </ion-item>
-  </ion-list>
-  
-</ng-container>
 
+</ion-item>
+
+<div *ngIf="field && field.type == 'radio'" radio-group
+  [disabled]="field.disabled !== undefined && field.disabled"
+  [(ngModel)]="field.value">
+
+  <ion-item *ngFor="let option of field.options">
+    <ion-label>{{ option.display }}</ion-label>
+    <ion-radio value="{{ option.value }}" (ionSelect)="emitHaveChanges()" checked></ion-radio>
+  </ion-item>
+</div>

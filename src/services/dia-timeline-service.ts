@@ -321,7 +321,7 @@ export class DiaTimelineService {
                     "value": 1,
                     "required": true,
                     "hint": "",
-                    "type": "select",
+                    "type": "radio",
                     "regex": "",
                     "key": "intensity",
                     "options": [
@@ -334,7 +334,7 @@ export class DiaTimelineService {
                 },
                 {
                     "display": minutes,
-                    "value": 0,
+                    "value": "",
                     "required": true,
                     "hint": numberMinutes,
                     "type": "number",
@@ -433,15 +433,15 @@ export class DiaTimelineService {
                   "conditional": {},
                   "required": true,
                   "hint": type,
-                  "type": "select",
+                  "type": "radio",
                   "regex": "^.*$",
                   "key": "trait_type",
                   "options": [
-                    { "display": height, "value": 2 },
-                    { "display": weight, "value": 3 },
-                    { "display": neck, "value": 4 },
-                    { "display": abdomen, "value": 5 },
-                    { "display": waist, "value": 6 },
+                    { "display": height, "value": "2" },
+                    { "display": weight, "value": "3" },
+                    { "display": neck, "value": "4" },
+                    { "display": abdomen, "value": "5" },
+                    { "display": waist, "value": "6" },
                   ],
                   "namespace_key": "trait_type"
                 },
@@ -450,11 +450,11 @@ export class DiaTimelineService {
                   "value": "",
                   "conditional": {
                     "$or": [
-                      { "trait_type": 2 },
-                      { "trait_type": 3 },
-                      { "trait_type": 4 },
-                      { "trait_type": 5 },
-                      { "trait_type": 6 },
+                      { "trait_type": "2" },
+                      { "trait_type": "3" },
+                      { "trait_type": "4" },
+                      { "trait_type": "5" },
+                      { "trait_type": "6" },
                     ]
                   },
                   "required": true,
