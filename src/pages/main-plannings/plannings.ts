@@ -38,9 +38,11 @@ export class PlanningsPage {
     let modal = this.modalCtrl.create(PlanningsEditorPage, {planning: planning});
 
     modal.onDidDismiss((result) => {
-      if(!!result && 'refresh' in Object.keys(result) && result['refresh']) {
-        this.refresh();
-      }
+      this.refresh();
+      // Pending to debug why this shit is not working. Until then, we always refresh
+      // if(!!result && 'refresh' in Object.keys(result) && result['refresh']) {
+      //   this.refresh();
+      // }
     });
     modal.present();
   }

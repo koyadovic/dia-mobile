@@ -37,7 +37,10 @@ export class DiaTimelineService {
                 private translate: TranslateService) {
 
         this.userConfig = this.configurationService.getUserConfiguration();
+        this.refreshElementFields();
+    }
 
+    refreshElementFields() {
         // this get the user medications from the bankend
         let medicationURL = `${this.backendURL.baseURL}/v1/medications/mine/`;
         this.restBackendService.genericGet(medicationURL).subscribe(
@@ -49,8 +52,6 @@ export class DiaTimelineService {
                 console.log('Error retrieving user medication brands: ' + err);
             }
         );
- 
-        
     }
 
     getTimeline(before?:number) {
@@ -321,20 +322,20 @@ export class DiaTimelineService {
                     "value": 1,
                     "required": true,
                     "hint": "",
-                    "type": "select",
+                    "type": "radio",
                     "regex": "",
                     "key": "intensity",
                     "options": [
-                        { "display": soft, "value": 1 },
-                        { "display": medium, "value": 2 },
-                        { "display": high, "value": 3 },
-                        { "display": extreme, "value": 4 },
+                        { "display": soft, "value": "1" },
+                        { "display": medium, "value": "2" },
+                        { "display": high, "value": "3" },
+                        { "display": extreme, "value": "4" },
                     ],
                     "namespace_key": "intensity"
                 },
                 {
                     "display": minutes,
-                    "value": 0,
+                    "value": "",
                     "required": true,
                     "hint": numberMinutes,
                     "type": "number",
@@ -350,9 +351,10 @@ export class DiaTimelineService {
         forkJoin(
             this.translate.get("Instant"),
             this.translate.get("Medication"),
+            this.translate.get("Click to edit your medication list"),
             this.translate.get("Amount"),
             this.translate.get("Amount of medication"),
-          ).subscribe(([instant, medication, amount, amountHint]) => {
+          ).subscribe(([instant, medication, medicationEdit, amount, amountHint]) => {
               this.medicationTakeFields = [
                 {
                   "display": instant,
@@ -368,17 +370,27 @@ export class DiaTimelineService {
                   }
                 },
                 {
-                  "display": medication,
-                  "value": this.userMedicationBrands.length > 0 ? this.userMedicationBrands[0].id : null,
-                  "required": true,
-                  "hint": medication,
-                  "type": "select",
-                  "regex": "^.*$",
-                  "key": "medication",
-                  "options": this.userMedicationBrands.map((x) => {
-                    return {display: x.name, value: x.id}
-                  }),
-                  "namespace_key": "medication"
+                "display": medication,
+                "value": this.userMedicationBrands.length > 0 ? '' + this.userMedicationBrands[0].id : null,
+                "required": true,
+                "hint": medication,
+                "type": "radio",
+                "regex": "^.*$",
+                "key": "medication",
+                "options": this.userMedicationBrands.map((x) => {
+                    return {display: x.name, value: '' + x.id}
+                }),
+                "namespace_key": "medication"
+                },                {
+                "display": medicationEdit,
+                "value": "medication_edition_request",
+                "required": true,
+                "hint": "",
+                "type": "action",
+                "regex": "^.*$",
+                "key": "medication_edition_request",
+                "options": [],
+                "namespace_key": "medication_edition_request"
                 },
                 {
                   "display": amount,
@@ -429,19 +441,19 @@ export class DiaTimelineService {
                 },
                 {
                   "display": type,
-                  "value": 2,
+                  "value": "2",
                   "conditional": {},
                   "required": true,
                   "hint": type,
-                  "type": "select",
+                  "type": "radio",
                   "regex": "^.*$",
                   "key": "trait_type",
                   "options": [
-                    { "display": height, "value": 2 },
-                    { "display": weight, "value": 3 },
-                    { "display": neck, "value": 4 },
-                    { "display": abdomen, "value": 5 },
-                    { "display": waist, "value": 6 },
+                    { "display": height, "value": "2" },
+                    { "display": weight, "value": "3" },
+                    { "display": neck, "value": "4" },
+                    { "display": abdomen, "value": "5" },
+                    { "display": waist, "value": "6" },
                   ],
                   "namespace_key": "trait_type"
                 },
@@ -450,11 +462,11 @@ export class DiaTimelineService {
                   "value": "",
                   "conditional": {
                     "$or": [
-                      { "trait_type": 2 },
-                      { "trait_type": 3 },
-                      { "trait_type": 4 },
-                      { "trait_type": 5 },
-                      { "trait_type": 6 },
+                      { "trait_type": "2" },
+                      { "trait_type": "3" },
+                      { "trait_type": "4" },
+                      { "trait_type": "5" },
+                      { "trait_type": "6" },
                     ]
                   },
                   "required": true,

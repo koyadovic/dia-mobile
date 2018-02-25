@@ -17,6 +17,7 @@ import { DiaAuthService } from '../../services/dia-auth-service';
 import * as moment from 'moment-timezone';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { DiaRestBackendService } from '../../services/dia-rest-backend-service';
+import { UserMedicationsPage } from '../user-medications/user-medications';
 
 
 @Component({
@@ -154,7 +155,7 @@ export class TimeLinePage {
         ]
       };
   
-      this.timelineService.completeAllGenericTypes(data);
+      // this.timelineService.completeAllGenericTypes(data);
       this.openGenericModal(data);
     });
   }
@@ -191,7 +192,7 @@ export class TimeLinePage {
         ]
       };
   
-      this.timelineService.completeAllGenericTypes(data);
+      // this.timelineService.completeAllGenericTypes(data);
       this.openGenericModal(data);
     });
   }
@@ -228,8 +229,7 @@ export class TimeLinePage {
         ]
       };
   
-      this.timelineService.completeAllGenericTypes(data);
-      console.log(JSON.stringify(data));
+      // this.timelineService.completeAllGenericTypes(data);
       this.openGenericModal(data);
     });
 
@@ -267,14 +267,14 @@ export class TimeLinePage {
         ]
       };
   
-      this.timelineService.completeAllGenericTypes(data);
+      // this.timelineService.completeAllGenericTypes(data);
       this.openGenericModal(data);
     });
   }
 
   addFeeding(data){
     this.fab.close();
-    let modal = this.modalCtrl.create(AddFeedingPage, {data: data});;
+    let modal = this.modalCtrl.create(AddFeedingPage, {data: data});
 
     modal.onDidDismiss((data) => {
       if(!!data && data["add"])

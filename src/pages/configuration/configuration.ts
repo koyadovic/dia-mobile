@@ -46,7 +46,7 @@ export class ConfigurationPage {
     }
   }
 
-  haveChanges(event) { 
+  haveChanges(event) {
     this.configurationChanges[event.namespace_key] = event.value; 
   }
 
@@ -63,6 +63,4 @@ export class ConfigurationPage {
   changeRoot(event) {
     this.configurationPointer.push(event);
   }
-
-
 }

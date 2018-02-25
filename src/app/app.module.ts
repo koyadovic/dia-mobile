@@ -38,6 +38,8 @@ import { AddGenericPage } from '../pages/add-generic/add-generic';
 import { AddFeedingPage } from '../pages/add-feeding/add-feeding';
 import { AddFoodPage } from '../pages/add-feeding-search-food-add-food/add-food';
 
+import { UserMedicationsPage } from '../pages/user-medications/user-medications';
+
 
 import { IonPullupModule } from 'ionic-pullup';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -45,6 +47,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DiaPlanningsService } from '../services/dia-plannings-service';
 import { PlanningsEditorPage } from '../pages/plannings-editor/plannings-editor';
 import { DiaInsightsService } from '../services/dia-insights-service';
+import { DiaMedicationsService } from '../services/dia-medications-service';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -67,7 +70,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AddFoodPage,
     AddFeedingPage,
 
-    PlanningsEditorPage
+    PlanningsEditorPage,
+    UserMedicationsPage,
   ],
   imports: [
     BrowserModule,
@@ -103,6 +107,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AddFoodPage,
 
     PlanningsEditorPage,
+    UserMedicationsPage,
   ],
   providers: [
     FCM,
@@ -118,6 +123,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DiaTimelineService,
     DiaPlanningsService,
     DiaInsightsService,
+    DiaMedicationsService,
   ]
 })
 export class AppModule {}
