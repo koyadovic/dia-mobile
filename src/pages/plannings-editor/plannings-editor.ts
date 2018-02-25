@@ -64,7 +64,7 @@ export class PlanningsEditorPage {
         (resp) => {
           // mensaje, todo fue guay
           this.toast('Everything was good. Planning saved.')
-          this.viewCtrl.dismiss({refresh: true});
+          this.viewCtrl.dismiss({"refresh": true});
         },
         (err) => {
           this.toast(`ERROR: ${err}`);
@@ -75,7 +75,7 @@ export class PlanningsEditorPage {
         (resp) => {
           // mensaje, todo fue guay
           this.toast('Everything was good. Planning saved.')
-          this.viewCtrl.dismiss({refresh: true});
+          this.viewCtrl.dismiss({"refresh": true});
         },
         (err) => {
           this.toast(`ERROR: ${err}`);
