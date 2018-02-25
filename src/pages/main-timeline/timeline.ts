@@ -17,6 +17,7 @@ import { DiaAuthService } from '../../services/dia-auth-service';
 import * as moment from 'moment-timezone';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { DiaRestBackendService } from '../../services/dia-rest-backend-service';
+import { UserMedicationsPage } from '../user-medications/user-medications';
 
 
 @Component({
@@ -274,12 +275,17 @@ export class TimeLinePage {
 
   addFeeding(data){
     this.fab.close();
-    let modal = this.modalCtrl.create(AddFeedingPage, {data: data});;
+    let modal = this.modalCtrl.create(AddFeedingPage, {data: data});
 
     modal.onDidDismiss((data) => {
       if(!!data && data["add"])
         this.refreshTimeline();
     });
+    modal.present();
+  }
+
+  openMedications() {
+    let modal = this.modalCtrl.create(UserMedicationsPage);
     modal.present();
   }
 
