@@ -28,8 +28,6 @@ export class DiaTimelineService {
 
     private userConfig: UserConfiguration;
 
-    private insulinTypes = [];
-    
     constructor(private backendURL: DiaBackendURL,
                 private restBackendService: DiaRestBackendService,
                 private configurationService: DiaConfigurationService,
@@ -37,10 +35,6 @@ export class DiaTimelineService {
                 private translate: TranslateService) {
 
         this.userConfig = this.configurationService.getUserConfiguration();
-        this.getInsulinTypes().subscribe((resp) => {
-            this.insulinTypes = resp;
-        });
-
  
         this.buildElementFields();
     }
@@ -53,19 +47,6 @@ export class DiaTimelineService {
             url = `${this.backendURL.baseURL}/v1/instants/timeline/`;
         }
         return this.restBackendService.genericGet(url);
-    }
-
-    getInsulinTypes():Observable<any> {
-        let url = `${this.backendURL.baseURL}/v1/instants/insulin-types/`;
-        return Observable.create((observer) => {
-            this.restBackendService
-            .genericGet(url)
-            .finally(() => observer.complete())
-            .subscribe(
-            (response) => {
-                observer.next(response);
-            });
-        });
     }
 
     deleteFood(food: DiaFood):Observable<any> {
@@ -351,6 +332,7 @@ export class DiaTimelineService {
         });
     }
 
+    /*
     buildInsulinFields() {
         forkJoin(
             this.translate.get("Instant"),
@@ -399,6 +381,7 @@ export class DiaTimelineService {
               ]
           });      
     }
+    */
 
     buildTraitFields() {
         forkJoin(
@@ -477,7 +460,7 @@ export class DiaTimelineService {
     buildElementFields() {
         this.buildGlucoseFields();
         this.buildPhysicalActivityFields();
-        this.buildInsulinFields();
+        //this.buildInsulinFields();
         this.buildTraitFields();
     }
 }
