@@ -46,7 +46,7 @@ export class ConfigurationPage {
     }
   }
 
-  haveChanges(event) { 
+  haveChanges(event) {
     this.configurationChanges[event.namespace_key] = event.value; 
   }
 
