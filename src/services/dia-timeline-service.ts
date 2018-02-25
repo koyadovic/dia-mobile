@@ -372,7 +372,7 @@ export class DiaTimelineService {
                   "value": this.userMedicationBrands.length > 0 ? this.userMedicationBrands[0].id : null,
                   "required": true,
                   "hint": medication,
-                  "type": "select",
+                  "type": "radio",
                   "regex": "^.*$",
                   "key": "medication",
                   "options": this.userMedicationBrands.map((x) => {
