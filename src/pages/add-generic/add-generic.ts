@@ -3,6 +3,9 @@ import { NavController, NavParams } from 'ionic-angular';
 import { DiaRestBackendService } from '../../services/dia-rest-backend-service';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { ViewController } from 'ionic-angular/navigation/view-controller';
+import { UserMedicationsPage } from '../user-medications/user-medications';
+import { DiaTimelineService } from '../../services/dia-timeline-service';
+import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 
 @Component({
   selector: 'page-add-generic',
@@ -19,10 +22,14 @@ export class AddGenericPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private viewCtrl: ViewController,
+              private timelineService: DiaTimelineService,
+              private modalCtrl: ModalController,
               private restBackendService: DiaRestBackendService) {
 
     // get data
     this.data = this.navParams.get("data");
+
+    console.log(JSON.stringify(this.data));
 
     this.data["elements"].forEach((element) => {
       let computed_fields = Object.assign([], this.data["types"][element["type"]]["fields"]);
@@ -40,8 +47,12 @@ export class AddGenericPage {
     });
   }
 
-  haveChanges(event, element) { 
-    element[event.namespace_key] = event.value;
+  haveChanges(event, element) {
+    if(event.value === "medication_edition_request" && event.namespace_key === 'medication_edition_request') {
+      this.openMedications();
+    } else {
+      element[event.namespace_key] = event.value;
+    }
   }
 
   isConditionalTrue(element, field){
@@ -151,5 +162,16 @@ export class AddGenericPage {
       }
     }
     return true;
+  }
+
+  openMedications() {
+    let modal = this.modalCtrl.create(UserMedicationsPage);
+    modal.onDidDismiss((data) => {
+      if (UserMedicationsPage.hadChanges) {
+        this.timelineService.refreshElementFields();
+        // TODO hay que actualizar la lista seleccinable de medications!
+      }
+    })
+    modal.present();
   }
 }

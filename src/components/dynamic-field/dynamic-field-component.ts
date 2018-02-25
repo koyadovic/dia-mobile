@@ -51,6 +51,7 @@ export class DynamicField {
   private emitHaveChanges(){
     this.updateValid();
     
+    
     if(!this.field.valid) {
       return;
     }
@@ -76,6 +77,11 @@ export class DynamicField {
 
   private updateValid() {
     let f = this.field;
+
+    if(f.type === 'action'){
+      f.valid = true;
+      return;
+    }
 
     if(f.required && !(f.value)) {
       f.valid = false;

@@ -1,36 +1,42 @@
 <ion-item *ngIf="field && field.type != 'radio'">
-    <ion-label *ngIf="field.display" stacked class="title-label" color="primary">{{ field.display }}</ion-label>
 
-    <ion-input
-      *ngIf="field.type == 'text' || field.type == 'number'"
-      type="{{ field.type }}" [pattern]="field.regex" [(ngModel)]="field.value" placeholder="{{ field.hint }}"
-      [disabled]="field['disabled'] !== undefined && field['disabled']"
-      (ionChange)="emitHaveChanges()" [required]="field.required"></ion-input>
-  
-    <ion-toggle
-      *ngIf="field.type == 'boolean'"
-      (ionChange)="emitHaveChanges()"
-      [disabled]="field.disabled !== undefined && field.disabled"
-      [(ngModel)]="field.value">{{ field.display }}</ion-toggle>
-  
-    <ion-datetime
-      *ngIf="field.type == 'date'"
-      (ionChange)="emitHaveChanges()"
-      displayFormat="{{ field.additional_options?.format }}"
-      [disabled]="field.disabled !== undefined && field.disabled"
-      [(ngModel)]="field.value"></ion-datetime>
-  
-    <ion-select
-      *ngIf="field.type == 'select'"
-      (ionChange)="emitHaveChanges()"
-      [disabled]="field.disabled !== undefined && field.disabled"
-      [(ngModel)]="field.value">
-  
-      <ion-option *ngFor="let option of field.options" [value]="option.value">
-        {{ option.display }}
-      </ion-option>
-  
-    </ion-select>
+  <button ion-button block outline
+    *ngIf="field.type == 'action' && field.display" (click)="emitHaveChanges()">
+    {{ field.display }}
+  </button>
+
+  <ion-label *ngIf="field.type != 'action' && field.display" stacked class="title-label" color="primary">{{ field.display }}</ion-label>
+
+  <ion-input
+    *ngIf="field.type == 'text' || field.type == 'number'"
+    type="{{ field.type }}" [pattern]="field.regex" [(ngModel)]="field.value" placeholder="{{ field.hint }}"
+    [disabled]="field['disabled'] !== undefined && field['disabled']"
+    (ionChange)="emitHaveChanges()" [required]="field.required"></ion-input>
+
+  <ion-toggle
+    *ngIf="field.type == 'boolean'"
+    (ionChange)="emitHaveChanges()"
+    [disabled]="field.disabled !== undefined && field.disabled"
+    [(ngModel)]="field.value">{{ field.display }}</ion-toggle>
+
+  <ion-datetime
+    *ngIf="field.type == 'date'"
+    (ionChange)="emitHaveChanges()"
+    displayFormat="{{ field.additional_options?.format }}"
+    [disabled]="field.disabled !== undefined && field.disabled"
+    [(ngModel)]="field.value"></ion-datetime>
+
+  <ion-select
+    *ngIf="field.type == 'select'"
+    (ionChange)="emitHaveChanges()"
+    [disabled]="field.disabled !== undefined && field.disabled"
+    [(ngModel)]="field.value">
+
+    <ion-option *ngFor="let option of field.options" [value]="option.value">
+      {{ option.display }}
+    </ion-option>
+
+  </ion-select>
 
 </ion-item>
 
