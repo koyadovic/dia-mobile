@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Medication } from '../../models/medications-model';
 import { DiaMedicationsService } from '../../services/dia-medications-service';
+import { ToastController } from 'ionic-angular/components/toast/toast-controller';
 
 
 @Component({
@@ -23,11 +24,17 @@ export class UserMedicationsPage {
   private searching: boolean = false;
   private viewStatusString = '';
 
+  // this is for the page closing. If was changes, global user medications needs to be refreshed.
+  public static hadChanges:boolean = false;
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
+              public toastCtrl: ToastController,
               public medicationsService: DiaMedicationsService) {}
 
   ionViewDidLoad() {
+    UserMedicationsPage.hadChanges = false;
+
     this.medicationsService.getUserMedications().subscribe(
       (medications) => {
         this.userMedications = medications;
@@ -78,5 +85,69 @@ export class UserMedicationsPage {
       }
     
     }
+  }
+
+  addMedication(item, id: number) {
+    item.close();
+
+    this.medicationsService.addUserMedication(id).subscribe(
+      (resp) => {
+        // remove from one array and push it to the other
+        let index = this.indexOfID(id, this.searchMedicationsResult);
+        let medication = this.searchMedicationsResult[index];
+        this.searchMedicationsResult.splice(index, 1);
+        this.userMedications.push(medication);
+
+        this.toastMessage('Medication added correctly to your list');
+        UserMedicationsPage.hadChanges = true;
+      },
+      (err) => {
+        this.toastMessage('There seem to was an error.');
+        console.error(err);
+      }
+    );
+  }
+
+  removeMedication(item, id: number) {
+    item.close();
+
+    this.medicationsService.removeUserMedication(id).subscribe(
+      (resp) => {
+        // remove from one array and push it to the other
+        let index = this.indexOfID(id, this.userMedications);
+        let medication = this.userMedications[index];
+        this.userMedications.splice(index, 1);
+        this.searchMedicationsResult.push(medication);
+
+        this.toastMessage('Medication removed correctly from your list');
+        UserMedicationsPage.hadChanges = true;
+      },
+      (err) => {
+        this.toastMessage('There seem to was an error.');
+        console.error(err);
+      }
+    );
+  }
+
+  toastMessage(message:string){
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000,
+      position: 'top'
+    });
+  
+    toast.onDidDismiss(() => {
+    });
+  
+    toast.present();
+  }
+
+  private indexOfID(id:number, array) {
+    for(let elem of array) {
+      if (elem['id'] == id) {
+        return array.indexOf(elem);
+      }
+    }
+    return -1;
   }
 }

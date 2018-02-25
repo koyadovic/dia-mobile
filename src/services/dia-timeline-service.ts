@@ -37,7 +37,10 @@ export class DiaTimelineService {
                 private translate: TranslateService) {
 
         this.userConfig = this.configurationService.getUserConfiguration();
+        this.refreshElementFields();
+    }
 
+    refreshElementFields() {
         // this get the user medications from the bankend
         let medicationURL = `${this.backendURL.baseURL}/v1/medications/mine/`;
         this.restBackendService.genericGet(medicationURL).subscribe(
@@ -49,8 +52,6 @@ export class DiaTimelineService {
                 console.log('Error retrieving user medication brands: ' + err);
             }
         );
- 
-        
     }
 
     getTimeline(before?:number) {

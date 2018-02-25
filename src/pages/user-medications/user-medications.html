@@ -21,20 +21,41 @@
   <!-- Search result ! -->
   <ng-container *ngIf="searchString !== ''">
     <ion-list>
-      <ion-item *ngFor="let medication of searchMedicationsResult">
-        <h1>{{ medication['name'] }}</h1>
-        <p>{{ medication['administration_type'] }} {{ medication['type'] }} {{ medication['sub_type'] }}</p>
-      </ion-item>
+      <ion-item-sliding #item *ngFor="let medication of searchMedicationsResult">
+
+        <button ion-item>
+          <h1>{{ medication['name'] }}</h1>
+          <p>{{ medication['administration_type'] }} {{ medication['type'] }} {{ medication['sub_type'] }}</p>
+        </button>
+
+        <ion-item-options>
+          <!-- add medication to user medications  -->
+          <button ion-button color="light" (click)="addMedication(item, medication['id'])"><ion-icon name="heart"></ion-icon>Add</button>
+  
+        </ion-item-options>
+      </ion-item-sliding>
+
     </ion-list>
   </ng-container>
 
   <!-- User medications ! -->
   <ng-container *ngIf="searchString === ''">
     <ion-list>
-      <ion-item *ngFor="let medication of userMedications">
-        <h1>{{ medication['name'] }}</h1>
-        <p>{{ medication['administration_type'] }} {{ medication['type'] }} {{ medication['sub_type'] }}</p>
-      </ion-item>
+      <ion-item-sliding #item *ngFor="let medication of userMedications">
+
+        <button ion-item>
+          <h1>{{ medication['name'] }}</h1>
+          <p>{{ medication['administration_type'] }} {{ medication['type'] }} {{ medication['sub_type'] }}</p>
+        </button>
+
+        <ion-item-options>
+
+          <!-- remove medication from user medications -->
+          <button ion-button color="danger" (click)="removeMedication(item, medication['id'])"><ion-icon name="trash"></ion-icon>Remove</button> 
+
+        </ion-item-options>
+      </ion-item-sliding>
+
     </ion-list>
   </ng-container>
       

@@ -286,6 +286,11 @@ export class TimeLinePage {
 
   openMedications() {
     let modal = this.modalCtrl.create(UserMedicationsPage);
+    modal.onDidDismiss((data) => {
+      if (UserMedicationsPage.hadChanges) {
+        this.timelineService.refreshElementFields();
+      }
+    })
     modal.present();
   }
 
