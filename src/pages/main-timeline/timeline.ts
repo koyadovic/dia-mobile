@@ -207,7 +207,7 @@ export class TimeLinePage {
         "elements": [
           {
             "info": unitsInfo,
-            "type": "medication",
+            "type": "medication-take",
             "fields": {
               "datetime": {
                 "default_value": "",
@@ -229,6 +229,7 @@ export class TimeLinePage {
       };
   
       this.timelineService.completeAllGenericTypes(data);
+      console.log(JSON.stringify(data));
       this.openGenericModal(data);
     });
 

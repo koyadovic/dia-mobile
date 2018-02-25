@@ -22,9 +22,11 @@ import { DiaFood, FoodListable, InternetFoodList, InternetFoodDetail, FoodSelect
 export class DiaTimelineService {
     private glucoseFields;
     private feedingFields;
-    private insulinFields;
+    private medicationTakeFields;
     private activityFields;
     private traitFields;
+
+    private userMedicationBrands = [];
 
     private userConfig: UserConfiguration;
 
@@ -35,8 +37,20 @@ export class DiaTimelineService {
                 private translate: TranslateService) {
 
         this.userConfig = this.configurationService.getUserConfiguration();
+
+        // this get the user medications from the bankend
+        let medicationURL = `${this.backendURL.baseURL}/v1/medications/mine/`;
+        this.restBackendService.genericGet(medicationURL).subscribe(
+            (resp) => {
+                this.userMedicationBrands = resp;
+                this.buildElementFields();
+            },
+            (err) => {
+                console.log('Error retrieving user medication brands: ' + err);
+            }
+        );
  
-        this.buildElementFields();
+        
     }
 
     getTimeline(before?:number) {
@@ -165,12 +179,12 @@ export class DiaTimelineService {
         data["types"] = {};
         data["elements"].forEach(element => {
             if (!(element["type"] in data["types"])) {
-                data["types"][element["type"]] = this.getGenericType(<"glucose" | "trait" | "activity" | "insulin">element["type"]);
+                data["types"][element["type"]] = this.getGenericType(<"glucose" | "trait" | "activity" | "medication-take">element["type"]);
             }
         });
     }
 
-    getGenericType(type:"glucose" | "trait" | "activity" | "insulin") {
+    getGenericType(type:"glucose" | "trait" | "activity" | "medication-take") {
         let url = "";
         let fields = [];
 
@@ -187,9 +201,9 @@ export class DiaTimelineService {
                 url = this.getPhysicalActivityEndPoint();
                 fields = this.getPhysicalActivityFields();
                 break;
-            case "insulin":
-                url = this.getInsulinDoseEndPoint();
-                fields = this.getInsulinFields();
+            case "medication-take":
+                url = this.getMedicationTakeEndPoint();
+                fields = this.getMedicationTakeFields();
                 break;
         }
 
@@ -218,8 +232,8 @@ export class DiaTimelineService {
         return `${this.backendURL.baseURL}/v1/instants/traits/`;
     }
 
-    getInsulinDoseEndPoint(): string {
-        return `${this.backendURL.baseURL}/v1/instants/insulins/`;
+    getMedicationTakeEndPoint(): string {
+        return `${this.backendURL.baseURL}/v1/instants/medications/`;
     }
 
 
@@ -227,8 +241,8 @@ export class DiaTimelineService {
         return this.glucoseFields.map((x) => Object.assign({}, x))
     }
 
-    getInsulinFields() {
-        return this.insulinFields.map((x) => Object.assign({}, x))
+    getMedicationTakeFields() {
+        return this.medicationTakeFields.map((x) => Object.assign({}, x))
     }
 
     getTraitFields() {
@@ -332,16 +346,14 @@ export class DiaTimelineService {
         });
     }
 
-    /*
-    buildInsulinFields() {
+    buildMedicationTakeFields() {
         forkJoin(
             this.translate.get("Instant"),
-            this.translate.get("Type"),
-            this.translate.get("Dose"),
-            this.translate.get("Units of insulin"),
-            this.translate.get("Introduce type and units of insulin administered."),
-          ).subscribe(([instant, type, dose, unitsOfDose, doseName]) => {
-              this.insulinFields = [
+            this.translate.get("Medication"),
+            this.translate.get("Amount"),
+            this.translate.get("Amount of medication"),
+          ).subscribe(([instant, medication, amount, amountHint]) => {
+              this.medicationTakeFields = [
                 {
                   "display": instant,
                   "value": "",
@@ -356,32 +368,31 @@ export class DiaTimelineService {
                   }
                 },
                 {
-                  "display": type,
-                  "value": this.insulinTypes.length > 0 ? this.insulinTypes[0].id : null,
+                  "display": medication,
+                  "value": this.userMedicationBrands.length > 0 ? this.userMedicationBrands[0].id : null,
                   "required": true,
-                  "hint": type,
+                  "hint": medication,
                   "type": "select",
                   "regex": "^.*$",
-                  "key": "insulin_type",
-                  "options": this.insulinTypes.map((x) => {
+                  "key": "medication",
+                  "options": this.userMedicationBrands.map((x) => {
                     return {display: x.name, value: x.id}
                   }),
-                  "namespace_key": "insulin_type"
+                  "namespace_key": "medication"
                 },
                 {
-                  "display": dose,
+                  "display": amount,
                   "value": "",
                   "required": true,
-                  "hint": unitsOfDose,
+                  "hint": amountHint,
                   "type": "number",
                   "regex": "^.*$",
-                  "key": "dose",
-                  "namespace_key": "dose"
+                  "key": "amount",
+                  "namespace_key": "amount"
                 }
               ]
           });      
     }
-    */
 
     buildTraitFields() {
         forkJoin(
@@ -460,7 +471,7 @@ export class DiaTimelineService {
     buildElementFields() {
         this.buildGlucoseFields();
         this.buildPhysicalActivityFields();
-        //this.buildInsulinFields();
+        this.buildMedicationTakeFields();
         this.buildTraitFields();
     }
 }
