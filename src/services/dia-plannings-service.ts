@@ -19,8 +19,6 @@ export class DiaPlanningsService {
 
     private userConfig: UserConfiguration;
 
-    private insulinTypes = [];
-    
     constructor(private backendURL: DiaBackendURL,
                 private restBackendService: DiaRestBackendService,
                 private configurationService: DiaConfigurationService,

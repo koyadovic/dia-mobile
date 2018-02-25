@@ -3,7 +3,6 @@ import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs';
 import { DiaBackendURL } from './dia-backend-urls';
-import { observeOn } from 'rxjs/operator/observeOn';
 import { HttpClient } from '@angular/common/http';
 
 
@@ -50,6 +49,10 @@ export class DiaAuthService {
     }
 
     logout(){
+        setTimeout(() => {
+            document.location.href = '';
+        }, 400);
+
         this.storage.set("token", "");
         this.storage.set("email", "");
         this.token = '';

@@ -1,10 +1,10 @@
 
-<ion-card *ngIf="show">
-  <ion-card-header text-center>
+<ng-container *ngIf="show && !!concreteChartData">
+  <h3 text-center>
     {{ chartData['name'] }}
-  </ion-card-header>
+  </h3>
 
-  <ion-card-content>
+  <div padding-left padding-right padding-bottom>
 
     <insights-chart-pie
       *ngIf="!!concreteChartData && concreteChartData['type'] === 'pie'"
@@ -36,5 +36,5 @@
       [keyValuesConcreteData]="concreteChartData">
     </insights-chart-key-values>
     
-  </ion-card-content>
-</ion-card>
+  </div>
+</ng-container>

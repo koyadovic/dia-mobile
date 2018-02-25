@@ -1,13 +1,11 @@
 <ion-menu [content]="mainPage">
-    <ion-content>
+    <ion-content class="menu-root-container">
       <ion-list>
-        <ion-item padding-top>
+        <ion-item padding-top class="profile-container">
           <img class="profile-image" src="assets/imgs/profile.png">
           <h2>{{ email }}</h2>
           <p>via diamobile.com</p>
         </ion-item>
-        <ion-item-divider></ion-item-divider>
-
         <button ion-item (click)="menuCtrl.close(); eventGoTab(0);" [ngClass]="{'selected': selectedIndex === 0}">
             {{ "Timeline" | translate }}
             <ion-icon item-start class="settings-icon" name="time"></ion-icon>

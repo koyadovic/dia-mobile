@@ -1,6 +1,3 @@
-page-menu {
-
-}
 
 .profile-image {
     border-radius: 50%;
@@ -9,5 +6,14 @@ page-menu {
 }
 
 button.selected {
-    color: #7eadff;
+    color: map-get($colors, primary);
+}
+
+.profile-container {
+    background-color: map-get($colors, light);
+    padding-bottom: 20px;
+
+    p {
+        color: map-get($colors, primary-dark);
+    }
 }

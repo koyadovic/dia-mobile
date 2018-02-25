@@ -38,8 +38,8 @@ export class PlanningsEditorPage {
       this.getPhysicalActivityStructure().subscribe((data) => {
         this.openGenericModal(data);
       });
-    } else if(this.planning.type == PLANNING_TYPES.INSULIN_DOSE) {
-      this.getInsulinDoseStructure().subscribe((data) => {
+    } else if(this.planning.type == PLANNING_TYPES.MEDICATION_TAKE) {
+      this.getMedicationTakeStructure().subscribe((data) => {
         this.openGenericModal(data);
       });
     }
@@ -120,17 +120,17 @@ export class PlanningsEditorPage {
     });
   }
 
-  getInsulinDoseStructure(){
+  getMedicationTakeStructure(){
     return Observable.create((observer) => {
       forkJoin(
-        this.translate.get("New Insulin Dose"),
-        this.translate.get("Introduce type and units of insulin administered."),
-      ).subscribe(([doseTitle, doseInfo]) => {
+        this.translate.get("New Medication Take"),
+        this.translate.get("Introduce what medication and units administered."),
+      ).subscribe(([medicationTitle, amountInfo]) => {
         let data = {
-          "title": doseTitle,
+          "title": medicationTitle,
           "types": {},
           "elements": [
-            {"info": doseInfo, "type": "insulin", "fields": {"datetime": {"default_value": "", "disabled": true}}}
+            {"info": amountInfo, "type": "medication-take", "fields": {"datetime": {"default_value": "", "disabled": true}}}
           ],
           "actions": [
             {"display": "Rechazar", "type": "dismiss",},

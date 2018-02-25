@@ -1,26 +1,24 @@
 <ion-header>
   <ion-navbar>
-
-    <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
-
-    <ion-title>
-      {{ 'Timeline' | translate }}
-    </ion-title>
-
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ 'Timeline' | translate }}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
 
-    <ion-refresher (ionRefresh)="doRefresh($event)">
-      <ion-refresher-content>
-      </ion-refresher-content>
-    </ion-refresher>
-    
-    <ion-list>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list class="instants-list">
     <ng-container *ngFor="let instant of timeline; let i = index">
 
-      <ion-list-header text-right padding-right *ngIf="!!dateInfo(i)">{{ dateInfo(i) }}</ion-list-header>
+      <ion-list-header class="instant-date-info" text-right padding-right *ngIf="!!dateInfo(i)">{{ dateInfo(i) }}
+      </ion-list-header>
 
       <instant-card
         [ngClass]="instant.event_type" [instant]="instant" [userConfig]="userConfig"
@@ -28,23 +26,23 @@
       </instant-card>
 
       <div class="space" *ngIf="instant.minutes_diff > 60"></div>
-  
     </ng-container>
-    </ion-list>
-
+  </ion-list>
     
-    <ion-fab padding-right bottom right #fab>
-      <button ion-fab><ion-icon name="add"></ion-icon></button>
-      <ion-fab-list side="left">
-        <button ion-fab (click)="addPhysicalTraitChange()"><ion-icon name="body"></ion-icon></button> <!-- Trait Change -->
-        <button ion-fab (click)="addInsulinDose()"><ion-icon name="thermometer"></ion-icon></button> <!-- Insulin Dose -->
-        <button ion-fab (click)="addPhysicalActivity()"><ion-icon name="bicycle"></ion-icon></button> <!-- Activity -->
-        <button ion-fab (click)="addFeeding({})"><ion-icon name="restaurant"></ion-icon></button> <!-- Feeding -->
-        <button ion-fab (click)="addGlucose()"><ion-icon name="water"></ion-icon></button> <!-- Glucose -->
-      </ion-fab-list>
-    </ion-fab>
+  <ion-fab bottom right #fab>
+    <button ion-fab><ion-icon name="add"></ion-icon></button>
+    <ion-fab-list side="left">
+      <button ion-fab (click)="addPhysicalTraitChange()"><ion-icon name="body"></ion-icon></button> <!-- Trait Change -->
+      <button ion-fab (click)="addMedicationTake()"><ion-icon name="thermometer"></ion-icon></button> <!-- Medication Take -->
+      <button ion-fab (click)="addPhysicalActivity()"><ion-icon name="bicycle"></ion-icon></button> <!-- Activity -->
+      <button ion-fab (click)="addFeeding({})"><ion-icon name="restaurant"></ion-icon></button> <!-- Feeding -->
+      <button ion-fab (click)="addGlucose()"><ion-icon name="water"></ion-icon></button> <!-- Glucose -->
+    </ion-fab-list>
+  </ion-fab>
 
-    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-      <ion-infinite-scroll-content></ion-infinite-scroll-content>
-    </ion-infinite-scroll>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content  loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
 </ion-content>

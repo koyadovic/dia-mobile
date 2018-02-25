@@ -9,7 +9,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding-top>
+<ion-content>
   <ion-list>
     <planning-list
     (editRequestEvent)="editPlanning(planning)"
@@ -18,7 +18,7 @@
     *ngFor="let planning of plannings" [planning]="planning"></planning-list>
   </ion-list>
 
-  <ion-fab padding-right bottom right #fab>
+  <ion-fab bottom right #fab>
     <button ion-fab (click)="editPlanning(null)"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 
