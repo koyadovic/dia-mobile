@@ -10,7 +10,7 @@
 
     "New Glucose": "Nueva Glucosa",
     "New Feeding": "Nueva Ingesta",
-    "New Insulin Dose": "Nueva Dosis de Insulina",
+    "New Medication Take": "Nueva Toma de Medicación",
     "New Physical Activity": "Nueva Actividad Física",
     "New Trait Change": "Nuevo Cambio Físico",
 
@@ -19,7 +19,6 @@
 
     "Glucose Level": "Nivel de Glucosa",
     "Physical Activity": "Actividad Física",
-    "Insulin Dose": "Dosis de Insulina",
     "Physical Trait Change": "Cambio en Rasgo Físico",
     "Feeding": "Alimentación",
 
@@ -38,9 +37,6 @@
     "Extreme": "Extrema",
 
     "Type": "Tipo",
-    "Dose": "Dosis",
-    "Units of insulin": "Unidades de insulina",
-    "Introduce type and units of insulin administered.": "Introduzca tipo y unidades de insulina administrada.",
 
     "Select date": "Seleccione Fecha",
     "Date of birth": "Fecha de nacimiento",

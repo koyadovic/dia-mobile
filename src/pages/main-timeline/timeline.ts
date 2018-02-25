@@ -196,18 +196,18 @@ export class TimeLinePage {
     });
   }
 
-  addInsulinDose(){
+  addMedicationTake(){
     forkJoin(
-      this.translate.get("New Insulin Dose"),
-      this.translate.get("Introduce type and units of insulin administered."),
-    ).subscribe(([doseTitle, doseInfo]) => {
+      this.translate.get("New Medication Take"),
+      this.translate.get("Introduce what medication and units administered."),
+    ).subscribe(([medicationTitle, unitsInfo]) => {
       let data = {
-        "title": doseTitle,
+        "title": medicationTitle,
         "types": {},
         "elements": [
           {
-            "info": doseInfo,
-            "type": "insulin",
+            "info": unitsInfo,
+            "type": "medication",
             "fields": {
               "datetime": {
                 "default_value": "",

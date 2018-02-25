@@ -4,7 +4,7 @@
     <ion-icon class="instant-card-icon" item-start *ngIf="instant.content.type == 'feeding'" name="restaurant"></ion-icon>
     <ion-icon class="instant-card-icon" item-start *ngIf="instant.content.type == 'activity'" name="bicycle"></ion-icon>
     <ion-icon class="instant-card-icon" item-start *ngIf="instant.content.type == 'trait'" name="body"></ion-icon>
-    <ion-icon class="instant-card-icon" item-start *ngIf="instant.content.type == 'insulin'" name="thermometer"></ion-icon>
+    <ion-icon class="instant-card-icon" item-start *ngIf="instant.content.type == 'medication-take'" name="thermometer"></ion-icon>
 
     <ion-icon item-end *ngIf="instant.content.type == 'action-request' && instant.content.status === 0" name="ios-alert-outline"></ion-icon>
     <ion-icon item-end *ngIf="instant.content.type == 'action-request' && instant.content.status === 1" name="ios-close-circle-outline"></ion-icon>
@@ -41,10 +41,10 @@
                         <p class="instant-card-subtitle">{{ trait_types[instant.content.trait_type] }} {{ instant.content.value }} {{ trait_types_measure[instant.content.trait_type] }}</p>
                     </ng-container>
                 
-                    <!-- insulin_dose -->
-                    <ng-container *ngSwitchCase="'insulin'">
-                        <h2 class="instant-card-title">{{ "Insulin Dose" | translate }} {{ instant.content.dose }}u</h2>
-                        <p class="instant-card-subtitle">{{ instant.content.insulin_type.name }}</p>
+                    <!-- medication takes -->
+                    <ng-container *ngSwitchCase="'medication-take'">
+                        <h2 class="instant-card-title">{{ "Medication Take" | translate }}</h2>
+                        <p class="instant-card-subtitle">{{ instant.content.medication }} {{ instant.content.amount }}u</p>
                     </ng-container>
 
                         
