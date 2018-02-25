@@ -21,6 +21,7 @@ export class DynamicField {
     if("field" in changes) {
       this.field["valid"] = false;
       this.updateValue();
+      this.updateValid();
     }
   }
 
@@ -38,6 +39,7 @@ export class DynamicField {
         // the idea here is when we have a field that has no default value specified and options length has elements
         // set as default value the first option value
         let options = this.field.options.map((x) => '' + x.value);
+        this.field.value = this.field.value + '';
 
         if(options.indexOf(this.field.value) < 0 && options.length > 0){
           this.field.value = options[0];

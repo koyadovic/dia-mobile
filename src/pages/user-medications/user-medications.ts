@@ -121,6 +121,14 @@ export class UserMedicationsPage {
 
         this.toastMessage('Medication removed correctly from your list');
         UserMedicationsPage.hadChanges = true;
+
+        // for the message
+        if(this.userMedications.length === 0) {
+          this.viewStatusString = 'Currently you don\'t have medications added. Try searching!';
+        } else {
+          this.viewStatusString = 'Your currently added medications. If you want, you can search for new ones.';
+        }
+  
       },
       (err) => {
         this.toastMessage('There seem to was an error.');
@@ -133,7 +141,7 @@ export class UserMedicationsPage {
     let toast = this.toastCtrl.create({
       message: message,
       duration: 3000,
-      position: 'top'
+      position: 'bottom'
     });
   
     toast.onDidDismiss(() => {

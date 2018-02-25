@@ -326,10 +326,10 @@ export class DiaTimelineService {
                     "regex": "",
                     "key": "intensity",
                     "options": [
-                        { "display": soft, "value": 1 },
-                        { "display": medium, "value": 2 },
-                        { "display": high, "value": 3 },
-                        { "display": extreme, "value": 4 },
+                        { "display": soft, "value": "1" },
+                        { "display": medium, "value": "2" },
+                        { "display": high, "value": "3" },
+                        { "display": extreme, "value": "4" },
                     ],
                     "namespace_key": "intensity"
                 },
@@ -370,14 +370,14 @@ export class DiaTimelineService {
                 },
                 {
                   "display": medication,
-                  "value": this.userMedicationBrands.length > 0 ? this.userMedicationBrands[0].id : null,
+                  "value": this.userMedicationBrands.length > 0 ? '' + this.userMedicationBrands[0].id : null,
                   "required": true,
                   "hint": medication,
                   "type": "radio",
                   "regex": "^.*$",
                   "key": "medication",
                   "options": this.userMedicationBrands.map((x) => {
-                    return {display: x.name, value: x.id}
+                    return {display: x.name, value: '' + x.id}
                   }),
                   "namespace_key": "medication"
                 },
@@ -430,7 +430,7 @@ export class DiaTimelineService {
                 },
                 {
                   "display": type,
-                  "value": 2,
+                  "value": "2",
                   "conditional": {},
                   "required": true,
                   "hint": type,
