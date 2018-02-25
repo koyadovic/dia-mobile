@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid> 
+  <ion-grid>
       
     <ion-row> 
       <ion-col> 
@@ -29,7 +29,7 @@
       </ion-col>
     </ion-row> 
     
-    <ion-row>
+    <ion-row *ngIf="!!data['actions']">
 
       <ion-col *ngFor="let action of data['actions']">
         <button (click)="doAction(action)" *ngIf="action.type === 'add'" [disabled]="! isValid()" ion-button full>{{ action['display'] }}</button>

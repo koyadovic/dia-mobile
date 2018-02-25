@@ -155,7 +155,7 @@ export class TimeLinePage {
         ]
       };
   
-      this.timelineService.completeAllGenericTypes(data);
+      // this.timelineService.completeAllGenericTypes(data);
       this.openGenericModal(data);
     });
   }
@@ -192,7 +192,7 @@ export class TimeLinePage {
         ]
       };
   
-      this.timelineService.completeAllGenericTypes(data);
+      // this.timelineService.completeAllGenericTypes(data);
       this.openGenericModal(data);
     });
   }
@@ -229,8 +229,7 @@ export class TimeLinePage {
         ]
       };
   
-      this.timelineService.completeAllGenericTypes(data);
-      console.log(JSON.stringify(data));
+      // this.timelineService.completeAllGenericTypes(data);
       this.openGenericModal(data);
     });
 
@@ -268,7 +267,7 @@ export class TimeLinePage {
         ]
       };
   
-      this.timelineService.completeAllGenericTypes(data);
+      // this.timelineService.completeAllGenericTypes(data);
       this.openGenericModal(data);
     });
   }

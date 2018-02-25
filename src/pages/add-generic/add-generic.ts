@@ -6,6 +6,7 @@ import { ViewController } from 'ionic-angular/navigation/view-controller';
 import { UserMedicationsPage } from '../user-medications/user-medications';
 import { DiaTimelineService } from '../../services/dia-timeline-service';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
+import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
 
 @Component({
   selector: 'page-add-generic',
@@ -15,6 +16,7 @@ export class AddGenericPage {
   @Input() dateFormat;
   @Input() timezone;
 
+  private originalData;
   private data;
 
   complete_elements: object[];
@@ -24,13 +26,13 @@ export class AddGenericPage {
               private viewCtrl: ViewController,
               private timelineService: DiaTimelineService,
               private modalCtrl: ModalController,
-              private restBackendService: DiaRestBackendService) {
+              private restBackendService: DiaRestBackendService,
+              public loadingCtrl: LoadingController) {
 
     // get data
     this.data = this.navParams.get("data");
-
-    console.log(JSON.stringify(this.data));
-
+    this.originalData = JSON.parse(JSON.stringify(this.data));
+    this.timelineService.completeAllGenericTypes(this.data);
     this.data["elements"].forEach((element) => {
       let computed_fields = Object.assign([], this.data["types"][element["type"]]["fields"]);
 
@@ -168,10 +170,41 @@ export class AddGenericPage {
     let modal = this.modalCtrl.create(UserMedicationsPage);
     modal.onDidDismiss((data) => {
       if (UserMedicationsPage.hadChanges) {
+
+        // this is to maintain users busy
+        let loading = this.loadingCtrl.create({
+          content: 'Please wait...'
+        });
+        loading.present();
+
         this.timelineService.refreshElementFields();
-        // TODO hay que actualizar la lista seleccinable de medications!
+
+        setTimeout(
+          () => {
+            // refresh the original data
+            this.data = JSON.parse(JSON.stringify(this.originalData));
+            this.timelineService.completeAllGenericTypes(this.data);
+            this.data["elements"].forEach((element) => {
+            let computed_fields = Object.assign([], this.data["types"][element["type"]]["fields"]);
+      
+            for(let computed_field of computed_fields) {
+              for(let field in element["fields"]) {
+      
+                if (field === computed_field["key"]) {
+                  computed_field["value"] = element["fields"][field]["default_value"];
+                  computed_field["disabled"] = element["fields"][field]["disabled"];
+                }
+              }
+            }
+              element["computed_fields"] = computed_fields;
+            });
+
+            loading.dismiss();
+
+          }
+        ,1000);
       }
-    })
+    });
     modal.present();
   }
 }
