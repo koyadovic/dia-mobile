@@ -124,7 +124,7 @@ export class AddGenericPage {
         for(let field of element['computed_fields']) {
           if (field['type'] === 'date') {
             data[field['key']] = new Date(field['value']).valueOf() / 1000.;
-          } else {
+          } else if (field['key'] !== 'medication_edition_request') {
             data[field['key']] = field['value'];
           }
         }
