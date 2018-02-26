@@ -32,7 +32,7 @@ export class DiaRestBackendService {
           observer.next(resp);
         },
         (err) => {
-          console.log(err);
+          console.error(err);
           if(err.status === 401){
             this.authService.logout();
           }
@@ -54,7 +54,7 @@ export class DiaRestBackendService {
           observer.next(resp);
         },
         (err) => {
-          console.log(err);
+          console.error(err);
           if(err.status === 401){
             this.authService.logout();
           }
