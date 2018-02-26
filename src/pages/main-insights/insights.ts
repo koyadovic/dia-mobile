@@ -38,6 +38,7 @@ export class InsightsPage {
   }
 
   tabChanged(segment){
+    this.content.scrollToTop();
     this.activeInsightSegment = segment['title'];
     this.activeInsightSegmentChartData = segment['insights'];
   }
