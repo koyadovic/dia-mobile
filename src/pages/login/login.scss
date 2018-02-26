@@ -44,11 +44,11 @@ ion-icon.password-icon {
   margin: 20px 0px;
 }
 
-.login-input {
+input.login-input {
 
   //background-color: transparentize(map-get($colors, primary), 0.5);
-  background-color: map-get($colors, primary-dark);
-  border: 0;
+  // background-color: map-get($colors, primary-dark);
+  border: 1;
   outline: 2;
   box-shadow: 2;
   padding: 0.75em;
