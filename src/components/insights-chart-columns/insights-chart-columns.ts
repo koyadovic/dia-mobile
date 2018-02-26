@@ -38,7 +38,8 @@ export class InsightsChartColumnsComponent {
           )
         },
         options: {
-          responsive: false
+          responsive: false,
+          animation: false
         }
       };
       this.columnsChart = new Chart(this.columnsChartCanvas.nativeElement, chartData);

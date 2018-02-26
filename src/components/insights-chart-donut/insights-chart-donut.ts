@@ -42,7 +42,8 @@ export class InsightsChartDonutComponent {
           })
         },
         options: {
-          responsive: false
+          responsive: false,
+          animation: false
         }
       };
 
