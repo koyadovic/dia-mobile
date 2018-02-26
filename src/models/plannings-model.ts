@@ -1,5 +1,6 @@
 export enum PLANNING_TYPES {
     PHYSICAL_ACTIVITY = 'physical_activity',
+    // this are the same in the backend
     //PHYSICAL_TRAIT_CHANGE = 'physical_trait',
     //FEEDING = 'feeding',
     //GLUCOSE = 'glucose',
