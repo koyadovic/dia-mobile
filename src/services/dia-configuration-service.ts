@@ -29,25 +29,29 @@ export class DiaConfigurationService {
             }
         );
     }
+    
+    saveConfiguration(configurationChanges) {
+        return this.restBackendService
+            .genericPost(`${this.backendURL.baseURL}/v1/configurations/`, configurationChanges)
+            .subscribe((configuration) => {
+                this.userConfig.updateValues(configurationChanges);
+                this.newConfiguration(configuration);
+            });
+    }
 
     private refreshConfiguration(){
         this.restBackendService
             .genericGet(`${this.backendURL.baseURL}/v1/configurations/`)
             .subscribe((configuration) => {
-                this.configuration.next(configuration);
-                this.userConfig.injectDependencies(configuration, this.translate);
-                this.ready$.next(true);
+                this.newConfiguration(configuration);
             }
         );
     }
 
-    saveConfiguration(configurationChanges) {
-        return this.restBackendService
-            .genericPost(`${this.backendURL.baseURL}/v1/configurations/`, configurationChanges)
-            .subscribe((resp) => {
-                this.userConfig.updateValues(configurationChanges);
-                this.refreshConfiguration();
-            });
+    private newConfiguration(configuration){
+        this.configuration.next(configuration);
+        this.userConfig.injectDependencies(configuration, this.translate);
+        this.ready$.next(true);
     }
 
     getConfiguration():Observable<any> {
