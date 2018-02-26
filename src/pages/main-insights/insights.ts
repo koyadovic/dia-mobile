@@ -33,6 +33,10 @@ export class InsightsPage {
     )
   }
 
+  ionViewWillLeave() {
+    this.content.scrollToTop();
+  }
+
   resize() {
     this.content.resize();
   }
