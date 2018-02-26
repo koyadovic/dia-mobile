@@ -10,12 +10,6 @@ import { ToastController } from 'ionic-angular/components/toast/toast-controller
   templateUrl: 'user-medications.html',
 })
 export class UserMedicationsPage {
-  /*
-  En el inicio, que se consulten las del usuario. Si hay, que te salga el listado.
-
-  Si un usuario busca en el cuadro de texto, se busca en el backend por nombre y se muestran los resultados. Si se elimina la búsqueda
-  vuelve a salir la lista de medicamentos del usuario
-  */
 
   private userMedications: Medication[] = [];
   private searchMedicationsResult: Medication[] = [];

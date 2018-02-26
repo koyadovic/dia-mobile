@@ -33,11 +33,16 @@ export class InsightsPage {
     )
   }
 
+  ionViewWillLeave() {
+    this.content.scrollToTop();
+  }
+
   resize() {
     this.content.resize();
   }
 
   tabChanged(segment){
+    this.content.scrollToTop();
     this.activeInsightSegment = segment['title'];
     this.activeInsightSegmentChartData = segment['insights'];
   }
