@@ -19,12 +19,12 @@
   <ion-list>
 
     <ion-item>
-      <ion-label stacked>Name</ion-label>
+      <ion-label stacked>Name for automation</ion-label>
       <ion-input type="text" [(ngModel)]="planning.name"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label stacked>Type</ion-label>
+      <ion-label stacked>What kind of event do you want to add</ion-label>
       <ion-select [(ngModel)]="planning.type" (ionChange)="updateTypeData()">
         <ion-option [value]="'physical_activity'">Physical Activity</ion-option>
         <ion-option [value]="'medication_take'">Medication Take</ion-option>
@@ -33,17 +33,18 @@
 
     <button ion-item (click)="definePlanning()">
       <ion-icon name="settings" item-start></ion-icon>
-      Redefine: {{ planning.data | json }}
+      <span *ngIf="emptyDict(dataPreserved[planning.type])">Not defined yet. Click me!</span>
+      <span *ngIf="!emptyDict(dataPreserved[planning.type])">Defined! Click to redefine</span>
     </button>
 
     <ion-item>
       <ion-icon name="time" item-start></ion-icon>
-      <ion-label>Time</ion-label>
+      <ion-label>Auto add at:</ion-label>
       <ion-datetime displayFormat="HH:mm" [(ngModel)]="datetimeTime" (ionChange)="timeChanged()"></ion-datetime>
     </ion-item>
 
     <ion-list-header>
-      Weekdays
+      Auto add every
     </ion-list-header>
 
     <button ion-item (click)="planning.mon = !planning.mon">
