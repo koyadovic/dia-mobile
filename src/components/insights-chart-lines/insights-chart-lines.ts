@@ -36,7 +36,8 @@ export class InsightsChartLinesComponent {
         },
         options: {
           responsive: false,
-          fill: 'start'
+          fill: 'start',
+          animation: false
         }
       };
 

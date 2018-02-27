@@ -1,4 +1,4 @@
-<ion-list *ngIf="!!configurationRoot">
+<ion-list *ngIf="!!configurationRoot && configurationRoot.fields?.length > 0">
 
   <dynamic-field
     *ngFor="let field of configurationRoot.fields"

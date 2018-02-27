@@ -45,7 +45,8 @@ export class InsightsChartPieComponent {
           })
         },
         options: {
-          responsive: false
+          responsive: false,
+          animation: false
         }
       };
 

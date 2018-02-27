@@ -19,6 +19,10 @@ import { ToastController } from 'ionic-angular/components/toast/toast-controller
 export class PlanningsEditorPage {
   @Input() planning: Planning;
 
+  datetimeTime = "";
+
+  dataPreserved = {};
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private modalCtrl: ModalController,
@@ -31,6 +35,15 @@ export class PlanningsEditorPage {
     // get data
     this.planning = this.navParams.get("planning");
     if(this.planning === null) this.createPlanning();
+
+    this.dataPreserved[PLANNING_TYPES.PHYSICAL_ACTIVITY] = {};
+    this.dataPreserved[PLANNING_TYPES.MEDICATION_TAKE] = {};
+    this.dataPreserved[this.planning.type] = this.planning.data;
+
+    // this sets the ion-datetime to current time.
+    let local_hour = this.planning.local_hour > 9 ? `${this.planning.local_hour}` : `0${this.planning.local_hour}`;
+    let local_minute = this.planning.local_minute > 9 ? `${this.planning.local_minute}` : `0${this.planning.local_minute}`;
+    this.datetimeTime = `${local_hour}:${local_minute}`;
   }
 
   definePlanning() {
@@ -46,6 +59,14 @@ export class PlanningsEditorPage {
   }
 
   private openGenericModal(data){
+    for(let key in this.dataPreserved[this.planning.type]) {
+      // this is to preserve the configuration made in the generic dialog.
+      data['elements'][0]['fields'][key] = {};
+      data['elements'][0]['fields'][key]['default_value'] = this.dataPreserved[this.planning.type][key];
+      data['elements'][0]['fields'][key]['disabled'] = false;
+
+      data[key] = this.dataPreserved[this.planning.type][key];
+    }
     let modal = this.modalCtrl.create(AddGenericPage, {data: data});
 
     modal.onDidDismiss((requests) => {
@@ -53,9 +74,18 @@ export class PlanningsEditorPage {
         let rs = requests['requests'];
         this.planning.data = rs[0].data;
         delete this.planning.data['datetime'];
+        this.dataPreserved[this.planning.type] = this.planning.data;
       }
     });
     modal.present();
+  }
+
+  emptyDict(dict:object) {
+    return Object.keys(dict).length === 0;
+  }
+
+  updateTypeData() {
+    this.planning.data = this.dataPreserved[this.planning.type];
   }
 
   save() {
@@ -142,6 +172,12 @@ export class PlanningsEditorPage {
         observer.complete();
       });
     });
+  }
+
+  timeChanged() {
+    let parts = this.datetimeTime.split(':');
+    this.planning.local_hour = parseInt(parts[0]);
+    this.planning.local_minute = parseInt(parts[1]);
   }
 
   toast(message:string){

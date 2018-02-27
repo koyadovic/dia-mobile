@@ -60,5 +60,8 @@
     "Waist Perimeter (cm)": "Perímetro de cintura (cm)",
     
     "Male": "Hombre",
-    "Female": "Mujer"
+    "Female": "Mujer",
+
+    "Delete Planning?": "¿Eliminar Planning?",
+    "Are you sure to delete this planning?": "¿Está seguro de querer eliminar el Planning?"
 }
