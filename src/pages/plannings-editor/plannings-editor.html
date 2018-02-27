@@ -14,91 +14,94 @@
 </ion-header>
 
 
-<ion-content padding>
-  <ion-grid *ngIf="planning">
+<ion-content *ngIf="planning">
 
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label stacked>Name</ion-label>
-          <ion-input type="text" [(ngModel)]="planning.name"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
+  <ion-list>
 
-    <ion-row>
-      <ion-col>
-          <ion-item>
-        <ion-label stacked>Type</ion-label>
-        <ion-select [(ngModel)]="planning.type">
-          <ion-option [value]="'physical_activity'">Physical Activity</ion-option>
-          <ion-option [value]="'medication_take'">Medication Take</ion-option>
-        </ion-select>
-      </ion-item>
-      </ion-col>
+    <ion-item>
+      <ion-label stacked>Name</ion-label>
+      <ion-input type="text" [(ngModel)]="planning.name"></ion-input>
+    </ion-item>
 
-      <ion-col>
-        {{ planning.data | json }}
-        <button ion-item (click)="definePlanning()">
-          Definition
-        </button>
-      </ion-col>
-    </ion-row>
+    <ion-item>
+      <ion-label stacked>Type</ion-label>
+      <ion-select [(ngModel)]="planning.type" (ionChange)="updateTypeData()">
+        <ion-option [value]="'physical_activity'">Physical Activity</ion-option>
+        <ion-option [value]="'medication_take'">Medication Take</ion-option>
+      </ion-select>
+    </ion-item>
 
-    <ion-row>
-      <ion-col>
-        <ion-item>
-        <ion-label stacked>Hour</ion-label>
-        <ion-input type="number" max="23" min="0" [(ngModel)]="planning.local_hour" placeholder="Hour"></ion-input>
-      </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-item>
-        <ion-label stacked>Minute</ion-label>
-        <ion-input type="number" max="59" min="0" [(ngModel)]="planning.local_minute" placeholder="Minute"></ion-input>
-      </ion-item>
-      </ion-col>
-    </ion-row>
+    <button ion-item (click)="definePlanning()">
+      <ion-icon name="settings" item-start></ion-icon>
+      Redefine: {{ planning.data | json }}
+    </button>
 
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label stacked>Monday</ion-label>
-          <ion-toggle [(ngModel)]="planning.mon"></ion-toggle>
-        </ion-item>
-          
-        <ion-item>
-          <ion-label stacked>Tuesday</ion-label>
-          <ion-toggle [(ngModel)]="planning.tue"></ion-toggle>
-        </ion-item>
+    <ion-item>
+      <ion-icon name="time" item-start></ion-icon>
+      <ion-label>Time</ion-label>
+      <ion-datetime displayFormat="HH:mm" [(ngModel)]="datetimeTime" (ionChange)="timeChanged()"></ion-datetime>
+    </ion-item>
 
-        <ion-item>
-          <ion-label stacked>Wednesday</ion-label>
-          <ion-toggle [(ngModel)]="planning.wed"></ion-toggle>
-        </ion-item>
+    <ion-list-header>
+      Weekdays
+    </ion-list-header>
 
-        <ion-item>
-          <ion-label stacked>Thursday</ion-label>
-          <ion-toggle [(ngModel)]="planning.thu"></ion-toggle>
-        </ion-item>
+    <button ion-item (click)="planning.mon = !planning.mon">
+      <ion-icon name="calendar" item-start></ion-icon>
+      <ion-label>Monday</ion-label>
+      <div item-content>
+        <ion-toggle [(ngModel)]="planning.mon" (click)="planning.mon = !planning.mon"></ion-toggle>
+      </div>
+    </button>
 
-        <ion-item>
-          <ion-label stacked>Friday</ion-label>
-          <ion-toggle [(ngModel)]="planning.fri"></ion-toggle>
-        </ion-item>
+    <button ion-item (click)="planning.tue = !planning.tue">
+      <ion-icon name="calendar" item-start></ion-icon>
+      <ion-label>Tuesday</ion-label>
+      <div item-content>
+        <ion-toggle [(ngModel)]="planning.tue" (click)="planning.tue = !planning.tue"></ion-toggle>
+      </div>
+    </button>
 
-        <ion-item>
-          <ion-label stacked>Saturday</ion-label>
-          <ion-toggle [(ngModel)]="planning.sat"></ion-toggle>
-        </ion-item>
+    <button ion-item (click)="planning.wed = !planning.wed">
+      <ion-icon name="calendar" item-start></ion-icon>
+      <ion-label>Wednesday</ion-label>
+      <div item-content>
+        <ion-toggle [(ngModel)]="planning.wed" (click)="planning.wed = !planning.wed"></ion-toggle>
+      </div>
+    </button>
 
-        <ion-item>
-          <ion-label stacked>Sunday</ion-label> 
-          <ion-toggle [(ngModel)]="planning.sun"></ion-toggle>
-        </ion-item>
+    <button ion-item (click)="planning.thu = !planning.thu">
+      <ion-icon name="calendar" item-start></ion-icon>
+      <ion-label>Thursday</ion-label>
+      <div item-content>
+        <ion-toggle [(ngModel)]="planning.thu" (click)="planning.thu = !planning.thu"></ion-toggle>
+      </div>
+    </button>
 
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+    <button ion-item (click)="planning.fri = !planning.fri">
+      <ion-icon name="calendar" item-start></ion-icon>
+      <ion-label>Friday</ion-label>
+      <div item-content>
+        <ion-toggle [(ngModel)]="planning.fri" (click)="planning.fri = !planning.fri"></ion-toggle>
+      </div>
+    </button>
+
+    <button ion-item (click)="planning.sat = !planning.sat">
+      <ion-icon name="calendar" item-start></ion-icon>
+      <ion-label>Saturday</ion-label>
+      <div item-content>
+        <ion-toggle [(ngModel)]="planning.sat" (click)="planning.sat = !planning.sat"></ion-toggle>
+      </div>
+    </button>
+
+    <button ion-item (click)="planning.sun = !planning.sun">
+      <ion-icon name="calendar" item-start></ion-icon>
+      <ion-label>Sunday</ion-label>
+      <div item-content>
+        <ion-toggle [(ngModel)]="planning.sun" (click)="planning.sun = !planning.sun"></ion-toggle>
+      </div>
+    </button>
+
+  </ion-list>
 
 </ion-content>

@@ -19,6 +19,10 @@ import { ToastController } from 'ionic-angular/components/toast/toast-controller
 export class PlanningsEditorPage {
   @Input() planning: Planning;
 
+  datetimeTime = "";
+
+  dataPreserved = {};
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private modalCtrl: ModalController,
@@ -30,7 +34,13 @@ export class PlanningsEditorPage {
 
     // get data
     this.planning = this.navParams.get("planning");
+    this.datetimeTime = `${this.planning.local_hour}:${this.planning.local_minute}`;
     if(this.planning === null) this.createPlanning();
+
+
+    this.dataPreserved[PLANNING_TYPES.PHYSICAL_ACTIVITY] = {};
+    this.dataPreserved[PLANNING_TYPES.MEDICATION_TAKE] = {};
+    this.dataPreserved[this.planning.type] = this.planning.data;
   }
 
   definePlanning() {
@@ -53,9 +63,14 @@ export class PlanningsEditorPage {
         let rs = requests['requests'];
         this.planning.data = rs[0].data;
         delete this.planning.data['datetime'];
+        this.dataPreserved[this.planning.type] = this.planning.data;
       }
     });
     modal.present();
+  }
+
+  updateTypeData() {
+    this.planning.data = this.dataPreserved[this.planning.type];
   }
 
   save() {
@@ -142,6 +157,12 @@ export class PlanningsEditorPage {
         observer.complete();
       });
     });
+  }
+
+  timeChanged() {
+    let parts = this.datetimeTime.split(':');
+    this.planning.local_hour = parseInt(parts[0]);
+    this.planning.local_minute = parseInt(parts[1]);
   }
 
   toast(message:string){
