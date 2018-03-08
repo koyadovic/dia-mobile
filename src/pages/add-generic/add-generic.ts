@@ -30,22 +30,21 @@ export class AddGenericPage {
               public loadingCtrl: LoadingController) {
 
     // get data
-    this.data = this.navParams.get("data");
-    this.originalData = JSON.parse(JSON.stringify(this.data));
+    this.originalData = this.navParams.get("data");
+    this.data = JSON.parse(JSON.stringify(this.originalData));
     this.timelineService.completeAllGenericTypes(this.data);
+
     this.data["elements"].forEach((element) => {
       let computed_fields = Object.assign([], this.data["types"][element["type"]]["fields"]);
-
       for(let computed_field of computed_fields) {
         for(let field in element["fields"]) {
-
           if (field === computed_field["key"]) {
             computed_field["value"] = element["fields"][field]["default_value"];
             computed_field["disabled"] = element["fields"][field]["disabled"];
           }
         }
       }
-      element["computed_fields"] = computed_fields;
+      element["computed_fields"] = JSON.parse(JSON.stringify(computed_fields));
     });
   }
 
@@ -156,10 +155,8 @@ export class AddGenericPage {
   isValid(){
     for(let element of this.data.elements) {
       for(let field of element.computed_fields) {
-        if((this.hasProp(field, 'disabled') && field['disabled'] === false) || !this.hasProp(field, 'disabled')) {
-          if (!this.hasProp(field, 'valid') || (this.hasProp(field, 'valid') && !field.valid)){
-            return false;
-          }
+        if (this.hasProp(field, 'valid') && !field.valid){
+          return false;
         }
       }
     }
