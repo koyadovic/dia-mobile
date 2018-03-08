@@ -16,9 +16,10 @@ p.time-passed {
 }
 
 h2.instant-card-title {
-//    font-size: 1.3em;
-//    font-weight: 100;
+    font-weight: 100;
+    font-size: 1.3em;
 }
+
 
 p.instant-card-subtitle{
     color: map-get($colors, primary-dark);

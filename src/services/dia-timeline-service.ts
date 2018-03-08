@@ -357,50 +357,51 @@ export class DiaTimelineService {
           ).subscribe(([instant, medication, medicationEdit, amount, amountHint]) => {
               this.medicationTakeFields = [
                 {
-                  "display": instant,
-                  "value": "",
-                  "required": false,
-                  "hint": "",
-                  "type": "date",
-                  "regex": "",
-                  "key": "datetime",
-                  "namespace_key": "datetime",
-                  "additional_options": {
-                    "format": `${this.userConfig.getValue(UserConfiguration.DATE_FORMAT)} HH:mm`
-                  }
+                    "display": instant,
+                    "value": "",
+                    "required": false,
+                    "hint": "",
+                    "type": "date",
+                    "regex": "",
+                    "key": "datetime",
+                    "namespace_key": "datetime",
+                    "additional_options": {
+                        "format": `${this.userConfig.getValue(UserConfiguration.DATE_FORMAT)} HH:mm`
+                    }
                 },
                 {
-                "display": medication,
-                "value": this.userMedicationBrands.length > 0 ? '' + this.userMedicationBrands[0].id : null,
-                "required": true,
-                "hint": medication,
-                "type": "radio",
-                "regex": "^.*$",
-                "key": "medication",
-                "options": this.userMedicationBrands.map((x) => {
-                    return {display: x.name, value: '' + x.id}
-                }),
-                "namespace_key": "medication"
-                },                {
-                "display": medicationEdit,
-                "value": "medication_edition_request",
-                "required": true,
-                "hint": "",
-                "type": "action",
-                "regex": "^.*$",
-                "key": "medication_edition_request",
-                "options": [],
-                "namespace_key": "medication_edition_request"
+                    "display": medication,
+                    "value": this.userMedicationBrands.length > 0 ? '' + this.userMedicationBrands[0].id : null,
+                    "required": true,
+                    "hint": medication,
+                    "type": "radio",
+                    "regex": "^.*$",
+                    "key": "medication",
+                    "options": this.userMedicationBrands.map((x) => {
+                        return {display: x.name, value: '' + x.id}
+                    }),
+                    "namespace_key": "medication"
                 },
                 {
-                  "display": amount,
-                  "value": "",
-                  "required": true,
-                  "hint": amountHint,
-                  "type": "number",
-                  "regex": "^.*$",
-                  "key": "amount",
-                  "namespace_key": "amount"
+                    "display": medicationEdit,
+                    "value": "medication_edition_request",
+                    "required": true,
+                    "hint": "",
+                    "type": "action",
+                    "regex": "^.*$",
+                    "key": "medication_edition_request",
+                    "options": [],
+                    "namespace_key": "medication_edition_request"
+                },
+                {
+                    "display": amount,
+                    "value": "",
+                    "required": true,
+                    "hint": amountHint,
+                    "type": "number",
+                    "regex": "^.*$",
+                    "key": "amount",
+                    "namespace_key": "amount"
                 }
               ]
           });      
