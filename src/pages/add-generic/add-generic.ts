@@ -35,12 +35,20 @@ export class AddGenericPage {
     this.timelineService.completeAllGenericTypes(this.data);
 
     this.data["elements"].forEach((element) => {
-      let computed_fields = Object.assign([], this.data["types"][element["type"]]["fields"]);
+
+      let computed_fields = JSON.parse(JSON.stringify(this.data["types"][element["type"]]["fields"]));
+
       for(let computed_field of computed_fields) {
         for(let field in element["fields"]) {
           if (field === computed_field["key"]) {
             computed_field["value"] = element["fields"][field]["default_value"];
             computed_field["disabled"] = element["fields"][field]["disabled"];
+          }
+          
+          // with this code, if field is disabled and is a selectable field, is silly show all alternatives
+          // only show the selected option.
+          if (computed_field["disabled"] && (computed_field["type"] == 'radio' || computed_field["type"] == 'select')) {
+            computed_field["options"] = computed_field["options"].filter(option => option["value"] == computed_field["value"] )
           }
         }
       }
