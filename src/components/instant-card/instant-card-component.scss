@@ -30,7 +30,9 @@ ion-icon.instant-card-icon {
     color: map-get($colors, primary-very-dark);
 }
 
-
+div.item-inner {
+    /* margin-left: 15px !important; */
+}
 
 .action-request {
 
