@@ -13,13 +13,14 @@
 }
 
 .instants-list {
-    background-color: #f7f7f7;
+    background-color: #f9f9f9;
     .item {
         padding-top: 0px;
     }
     .instant-date-info {
         color: map-get($colors, grey);
-        background-color: #f7f7f7;
+        background-color: #f9f9f9;
         border-top: 0;
+        border-bottom: 0;
     }
 }

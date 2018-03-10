@@ -1,6 +1,6 @@
 <ng-container [ngSwitch]="instant.content.type" class="card">
     <!-- Glucose Levels -->
-    <button ion-item [ngClass]="getInstantClass()" *ngSwitchCase="'glucose'">
+    <button ion-item class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'glucose'">
 
         <ion-icon class="instant-card-icon" color="primary" item-start name="water"></ion-icon>
         <ion-grid>
@@ -19,7 +19,7 @@
 
 
     <!-- Feedings -->
-    <button ion-item [ngClass]="getInstantClass()" *ngSwitchCase="'feeding'">
+    <button ion-item class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'feeding'">
         <ion-icon class="instant-card-icon" color="primary" item-start name="restaurant"></ion-icon>
         <ion-grid>
             <ion-row align-items-end>
@@ -36,7 +36,7 @@
     </button>
 
     <!-- Activity -->
-    <button ion-item [ngClass]="getInstantClass()" *ngSwitchCase="'activity'">
+    <button ion-item class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'activity'">
         <ion-icon class="instant-card-icon" color="primary" item-start name="bicycle"></ion-icon>
         <ion-grid>
             <ion-row align-items-end>
@@ -53,7 +53,7 @@
     </button>
 
     <!-- Trait Changes -->
-    <button ion-item [ngClass]="getInstantClass()" *ngSwitchCase="'trait'">
+    <button ion-item class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'trait'">
         <ion-icon class="instant-card-icon" color="primary" item-start name="body"></ion-icon>
         <ion-grid>
             <ion-row align-items-end>
@@ -71,7 +71,7 @@
 
 
     <!-- Medication Takes -->
-    <button ion-item [ngClass]="getInstantClass()" *ngSwitchCase="'medication-take'">
+    <button ion-item class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'medication-take'">
         <ion-icon class="instant-card-icon" color="primary" item-start name="thermometer"></ion-icon>
         <ion-grid>
             <ion-row align-items-end>
@@ -88,7 +88,7 @@
     </button>
 
     <!-- Action Requests -->
-    <button ion-item [ngClass]="getInstantClass()" *ngSwitchCase="'action-request'">
+    <button ion-item class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'action-request'">
 
         <ion-icon item-end *ngIf="instant.content.status === 0" color="light" name="ios-alert-outline"></ion-icon>
         <ion-icon item-end *ngIf="instant.content.status === 1" color="light" name="ios-close-circle-outline"></ion-icon>

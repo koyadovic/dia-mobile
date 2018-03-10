@@ -56,13 +56,12 @@ ion-icon.instant-card-icon {
 
 
 
-button.item {
-    box-shadow: 0px 5px 8px #ccc;
-    width: calc(100% - 20px);
-    margin-left: 10px;
-    margin-right: 10px;
+button.item.instant-card {
+    box-shadow: 0px 5px 8px #eee;
+    width: calc(100% - 10px);
+    margin-left: 5px;
+    margin-right: 5px;
     margin-bottom: 10px;
-    
 
     /* border: solid 1px; */
     border-radius: 4px;

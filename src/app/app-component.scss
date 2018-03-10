@@ -34,7 +34,7 @@
 }
 
 // This is for configuration page, arrow icons to be white.
-.bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default {
+.bar-button {
     color: map-get($colors, light);
     background-color: transparent;
 }
