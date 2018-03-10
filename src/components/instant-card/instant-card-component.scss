@@ -17,7 +17,7 @@ p.time-passed {
 
 h2.instant-card-title {
     font-weight: 100;
-    font-size: 1.3em;
+    font-size: 1.0em;
 }
 
 
@@ -30,24 +30,19 @@ ion-icon.instant-card-icon {
     color: map-get($colors, primary-very-dark);
 }
 
-div.item-inner {
-    /* margin-left: 15px !important; */
-}
-
-.action-request {
-
-}
 
 .action-request.done {
-    color: green;
-    background: linear-gradient(to right, #fff , #eff9fb);
+    /* color: green; */
+    color: map-get($colors, secondary);
+    background: linear-gradient(to right,transparentize(map-get($colors, primary-dark), 0.8), transparentize(map-get($colors, primary-dark), 0.0));
     border-bottom: 1px solid #eff9fb;
     border-top: 1px solid #eff9fb;
 }
 
 .action-request.unattended {
-    color: red;
-    background: linear-gradient(to right, #fff , #ffeff2);
+    /* color: red; */
+    color: map-get($colors, secondary);
+    background: linear-gradient(to right,transparentize(map-get($colors, danger), 0.8) , transparentize(map-get($colors, danger), 0.0));
     border-bottom: 1px solid #ffeff2;
     border-top: 1px solid #ffeff2;
 }
@@ -57,4 +52,18 @@ div.item-inner {
     background: linear-gradient(to right, #fff , #f7f7f7);
     border-bottom: 1px solid #f7f7f7;
     border-top: 1px solid #f7f7f7;
+}
+
+
+
+button.item {
+    box-shadow: 0px 5px 8px #ccc;
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    
+
+    /* border: solid 1px; */
+    border-radius: 4px;
 }
