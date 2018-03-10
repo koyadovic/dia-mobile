@@ -27,16 +27,19 @@
     background-color: map-get($colors, primary);
 }
 .toolbar-title {
-    color: map-get($colors, light); 
+    color: map-get($colors, light);
+    font-weight: 400;
 }
 .bar-buttons {
     color: map-get($colors, light); 
+    font-weight: 400;
 }
 
 // This is for configuration page, arrow icons to be white.
 .bar-button {
     color: map-get($colors, light);
     background-color: transparent;
+    font-weight: 400;
 }
 
 /*

@@ -90,15 +90,15 @@
     <!-- Action Requests -->
     <button ion-item class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'action-request'">
 
-        <ion-icon item-end *ngIf="instant.content.status === 0" color="light" name="ios-alert-outline"></ion-icon>
-        <ion-icon item-end *ngIf="instant.content.status === 1" color="light" name="ios-close-circle-outline"></ion-icon>
-        <ion-icon item-end *ngIf="instant.content.status === 2" color="light" name="ios-checkmark-circle-outline"></ion-icon>
+        <ion-icon item-start *ngIf="instant.content.status === 0" color="danger" name="ios-alert-outline"></ion-icon>
+        <ion-icon item-start *ngIf="instant.content.status === 1" color="secondary" name="ios-close-circle-outline"></ion-icon>
+        <ion-icon item-start *ngIf="instant.content.status === 2" color="primary" name="ios-checkmark-circle-outline"></ion-icon>
 
         <ion-grid>
             <ion-row align-items-end>
                 <ion-col>
-                    <h2 text-right padding-right class="instant-card-title">{{ instant.content.title }}</h2>
-                    <p *ngIf="instant.content.status === 0" text-right padding-right>{{ instant.content.elements[0].info }}</p>
+                    <h2 class="instant-card-title">{{ instant.content.title }}</h2>
+                    <p *ngIf="instant.content.status === 0">{{ instant.content.elements[0].info }}</p>
                 </ion-col>
             </ion-row>
         </ion-grid>

@@ -39,13 +39,15 @@ $colors: (
   primary-light:  #66acd0,
   secondary:  #FCE57C, // #32db64
   tertiary:     #E57CFC, // #f53d3d
-  danger:     #B1001E, // #f53d3d
   light:      #f4f4f4,
   yellow-light: #78c9af,
   dark:       #222, // #222
   grey:       #999, // #222
 
-  textcolor: #FCE57C
+  textcolor: #FCE57C,
+
+  danger:     #B1001E, // #f53d3d
+  success: #78c9af
 );
 
 
