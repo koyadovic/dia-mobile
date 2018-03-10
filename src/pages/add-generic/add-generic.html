@@ -17,7 +17,7 @@
           <p padding-right padding-left *ngIf="!!element.info">{{ element.info }}</p>
           <ng-container *ngFor="let field of element.computed_fields">
 
-            <dynamic-field *ngIf="isConditionalTrue(element, field) && !(field.disabled !== undefined && field.disabled)"
+            <dynamic-field *ngIf="isConditionalTrue(element, field) && (data.type !== 'action-request' || field.type !== 'action')"
               [dateFormat]="dateFormat || 'MM DD, YYYY HH:mm'"
               [timezone]="timezone || 'UTC'"
               [field]="field" (haveChanges)="haveChanges($event, element)">

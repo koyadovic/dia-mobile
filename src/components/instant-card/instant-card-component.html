@@ -1,10 +1,10 @@
 <button ion-item [ngClass]="getInstantClass()">
 
-    <ion-icon class="instant-card-icon" item-start *ngIf="instant.content.type == 'glucose'" name="water"></ion-icon>
-    <ion-icon class="instant-card-icon" item-start *ngIf="instant.content.type == 'feeding'" name="restaurant"></ion-icon>
-    <ion-icon class="instant-card-icon" item-start *ngIf="instant.content.type == 'activity'" name="bicycle"></ion-icon>
-    <ion-icon class="instant-card-icon" item-start *ngIf="instant.content.type == 'trait'" name="body"></ion-icon>
-    <ion-icon class="instant-card-icon" item-start *ngIf="instant.content.type == 'medication-take'" name="thermometer"></ion-icon>
+    <ion-icon class="instant-card-icon" color="primary" item-start *ngIf="instant.content.type == 'glucose'" name="water"></ion-icon>
+    <ion-icon class="instant-card-icon" color="primary" item-start *ngIf="instant.content.type == 'feeding'" name="restaurant"></ion-icon>
+    <ion-icon class="instant-card-icon" color="primary" item-start *ngIf="instant.content.type == 'activity'" name="bicycle"></ion-icon>
+    <ion-icon class="instant-card-icon" color="primary" item-start *ngIf="instant.content.type == 'trait'" name="body"></ion-icon>
+    <ion-icon class="instant-card-icon" color="primary" item-start *ngIf="instant.content.type == 'medication-take'" name="thermometer"></ion-icon>
 
     <ion-icon item-end *ngIf="instant.content.type == 'action-request' && instant.content.status === 0" name="ios-alert-outline"></ion-icon>
     <ion-icon item-end *ngIf="instant.content.type == 'action-request' && instant.content.status === 1" name="ios-close-circle-outline"></ion-icon>
@@ -16,8 +16,8 @@
                 <ng-container [ngSwitch]="instant.content.type">
                     <!-- glucoses -->
                     <ng-container *ngSwitchCase="'glucose'">
-                        <h2 class="instant-card-title">{{ "Glucose Level" | translate }}</h2>
-                        <p class="instant-card-subtitle">{{ instant.content.level }}mg/dL</p>
+                        <h2 class="instant-card-title">{{ instant.content.level }}mg/dL</h2>
+                        <p class="instant-card-subtitle">{{ "Glucose Level" | translate }}</p>
                     </ng-container>
                     
                     <!-- feeding -->
@@ -31,20 +31,20 @@
             
                     <!-- physical_activity -->
                     <ng-container *ngSwitchCase="'activity'">
-                        <h2 class="instant-card-title">{{ "Physical Activity" | translate }}</h2>
-                        <p class="instant-card-subtitle">{{activity_intensities[instant.content.intensity]}} intensity. {{ instant.content.minutes }} minutes.</p>
+                        <h2 class="instant-card-title">{{activity_intensities[instant.content.intensity]}} intensity. {{ instant.content.minutes }} minutes.</h2>
+                        <p class="instant-card-subtitle">{{ "Physical Activity" | translate }}</p>
                     </ng-container>
             
                     <!-- physical_trait -->
                     <ng-container *ngSwitchCase="'trait'">
-                        <h2 class="instant-card-title">{{ "Physical Trait Change" | translate }}</h2>
-                        <p class="instant-card-subtitle">{{ trait_types[instant.content.trait_type] }} {{ instant.content.value }} {{ trait_types_measure[instant.content.trait_type] }}</p>
+                        <h2 class="instant-card-title">{{ trait_types[instant.content.trait_type] }} {{ instant.content.value }} {{ trait_types_measure[instant.content.trait_type] }}</h2>
+                        <p class="instant-card-subtitle">{{ "Physical Trait Change" | translate }}</p>
                     </ng-container>
                 
                     <!-- medication takes -->
                     <ng-container *ngSwitchCase="'medication-take'">
-                        <h2 class="instant-card-title">{{ "Medication Take" | translate }}</h2>
-                        <p class="instant-card-subtitle">{{ instant.content.medication }} {{ instant.content.amount }}u</p>
+                        <h2 class="instant-card-title">{{ instant.content.medication }} {{ instant.content.amount }}u</h2>
+                        <p class="instant-card-subtitle">{{ "Medication Take" | translate }}</p>
                     </ng-container>
 
                         
@@ -54,7 +54,7 @@
 
             <ion-col *ngIf="instant.content.type === 'action-request'">
                 <!-- action-request -->
-                <h2 text-right padding-right>{{ instant.content.title }}</h2>
+                <h2 text-right padding-right class="instant-card-title">{{ instant.content.title }}</h2>
                 <p *ngIf="instant.content.status === 0" text-right padding-right>{{ instant.content.elements[0].info }}</p>
             </ion-col>
 

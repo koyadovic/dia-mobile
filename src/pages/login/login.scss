@@ -1,20 +1,13 @@
-ion-icon.password-icon {
-    font-size: 120%;
-    color: rgb(0, 131, 24);
-    padding-top: 5px;
-}
-
 .root-container {
-    background-color: color($colors, primary-light);
+    background-color: color($colors, primary);
 }
 
 .img-logo {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 40%;
+  width: 50%;
 }
-
 
 .login-container {
   visibility: hidden;
@@ -44,11 +37,11 @@ ion-icon.password-icon {
   margin: 20px 0px;
 }
 
-input.login-input {
+.login-group input.login-input {
 
-  //background-color: transparentize(map-get($colors, primary), 0.5);
-  // background-color: map-get($colors, primary-dark);
-  border: 1;
+  background-color: transparentize(#000, 0.7) !important;
+  // background-color: map-get($colors, primary-dark); FCE57C
+  border: 0;
   outline: 2;
   box-shadow: 2;
   padding: 0.75em;
