@@ -15,6 +15,28 @@
   </ion-refresher>
 
   <ion-list class="instants-list">
+
+    <!-- FUTURE -->
+    <button class="future-ion-button" ion-item (click)="showFuture=!showFuture" *ngIf="futureTimeline.length > 0">
+        <p *ngIf="futureTimeline.length == 1" color="grey">See next {{ futureTimeline.length }} routine</p>
+        <p *ngIf="futureTimeline.length > 1" color="grey">See next {{ futureTimeline.length }} routines</p>
+        <ion-icon item-start name="glasses" color="grey" *ngIf="!showFuture"></ion-icon>
+        <ion-icon item-start name="glasses" color="primary" *ngIf="showFuture"></ion-icon>
+    </button>
+
+    <ng-container *ngIf="showFuture">
+      <ng-container *ngFor="let instant of futureTimeline; let i = index">
+
+        <instant-card
+          [ngClass]="instant.event_type" [instant]="instant" [userConfig]="userConfig"
+          (click)="cardClicked(instant)">
+        </instant-card>
+
+      </ng-container>
+    </ng-container>
+    <!-- FUTURE END -->
+
+
     <ng-container *ngFor="let instant of timeline; let i = index">
 
       <ion-list-header class="instant-date-info" text-right *ngIf="!!dateInfo(i)">{{ dateInfo(i) }}
