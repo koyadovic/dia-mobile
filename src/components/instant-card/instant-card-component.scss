@@ -23,12 +23,8 @@ h2.instant-card-title {
 
 p.instant-card-subtitle{
     color: map-get($colors, primary-dark);
-    //font-weight: 800;
 }
 
-ion-icon.instant-card-icon {
-    color: map-get($colors, primary-very-dark);
-}
 
 
 
@@ -59,6 +55,36 @@ button.item .instant-card-icon {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
+
+
+/* FUTURE */
+button.item.instant-card.future {
+    box-shadow: 5px 5px 5px #eee;
+}
+
+button.item.future p.instant-card-subtitle{
+    color: transparentize(map-get($colors, primary-dark), 0.5);
+}
+
+button.item.future p.time-passed {
+    text-align: right;
+    color: transparentize(map-get($colors, grey), 0.5);
+}
+
+
+button.item.future {
+    color: transparentize(map-get($colors, dark), 0.5);
+}
+button.item.future .instant-card-icon {
+    margin: 0;
+    padding: 11px;
+    background-color: transparentize(map-get($colors, primary), 0.5);
+    color: transparentize(map-get($colors, secondary), 0.5);
+    width: 50px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
 
 
 .action-request.done {
