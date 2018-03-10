@@ -9,17 +9,17 @@
 .space {
     display: block;
     height: 2em;
-    background: #fff;
+    background: #f7f7f7;
 }
 
 .instants-list {
-    background-color: #f9f9f9;
+    background-color: #f7f7f7;
     .item {
         padding-top: 0px;
     }
     .instant-date-info {
         color: map-get($colors, grey);
-        background-color: #f9f9f9;
+        background-color: #f7f7f7;
         border-top: 0;
         border-bottom: 0;
     }
