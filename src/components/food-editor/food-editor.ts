@@ -41,7 +41,10 @@ export class FoodEditorComponent {
   }
 
   save() {
-    this.editFinished.emit(true);
+    if(this.valid()) {
+      this.updateValues();
+      this.editFinished.emit(true);
+    }
   }
 
   dismiss() {
