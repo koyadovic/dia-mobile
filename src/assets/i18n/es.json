@@ -110,6 +110,14 @@
     "For cookies, slices of bread, and so on": "Para galletas, rebanadas de pan, etcétera",
     "Close": "Cerrar",
 
+    "In grams": "En gramos",
+
+
+    "minutes": "minutos",
+    
+    "Height": "Altura",
     "Weight": "Peso",
-    "In grams": "En gramos"
+    "Neck Perimeter": "Perímetro Cuello",
+    "Abdomen Perimeter": "Perímetro Abdomen",
+    "Waist Perimeter": "Perímetro Cadera"
 }

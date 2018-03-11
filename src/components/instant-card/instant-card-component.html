@@ -41,7 +41,7 @@
         <ion-grid>
             <ion-row align-items-end>
                 <ion-col col-9>
-                    <h2 class="instant-card-title">{{activity_intensities[instant.content.intensity]}} intensity. {{ instant.content.minutes }} minutes.</h2>
+                    <h2 class="instant-card-title">{{activity_intensities[instant.content.intensity]}} {{ "Intensity" | translate }}. {{ instant.content.minutes }}m</h2>
                     <p class="instant-card-subtitle">{{ "Physical Activity" | translate }}</p>
                 </ion-col>
 
@@ -58,8 +58,8 @@
         <ion-grid>
             <ion-row align-items-end>
                 <ion-col col-9>
-                    <h2 class="instant-card-title">{{activity_intensities[instant.content.intensity]}} intensity. {{ instant.content.minutes }} minutes.</h2>
-                    <p class="instant-card-subtitle">{{ "Physical Activity" | translate }}</p>
+                    <h2 class="instant-card-title">{{ trait_types[instant.content.trait_type] }} {{ instant.content.value }} {{ trait_types_measure[instant.content.trait_type] }}</h2> 
+                    <p class="instant-card-subtitle">{{ "Physical Trait Change" | translate }}</p> 
                 </ion-col>
 
                 <ion-col col-3>
