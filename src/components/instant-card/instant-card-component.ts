@@ -71,25 +71,6 @@ export class DiaInstantCard {
                 this.trait_types["6"] = textWaistPerimeter;
                 this.trait_types["7"] = textSex;
           });
-      
-        /*
-            activity_intensities = {
-        "1": "Soft",
-        "2": "Medium",
-        "3": "High",
-        "4": "Extreme",
-    };
-
-    trait_types = {
-        "1": "Birth Date",
-        "2": "Height",
-        "3": "Weight",
-        "4": "Neck Perimeter",
-        "5": "Abdomen Perimeter",
-        "6": "Waist Perimeter",
-        "7": "Sex",
-    }
-        */
     }
 
     private appendClass(classes, newClass) {
@@ -120,6 +101,14 @@ export class DiaInstantCard {
             else if(this.instant.content.status === 2) { // done
                 classes = this.appendClass(classes, 'done');
             }
+        }
+
+        // group of days
+        if (this.instant.is_start) {
+            classes = this.appendClass(classes, 'day-group-start');
+        }
+        if (this.instant.is_end) {
+            classes = this.appendClass(classes, 'day-group-end');
         }
 
         return classes;
