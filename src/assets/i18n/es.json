@@ -119,5 +119,31 @@
     "Weight": "Peso",
     "Neck Perimeter": "Perímetro Cuello",
     "Abdomen Perimeter": "Perímetro Abdomen",
-    "Waist Perimeter": "Perímetro Cadera"
+    "Waist Perimeter": "Perímetro Cadera",
+
+    "Summary": "Sumario",
+    "Carb": "Carb",
+    "Prot": "Prot",
+    "Kcal": "Kcal",
+    "Add": "Añadir",
+
+
+    "Remove": "Eliminar",
+
+    "Search": "Búsqueda",
+
+    "Medications": "Medicamentos",
+    "Click to edit your medication list": "Editar su lista de medicamentos",
+
+    "Currently you don't have medications added. Try searching!": "Actualmente no tiene medicamentos añadidos. ¡Pruebe buscando!",
+    "Your currently added medications. If you want, you can search for new ones": "Sus medicamentos actualmente añadidos. Si quiere, puede buscar por nuevos",
+    "There is no results ... Try with another name": "No hay resultados ... Pruebe con otro nombre",
+    "There is": "Hay",
+    "There are": "Hay",
+    "result": "resultado",
+    "results": "resultados",
+    "I seems that there was an error ... Sorry!": "Parece que hubo un error ... ¡Lo siento!",
+    "Medication added correctly to your list": "Medicamento añadido correctamente a su lista",
+    "There seem to was an error": "Parece que hubo un error",
+    "Medication removed correctly from your list": "Medicamento eliminado correctamente de su lista"
 }

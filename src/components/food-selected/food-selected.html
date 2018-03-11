@@ -7,10 +7,10 @@
         <ion-grid class="nutrition">
             <ion-row>
                 <ion-col>
-                    <ion-badge *ngIf="showCarbs" color="secondary">Carb<br/>{{ round(foodSelected.carb_g) }}g</ion-badge>
-                    <ion-badge *ngIf="showProteins" color="secondary">Prot<br/>{{ round(foodSelected.protein_g) }}g</ion-badge>
-                    <ion-badge *ngIf="showFats" color="secondary">Fats<br/>{{ round(foodSelected.fat_g) }}g</ion-badge>
-                    <ion-badge *ngIf="showKCal" color="secondary">Kcal<br/>{{ round(kcal()) }}</ion-badge>
+                    <ion-badge *ngIf="showCarbs" color="secondary">{{ "Carb" | translate }}<br/>{{ round(foodSelected.carb_g) }}g</ion-badge>
+                    <ion-badge *ngIf="showProteins" color="secondary">{{ "Prot" | translate }}<br/>{{ round(foodSelected.protein_g) }}g</ion-badge>
+                    <ion-badge *ngIf="showFats" color="secondary">{{ "Fats" | translate }}<br/>{{ round(foodSelected.fat_g) }}g</ion-badge>
+                    <ion-badge *ngIf="showKCal" color="secondary">{{ "Kcal" | translate }}<br/>{{ round(kcal()) }}</ion-badge>
                 </ion-col>
             </ion-row>
 
@@ -20,7 +20,7 @@
 
     <ion-item-options *ngIf="!editMode && !selectionMode" side="right">
         <!-- Remove from food selected list -->
-        <button ion-button color="danger" (click)="unselect(item)"><ion-icon name="remove"></ion-icon>Remove</button> 
+        <button ion-button color="danger" (click)="unselect(item)"><ion-icon name="remove"></ion-icon>{{ "Remove" | translate }}</button> 
     </ion-item-options>
 </ion-item-sliding>
 
