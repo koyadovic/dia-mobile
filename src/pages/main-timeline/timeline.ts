@@ -112,40 +112,42 @@ export class TimeLinePage {
 
     /* This is for grouping events in the same day as cards */
     for(let n=0; n<resultInstants.length; n++){
-      if(n === 0 || n === resultInstants.length - 1) {
-        if(n === 0) {
-          resultInstants[n].is_start = true;
-        }
-        if(n === resultInstants.length - 1) {
-          resultInstants[n].is_end = true;
-        }
-      } else {
-        if(resultInstants[n].day != resultInstants[n - 1].day) {
-          resultInstants[n].is_start = true;
-        }
-        if(resultInstants[n].day != resultInstants[n + 1].day) {
-          resultInstants[n].is_end = true;
-        }
+      resultInstants[n].is_start = false;
+      resultInstants[n].is_end = false;
+
+      if(n === 0) {
+        resultInstants[n].is_start = true;
       }
+      if(n === resultInstants.length - 1) {
+        resultInstants[n].is_end = true;
+      }
+      if(n !== 0 && resultInstants[n].day !== resultInstants[n - 1].day) {
+        resultInstants[n].is_start = true;
+      }
+      if(n !== resultInstants.length -1 && resultInstants[n].day !== resultInstants[n + 1].day) {
+        resultInstants[n].is_end = true;
+      }
+
     }
 
     /* the same for future events */
     for(let n=0; n<futureResultInstants.length; n++){
-      if(n === 0 || n === futureResultInstants.length - 1) {
-        if(n === 0) {
-          futureResultInstants[n].is_start = true;
-        }
-        if(n === futureResultInstants.length - 1) {
-          futureResultInstants[n].is_end = true;
-        }
-      } else {
-        if(futureResultInstants[n].day != futureResultInstants[n - 1].day) {
-          futureResultInstants[n].is_start = true;
-        }
-        if(futureResultInstants[n].day != futureResultInstants[n + 1].day) {
-          futureResultInstants[n].is_end = true;
-        }
+      futureResultInstants[n].is_start = false;
+      futureResultInstants[n].is_end = false;
+
+      if(n === 0) {
+        futureResultInstants[n].is_start = true;
       }
+      if(n === futureResultInstants.length - 1) {
+        futureResultInstants[n].is_end = true;
+      }
+      if(n !== 0 && futureResultInstants[n].day !== futureResultInstants[n - 1].day) {
+        futureResultInstants[n].is_start = true;
+      }
+      if(n !== futureResultInstants.length -1 && futureResultInstants[n].day !== futureResultInstants[n + 1].day) {
+        futureResultInstants[n].is_end = true;
+      }
+
     }
 
 

@@ -10,8 +10,18 @@
         background-color: #f7f7f7;
         border-top: 0;
         border-bottom: 0;
-        min-height: 2em;
-        padding-right: 5px;
+        min-height: 0em;
+
+        margin: 0;
+        padding: 0;
+
+        padding-right: 15px !important;
+        margin-top: 20px;
+
+        ion-label {
+            margin: 0;
+            padding: 0;
+        }
     }
 }
 
