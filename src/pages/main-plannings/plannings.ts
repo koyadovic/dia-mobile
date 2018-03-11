@@ -50,14 +50,12 @@ export class PlanningsPage {
     let modal = this.modalCtrl.create(PlanningsEditorPage, {planning: planning});
 
     modal.onDidDismiss((result) => {
-      this.refresh();
-      this.events.publish('timeline:with:changes');
-
-      // Pending to debug why this shit is not working. Until then, we always refresh
-      // if(!!result && 'refresh' in Object.keys(result) && result['refresh']) {
-      //   this.refresh();
-      // }
+      if(!!result && 'refresh' in result && result['refresh']) {
+        this.events.publish('timeline:with:changes');
+        this.refresh();
+      }
     });
+    
     modal.present();
   }
 
