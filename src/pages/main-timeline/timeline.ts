@@ -79,11 +79,11 @@ export class TimeLinePage {
     let futureResultInstants = [];
     let resultInstants = [];
 
-    for(let instant of instants) {
+    for(let n=0; n<instants.length; n++) {
+      let instant = instants[n];
       let now = new Date().getTime() / 1000;
 
-      if(instant.content.type === 'action-request' && instant.datetime > now) {
-      } else {
+      if(instant.content.type !== 'action-request' || instant.datetime <= now) {
         let currentMoment = moment(instant.datetime * 1000);
         // append day of month
         instant.day = currentMoment.format('DD')
@@ -107,9 +107,47 @@ export class TimeLinePage {
         } else {
           resultInstants.push(instant);
         }
-        
       }
     }
+
+    /* This is for grouping events in the same day as cards */
+    for(let n=0; n<resultInstants.length; n++){
+      if(n === 0 || n === resultInstants.length - 1) {
+        if(n === 0) {
+          resultInstants[n].is_start = true;
+        }
+        if(n === resultInstants.length - 1) {
+          resultInstants[n].is_end = true;
+        }
+      } else {
+        if(resultInstants[n].day != resultInstants[n - 1].day) {
+          resultInstants[n].is_start = true;
+        }
+        if(resultInstants[n].day != resultInstants[n + 1].day) {
+          resultInstants[n].is_end = true;
+        }
+      }
+    }
+
+    /* the same for future events */
+    for(let n=0; n<futureResultInstants.length; n++){
+      if(n === 0 || n === futureResultInstants.length - 1) {
+        if(n === 0) {
+          futureResultInstants[n].is_start = true;
+        }
+        if(n === futureResultInstants.length - 1) {
+          futureResultInstants[n].is_end = true;
+        }
+      } else {
+        if(futureResultInstants[n].day != futureResultInstants[n - 1].day) {
+          futureResultInstants[n].is_start = true;
+        }
+        if(futureResultInstants[n].day != futureResultInstants[n + 1].day) {
+          futureResultInstants[n].is_end = true;
+        }
+      }
+    }
+
 
     // avoiding future errors
     if (!!lastInstant)

@@ -1,33 +1,3 @@
-.list-header {
-    margin-bottom: 0px;
-}
-
-.label {
-    margin: 0;
-}
-
-p.time-passed {
-    text-align: right;
-    color: map-get($colors, grey);
-}
-
-.grid {
-    padding: 0;
-}
-
-h2.instant-card-title {
-    font-weight: 100;
-    font-size: 1.0em;
-}
-
-
-p.instant-card-subtitle{
-    color: map-get($colors, primary-dark);
-}
-
-
-
-
 
 button.item.instant-card {
     box-shadow: 5px 5px 5px #d7d7d7;
@@ -44,47 +14,71 @@ button.item.instant-card {
     border-bottom-right-radius: 5px;
 
     padding-left: 0;
-}
 
-button.item .instant-card-icon {
-    margin: 0;
-    padding: 11px;
-    background-color: map-get($colors, primary);
-    color: map-get($colors, secondary);
-    width: 50px;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+    .list-header {
+        margin-bottom: 0px;
+    }
+    
+    .label {
+        margin: 0;
+    }
+    
+    .time-passed {
+        text-align: right;
+        color: map-get($colors, grey);
+    }
+    
+    .grid {
+        padding: 0;
+    }
+    
+    .instant-card-title {
+        font-weight: 100;
+        font-size: 1.0em;
+    }
+    
+    
+    .instant-card-subtitle{
+        color: map-get($colors, primary-dark);
+    }
+
+
+    .instant-card-icon {
+        margin: 0;
+        padding: 11px;
+        background-color: map-get($colors, primary);
+        color: map-get($colors, secondary);
+        width: 50px;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
 }
 
 
 /* FUTURE */
 button.item.instant-card.future {
     box-shadow: 5px 5px 5px #eee;
-}
-
-button.item.future p.instant-card-subtitle{
-    color: transparentize(map-get($colors, primary-dark), 0.5);
-}
-
-button.item.future p.time-passed {
-    text-align: right;
-    color: transparentize(map-get($colors, grey), 0.5);
-}
-
-
-button.item.future {
     color: transparentize(map-get($colors, dark), 0.5);
-}
-button.item.future .instant-card-icon {
-    margin: 0;
-    padding: 11px;
-    background-color: transparentize(map-get($colors, primary), 0.5);
-    color: transparentize(map-get($colors, secondary), 0.5);
-    width: 50px;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-}
 
+    .instant-card-subtitle{
+        color: transparentize(map-get($colors, primary-dark), 0.5);
+    }
+
+    .time-passed {
+        text-align: right;
+        color: transparentize(map-get($colors, grey), 0.5);
+    }
+
+    .instant-card-icon {
+        margin: 0;
+        padding: 11px;
+        background-color: transparentize(map-get($colors, primary), 0.5);
+        color: transparentize(map-get($colors, secondary), 0.5);
+        width: 50px;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+}
 
 
 .action-request.done {
