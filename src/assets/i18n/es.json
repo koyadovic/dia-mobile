@@ -1,8 +1,8 @@
 {
     "Dia Mobile": "Dia Mobile",
     "Timeline": "Cronología",
-    "Plannings": "Planificación",
-    "Insights": "Percepciones",
+    "Routines": "Rutinas",
+    "Insights": "Gráficos",
     "Settings": "Configuración",
     "Logout": "Cerrar sesión",
     "Logout Confirmation": "Confirmar Cierre de Sesión",
@@ -63,5 +63,53 @@
     "Female": "Mujer",
 
     "Delete Planning?": "¿Eliminar Planning?",
-    "Are you sure to delete this planning?": "¿Está seguro de querer eliminar el Planning?"
+    "Are you sure to delete this planning?": "¿Está seguro de querer eliminar el Planning?",
+
+    "Login": "Inicia sesión",
+    "See next events":"Ver próximos eventos",
+    "Hide next events":"Ocultar próximos eventos",
+
+    "Edit": "Editar",
+    "Delete": "Eliminar",
+    "Planning Editor": "Editor de Rutina",
+    "Name and definition": "Nombre y definición",
+    "Name for routine": "Nombre para la rutina",
+    "What kind of event do you want to add?": "¿Qué tipo de evento quiere añadir?",
+    "Not defined yet. Press me!": "No definido aún. ¡Púlsame!",
+    "Defined! Click to redefine": "¡Definido! Click para redefinir",
+    "Auto add at": "Auto añadir a las",
+    "Time": "Hora",
+    "Auto add every": "Auto añadir cada",
+    "Monday": "Lunes",
+    "Tuesday": "Martes",
+    "Wednesday": "Miércoles",
+    "Thursday": "Jueves",
+    "Friday": "Viernes",
+    "Saturday": "Sábado",
+    "Sunday": "Domingo",
+
+
+    "Normal": "Normales",
+    "Favorites": "Favoritos",
+    "From Internet": "Desde Internet",
+
+
+    "New Food": "Nuevo Alimento",
+    "Name": "Nombre",
+    "Name of new Food": "Nombre del nuevo alimento",
+    "Manufacturer": "Fabricante",
+    "Brand or Manufacturer": "Marca o fabricante",
+    "Grams or ml": "Gramos o ml",
+    "In Grams": "En gramos",
+    "Carbs": "Carbohidratos",
+    "Proteins": "Proteínas",
+    "Fats": "Grasas",
+    "Fiber": "Fibra",
+    "Alcohol": "Alcohol",
+    "Weight per unit": "Peso por unidad",
+    "For cookies, slices of bread, and so on": "Para galletas, rebanadas de pan, etcétera",
+    "Close": "Cerrar",
+
+    "Weight": "Peso",
+    "In grams": "En gramos"
 }

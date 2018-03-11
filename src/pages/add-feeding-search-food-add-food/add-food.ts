@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { DiaTimelineService } from '../../services/dia-timeline-service';
 import { ViewController } from 'ionic-angular/navigation/view-controller';
 import { DiaFood } from '../../models/food-model';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -36,6 +37,7 @@ export class AddFoodPage {
   }
 
   constructor(private viewCtrl: ViewController,
+              private translate: TranslateService,
               private timelineService: DiaTimelineService) {}
 
   valid(){

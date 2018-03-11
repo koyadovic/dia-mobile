@@ -41,7 +41,7 @@ export class MainPage {
     
     forkJoin(
       this.translate.get('Timeline'),
-      this.translate.get('Plannings'),
+      this.translate.get('Routines'),
       this.translate.get('Insights'),
     ).subscribe(
       ([timeline, plannings, insights]) => {

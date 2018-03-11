@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FoodSelected, selection_kcal } from '../../models/food-model';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Generated class for the FoodSummaryComponent component.
@@ -22,7 +23,7 @@ export class FoodSummaryComponent {
   private total_alcohol_g = 0.0;
   private total_kcal = 0.0;
 
-  constructor() {}
+  constructor(private translate: TranslateService,) {}
 
   ngOnChanges(changes) {
     if('foodSelected' in changes) {

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Medication } from '../../models/medications-model';
 import { DiaMedicationsService } from '../../services/dia-medications-service';
 import { ToastController } from 'ionic-angular/components/toast/toast-controller';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class UserMedicationsPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public toastCtrl: ToastController,
+              private translate: TranslateService,
               public medicationsService: DiaMedicationsService) {}
 
   ionViewDidLoad() {

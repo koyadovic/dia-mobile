@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DiaAuthService } from '../../services/dia-auth-service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'login',
@@ -13,6 +14,7 @@ export class LoginPage {
   @ViewChild('loginContainer') loginContainer;
 
   constructor(public navCtrl: NavController,
+              private translate: TranslateService,
               private authenticationService: DiaAuthService) { }
   
   ionViewDidEnter() {

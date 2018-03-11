@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Planning } from '../../models/plannings-model';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class PlanningListComponent {
 
   timerForSaving = null;
 
-  constructor() {
+  constructor(private translate: TranslateService,) {
   }
 
   local_hour() {
