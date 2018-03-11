@@ -114,6 +114,7 @@ export class TimeLinePage {
   }
 
   refreshTimeline() {
+    this.showFuture = false;
     this.timelineService.getTimeline().subscribe((response) => {
       let instants = response['instants'];
       TimeLinePage.unattended = response['unattended'] > 0 ? response['unattended'] : null;
@@ -125,6 +126,7 @@ export class TimeLinePage {
   // refresh timeline
   doRefresh(refresher) {
     this.timelineService.getTimeline().subscribe((response) => {
+      this.showFuture = false;
       let instants = response['instants'];
       TimeLinePage.unattended = response['unattended'] > 0 ? response['unattended'] : null;
       this.now = moment();

@@ -17,11 +17,9 @@
   <ion-list class="instants-list">
 
     <!-- FUTURE -->
-    <button class="future-ion-button" ion-item (click)="showFuture=!showFuture" *ngIf="futureTimeline.length > 0">
-        <p *ngIf="futureTimeline.length == 1" color="grey">See next {{ futureTimeline.length }} routine</p>
-        <p *ngIf="futureTimeline.length > 1" color="grey">See next {{ futureTimeline.length }} routines</p>
-        <ion-icon item-start name="glasses" color="grey" *ngIf="!showFuture"></ion-icon>
-        <ion-icon item-start name="glasses" color="primary" *ngIf="showFuture"></ion-icon>
+    <button class="future-ion-button" ion-item text-center (click)="showFuture=!showFuture" *ngIf="futureTimeline.length > 0">
+        <ion-label *ngIf="futureTimeline.length == 1" color="primary">See next {{ futureTimeline.length }} routine</ion-label>
+        <ion-label *ngIf="futureTimeline.length > 1" color="primary">See next {{ futureTimeline.length }} routines</ion-label>
     </button>
 
     <ng-container *ngIf="showFuture">
@@ -33,6 +31,7 @@
         </instant-card>
 
       </ng-container>
+      <ion-item-divider color="light"></ion-item-divider>
     </ng-container>
     <!-- FUTURE END -->
 
