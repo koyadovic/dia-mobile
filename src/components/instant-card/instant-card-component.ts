@@ -50,12 +50,6 @@ export class DiaInstantCard {
         }
     }
 
-    ngOnChanges(changes) {
-        if('instant' in changes) {
-            console.log(JSON.stringify(this.instant));
-        }
-    }
-
     getInstantClass() {
         let classes:string = '';
 

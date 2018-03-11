@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Events } from 'ionic-angular';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ConfigurationPage } from '../configuration/configuration';
 import { TranslateService } from '@ngx-translate/core';
@@ -23,7 +24,8 @@ export class PlanningsPage {
               private translate: TranslateService,
               private messageService: DiaMessageService,
               private planningsService: DiaPlanningsService,
-              private modalCtrl: ModalController) {
+              private modalCtrl: ModalController,
+              private events: Events) {
 
     this.refresh();
   }
@@ -35,7 +37,13 @@ export class PlanningsPage {
     } else {
       req = this.planningsService.savePlanning(planning);
     }
-    req.subscribe((resp) => this.refresh, (err) => console.log(err));
+    req.subscribe(
+      (resp) =>  {
+        this.refresh;
+        this.events.publish('timeline:with:changes');
+      },
+      (err) => console.log(err)
+    );
   }
 
   editPlanning(planning){
@@ -43,6 +51,8 @@ export class PlanningsPage {
 
     modal.onDidDismiss((result) => {
       this.refresh();
+      this.events.publish('timeline:with:changes');
+
       // Pending to debug why this shit is not working. Until then, we always refresh
       // if(!!result && 'refresh' in Object.keys(result) && result['refresh']) {
       //   this.refresh();
@@ -62,6 +72,7 @@ export class PlanningsPage {
         if (ok) {
           this.planningsService.deletePlanning(planning.id).subscribe(
             (resp) => {
+              this.events.publish('timeline:with:changes');
               this.refresh();
             },
             (err) => {

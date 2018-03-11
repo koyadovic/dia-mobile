@@ -18,8 +18,10 @@
 
     <!-- FUTURE -->
     <button class="future-ion-button" ion-item text-center (click)="showFuture=!showFuture" *ngIf="futureTimeline.length > 0">
-        <ion-label *ngIf="futureTimeline.length == 1" color="primary">See next {{ futureTimeline.length }} routine</ion-label>
-        <ion-label *ngIf="futureTimeline.length > 1" color="primary">See next {{ futureTimeline.length }} routines</ion-label>
+        <ion-label *ngIf="futureTimeline.length == 1 && !showFuture" color="primary">See next {{ futureTimeline.length }} routine</ion-label>
+        <ion-label *ngIf="futureTimeline.length > 1 && !showFuture" color="primary">See next {{ futureTimeline.length }} routines</ion-label>
+        <ion-label *ngIf="futureTimeline.length == 1 && showFuture" color="primary">Hide next {{ futureTimeline.length }} routine</ion-label>
+        <ion-label *ngIf="futureTimeline.length > 1 && showFuture" color="primary">Hide next {{ futureTimeline.length }} routines</ion-label>
     </button>
 
     <ng-container *ngIf="showFuture">
@@ -31,7 +33,7 @@
         </instant-card>
 
       </ng-container>
-      <ion-item-divider color="light"></ion-item-divider>
+      <ion-item-divider class="future-divider" color="light"></ion-item-divider>
     </ng-container>
     <!-- FUTURE END -->
 

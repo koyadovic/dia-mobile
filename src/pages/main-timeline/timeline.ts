@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { FabContainer } from 'ionic-angular/components/fab/fab-container';
 import { ModalController } from 'ionic-angular';
+import { Events } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 
 import { UserConfiguration } from '../../utils/user-configuration';
@@ -45,7 +46,8 @@ export class TimeLinePage {
               private modalCtrl: ModalController,
               private authService: DiaAuthService,
               private translate: TranslateService,
-              private restBackendService: DiaRestBackendService) {
+              private restBackendService: DiaRestBackendService,
+              private events: Events) {
 
     this.userConfig = this.configurationService.getUserConfiguration();
 
@@ -54,15 +56,19 @@ export class TimeLinePage {
 
       if(loggedin){
         this.refreshTimeline();
-
- 
-
       } else {
         this.userConfig = null;
         if(!!this.loggedinSubscription)
           this.loggedinSubscription.unsubscribe();
       }
     });
+
+    // this logic is for other tabs changes that influence the current timeline
+    // with this, capture this modifications and when tab changed to this, refresh automatically.
+    this.events.subscribe('timeline:with:changes', () => {
+      this.refreshTimeline();
+    });
+    
   }
 
   private completeInstants(instants: any[]){
@@ -318,7 +324,6 @@ export class TimeLinePage {
   // when a card is clicked must be shown details about it
   cardClicked(instant) {
     this.fab.close();
-    console.log(JSON.stringify(instant));
     if(instant.content.type === 'action-request' && instant.content.status === 0) { // only if unattended
       if (instant.content.elements[0].type === 'feeding') {
         this.addFeeding(instant.content);
