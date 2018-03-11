@@ -10,6 +10,7 @@ import * as moment from 'moment';
 export class DiaInstantCard {
     @Input() instant;
     @Input() userConfig: UserConfiguration;
+    now = new Date().getTime() / 1000;
 
     activity_intensities = {
         "1": "Soft",
@@ -49,8 +50,19 @@ export class DiaInstantCard {
         }
     }
 
+    ngOnChanges(changes) {
+        if('instant' in changes) {
+            console.log(JSON.stringify(this.instant));
+        }
+    }
+
     getInstantClass() {
         let classes:string = '';
+
+        // if instant is future, style it differently.
+        if(this.instant.datetime > this.now) {
+            classes = this.appendClass(classes, 'future');
+        }
 
         if (this.instant.content.type === 'action-request') {
             classes = this.appendClass(classes, 'action-request');

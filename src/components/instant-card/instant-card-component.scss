@@ -17,44 +17,121 @@ p.time-passed {
 
 h2.instant-card-title {
     font-weight: 100;
-    font-size: 1.3em;
+    font-size: 1.0em;
 }
 
 
 p.instant-card-subtitle{
     color: map-get($colors, primary-dark);
-    //font-weight: 800;
 }
 
-ion-icon.instant-card-icon {
-    color: map-get($colors, primary-very-dark);
+
+
+
+
+button.item.instant-card {
+    box-shadow: 5px 5px 5px #d7d7d7;
+    width: calc(100% - 10px);
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+
+    /* border: solid 1px; */
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    padding-left: 0;
 }
 
-div.item-inner {
-    /* margin-left: 15px !important; */
+button.item .instant-card-icon {
+    margin: 0;
+    padding: 11px;
+    background-color: map-get($colors, primary);
+    color: map-get($colors, secondary);
+    width: 50px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 
-.action-request {
 
+/* FUTURE */
+button.item.instant-card.future {
+    box-shadow: 5px 5px 5px #eee;
 }
+
+button.item.future p.instant-card-subtitle{
+    color: transparentize(map-get($colors, primary-dark), 0.5);
+}
+
+button.item.future p.time-passed {
+    text-align: right;
+    color: transparentize(map-get($colors, grey), 0.5);
+}
+
+
+button.item.future {
+    color: transparentize(map-get($colors, dark), 0.5);
+}
+button.item.future .instant-card-icon {
+    margin: 0;
+    padding: 11px;
+    background-color: transparentize(map-get($colors, primary), 0.5);
+    color: transparentize(map-get($colors, secondary), 0.5);
+    width: 50px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+
 
 .action-request.done {
-    color: green;
-    background: linear-gradient(to right, #fff , #eff9fb);
-    border-bottom: 1px solid #eff9fb;
-    border-top: 1px solid #eff9fb;
+    .icon {
+        margin: 0;
+        padding: 11px;
+        background-color: map-get($colors, success);
+        color: map-get($colors, light);
+        width: 50px;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+
+    color: darken( map-get($colors, success), 30% );
+    background: #fff;
+    margin-bottom: 10px !important;
 }
 
 .action-request.unattended {
-    color: red;
-    background: linear-gradient(to right, #fff , #ffeff2);
-    border-bottom: 1px solid #ffeff2;
-    border-top: 1px solid #ffeff2;
+    .icon {
+        margin: 0;
+        padding: 11px;
+        background-color: map-get($colors, danger);
+        color: map-get($colors, light);
+        width: 50px;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+    color: map-get($colors, danger);
+    background: #fff;
+    margin-bottom: 10px !important;
 }
 
 .action-request.ignored {
-    color: #999;
-    background: linear-gradient(to right, #fff , #f7f7f7);
-    border-bottom: 1px solid #f7f7f7;
-    border-top: 1px solid #f7f7f7;
+    .icon {
+        margin: 0;
+        padding: 11px;
+        background-color: map-get($colors, ignored);
+        color: map-get($colors, light);
+        width: 50px;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+    color: map-get($colors, ignored);
+    background: #fff;
+    margin-bottom: 10px !important;
 }
+
+
+

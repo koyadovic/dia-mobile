@@ -26,7 +26,11 @@ import { UserMedicationsPage } from '../user-medications/user-medications';
 })
 export class TimeLinePage {
   @ViewChild(FabContainer) fab: FabContainer;
+
   private timeline = [];
+  private futureTimeline = [];
+  private showFuture = false;
+
   public static unattended:number = null;
   private userConfig: UserConfiguration;
   private lastDateShown = "";
@@ -65,6 +69,8 @@ export class TimeLinePage {
     let processed;
 
     let lastInstant = null;
+
+    let futureResultInstants = [];
     let resultInstants = [];
 
     for(let instant of instants) {
@@ -90,7 +96,12 @@ export class TimeLinePage {
   
         lastInstant = instant;
   
-        resultInstants.push(instant);
+        if(instant.datetime > now) {
+          futureResultInstants.push(instant);
+        } else {
+          resultInstants.push(instant);
+        }
+        
       }
     }
 
@@ -98,25 +109,28 @@ export class TimeLinePage {
     if (!!lastInstant)
       lastInstant.minutes_diff = 0;
 
-    return resultInstants;
+    this.futureTimeline = futureResultInstants;
+    this.timeline = resultInstants;
   }
 
   refreshTimeline() {
+    this.showFuture = false;
     this.timelineService.getTimeline().subscribe((response) => {
       let instants = response['instants'];
       TimeLinePage.unattended = response['unattended'] > 0 ? response['unattended'] : null;
       this.now = moment();
-      this.timeline = this.completeInstants(instants);
+      this.completeInstants(instants);
     });
   }
 
   // refresh timeline
   doRefresh(refresher) {
     this.timelineService.getTimeline().subscribe((response) => {
+      this.showFuture = false;
       let instants = response['instants'];
       TimeLinePage.unattended = response['unattended'] > 0 ? response['unattended'] : null;
       this.now = moment();
-      this.timeline = this.completeInstants(instants);
+      this.completeInstants(instants);
       refresher.complete();
     });
   }
@@ -326,8 +340,8 @@ export class TimeLinePage {
           this.oldestElementTimestamp = this.timeline[this.timeline.length - 1].datetime;
         }
         this.now = moment();
-        let all = this.timeline.concat(resp['instants']);
-        this.timeline = this.completeInstants(all);
+        let all = this.futureTimeline.concat(this.timeline.concat(resp['instants']))
+        this.completeInstants(all);
         infiniteScroll.complete();
       }
     );
