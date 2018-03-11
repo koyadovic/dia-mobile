@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FoodSelected, selection_kcal, weight, FoodDetailable } from '../../models/food-model';
 import { style, state, animate, transition, trigger } from '@angular/animations';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'food-selected',
@@ -41,7 +42,7 @@ export class FoodSelectedComponent {
   selectionMode:boolean = false;
   selectionModeFood: FoodSelected = null;
 
-  constructor() {}
+  constructor(private translate: TranslateService,) {}
 
   doClick(){ // selection
     if(!this.selectionMode) {

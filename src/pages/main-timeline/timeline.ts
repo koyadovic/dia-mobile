@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { FabContainer } from 'ionic-angular/components/fab/fab-container';
 import { ModalController } from 'ionic-angular';
+import { Events } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 
 import { UserConfiguration } from '../../utils/user-configuration';
@@ -45,7 +46,8 @@ export class TimeLinePage {
               private modalCtrl: ModalController,
               private authService: DiaAuthService,
               private translate: TranslateService,
-              private restBackendService: DiaRestBackendService) {
+              private restBackendService: DiaRestBackendService,
+              private events: Events) {
 
     this.userConfig = this.configurationService.getUserConfiguration();
 
@@ -54,15 +56,19 @@ export class TimeLinePage {
 
       if(loggedin){
         this.refreshTimeline();
-
- 
-
       } else {
         this.userConfig = null;
         if(!!this.loggedinSubscription)
           this.loggedinSubscription.unsubscribe();
       }
     });
+
+    // this logic is for other tabs changes that influence the current timeline
+    // with this, capture this modifications and when tab changed to this, refresh automatically.
+    this.events.subscribe('timeline:with:changes', () => {
+      this.refreshTimeline();
+    });
+    
   }
 
   private completeInstants(instants: any[]){
@@ -73,11 +79,11 @@ export class TimeLinePage {
     let futureResultInstants = [];
     let resultInstants = [];
 
-    for(let instant of instants) {
+    for(let n=0; n<instants.length; n++) {
+      let instant = instants[n];
       let now = new Date().getTime() / 1000;
 
-      if(instant.content.type === 'action-request' && instant.datetime > now) {
-      } else {
+      if(instant.content.type !== 'action-request' || instant.datetime <= now) {
         let currentMoment = moment(instant.datetime * 1000);
         // append day of month
         instant.day = currentMoment.format('DD')
@@ -101,9 +107,49 @@ export class TimeLinePage {
         } else {
           resultInstants.push(instant);
         }
-        
       }
     }
+
+    /* This is for grouping events in the same day as cards */
+    for(let n=0; n<resultInstants.length; n++){
+      resultInstants[n].is_start = false;
+      resultInstants[n].is_end = false;
+
+      if(n === 0) {
+        resultInstants[n].is_start = true;
+      }
+      if(n === resultInstants.length - 1) {
+        resultInstants[n].is_end = true;
+      }
+      if(n !== 0 && resultInstants[n].day !== resultInstants[n - 1].day) {
+        resultInstants[n].is_start = true;
+      }
+      if(n !== resultInstants.length -1 && resultInstants[n].day !== resultInstants[n + 1].day) {
+        resultInstants[n].is_end = true;
+      }
+
+    }
+
+    /* the same for future events */
+    for(let n=0; n<futureResultInstants.length; n++){
+      futureResultInstants[n].is_start = false;
+      futureResultInstants[n].is_end = false;
+
+      if(n === 0) {
+        futureResultInstants[n].is_start = true;
+      }
+      if(n === futureResultInstants.length - 1) {
+        futureResultInstants[n].is_end = true;
+      }
+      if(n !== 0 && futureResultInstants[n].day !== futureResultInstants[n - 1].day) {
+        futureResultInstants[n].is_start = true;
+      }
+      if(n !== futureResultInstants.length -1 && futureResultInstants[n].day !== futureResultInstants[n + 1].day) {
+        futureResultInstants[n].is_end = true;
+      }
+
+    }
+
 
     // avoiding future errors
     if (!!lastInstant)
@@ -318,7 +364,6 @@ export class TimeLinePage {
   // when a card is clicked must be shown details about it
   cardClicked(instant) {
     this.fab.close();
-    console.log(JSON.stringify(instant));
     if(instant.content.type === 'action-request' && instant.content.status === 0) { // only if unattended
       if (instant.content.elements[0].type === 'feeding') {
         this.addFeeding(instant.content);

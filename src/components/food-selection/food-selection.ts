@@ -1,6 +1,7 @@
 import { Component, Input, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { FoodDetailable, FoodSelected, weight, selection_kcal } from '../../models/food-model';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class FoodSelectionComponent {
   @Input() food: FoodSelected;
   @Output() selectionFinished:EventEmitter<FoodSelected> = new EventEmitter<FoodSelected>();
 
-  constructor() {
+  constructor(private translate: TranslateService,) {
   }
 
   valid() {

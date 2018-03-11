@@ -1,19 +1,13 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Medications</ion-title>
+    <ion-title>{{ "Medications" | translate }}</ion-title>
   </ion-navbar>
 </ion-header>
 
-<!-- 
-  private userMedications: Medication[] = [];
-  private searchMedicationsResult: Medication[] = [];
-  private searchString = '';
-  private searching: boolean = false;
--->
-
 <ion-content>
   <ion-searchbar
+    placeholder="{{ 'Search' | translate }}"
     [showCancelButton]="false" [animated]="true" [debounce]="400"
     (ionInput)="onInput($event)"></ion-searchbar>
 
@@ -51,7 +45,7 @@
         <ion-item-options>
 
           <!-- remove medication from user medications -->
-          <button ion-button color="danger" (click)="removeMedication(item, medication['id'])"><ion-icon name="trash"></ion-icon>Remove</button> 
+          <button ion-button color="danger" (click)="removeMedication(item, medication['id'])"><ion-icon name="trash"></ion-icon>{{ "Remove" | translate }}</button> 
 
         </ion-item-options>
       </ion-item-sliding>

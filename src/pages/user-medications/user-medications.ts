@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Medication } from '../../models/medications-model';
 import { DiaMedicationsService } from '../../services/dia-medications-service';
 import { ToastController } from 'ionic-angular/components/toast/toast-controller';
+import { TranslateService } from '@ngx-translate/core';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 
 
 @Component({
@@ -21,10 +23,30 @@ export class UserMedicationsPage {
   // this is for the page closing. If was changes, global user medications needs to be refreshed.
   public static hadChanges:boolean = false;
 
+  // status messages
+  noMedications:string = 'Currently you don\'t have medications added. Try searching!';
+  yesMedications:string = 'Your currently added medications. If you want, you can search for new ones';
+  noResults:string = 'There is no results ... Try with another name';
+  thereIs = 'There is';
+  thereAre = 'There are';
+  textResult = 'result';
+  textResults = 'results';
+  statusError = `I seems that there was an error ... Sorry!`;
+
+  // toast messages
+  toastMedicationAdded = 'Medication added correctly to your list';
+  toastMedicationError = 'There seem to was an error';
+  toastRemoved = 'Medication removed correctly from your list';
+
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public toastCtrl: ToastController,
-              public medicationsService: DiaMedicationsService) {}
+              private translate: TranslateService,
+              public medicationsService: DiaMedicationsService) {
+
+    this.translateStrings();
+  }
 
   ionViewDidLoad() {
     UserMedicationsPage.hadChanges = false;
@@ -33,9 +55,9 @@ export class UserMedicationsPage {
       (medications) => {
         this.userMedications = medications;
         if(this.userMedications.length === 0) {
-          this.viewStatusString = 'Currently you don\'t have medications added. Try searching!';
+          this.viewStatusString = this.noMedications;
         } else {
-          this.viewStatusString = 'Your currently added medications. If you want, you can search for new ones.';
+          this.viewStatusString = this.yesMedications;
         }
       }
     );
@@ -52,12 +74,12 @@ export class UserMedicationsPage {
           this.searchMedicationsResult = medications;
           this.searching = false;
           if(this.searchMedicationsResult.length === 0) {
-            this.viewStatusString = 'There is no results ... Try with another name.';
+            this.viewStatusString = this.noResults;
           } else {
             if (this.searchMedicationsResult.length === 1) {
-              this.viewStatusString = `There is ${this.searchMedicationsResult.length} result.`;
+              this.viewStatusString = `${this.thereIs} ${this.searchMedicationsResult.length} ${this.textResult}.`;
             } else {
-              this.viewStatusString = `There are ${this.searchMedicationsResult.length} results.`;
+              this.viewStatusString = `${this.thereAre} ${this.searchMedicationsResult.length} ${this.textResults}.`;
             }
             
           }
@@ -66,16 +88,16 @@ export class UserMedicationsPage {
         (err) => {
           this.searching = false;
           console.error(err);
-          this.viewStatusString = `I seems that there was an error ... Sorry!`;
+          this.viewStatusString = this.statusError;
         }
       );
     } else {
       this.searchString = '';
       this.searchMedicationsResult = [];
       if(this.userMedications.length === 0) {
-        this.viewStatusString = 'Currently you don\'t have medications added. Try searching!';
+        this.viewStatusString = this.noMedications;
       } else {
-        this.viewStatusString = 'Your currently added medications. If you want, you can search for new ones.';
+        this.viewStatusString = this.yesMedications;
       }
     
     }
@@ -92,11 +114,11 @@ export class UserMedicationsPage {
         this.searchMedicationsResult.splice(index, 1);
         this.userMedications.push(medication);
 
-        this.toastMessage('Medication added correctly to your list');
+        this.toastMessage(this.toastMedicationAdded);
         UserMedicationsPage.hadChanges = true;
       },
       (err) => {
-        this.toastMessage('There seem to was an error.');
+        this.toastMessage(this.toastMedicationError);
         console.error(err);
       }
     );
@@ -113,19 +135,19 @@ export class UserMedicationsPage {
         this.userMedications.splice(index, 1);
         this.searchMedicationsResult.push(medication);
 
-        this.toastMessage('Medication removed correctly from your list');
+        this.toastMessage(this.toastRemoved);
         UserMedicationsPage.hadChanges = true;
 
         // for the message
         if(this.userMedications.length === 0) {
-          this.viewStatusString = 'Currently you don\'t have medications added. Try searching!';
+          this.viewStatusString = this.noMedications;
         } else {
-          this.viewStatusString = 'Your currently added medications. If you want, you can search for new ones.';
+          this.viewStatusString = this.yesMedications;
         }
   
       },
       (err) => {
-        this.toastMessage('There seem to was an error.');
+        this.toastMessage(this.toastMedicationError);
         console.error(err);
       }
     );
@@ -151,5 +173,34 @@ export class UserMedicationsPage {
       }
     }
     return -1;
+  }
+
+  private translateStrings() {
+    forkJoin(
+      this.translate.get(this.noMedications),
+      this.translate.get(this.yesMedications),
+      this.translate.get(this.noResults),
+      this.translate.get(this.thereIs),
+      this.translate.get(this.thereAre),
+      this.translate.get(this.textResult),
+      this.translate.get(this.textResults),
+      this.translate.get(this.statusError),
+      this.translate.get(this.toastMedicationAdded),
+      this.translate.get(this.toastMedicationError),
+      this.translate.get(this.toastRemoved),
+    ).subscribe(([noMedications, yesMedications, noResults, thereIs, thereAre, textResult, textResults,
+      statusError, toastMedicationAdded, toastMedicationError, toastRemoved]) => {
+        this.noMedications = noMedications;
+        this.yesMedications = yesMedications;
+        this.noResults = noResults;
+        this.thereIs = thereIs;
+        this.thereAre = thereAre;
+        this.textResult = textResult;
+        this.textResults = textResults;
+        this.statusError = statusError;
+        this.toastMedicationAdded = toastMedicationAdded;
+        this.toastMedicationError = toastMedicationError;
+        this.toastRemoved = toastRemoved;
+    });
   }
 }

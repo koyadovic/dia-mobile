@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Planning Editor</ion-title>
+    <ion-title>{{ "Planning Editor" | translate }}</ion-title>
 
     <ion-buttons end>
       <button ion-button icon-only (click)="save()">
@@ -18,48 +18,48 @@
 
   <ion-list>
     <ion-list-header>
-      Name and definition
+      {{ "Name and definition" | translate }}
     </ion-list-header>
     
     <ion-item>
       <ion-icon color="primary" name="create" item-start></ion-icon>
-      <ion-label stacked>Name for automation</ion-label>
+      <ion-label stacked>{{ "Name for routine" | translate }}</ion-label>
       <ion-input type="text" [(ngModel)]="planning.name"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-icon *ngIf="planning.type === 'medication_take'" color="primary" name="thermometer" item-start></ion-icon> <!-- medication take -->
       <ion-icon *ngIf="planning.type === 'physical_activity'" color="primary" name="bicycle" item-start></ion-icon> <!-- physical activity -->
-      <ion-label stacked>What kind of event do you want to add</ion-label>
+      <ion-label stacked>{{ "What kind of event do you want to add?" | translate }}</ion-label>
       <ion-select [(ngModel)]="planning.type" (ionChange)="updateTypeData()">
-        <ion-option [value]="'physical_activity'">Physical Activity</ion-option>
-        <ion-option [value]="'medication_take'">Medication Take</ion-option>
+        <ion-option [value]="'physical_activity'">{{ "Physical Activity" | translate }}</ion-option>
+        <ion-option [value]="'medication_take'">{{ "Medication Take" | translate }}</ion-option>
       </ion-select>
     </ion-item>
 
     <button ion-item (click)="definePlanning()">
       <ion-icon color="primary" name="settings" item-start></ion-icon>
-      <span *ngIf="emptyDict(dataPreserved[planning.type])">Not defined yet. Click me!</span>
-      <span *ngIf="!emptyDict(dataPreserved[planning.type])">Defined! Click to redefine</span>
+      <span *ngIf="emptyDict(dataPreserved[planning.type])">{{ "Not defined yet. Press me!" | translate }}</span>
+      <span *ngIf="!emptyDict(dataPreserved[planning.type])">{{ "Defined! Click to redefine" | translate }}</span>
     </button>
 
     <ion-list-header>
-      Auto add at
+      {{ "Auto add at" | translate }}
     </ion-list-header>
   
     <ion-item>
       <ion-icon color="primary" name="time" item-start></ion-icon>
-      <ion-label class="datetime-label">Time</ion-label>
+      <ion-label class="datetime-label">{{ "Time" | translate }}</ion-label>
       <ion-datetime displayFormat="HH:mm" [(ngModel)]="datetimeTime" (ionChange)="timeChanged()"></ion-datetime>
     </ion-item>
 
     <ion-list-header>
-      Auto add every
+      {{ "Auto add every" | translate }}
     </ion-list-header>
 
     <button ion-item (click)="planning.mon = !planning.mon">
       <ion-icon color="primary" name="calendar" item-start></ion-icon>
-      <ion-label>Monday</ion-label>
+      <ion-label>{{ "Monday" | translate }}</ion-label>
       <div item-content>
         <ion-toggle [(ngModel)]="planning.mon" (click)="planning.mon = !planning.mon"></ion-toggle>
       </div>
@@ -67,7 +67,7 @@
 
     <button ion-item (click)="planning.tue = !planning.tue">
       <ion-icon color="primary" name="calendar" item-start></ion-icon>
-      <ion-label>Tuesday</ion-label>
+      <ion-label>{{ "Tuesday" | translate }}</ion-label>
       <div item-content>
         <ion-toggle [(ngModel)]="planning.tue" (click)="planning.tue = !planning.tue"></ion-toggle>
       </div>
@@ -75,7 +75,7 @@
 
     <button ion-item (click)="planning.wed = !planning.wed">
       <ion-icon color="primary" name="calendar" item-start></ion-icon>
-      <ion-label>Wednesday</ion-label>
+      <ion-label>{{ "Wednesday" | translate }}</ion-label>
       <div item-content>
         <ion-toggle [(ngModel)]="planning.wed" (click)="planning.wed = !planning.wed"></ion-toggle>
       </div>
@@ -83,7 +83,7 @@
 
     <button ion-item (click)="planning.thu = !planning.thu">
       <ion-icon color="primary" name="calendar" item-start></ion-icon>
-      <ion-label>Thursday</ion-label>
+      <ion-label>{{ "Thursday" | translate }}</ion-label>
       <div item-content>
         <ion-toggle [(ngModel)]="planning.thu" (click)="planning.thu = !planning.thu"></ion-toggle>
       </div>
@@ -91,7 +91,7 @@
 
     <button ion-item (click)="planning.fri = !planning.fri">
       <ion-icon color="primary" name="calendar" item-start></ion-icon>
-      <ion-label>Friday</ion-label>
+      <ion-label>{{ "Friday" | translate }}</ion-label>
       <div item-content>
         <ion-toggle [(ngModel)]="planning.fri" (click)="planning.fri = !planning.fri"></ion-toggle>
       </div>
@@ -99,7 +99,7 @@
 
     <button ion-item (click)="planning.sat = !planning.sat">
       <ion-icon color="primary" name="calendar" item-start></ion-icon>
-      <ion-label>Saturday</ion-label>
+      <ion-label>{{ "Saturday" | translate }}</ion-label>
       <div item-content>
         <ion-toggle [(ngModel)]="planning.sat" (click)="planning.sat = !planning.sat"></ion-toggle>
       </div>
@@ -107,7 +107,7 @@
 
     <button ion-item (click)="planning.sun = !planning.sun">
       <ion-icon color="primary" name="calendar" item-start></ion-icon>
-      <ion-label>Sunday</ion-label>
+      <ion-label>{{ "Sunday" | translate }}</ion-label>
       <div item-content>
         <ion-toggle [(ngModel)]="planning.sun" (click)="planning.sun = !planning.sun"></ion-toggle>
       </div>

@@ -3,6 +3,7 @@
   <ion-toolbar color="light">
 
     <ion-searchbar
+    placeholder="{{ 'Search' | translate }}"
     [(ngModel)]="resultSearchString"
     [showCancelButton]="false" [animated]="true" [debounce]="400"
     (ionInput)="onInput($event)"
@@ -12,15 +13,15 @@
 
   <ion-segment [(ngModel)]="food_tab" color="primary">
     <ion-segment-button value="recent" (ionSelect)="switchToRecent()">
-      Normal
+      {{ "Normal" | translate }}
     </ion-segment-button>
         
     <ion-segment-button value="favorite" (ionSelect)="switchToFavorite()">
-        Favorite
+        {{ "Favorites" | translate }}
     </ion-segment-button>
 
     <ion-segment-button value="internet" (ionSelect)="switchToInternet()">
-      From Internet
+      {{ "From Internet" | translate }}
     </ion-segment-button>
 
   </ion-segment>

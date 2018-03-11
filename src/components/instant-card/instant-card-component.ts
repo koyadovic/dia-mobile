@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { UserConfiguration } from '../../utils/user-configuration';
 import * as moment from 'moment';
+import { TranslateService } from '@ngx-translate/core';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 
 
 @Component({
@@ -39,7 +41,36 @@ export class DiaInstantCard {
         "7": "",
     }
 
-    constructor() {
+    constructor(private translate: TranslateService) {
+        //this.translate
+        forkJoin(
+            this.translate.get("Soft"),
+            this.translate.get("Medium"),
+            this.translate.get("High"),
+            this.translate.get("Extreme"),
+
+            this.translate.get("Birth Date"),
+            this.translate.get("Height"),
+            this.translate.get("Weight"),
+            this.translate.get("Neck Perimeter"),
+            this.translate.get("Abdomen Perimeter"),
+            this.translate.get("Waist Perimeter"),
+            this.translate.get("Sex"),
+          ).subscribe(([textSoft, textMedium, textHigh, textExtreme, textBirthDate, textHeight, textWeight,
+            textNeckPerimeter, textAbdomenPerimeter, textWaistPerimeter, textSex]) => {
+                this.activity_intensities["1"] = textSoft;
+                this.activity_intensities["2"] = textMedium;
+                this.activity_intensities["3"] = textHigh;
+                this.activity_intensities["4"] = textExtreme;
+
+                this.trait_types["1"] = textBirthDate;
+                this.trait_types["2"] = textHeight;
+                this.trait_types["3"] = textWeight;
+                this.trait_types["4"] = textNeckPerimeter;
+                this.trait_types["5"] = textAbdomenPerimeter;
+                this.trait_types["6"] = textWaistPerimeter;
+                this.trait_types["7"] = textSex;
+          });
     }
 
     private appendClass(classes, newClass) {
@@ -47,12 +78,6 @@ export class DiaInstantCard {
             return classes += newClass;
         } else {
             return classes += " " + newClass;
-        }
-    }
-
-    ngOnChanges(changes) {
-        if('instant' in changes) {
-            console.log(JSON.stringify(this.instant));
         }
     }
 
@@ -76,6 +101,14 @@ export class DiaInstantCard {
             else if(this.instant.content.status === 2) { // done
                 classes = this.appendClass(classes, 'done');
             }
+        }
+
+        // group of days
+        if (this.instant.is_start) {
+            classes = this.appendClass(classes, 'day-group-start');
+        }
+        if (this.instant.is_end) {
+            classes = this.appendClass(classes, 'day-group-end');
         }
 
         return classes;

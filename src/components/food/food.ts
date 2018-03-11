@@ -5,6 +5,7 @@ import { ItemSliding } from 'ionic-angular';
 import { style, state, animate, transition, trigger } from '@angular/animations';
 import { AlertController } from 'ionic-angular';
 import { FoodListable, InternetFoodList, DiaFood, selection_kcal, weight, FoodDetailable, FoodSelected } from '../../models/food-model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'food-component',
@@ -44,6 +45,7 @@ export class FoodComponent {
   selectionModeFood: FoodSelected = null;
 
   constructor(private timelineService: DiaTimelineService,
+              private translate: TranslateService,
               private alertCtrl: AlertController) {
   }
 

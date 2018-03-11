@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { DiaFood } from '../../models/food-model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'food-editor',
@@ -21,7 +22,7 @@ export class FoodEditorComponent {
     fiber_g: null,
     alcohol_g: null
   }
-  constructor() {}
+  constructor(private translate: TranslateService,) {}
 
   ngOnChanges(changes) {
     if('food' in changes) {
@@ -40,7 +41,10 @@ export class FoodEditorComponent {
   }
 
   save() {
-    this.editFinished.emit(true);
+    if(this.valid()) {
+      this.updateValues();
+      this.editFinished.emit(true);
+    }
   }
 
   dismiss() {

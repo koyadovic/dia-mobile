@@ -10,6 +10,7 @@ import { LoadingController } from 'ionic-angular/components/loading/loading-cont
 
 import { IonPullUpFooterState } from 'ionic-pullup';
 import { InternetFoodList, FoodSelected } from '../../models/food-model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'page-add-feeding',
@@ -46,6 +47,7 @@ export class AddFeedingPage {
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
+              private translate: TranslateService,
               private modalCtrl: ModalController,
               private viewCtrl: ViewController,
               private timelineService: DiaTimelineService,

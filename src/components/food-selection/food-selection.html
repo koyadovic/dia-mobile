@@ -1,14 +1,14 @@
 <ion-card>
   <ion-card-content>
     <ion-card-title text-center>
-      {{ food.food.name }}, {{ food.food.manufacturer }}
+      {{ food.food.name }}<br>{{ food.food.manufacturer }}
     </ion-card-title>
     <ion-grid>
       <ion-row>
         <ion-col>
           <ion-item text-center *ngIf="!food?.food?.g_or_ml_per_unit">
-            <ion-label stacked color="primary">Weight</ion-label>
-            <ion-input text-center type="number" placeholder="Introduce weight in grams" name="g_or_ml_selected" [(ngModel)]="food.selection" (ionChange)='updateValues()' required></ion-input>
+            <ion-label stacked color="primary">{{ "Weight" | translate }}</ion-label>
+            <ion-input text-center type="number" placeholder="{{ 'In grams' | translate }}" name="g_or_ml_selected" [(ngModel)]="food.selection" (ionChange)='updateValues()' required></ion-input>
           </ion-item>
   
           <ion-item text-center *ngIf="food?.food?.g_or_ml_per_unit > 0">

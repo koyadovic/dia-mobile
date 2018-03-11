@@ -33,8 +33,8 @@
   </button>
   
   <ion-item-options side="right">
-    <button ion-button color="secondary" (click)="editRequest(item)"><ion-icon name="create"></ion-icon>Edit</button> 
-    <button ion-button color="danger" (click)="deleteRequest(item)"><ion-icon name="trash"></ion-icon>Delete</button> 
+    <button ion-button color="secondary" (click)="editRequest(item)"><ion-icon name="create"></ion-icon>{{ "Edit" | translate }}</button> 
+    <button ion-button color="danger" (click)="deleteRequest(item)"><ion-icon name="trash"></ion-icon>{{ "Delete" | translate }}</button> 
   </ion-item-options>
   
 </ion-item-sliding>

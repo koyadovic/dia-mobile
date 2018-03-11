@@ -1,90 +1,107 @@
-.list-header {
-    margin-bottom: 0px;
-}
-
-.label {
-    margin: 0;
-}
-
-p.time-passed {
-    text-align: right;
-    color: map-get($colors, grey);
-}
-
-.grid {
-    padding: 0;
-}
-
-h2.instant-card-title {
-    font-weight: 100;
-    font-size: 1.0em;
-}
-
-
-p.instant-card-subtitle{
-    color: map-get($colors, primary-dark);
-}
-
-
-
-
 
 button.item.instant-card {
-    box-shadow: 5px 5px 5px #d7d7d7;
-    width: calc(100% - 10px);
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-bottom: 10px;
+    box-shadow: 5px 5px 8px #bbb;
+    width: calc(100% - 16px);
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-bottom: 0px;
 
     /* border: solid 1px; */
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
 
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
 
     padding-left: 0;
+
+    .list-header {
+        margin-bottom: 0px;
+    }
+    
+    .label {
+        margin: 0;
+    }
+    
+    .time-passed {
+        text-align: right;
+        color: map-get($colors, grey);
+    }
+    
+    .grid {
+        padding: 0;
+    }
+    
+    .instant-card-title {
+        font-weight: 100;
+        font-size: 1.0em;
+    }
+    
+    
+    .instant-card-subtitle{
+        color: map-get($colors, primary-dark);
+    }
+
+
+    .instant-card-icon {
+        margin: 0;
+        padding: 11px;
+        background-color: map-get($colors, primary);
+        color: map-get($colors, secondary);
+        width: 50px;
+        border-top-right-radius: 0%;
+        border-bottom-right-radius: 0%;
+    }
 }
 
-button.item .instant-card-icon {
-    margin: 0;
-    padding: 11px;
-    background-color: map-get($colors, primary);
-    color: map-get($colors, secondary);
-    width: 50px;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+
+/* day-group-start */
+
+/* day-group-end */
+
+.day-group-start {
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+    
 }
+.day-group-end {
+    border-bottom-left-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+    margin-bottom: 10px !important;
+}
+
+.action-request.day-group-end {
+    border-bottom-left-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+    margin-bottom: 10px !important;
+}
+
 
 
 /* FUTURE */
 button.item.instant-card.future {
     box-shadow: 5px 5px 5px #eee;
-}
-
-button.item.future p.instant-card-subtitle{
-    color: transparentize(map-get($colors, primary-dark), 0.5);
-}
-
-button.item.future p.time-passed {
-    text-align: right;
-    color: transparentize(map-get($colors, grey), 0.5);
-}
-
-
-button.item.future {
     color: transparentize(map-get($colors, dark), 0.5);
-}
-button.item.future .instant-card-icon {
-    margin: 0;
-    padding: 11px;
-    background-color: transparentize(map-get($colors, primary), 0.5);
-    color: transparentize(map-get($colors, secondary), 0.5);
-    width: 50px;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-}
 
+    .instant-card-subtitle{
+        color: transparentize(map-get($colors, primary-dark), 0.5);
+    }
+
+    .time-passed {
+        text-align: right;
+        color: transparentize(map-get($colors, grey), 0.5);
+    }
+
+    .instant-card-icon {
+        margin: 0;
+        padding: 11px;
+        background-color: transparentize(map-get($colors, primary), 0.5);
+        color: transparentize(map-get($colors, secondary), 0.5);
+        width: 50px;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+    }
+}
 
 
 .action-request.done {
@@ -94,13 +111,13 @@ button.item.future .instant-card-icon {
         background-color: map-get($colors, success);
         color: map-get($colors, light);
         width: 50px;
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
+        /* border-radius: 50%;*/ 
+        border-top-right-radius: 0%;
+        border-bottom-right-radius: 0%;
     }
 
     color: darken( map-get($colors, success), 30% );
     background: #fff;
-    margin-bottom: 10px !important;
 }
 
 .action-request.unattended {
@@ -110,12 +127,12 @@ button.item.future .instant-card-icon {
         background-color: map-get($colors, danger);
         color: map-get($colors, light);
         width: 50px;
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
+        /* border-radius: 50%;*/ 
+        border-top-right-radius: 0%;
+        border-bottom-right-radius: 0%;
     }
     color: map-get($colors, danger);
     background: #fff;
-    margin-bottom: 10px !important;
 }
 
 .action-request.ignored {
@@ -125,12 +142,12 @@ button.item.future .instant-card-icon {
         background-color: map-get($colors, ignored);
         color: map-get($colors, light);
         width: 50px;
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
+        /* border-radius: 50%;*/ 
+        border-top-right-radius: 0%;
+        border-bottom-right-radius: 0%;
     }
     color: map-get($colors, ignored);
     background: #fff;
-    margin-bottom: 10px !important;
 }
 
 
