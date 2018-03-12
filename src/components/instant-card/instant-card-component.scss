@@ -40,6 +40,7 @@ button.item.instant-card {
     
     .instant-card-subtitle{
         color: map-get($colors, primary-dark);
+        font-size: 0.8em;
     }
 
 
@@ -60,27 +61,28 @@ button.item.instant-card {
 /* day-group-end */
 
 .day-group-start {
-    border-top-left-radius: 10px !important;
-    border-top-right-radius: 10px !important;
+    border-top-left-radius: 5px !important;
+    border-top-right-radius: 0px !important;
     
 }
 .day-group-end {
-    border-bottom-left-radius: 10px !important;
-    border-bottom-right-radius: 10px !important;
-    margin-bottom: 30px !important;
+    border-bottom-left-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+    margin-bottom: 10px !important;
 }
 
 .action-request.day-group-end {
-    border-bottom-left-radius: 10px !important;
-    border-bottom-right-radius: 10px !important;
-    margin-bottom: 30px !important;
+    border-bottom-left-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+    margin-bottom: 10px !important;
 }
 
 
 
 /* FUTURE */
 button.item.instant-card.future {
-    box-shadow: 5px 5px 5px #eee;
+    border-top-right-radius: 5px !important;
+    box-shadow: 5px 5px 8px #eee;
     color: transparentize(map-get($colors, dark), 0.5);
 
     .instant-card-subtitle{

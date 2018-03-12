@@ -5,22 +5,6 @@
     .item {
         padding-top: 0px;
     }
-    .instant-date-info {
-        color: map-get($colors, grey);
-        background-color: #f7f7f7;
-        border-top: 0;
-        border-bottom: 0;
-        min-height: 0em;
-
-        margin: 0;
-        padding: 0;
-
-        padding-right: 15px !important;
-        ion-label {
-            margin: 0;
-            padding: 0;
-        }
-    }
 }
 
 
@@ -28,6 +12,38 @@
     background-color: #f7f7f7;
 }
 
-ion-item-divider.future-divider {
+future-divider.future-divider {
     background-color: #f7f7f7;
+    display: block;
+    height: 10px;
+}
+
+
+ion-list-header.instant-date-info {
+    color: map-get($colors, grey);
+    background-color: #f7f7f7;
+    border-top: 0;
+    border-bottom: 0;
+    min-height: 0em;
+
+    margin: 0;
+    padding: 0;
+
+    padding-right: 8px !important;
+    .item-inner {
+        .input-wrapper {
+            padding-top: 10px;
+            ion-label.label {
+                flex: none;
+                margin: 0;
+                padding: 0;
+                padding: 5px 15px !important;
+                margin-left: auto;
+                display: inline-block;
+                background: #fff;
+                border-top-left-radius: 5px !important;
+                border-top-right-radius: 5px !important;
+            }
+        }
+    }
 }
