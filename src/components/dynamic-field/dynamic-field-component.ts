@@ -6,6 +6,24 @@ import * as moment from 'moment-timezone';
   templateUrl: 'dynamic-field-component.html'
 })
 export class DynamicField {
+  /*
+  field is something like the following:
+    {
+      "display": "Instante",
+      "value": "",
+      "required": false,
+      "hint": "",
+      "type": "date",
+      "regex": "",
+      "key": "datetime",
+      "namespace_key": "datetime",
+      "additional_options": {
+        "format": "DD/MM/YYYY HH:mm"
+      },
+      "disabled": true
+    }
+
+  */
   @Input() field;
 
   @Input() dateFormat;

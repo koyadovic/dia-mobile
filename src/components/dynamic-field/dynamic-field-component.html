@@ -1,4 +1,4 @@
-<ion-item *ngIf="field && field.type != 'radio'">
+<ion-item *ngIf="field && field.type != 'radio' && field.show !== false">
 
   <button ion-button block outline
     *ngIf="field.type == 'action' && field.display" (click)="emitHaveChanges()">
@@ -40,7 +40,7 @@
 
 </ion-item>
 
-<div *ngIf="field && field.type == 'radio'" radio-group
+<div *ngIf="field && field.type == 'radio' && field.show !== false" radio-group
   [disabled]="field.disabled !== undefined && field.disabled"
   [(ngModel)]="field.value">
 

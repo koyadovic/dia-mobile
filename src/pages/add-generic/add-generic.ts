@@ -34,12 +34,16 @@ export class AddGenericPage {
     this.data = JSON.parse(JSON.stringify(this.originalData));
     this.timelineService.completeAllGenericTypes(this.data);
 
+    // this is to remove duplicated date fields
+    let date_field_values = [];
+
     this.data["elements"].forEach((element) => {
 
       let computed_fields = JSON.parse(JSON.stringify(this.data["types"][element["type"]]["fields"]));
 
       for(let computed_field of computed_fields) {
         for(let field in element["fields"]) {
+  
           if (field === computed_field["key"]) {
             computed_field["value"] = element["fields"][field]["default_value"];
             computed_field["disabled"] = element["fields"][field]["disabled"];
@@ -50,8 +54,22 @@ export class AddGenericPage {
           if (computed_field["disabled"] && (computed_field["type"] == 'radio' || computed_field["type"] == 'select')) {
             computed_field["options"] = computed_field["options"].filter(option => option["value"] == computed_field["value"] )
           }
+
         }
       }
+
+      // with this we try to remove duplicated dates when it's recommended something from the backend
+      for(let computed_field of computed_fields) {
+        if (computed_field["type"] === 'date') {
+          if (date_field_values.indexOf(computed_field["value"]) < 0) {
+            date_field_values.push(computed_field["value"])
+            computed_field["show"] = true;
+          } else {
+            computed_field["show"] = false;
+          }
+        }
+      }
+
       element["computed_fields"] = JSON.parse(JSON.stringify(computed_fields));
     });
   }
