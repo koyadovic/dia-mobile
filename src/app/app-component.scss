@@ -42,6 +42,19 @@
     font-weight: 400;
 }
 
+/*
+This is to remove ion-input underline
+*/
+.item-input::after {
+    border-bottom-color: transparent !important;
+}
+.item-input.ng-valid.input-has-value::after{ border-bottom-color: transparent; }
+.item-inner {
+    border-bottom-color: transparent !important;
+    box-shadow: none !important;
+}
+/* fuck with the underline */
+
 
 /*
 .item-inner, ion-item {

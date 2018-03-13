@@ -1,4 +1,4 @@
-<ion-item *ngIf="field && field.type != 'radio' && field.show !== false">
+<ion-item class="dynamic-field" [ngClass]="{'dynamic-field-disabled': field['disabled']}" *ngIf="field && field.type != 'radio' && field.show !== false">
 
   <button ion-button block outline
     *ngIf="field.type == 'action' && field.display" (click)="emitHaveChanges()">
@@ -41,10 +41,9 @@
 </ion-item>
 
 <div *ngIf="field && field.type == 'radio' && field.show !== false" radio-group
-  [disabled]="field.disabled !== undefined && field.disabled"
   [(ngModel)]="field.value">
 
-  <ion-item *ngFor="let option of field.options">
+  <ion-item class="dynamic-field" [ngClass]="{'dynamic-field-disabled': field['disabled']}" *ngFor="let option of field.options">
     <ion-label>{{ option.display }}</ion-label>
     <ion-radio value="{{ option.value }}" (ionSelect)="emitHaveChanges()" checked></ion-radio>
   </ion-item>

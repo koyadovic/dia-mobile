@@ -14,7 +14,7 @@
 
         <ng-container *ngFor="let element of data.elements; let i = index">
 
-          <p padding-right padding-left *ngIf="!!element.info">{{ element.info }}</p>
+          <p *ngIf="!!element.info">{{ element.info }}</p>
           <ng-container *ngFor="let field of element.computed_fields">
 
             <dynamic-field *ngIf="isConditionalTrue(element, field) && (data.type !== 'action-request' || field.type !== 'action')"
@@ -24,11 +24,10 @@
             </dynamic-field>
           
           </ng-container>
-          <hr>
         </ng-container>
       </ion-col>
     </ion-row> 
-    
+    <hr>
     <ion-row *ngIf="!!data['actions']">
 
       <ion-col *ngFor="let action of data['actions']">
