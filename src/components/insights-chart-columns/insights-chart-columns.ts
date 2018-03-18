@@ -39,7 +39,14 @@ export class InsightsChartColumnsComponent {
         },
         options: {
           responsive: false,
-          animation: false
+          animation: false,
+          scales: {
+            yAxes: [{
+              ticks: {
+                min: 0,
+              },
+            }],
+          }
         }
       };
       this.columnsChart = new Chart(this.columnsChartCanvas.nativeElement, chartData);
