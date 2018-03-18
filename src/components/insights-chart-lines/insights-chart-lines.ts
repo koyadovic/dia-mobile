@@ -16,30 +16,46 @@ export class InsightsChartLinesComponent {
 
   ngOnChanges(changes) {
     if('linesConcreteData' in changes && !!this.linesConcreteData) {
+      let xypoints = false;
 
       let chartData = {
         type: 'line',
         data: {
           labels: this.linesConcreteData["labels"],
-          datasets: this.linesConcreteData["datasets"].map((x) => {
+          datasets: this.linesConcreteData["datasets"].map((elem) => {
             let color = InsightsChartComponent.getCurrentColor('0.8');
             let bgColor = InsightsChartComponent.getCurrentColor('0.2');
             InsightsChartComponent.increaseCurrentColor();
+            xypoints = elem['data'].length > 0 && isNaN(elem['data'][0]) && 'x' in elem['data'][0];
             return {
-              data: x['data'],
-              label: x['label'],
+              data: elem['data'],
+              label: elem['label'],
               backgroundColor: bgColor,
               borderColor: color,
               borderWidth: 2,
+              lineTension: 0,
             }
           })
         },
         options: {
           responsive: false,
           fill: 'start',
-          animation: false
+          animation: false,
         }
       };
+      if (xypoints) {
+          chartData['options']['scales'] = {
+            xAxes: [{
+               display: true,
+               type: 'linear',
+            }],
+            yAxes: [{
+               display: true,
+               type: 'linear',
+            }]
+         }
+      }
+      console.log(JSON.stringify(chartData));
 
       this.linesChart = new Chart(this.linesChartCanvas.nativeElement, chartData);
     }
