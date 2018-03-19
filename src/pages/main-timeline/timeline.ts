@@ -19,6 +19,7 @@ import * as moment from 'moment-timezone';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { DiaRestBackendService } from '../../services/dia-rest-backend-service';
 import { UserMedicationsPage } from '../user-medications/user-medications';
+import { ToastController } from 'ionic-angular/components/toast/toast-controller';
 
 
 @Component({
@@ -46,6 +47,7 @@ export class TimeLinePage {
               private modalCtrl: ModalController,
               private authService: DiaAuthService,
               private translate: TranslateService,
+              public toastCtrl: ToastController,
               private restBackendService: DiaRestBackendService,
               private events: Events) {
 
@@ -53,6 +55,17 @@ export class TimeLinePage {
 
     this.loggedinSubscription = this.authService.loggedIn().subscribe((loggedin) => {
       if(loggedin === null) return;
+
+      this.timelineService.getBackendNotices().subscribe(resp => {
+        let timeout = 0;
+        for(let notice of resp) {
+          
+          setTimeout(() => {
+            this.toastMessage(notice.message);
+          }, timeout);
+          timeout += 7000;
+        }
+      });
 
       if(loggedin){
         this.refreshTimeline();
@@ -70,6 +83,20 @@ export class TimeLinePage {
     });
     
   }
+
+  toastMessage(message: string){
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 7000,
+      position: 'top'
+    });
+  
+    toast.onDidDismiss(() => {
+    });
+  
+    toast.present();
+  }
+
 
   private completeInstants(instants: any[]){
     let processed;
