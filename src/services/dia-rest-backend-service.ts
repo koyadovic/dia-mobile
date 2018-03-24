@@ -3,13 +3,26 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { DiaAuthService } from './dia-auth-service';
 import { HttpResponse } from '@angular/common/http';
+import { ToastController } from 'ionic-angular/components/toast/toast-controller';
 
 
 @Injectable()
 export class DiaRestBackendService {
 
   constructor(private http: HttpClient,
-              private authService: DiaAuthService) {}
+              private authService: DiaAuthService,
+              public toastCtrl: ToastController,) {}
+
+  private toastMessage(message: string){
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 7000,
+      position: 'top'
+    });
+    toast.onDidDismiss(() => {
+    });
+    toast.present();
+  }
 
   private getHeaders(token: string) {
     let headers = new HttpHeaders({
@@ -57,6 +70,13 @@ export class DiaRestBackendService {
           console.error(err);
           if(err.status === 401){
             this.authService.logout();
+          } else {
+            let mess = err.error.detail;
+            if (mess !== undefined){
+              this.toastMessage(err.error.detail);
+            } else {
+              this.toastMessage(err.status + " " + err.message);
+            }
           }
         }
       );
@@ -77,8 +97,16 @@ export class DiaRestBackendService {
         },
         (err) => {
           console.log(err);
+
           if(err.status === 401){
             this.authService.logout();
+          } else {
+            let mess = err.error.detail;
+            if (mess !== undefined){
+              this.toastMessage(err.error.detail);
+            } else {
+              this.toastMessage(err.status + " " + err.message);
+            }
           }
         }
       );
@@ -101,6 +129,13 @@ export class DiaRestBackendService {
           console.log(err);
           if(err.status === 401){
             this.authService.logout();
+          } else {
+            let mess = err.error.detail;
+            if (mess !== undefined){
+              this.toastMessage(err.error.detail);
+            } else {
+              this.toastMessage(err.status + " " + err.message);
+            }
           }
         }
       );
