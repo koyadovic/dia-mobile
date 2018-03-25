@@ -34,7 +34,7 @@ export class DiaTimelineService {
     constructor(private backendURL: DiaBackendURL,
                 private restBackendService: DiaRestBackendService,
                 private configurationService: DiaConfigurationService,
-                private authenticationService: DiaAuthService,
+                public authenticationService: DiaAuthService,
                 private translate: TranslateService) {
 
         this.userConfig = this.configurationService.getUserConfiguration();

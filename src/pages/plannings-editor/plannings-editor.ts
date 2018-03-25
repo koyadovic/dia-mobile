@@ -77,7 +77,7 @@ export class PlanningsEditorPage {
 
       data[key] = this.dataPreserved[this.planning.type][key];
     }
-    let modal = this.modalCtrl.create(AddGenericPage, {data: data});
+    let modal = this.modalCtrl.create(AddGenericPage, {data: data, hide_fields: ['datetime']});
 
     modal.onDidDismiss((requests) => {
       if(!!requests && requests["requests"] && requests["requests"].length > 0) {
@@ -154,6 +154,14 @@ export class PlanningsEditorPage {
           ]
         };
         this.timelineService.completeAllGenericTypes(data);
+
+        for (let n=0; n < data["types"]["activity"]["fields"].length; n++) {
+          let f = data["types"]["activity"]["fields"][n];
+          if(f["key"] == "datetime") {
+            data["types"]["activity"]["fields"][n]["show"] = false;
+          }
+        }
+
         observer.next(data);
         observer.complete();
       });

@@ -31,6 +31,13 @@ export class AddGenericPage {
 
     // get data
     this.originalData = this.navParams.get("data");
+
+    // this is useful when we want to hide some key because it has no sense.
+    let fields_to_hide = this.navParams.get("hide_fields");
+    if (fields_to_hide === undefined){
+      fields_to_hide = [];
+    }
+
     this.data = JSON.parse(JSON.stringify(this.originalData));
     this.timelineService.completeAllGenericTypes(this.data);
 
@@ -67,6 +74,10 @@ export class AddGenericPage {
           } else {
             computed_field["show"] = false;
           }
+        }
+
+        if(fields_to_hide.indexOf(computed_field["key"]) > -1) {
+          computed_field["show"] = false;
         }
       }
 

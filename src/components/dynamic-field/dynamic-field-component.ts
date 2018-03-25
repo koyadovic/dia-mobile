@@ -20,7 +20,8 @@ export class DynamicField {
       "additional_options": {
         "format": "DD/MM/YYYY HH:mm"
       },
-      "disabled": true
+      "disabled": true,
+      "show": true
     }
 
   */
