@@ -58,6 +58,16 @@ export class PlanningsEditorPage {
     }
   }
 
+  diabeticGroup() {
+    let userGroups:any[] = this.timelineService.authenticationService.groups;
+    return userGroups.indexOf('Diabetics') > -1;
+  }
+
+  dietAndExercise() {
+    let userGroups:any[] = this.timelineService.authenticationService.groups;
+    return userGroups.indexOf('Diet & Exercise') > -1;
+  }
+
   private openGenericModal(data){
     for(let key in this.dataPreserved[this.planning.type]) {
       // this is to preserve the configuration made in the generic dialog.

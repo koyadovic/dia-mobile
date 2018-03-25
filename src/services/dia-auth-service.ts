@@ -22,6 +22,29 @@ export class DiaAuthService {
             if(this.loggedIn$.getValue() !== !!token)
                 this.loggedIn$.next(!!token);
         });
+
+        // here we get user groups
+        this.loggedIn().subscribe(loggedIn => {
+            if(loggedIn) {
+
+                let headers = new HttpHeaders({
+                    "Authorization":`token ${this.token}`,
+                    'Content-Type': 'application/json'
+                });
+
+                let url = `${this.backendURL.baseURL}/v1/accounts/self/`;
+
+                this.http.get(url, {headers: headers})
+                            .map((response: HttpResponse<any>) => { return response['groups']; })
+                            .subscribe(
+                                resp =>  this.groups = resp,
+                                err => console.error(err)
+                            );
+      
+            } else {
+                this.groups = [];
+            }
+        });
     }
 
     // return only observable versions of the subject

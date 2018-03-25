@@ -85,12 +85,12 @@ export class TimeLinePage {
   }
 
   diabeticGroup() {
-    let userGroups:any[] = this.timelineService.userGroups;
+    let userGroups:any[] = this.timelineService.authenticationService.groups;
     return userGroups.indexOf('Diabetics') > -1;
   }
 
   dietAndExercise() {
-    let userGroups:any[] = this.timelineService.userGroups;
+    let userGroups:any[] = this.timelineService.authenticationService.groups;
     return userGroups.indexOf('Diet & Exercise') > -1;
   }
 

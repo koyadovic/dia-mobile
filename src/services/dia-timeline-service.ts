@@ -27,7 +27,7 @@ export class DiaTimelineService {
     private traitFields;
 
     private userMedicationBrands = [];
-    public userGroups = [];
+    //public userGroups = [];
 
     private userConfig: UserConfiguration;
 
@@ -40,9 +40,6 @@ export class DiaTimelineService {
         this.userConfig = this.configurationService.getUserConfiguration();
         this.refreshElementFields();
 
-        // get user groups
-        let url = `${this.backendURL.baseURL}/v1/accounts/self/`;
-        this.restBackendService.genericGet(url).subscribe(resp => this.userGroups = resp["groups"]);
     }
 
     refreshElementFields() {
