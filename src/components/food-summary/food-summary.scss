@@ -5,5 +5,7 @@
     ion-badge {
         flex: 1;
         margin: 0px 4px;
+        color: color($colors, secondary);
+        border-color: color($colors, dark);
     }
 }
