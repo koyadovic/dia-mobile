@@ -64,10 +64,8 @@ export class AddFeedingPage {
       duration: 3000,
       position: 'top'
     });
-  
     toast.onDidDismiss(() => {
     });
-  
     toast.present();
   }
 
@@ -104,7 +102,7 @@ export class AddFeedingPage {
     let i = this.foodSelected.indexOf(food);
     if (i > -1) {
       this.foodSelected.splice(i, 1);
-      this.foodActionMessage('Removed from list');
+      this.translate.get('Removed from list').subscribe(mess => this.foodActionMessage(mess));
       this.foodSelected = this.foodSelected.slice();
     }
   }
@@ -215,7 +213,7 @@ export class AddFeedingPage {
   finishFeeding() {
     this.timelineService.saveFeeding(this.foodSelected).subscribe(
       (resp) => {
-        this.foodActionMessage('Feeding added correctly.');
+        this.translate.get('Feeding added correctly').subscribe(mess => this.foodActionMessage(mess));
         this.viewCtrl.dismiss({'add': true});
       }
     )

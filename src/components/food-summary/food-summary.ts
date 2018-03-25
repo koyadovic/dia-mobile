@@ -32,7 +32,6 @@ export class FoodSummaryComponent {
   }
 
   recalculateTotals() {
-    console.log("recalculating totals");
     let total_carb_g = 0.0;
     let total_protein_g = 0.0;
     let total_fat_g = 0.0;

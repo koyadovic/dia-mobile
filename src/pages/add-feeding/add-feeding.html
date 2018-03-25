@@ -57,15 +57,19 @@
     </ion-title>
 
   </ion-toolbar>
+
   <ion-content>
-    <ion-list>
+
+    <p text-center *ngIf="foodSelected.length === 0">{{ "No food selected yet" | translate }}</p>
+
+    <ion-list class="food-list">
 
       <food-selected
         *ngFor="let food of foodSelected" [foodSelected]="food"
         (unselectFood)="unselectedFood(food)" (selectingFood)="selectingFood = $event"
         [showCarbs]="true" [showProteins]="true" [showFats]="true" [showKCal]="true"
         (foodMessage)="foodActionMessage($event)"
-        (foodChanges)="foodSummary.recalculateTotals()"
+        (foodChanges)="foodSummary?.recalculateTotals()"
         (foodUnSelection)="unselectedFood($event)">
       </food-selected>
 
@@ -73,7 +77,17 @@
     
   </ion-content>
 
-  <food-summary #foodSummary (addFeeding)="finishFeeding()" [foodSelected]="foodSelected"></food-summary>
+  <ion-footer>
+
+    <ion-toolbar [ngClass]="{'hide': foodSelected.length === 0}">
+
+      <button ion-button block color="secondary" (click)="finishFeeding()">
+        {{ "Finalize feeding add" | translate }}
+      </button>
+      <food-summary #foodSummary [foodSelected]="foodSelected"></food-summary>
+    </ion-toolbar>
+
+  </ion-footer>
 
 </ion-pullup>
   

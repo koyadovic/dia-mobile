@@ -145,5 +145,12 @@
     "I seems that there was an error ... Sorry!": "Parece que hubo un error ... ¡Lo siento!",
     "Medication added correctly to your list": "Medicamento añadido correctamente a su lista",
     "There seem to was an error": "Parece que hubo un error",
-    "Medication removed correctly from your list": "Medicamento eliminado correctamente de su lista"
+    "Medication removed correctly from your list": "Medicamento eliminado correctamente de su lista",
+
+
+    "Selected food Modified": "Modificado el alimento seleccionado",
+    "Removed from list": "Eliminado del listado",
+    "Feeding added correctly": "Alimentación añadida correctamente",
+    "No food selected yet": "Ningún alimento seleccionado aún",
+    "Finalize feeding add": "Finalice añadido de alimentación"
 }
