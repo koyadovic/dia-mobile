@@ -84,6 +84,16 @@ export class TimeLinePage {
     
   }
 
+  diabeticGroup() {
+    let userGroups:any[] = this.timelineService.userGroups;
+    return userGroups.indexOf('Diabetics') > -1;
+  }
+
+  dietAndExercise() {
+    let userGroups:any[] = this.timelineService.userGroups;
+    return userGroups.indexOf('Diet & Exercise') > -1;
+  }
+
   toastMessage(message: string){
     let toast = this.toastCtrl.create({
       message: message,
