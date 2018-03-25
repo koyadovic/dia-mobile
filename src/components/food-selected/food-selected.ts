@@ -68,6 +68,7 @@ export class FoodSelectedComponent {
     // food here it's a copy, not a reference
     if(foodSelected !== null) {
       this.foodMessage.emit('Selected food Modified');
+      this.foodChanges.emit();
     }
     setTimeout(() => { this.selectionMode = false; this.selectionModeFood = null; }, 100);
     this.selectingFood.emit(false);

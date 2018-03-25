@@ -64,6 +64,8 @@
         *ngFor="let food of foodSelected" [foodSelected]="food"
         (unselectFood)="unselectedFood(food)" (selectingFood)="selectingFood = $event"
         [showCarbs]="true" [showProteins]="true" [showFats]="true" [showKCal]="true"
+        (foodMessage)="foodActionMessage($event)"
+        (foodChanges)="foodSummary.recalculateTotals()"
         (foodUnSelection)="unselectedFood($event)">
       </food-selected>
 
@@ -71,7 +73,7 @@
     
   </ion-content>
 
-  <food-summary (addFeeding)="finishFeeding()" [foodSelected]="foodSelected"></food-summary>
+  <food-summary #foodSummary (addFeeding)="finishFeeding()" [foodSelected]="foodSelected"></food-summary>
 
 </ion-pullup>
   
