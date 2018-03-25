@@ -1,4 +1,4 @@
-<ion-list *ngIf="!!configurationRoot && configurationRoot.fields?.length > 0">
+<ion-list *ngIf="!!configurationRoot && configurationRoot.fields?.length > 0" padding-left padding-right>
 
   <dynamic-field
     *ngFor="let field of configurationRoot.fields"
@@ -13,9 +13,9 @@
 <ion-list *ngIf="!!configurationRoot">
 
   <button ion-item
-  *ngFor="let submenu of configurationRoot.children_nodes"
-  (click)="requestRootChange(submenu)">
-    {{ submenu.display }}<ion-icon item-end name="build"></ion-icon>
+    *ngFor="let submenu of configurationRoot.children_nodes"
+    (click)="requestRootChange(submenu)">
+      {{ submenu.display }}<ion-icon item-end name="build"></ion-icon>
   </button>
 
 </ion-list>
