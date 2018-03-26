@@ -11,6 +11,10 @@ ion-pullup .toolbar-icon {
     color: color($colors, dark);
 }
 
+ion-footer .scroll-content {
+    bottom: 150px !important;
+}
+
 
 .result-food-list {
     margin-bottom: 56px;

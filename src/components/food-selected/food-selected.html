@@ -4,17 +4,12 @@
         <h2>{{ foodSelected.food.name }}, {{ selection() }}</h2>
         <p>{{ foodSelected.food.manufacturer }}</p>
 
-        <ion-grid class="nutrition">
-            <ion-row>
-                <ion-col>
-                    <ion-badge *ngIf="showCarbs" color="secondary">{{ "Carb" | translate }}<br/>{{ round(foodSelected.carb_g) }}g</ion-badge>
-                    <ion-badge *ngIf="showProteins" color="secondary">{{ "Prot" | translate }}<br/>{{ round(foodSelected.protein_g) }}g</ion-badge>
-                    <ion-badge *ngIf="showFats" color="secondary">{{ "Fats" | translate }}<br/>{{ round(foodSelected.fat_g) }}g</ion-badge>
-                    <ion-badge *ngIf="showKCal" color="secondary">{{ "Kcal" | translate }}<br/>{{ round(kcal()) }}</ion-badge>
-                </ion-col>
-            </ion-row>
-
-        </ion-grid>
+        <div class="nutrition-container">
+            <ion-badge *ngIf="showCarbs" color="secondary">{{ "Carb" | translate }}<br/>{{ round(foodSelected.carb_g) }}g</ion-badge>
+            <ion-badge *ngIf="showProteins" color="secondary">{{ "Prot" | translate }}<br/>{{ round(foodSelected.protein_g) }}g</ion-badge>
+            <ion-badge *ngIf="showFats" color="secondary">{{ "Fats" | translate }}<br/>{{ round(foodSelected.fat_g) }}g</ion-badge>
+            <ion-badge *ngIf="showKCal" color="secondary">{{ "Kcal" | translate }}<br/>{{ round(kcal()) }}</ion-badge>
+        </div>
 
     </button>
 
