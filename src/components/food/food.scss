@@ -12,7 +12,7 @@
 
 .food-item {
     h2 {
-        font-weight: 600 !important;
+        font-weight: 100 !important;
         font-size: 1.2em;
     }
     p {
@@ -28,9 +28,9 @@
     ion-badge {
         flex: 1;
         margin-right: 4px;
-        color: color($colors, secondary);
+        color: color($colors, primary-dark);
         border-color: color($colors, dark);
-        background-color: color($colors, primary);
+        background-color: color($colors, light);
     }
     ion-badge:last-child {
         margin-right: 0px;

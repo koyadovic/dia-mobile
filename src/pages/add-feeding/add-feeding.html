@@ -84,11 +84,10 @@
 
     <ion-toolbar transparent [ngClass]="{'hide': foodSelected.length === 0}">
 
+      <food-summary #foodSummary [foodSelected]="foodSelected"></food-summary>
       <button ion-button block class="button-finalize-feeding" (click)="finishFeeding()">
         {{ "Finalize feeding add" | translate }}
       </button>
-
-      <food-summary #foodSummary [foodSelected]="foodSelected"></food-summary>
     </ion-toolbar>
 
   </ion-footer>

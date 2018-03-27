@@ -24,7 +24,10 @@
 }
 
 
-
+.action-type-field {
+    color: color($colors, primary-light);
+    font-size: 0.8em;
+}
 
 
 .item.dynamic-field-disabled {
