@@ -42,3 +42,8 @@ ion-footer .scroll-content {
 .feeding-footer {
     background: color($colors, light);
 }
+
+
+food-selected:last-child > ion-item-sliding {
+    margin-bottom: 94px;
+}
