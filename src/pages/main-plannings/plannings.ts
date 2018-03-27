@@ -42,7 +42,7 @@ export class PlanningsPage {
         this.refresh;
         this.events.publish('timeline:with:changes');
       },
-      (err) => console.log(err)
+      (err) => console.error(err)
     );
   }
 
@@ -74,7 +74,7 @@ export class PlanningsPage {
               this.refresh();
             },
             (err) => {
-              console.log(err);
+              console.error(err);
             }
           );
         }

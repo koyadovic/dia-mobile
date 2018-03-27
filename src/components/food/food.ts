@@ -25,7 +25,7 @@ import { forkJoin } from 'rxjs/observable/forkJoin';
 
 })
 export class FoodComponent {
-  @Input() food: FoodListable | FoodDetailable;
+  @Input() food: InternetFoodList | FoodListable | FoodDetailable;
 
   @Input() showCarbs:boolean = false;
   @Input() showProteins:boolean = false;
@@ -53,13 +53,17 @@ export class FoodComponent {
   doClick(){ // selection
     if(!this.selectionMode && !this.editMode) {
       if(!('carb_factor' in this.food) || !('protein_factor' in this.food) || !('fat_factor' in this.food)) {
-        // it's FoodListable
-        this.timelineService.searchedFoodDetails(<InternetFoodList>this.food).subscribe(
-          food => {
-            this.food = food;
-            this.openSelection();
-          }
-        )
+        // it's InternetFoodList
+        if('source_name' in this.food && 'source_id' in this.food) {
+          this.timelineService.searchedFoodDetails(<InternetFoodList>this.food).subscribe(
+            food => {
+              this.food = food;
+              this.openSelection();
+            }
+          );
+        } else {
+          console.error('!!!')
+        }
       } else {
         this.openSelection();
       }
@@ -153,7 +157,7 @@ export class FoodComponent {
         this.foodChanges.emit();
       },
       (err) => {
-        console.log(err);
+        console.error(err);
       }
     )
   }
@@ -164,7 +168,7 @@ export class FoodComponent {
         this.foodMessage.emit('Food saved');
         this.foodChanges.emit();
       },
-      (err) => {console.log(err)}
+      (err) => {console.error(err)}
     );
   }
 

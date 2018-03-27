@@ -51,7 +51,7 @@ export class DiaTimelineService {
                 this.buildElementFields();
             },
             (err) => {
-                console.log('Error retrieving user medication brands: ' + err);
+                console.error('Error retrieving user medication brands: ' + err);
             }
         );
     }

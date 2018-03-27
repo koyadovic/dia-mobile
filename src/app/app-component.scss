@@ -70,7 +70,15 @@ ion-item-options button span {
     box-shadow: none !important;
 }
 */
-    
+
+/* Default is 10px, this makes content inside input appear out of position (unaligned vertically)  with text outside the input
+   with 3px this effect is minimized */
+ion-input {
+    padding-left: 3px !important;
+}
+ion-datetime {
+    padding-left: 3px !important;
+}
 
 
 

@@ -55,8 +55,6 @@ export class InsightsChartLinesComponent {
             }]
          }
       }
-      console.log(JSON.stringify(chartData));
-
       this.linesChart = new Chart(this.linesChartCanvas.nativeElement, chartData);
     }
   }

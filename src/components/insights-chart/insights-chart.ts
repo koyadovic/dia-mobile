@@ -33,7 +33,7 @@ export class InsightsChartComponent {
           this.chartDataLoaded.emit();
         },
         (err) => {
-          console.log(err);
+          console.error(err);
         }
       )
     }
