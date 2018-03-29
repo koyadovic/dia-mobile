@@ -5,6 +5,7 @@ ion-badge.enabled {
 ion-label.planning-hour {
     font-weight: 100;
     font-size: 1.3em;
+    margin: 5px 8px 5px 0;
 }
 
 
@@ -42,4 +43,9 @@ ion-toggle.plannings-toggle {
 
 .planning-item .grid {
     padding: 0px;
+
+    .row {
+        max-height: 3em;
+
+    }
 }
