@@ -266,8 +266,7 @@ export class DiaTimelineService {
         forkJoin(
             this.translate.get("Instant"),
             this.translate.get("Level"),
-            this.translate.get("Please, provide the following data."),
-          ).subscribe(([instant, level, glucoseName]) => {
+          ).subscribe(([instant, level]) => {
             this.glucoseFields = [
                 {
                     "display": instant,
@@ -302,12 +301,11 @@ export class DiaTimelineService {
             this.translate.get("Intensity"),
             this.translate.get("Minutes"),
             this.translate.get("Number of minutes"),
-            this.translate.get("Introduce intensity and minutes that have spent with the activity."),
             this.translate.get("Soft"),
             this.translate.get("Medium"),
             this.translate.get("High"),
             this.translate.get("Extreme"),
-          ).subscribe(([instant, intensity, minutes, numberMinutes, activityName,
+          ).subscribe(([instant, intensity, minutes, numberMinutes,
           soft, medium, high, extreme]) => {
       
             this.activityFields = [
@@ -421,8 +419,6 @@ export class DiaTimelineService {
             this.translate.get("Select date"),
             this.translate.get("Value"),
             this.translate.get("Introduce a value"),
-            this.translate.get("Select type of trait and complete the value."),
-      
             this.translate.get("Height (cm)"),
             this.translate.get("Weight (kg)"),
             this.translate.get("Neck Perimeter (cm)"),
@@ -430,7 +426,7 @@ export class DiaTimelineService {
             this.translate.get("Waist Perimeter (cm)"),
       
           ).subscribe(([instant, type, selectDate,
-          value, introduceAValue, traitName, height, weight,
+          value, introduceAValue, height, weight,
           neck, abdomen, waist]) => {
               this.traitFields = [
                 {

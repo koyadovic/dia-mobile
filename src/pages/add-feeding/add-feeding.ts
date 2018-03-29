@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 import { AddFoodPage } from '../add-feeding-search-food-add-food/add-food';
+import { ViewChild } from '@angular/core';
 
 import { DiaTimelineService } from '../../services/dia-timeline-service';
 import { ViewController } from 'ionic-angular/navigation/view-controller';
@@ -11,6 +12,7 @@ import { LoadingController } from 'ionic-angular/components/loading/loading-cont
 import { IonPullUpFooterState } from 'ionic-pullup';
 import { InternetFoodList, FoodSelected } from '../../models/food-model';
 import { TranslateService } from '@ngx-translate/core';
+import { FoodSummaryComponent } from '../../components/food-summary/food-summary';
 
 @Component({
   selector: 'page-add-feeding',
@@ -37,13 +39,19 @@ export class AddFeedingPage {
   // food selections
   footerState: IonPullUpFooterState;
   private foodSelected:FoodSelected[] = [];
+  @ViewChild(FoodSummaryComponent) foodSummary: FoodSummaryComponent;
 
   private footerCurrentlyExpanded: boolean = false;
 
-  // this two is to hjide the ribbon for add food.
+  // this two is to hide the ribbon for add food.
   // if selecting or editing, the ribbon must be hide
   private editingFood: boolean = false;
   private selectingFood: boolean = false;
+
+  private maxCarb = null;
+  private maxProt = null;
+  private maxFats = null;
+  private maxKcal = null;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -54,6 +62,30 @@ export class AddFeedingPage {
               public loadingCtrl: LoadingController,
               public toastCtrl: ToastController) {
 
+    // get fixed fields.
+    let rawData = this.navParams.get("data");
+    let fixedFields = {};
+    if(Object.keys(rawData).length > 0) {
+      fixedFields = rawData['elements'][0]['fields'];
+      if('datetime' in fixedFields) {
+        delete fixedFields['datetime'];
+      }
+    }
+    for (let key of Object.keys(fixedFields)){
+      if(key === 'carb_g') {
+        this.maxCarb = fixedFields[key]['default_value'];
+      }
+      if(key === 'protein_g') {
+        this.maxProt = fixedFields[key]['default_value'];
+      }
+      if(key === 'fat_g') {
+        this.maxFats = fixedFields[key]['default_value'];
+      }
+      if(key === 'kcal') {
+        this.maxKcal = fixedFields[key]['default_value'];
+      }
+    }
+
     this.switchToRecent();
     this.footerState = IonPullUpFooterState.Collapsed;
   }
@@ -61,8 +93,8 @@ export class AddFeedingPage {
   foodActionMessage(message:string){
     let toast = this.toastCtrl.create({
       message: message,
-      duration: 3000,
-      position: 'top'
+      duration: 2000,
+      position: 'bottom'
     });
     toast.onDidDismiss(() => {
     });
@@ -96,6 +128,7 @@ export class AddFeedingPage {
 
     // if we does not clone the array, angular does not detect changes
     this.foodSelected = this.foodSelected.slice();
+
   }
 
   unselectedFood(food: FoodSelected) {

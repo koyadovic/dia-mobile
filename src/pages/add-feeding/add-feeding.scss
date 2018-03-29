@@ -8,7 +8,7 @@ ion-footer > div {
 }
 
 ion-pullup .toolbar-icon {
-    color: color($colors, dark);
+    color: color($colors, white);
 }
 
 ion-footer .scroll-content {
@@ -36,8 +36,8 @@ ion-footer .scroll-content {
 }
 
 .button-finalize-feeding {
-    color: color($colors, dark);
-    background: color($colors, secondary) !important;
+    color: color($colors, white);
+    background: color($colors, primary) !important;
 }
 .feeding-footer {
     background: color($colors, light);

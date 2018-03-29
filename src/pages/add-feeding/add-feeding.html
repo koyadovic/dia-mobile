@@ -52,10 +52,10 @@
 <ion-pullup
   (onExpand)="footerExpanded()" (onCollapse)="footerCollapsed()" [(state)]="footerState">
 
-  <ion-toolbar color="light" (tap)="toggleFooter()">
+  <ion-toolbar color="primary-light" (tap)="toggleFooter()">
       
     <ion-title text-center>
-      <ion-badge *ngIf="foodSelected.length > 0 && !footerCurrentlyExpanded" item-start>{{ foodSelected.length }}</ion-badge>
+      <ion-badge color="tertiary" *ngIf="foodSelected.length > 0 && !footerCurrentlyExpanded" item-start>{{ foodSelected.length }}</ion-badge>
       <ion-icon class="toolbar-icon" name="more"></ion-icon>
     </ion-title>
 
@@ -84,12 +84,15 @@
 
     <ion-toolbar transparent [ngClass]="{'hide': foodSelected.length === 0}">
 
-      <food-summary #foodSummary [foodSelected]="foodSelected"></food-summary>
-      <button ion-button block class="button-finalize-feeding" (click)="finishFeeding()">
+      <food-summary #foodSummary
+        [foodSelected]="foodSelected"
+        [maxCarb]="maxCarb" [maxProt]="maxProt" [maxFats]="maxFats" [maxKcal]="maxKcal">
+      </food-summary>
+
+      <button ion-button full round class="button-finalize-feeding" (click)="finishFeeding()">
         {{ "Finalize feeding add" | translate }}
       </button>
     </ion-toolbar>
-
   </ion-footer>
 
 </ion-pullup>
