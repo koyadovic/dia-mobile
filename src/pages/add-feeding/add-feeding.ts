@@ -40,10 +40,12 @@ export class AddFeedingPage {
 
   private footerCurrentlyExpanded: boolean = false;
 
-  // this two is to hjide the ribbon for add food.
+  // this two is to hide the ribbon for add food.
   // if selecting or editing, the ribbon must be hide
   private editingFood: boolean = false;
   private selectingFood: boolean = false;
+
+  private fixedFields = {};
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -53,6 +55,23 @@ export class AddFeedingPage {
               private timelineService: DiaTimelineService,
               public loadingCtrl: LoadingController,
               public toastCtrl: ToastController) {
+
+    // get fixed fields.
+    // fixedFields has the following structure:
+    
+    // {
+    //   "carb_g": {
+    //     "default_value": 45,
+    //     "disabled": true
+    //   }
+    // }
+    let rawData = this.navParams.get("data");
+    if(Object.keys(rawData).length > 0) {
+      this.fixedFields = rawData['elements'][0]['fields'];
+      if('datetime' in this.fixedFields) {
+        delete this.fixedFields['datetime'];
+      }
+    }
 
     this.switchToRecent();
     this.footerState = IonPullUpFooterState.Collapsed;

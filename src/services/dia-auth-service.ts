@@ -44,7 +44,7 @@ export class DiaAuthService {
         this.http.get(url, {headers: headers})
                     .map((response: HttpResponse<any>) => { return response['groups']; })
                     .subscribe(
-                        resp => { this.groups = resp; console.log(this.groups); },
+                        resp => this.groups = resp,
                         err => console.error(err)
                     );
     }
