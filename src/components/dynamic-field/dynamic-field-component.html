@@ -1,9 +1,17 @@
 <ion-item class="dynamic-field" [ngClass]="{'dynamic-field-disabled': field['disabled']}" *ngIf="field && field.type != 'radio' && field.show !== false">
 
+  <!--
   <div class="action-type-field"
     *ngIf="field.type == 'action' && field.display" (click)="emitHaveChanges()">
+    <ion-icon name="add"></ion-icon>
     {{ field.display }}
   </div>
+  -->
+
+  <button ion-button round full icon-start *ngIf="field.type == 'action' && field.display" (click)="emitHaveChanges()">
+    <ion-icon name="hand"></ion-icon>
+    {{ field.display }}
+  </button>
 
   <ion-label *ngIf="field.type != 'action' && field.display" stacked class="title-label" color="primary">{{ field.display }}</ion-label>
 

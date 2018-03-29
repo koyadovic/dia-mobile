@@ -228,7 +228,7 @@ export class TimeLinePage {
         "types": {},
         "elements": [
           {
-            "info": glucoseInfo,
+            //"info": glucoseInfo,
             "type": "glucose",
             "fields": {
               "datetime": {
@@ -267,7 +267,7 @@ export class TimeLinePage {
         "types": {},
         "elements": [
           {
-            "info": activityInfo,
+            //"info": activityInfo,
             "type": "activity",
             "fields": {
               "datetime": {
@@ -304,7 +304,7 @@ export class TimeLinePage {
         "types": {},
         "elements": [
           {
-            "info": unitsInfo,
+            //"info": unitsInfo,
             "type": "medication-take",
             "fields": {
               "datetime": {
@@ -342,7 +342,7 @@ export class TimeLinePage {
         "types": {},
         "elements": [
           {
-            "info": traitInfo,
+            //"info": traitInfo,
             "type": "trait",
             "fields": {
               "datetime": {
