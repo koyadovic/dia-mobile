@@ -133,7 +133,7 @@
     "Search": "Búsqueda",
 
     "Medications": "Medicamentos",
-    "Click to edit your medication list": "Editar su lista de medicamentos",
+    "Press to edit your medication list": "Pulse para editar su lista de medicamentos",
 
     "Currently you don't have medications added. Try searching!": "Actualmente no tiene medicamentos añadidos. ¡Pruebe buscando!",
     "Your currently added medications. If you want, you can search for new ones": "Sus medicamentos actualmente añadidos. Si quiere, puede buscar por nuevos",
@@ -145,5 +145,24 @@
     "I seems that there was an error ... Sorry!": "Parece que hubo un error ... ¡Lo siento!",
     "Medication added correctly to your list": "Medicamento añadido correctamente a su lista",
     "There seem to was an error": "Parece que hubo un error",
-    "Medication removed correctly from your list": "Medicamento eliminado correctamente de su lista"
+    "Medication removed correctly from your list": "Medicamento eliminado correctamente de su lista",
+
+
+    "Selected food Modified": "Modificado el alimento seleccionado",
+    "Removed from list": "Eliminado del listado",
+    "Feeding added correctly": "Alimentación añadida correctamente",
+    "No food selected yet": "Ningún alimento seleccionado aún",
+    "Finalize feeding add": "Finalice añadido de alimentación",
+    "Empty": "Vacío",
+    "Added to food selected list": "Añadido a la lista de alimentos seleccionados",
+    "Food deleted": "Alimento eliminado",
+    "Confirm delete": "Confirme eliminado",
+    "Do you want to delete this food?": "¿Quiere eliminar este alimento?",
+    "Cancel": "Cancelar",
+
+    "Give me a name": "Deme un nombre",
+
+    "Everything was good. Routine saved.": "Todo fue bien. Rutina guardada.",
+
+    "There is not data yet": "Aún no hay datos"
 }

@@ -1,15 +1,6 @@
-<ion-footer *ngIf="foodSelected.length > 0">
-  <ion-toolbar>
-    <ion-title>{{ "Summary" | translate }}</ion-title>
-    <ion-badge color="secondary">{{ "Carb" | translate }}<br/>{{ total_carb_g }}g</ion-badge>
-    <ion-badge color="secondary">{{ "Prot" | translate }}<br/>{{ total_protein_g }}g</ion-badge>
-    <ion-badge color="secondary">{{ "Fats" | translate }}<br/>{{ total_fat_g }}g</ion-badge>
-    <ion-badge color="secondary">{{ "Kcal" | translate }}<br/>{{ total_kcal }}</ion-badge>
-
-    <ion-buttons end>
-      <button ion-button item-end (click)="finishFeedingRequested()"><ion-icon name="checkmark"></ion-icon>{{ "Add" | translate }}</button>
-    </ion-buttons>
-
-  </ion-toolbar>
-
-</ion-footer>
+<div class="summary-container">
+  <ion-badge color="primary">{{ "Carb" | translate }}<br/>{{ total_carb_g }}g</ion-badge>
+  <ion-badge color="primary">{{ "Prot" | translate }}<br/>{{ total_protein_g }}g</ion-badge>
+  <ion-badge color="primary">{{ "Fats" | translate }}<br/>{{ total_fat_g }}g</ion-badge>
+  <ion-badge color="primary">{{ "Kcal" | translate }}<br/>{{ total_kcal }}</ion-badge>
+</div>

@@ -65,33 +65,11 @@ export class DiaAuthService {
                         this.storage.set("email", data.email);
                         this.token = token;
                         this.loggedIn$.next(!!token);
-                        this.updateGroups();
                     },
                     (err) => {
                         this.logout();
                     }
-                )
-    }
-
-    private updateGroups() {
-        let url = `${this.backendURL.baseURL}/v1/accounts/self/`;
-        let headers = new HttpHeaders({
-            "Authorization":`token ${this.token}`,
-            'Content-Type': 'application/json'
-        });
-        this.http
-        .get(url, {headers: headers})
-        .map((response: HttpResponse<any>) => {
-          return response;
-        })
-        .subscribe(
-          (resp) => {
-            console.log(JSON.stringify(resp));
-          },
-          (err) => {
-
-          }
-        );
+                );
     }
 
     logout(){

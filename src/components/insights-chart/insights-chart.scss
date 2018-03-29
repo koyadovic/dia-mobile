@@ -1,0 +1,20 @@
+.chart-title {
+    color: color($colors, primary-dark);
+}
+
+
+.empty-data {
+    display: flex;
+    height: 15em;
+    width: 100%;
+    border-radius: 10px;
+    background: color($colors, light);
+    p {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        color: color($colors, primary);
+    }
+}

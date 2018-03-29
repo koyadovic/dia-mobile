@@ -1,0 +1,15 @@
+.summary-container {
+    margin: 5px 0px 15px 0px;
+    display: flex;
+
+    ion-badge {
+        flex: 1;
+        margin-right: 5px;
+        color: color($colors, primary-dark);
+        border-color: color($colors, light);
+        background-color: color($colors, light);
+    }
+    ion-badge:last-child {
+        margin-right: 0px;
+    }
+}

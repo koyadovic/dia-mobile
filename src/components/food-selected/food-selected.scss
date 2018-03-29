@@ -1,7 +1,9 @@
 
+/*
 .nutrition {
     color: green !important;
 }
+*/
 
 .nutrition ion-col {
     padding: 0 !important;
@@ -10,7 +12,7 @@
 }
 
 .food-item h2 {
-    font-weight: 600 !important;
+    font-weight: 100 !important;
     font-size: 1.2em;
 }
 
@@ -21,3 +23,11 @@
     font-size: 0.7em;
     font-weight: 400;
 }
+
+/* lateral left border */
+/*
+ion-item-sliding {
+    border-left: 3px solid color($colors, secondary);
+    margin-left: 0px;
+}
+*/

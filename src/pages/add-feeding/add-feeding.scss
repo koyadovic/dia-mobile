@@ -11,6 +11,10 @@ ion-pullup .toolbar-icon {
     color: color($colors, dark);
 }
 
+ion-footer .scroll-content {
+    bottom: 150px !important;
+}
+
 
 .result-food-list {
     margin-bottom: 56px;
@@ -19,4 +23,27 @@ ion-pullup .toolbar-icon {
 .fabextramargin {
     margin-bottom: 66px;
     z-index: 2;
+}
+
+
+
+.food-list {
+    background-color: #f7f7f7;
+}
+
+.hide {
+    display: none;
+}
+
+.button-finalize-feeding {
+    color: color($colors, dark);
+    background: color($colors, secondary) !important;
+}
+.feeding-footer {
+    background: color($colors, light);
+}
+
+
+food-selected:last-child > *:last-child {
+    margin-bottom: 94px;
 }

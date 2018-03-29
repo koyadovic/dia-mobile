@@ -33,8 +33,12 @@ export class PlanningsEditorPage {
               public toastCtrl: ToastController) {
 
     // get data
-    this.planning = this.navParams.get("planning");
-    if(this.planning === null) this.createPlanning();
+    let p = this.navParams.get("planning");
+    if(p === null){
+      this.createPlanning();
+    } else {
+      this.planning = JSON.parse(JSON.stringify(p));
+    }
 
     this.dataPreserved[PLANNING_TYPES.PHYSICAL_ACTIVITY] = {};
     this.dataPreserved[PLANNING_TYPES.MEDICATION_TAKE] = {};
@@ -102,8 +106,7 @@ export class PlanningsEditorPage {
     if(this.planning.id === null) {
       this.planningsService.savePlanning(this.planning).subscribe(
         (resp) => {
-          // mensaje, todo fue guay
-          this.toast('Everything was good. Planning saved.')
+          this.translate.get('Everything was good. Routine saved.').subscribe(message => this.toast(message));
           this.viewCtrl.dismiss({"refresh": true});
         },
         (err) => {
@@ -113,8 +116,7 @@ export class PlanningsEditorPage {
     } else {
       this.planningsService.modifyPlanning(this.planning.id, this.planning).subscribe(
         (resp) => {
-          // mensaje, todo fue guay
-          this.toast('Everything was good. Planning saved.')
+          this.translate.get('Everything was good. Routine saved.').subscribe(message => this.toast(message));
           this.viewCtrl.dismiss({"refresh": true});
         },
         (err) => {

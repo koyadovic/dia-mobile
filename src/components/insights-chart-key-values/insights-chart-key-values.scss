@@ -1,3 +1,4 @@
+/*
 .insights-key-value > .header .col {
     background-color:lightgrey;
 }
@@ -18,4 +19,14 @@
 
 .insights-key-value .row:last-child .col {
     border-bottom: solid 1px grey;
+}
+
+
+.insights-key-value > .row > .col:first-child {
+    background-color: color($colors, secondary-light);
+}
+*/
+
+.insights-key-value .row {
+    border-bottom: solid 1px color($colors, primary-dark);
 }

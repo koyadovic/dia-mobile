@@ -1,6 +1,6 @@
 <div class="insights-key-value" *ngIf="!!keyValuesConcreteData">
     <div class="row" *ngFor="let element of keyValuesConcreteData['data']">
-        <div class="col">{{ element['label'] }}</div>
+        <div class="col"><b>{{ element['label'] }}</b></div>
         <div class="col">{{ element['value'] }}</div>
     </div>
 </div>

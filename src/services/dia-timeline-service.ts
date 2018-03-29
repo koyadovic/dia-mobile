@@ -51,7 +51,7 @@ export class DiaTimelineService {
                 this.buildElementFields();
             },
             (err) => {
-                console.log('Error retrieving user medication brands: ' + err);
+                console.error('Error retrieving user medication brands: ' + err);
             }
         );
     }
@@ -358,7 +358,7 @@ export class DiaTimelineService {
         forkJoin(
             this.translate.get("Instant"),
             this.translate.get("Medication"),
-            this.translate.get("Click to edit your medication list"),
+            this.translate.get("Press to edit your medication list"),
             this.translate.get("Amount"),
             this.translate.get("Amount of medication"),
           ).subscribe(([instant, medication, medicationEdit, amount, amountHint]) => {
@@ -377,6 +377,17 @@ export class DiaTimelineService {
                     }
                 },
                 {
+                    "display": medicationEdit,
+                    "value": "medication_edition_request",
+                    "required": true,
+                    "hint": "",
+                    "type": "action",
+                    "regex": "^.*$",
+                    "key": "medication_edition_request",
+                    "options": [],
+                    "namespace_key": "medication_edition_request"
+                },
+                {
                     "display": medication,
                     "value": this.userMedicationBrands.length > 0 ? '' + this.userMedicationBrands[0].id : null,
                     "required": true,
@@ -388,17 +399,6 @@ export class DiaTimelineService {
                         return {display: x.name, value: '' + x.id}
                     }),
                     "namespace_key": "medication"
-                },
-                {
-                    "display": medicationEdit,
-                    "value": "medication_edition_request",
-                    "required": true,
-                    "hint": "",
-                    "type": "action",
-                    "regex": "^.*$",
-                    "key": "medication_edition_request",
-                    "options": [],
-                    "namespace_key": "medication_edition_request"
                 },
                 {
                     "display": amount,

@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-toolbar color="light">
+  <ion-toolbar color="primary">
 
     <ion-searchbar
     placeholder="{{ 'Search' | translate }}"
@@ -29,6 +29,9 @@
 
 
 <ion-content>
+
+  <p text-center *ngIf="resultFoods.length === 0">{{ "Empty" | translate }}</p>
+
   <ion-list class="result-food-list">
     <food-component *ngFor="let food of resultFoods"
       (foodSelection)="selectedFood($event)" (foodChanges)="refresh(food)" (foodMessage)="foodActionMessage($event)"
@@ -57,15 +60,19 @@
     </ion-title>
 
   </ion-toolbar>
+
   <ion-content>
-    <ion-list>
+
+    <p text-center *ngIf="foodSelected.length === 0">{{ "No food selected yet" | translate }}</p>
+
+    <ion-list class="food-list">
 
       <food-selected
         *ngFor="let food of foodSelected" [foodSelected]="food"
         (unselectFood)="unselectedFood(food)" (selectingFood)="selectingFood = $event"
         [showCarbs]="true" [showProteins]="true" [showFats]="true" [showKCal]="true"
         (foodMessage)="foodActionMessage($event)"
-        (foodChanges)="foodSummary.recalculateTotals()"
+        (foodChanges)="foodSummary?.recalculateTotals()"
         (foodUnSelection)="unselectedFood($event)">
       </food-selected>
 
@@ -73,7 +80,17 @@
     
   </ion-content>
 
-  <food-summary #foodSummary (addFeeding)="finishFeeding()" [foodSelected]="foodSelected"></food-summary>
+  <ion-footer class="feeding-footer">
+
+    <ion-toolbar transparent [ngClass]="{'hide': foodSelected.length === 0}">
+
+      <food-summary #foodSummary [foodSelected]="foodSelected"></food-summary>
+      <button ion-button block class="button-finalize-feeding" (click)="finishFeeding()">
+        {{ "Finalize feeding add" | translate }}
+      </button>
+    </ion-toolbar>
+
+  </ion-footer>
 
 </ion-pullup>
   

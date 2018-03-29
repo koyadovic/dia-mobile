@@ -6,6 +6,7 @@ import { style, state, animate, transition, trigger } from '@angular/animations'
 import { AlertController } from 'ionic-angular';
 import { FoodListable, InternetFoodList, DiaFood, selection_kcal, weight, FoodDetailable, FoodSelected } from '../../models/food-model';
 import { TranslateService } from '@ngx-translate/core';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 
 @Component({
   selector: 'food-component',
@@ -24,7 +25,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 })
 export class FoodComponent {
-  @Input() food: FoodListable | FoodDetailable;
+  @Input() food: InternetFoodList | FoodListable | FoodDetailable;
 
   @Input() showCarbs:boolean = false;
   @Input() showProteins:boolean = false;
@@ -52,13 +53,17 @@ export class FoodComponent {
   doClick(){ // selection
     if(!this.selectionMode && !this.editMode) {
       if(!('carb_factor' in this.food) || !('protein_factor' in this.food) || !('fat_factor' in this.food)) {
-        // it's FoodListable
-        this.timelineService.searchedFoodDetails(<InternetFoodList>this.food).subscribe(
-          food => {
-            this.food = food;
-            this.openSelection();
-          }
-        )
+        // it's InternetFoodList
+        if('source_name' in this.food && 'source_id' in this.food) {
+          this.timelineService.searchedFoodDetails(<InternetFoodList>this.food).subscribe(
+            food => {
+              this.food = food;
+              this.openSelection();
+            }
+          );
+        } else {
+          console.error('!!!')
+        }
       } else {
         this.openSelection();
       }
@@ -82,7 +87,7 @@ export class FoodComponent {
   selectionFinishedCallback(foodSelected: FoodSelected) {
     // food here it's a copy, not a reference
     if(foodSelected !== null) {
-      this.foodMessage.emit('Added to food selected list');
+      this.translate.get('Added to food selected list').subscribe(message => this.foodMessage.emit(message));
       this.foodSelection.emit(foodSelected);
     }
     setTimeout(() => { this.selectionMode = false; this.selectionModeFood = null; }, 100);
@@ -106,30 +111,38 @@ export class FoodComponent {
 
   delete(item:ItemSliding) {
     item.close();
-    let alert = this.alertCtrl.create({
-      title: 'Confirm delete',
-      message: 'Do you want to delete this food?',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
+
+    forkJoin(
+      this.translate.get('Confirm delete'),
+      this.translate.get('Do you want to delete this food?'),
+      this.translate.get('Cancel'),
+      this.translate.get('Delete'),
+    ).subscribe(([title, mess, cancelText, deleteText]) => {
+      let alert = this.alertCtrl.create({
+        title: title,
+        message: mess,
+        buttons: [
+          {
+            text: cancelText,
+            role: 'cancel',
+            handler: () => {
+            }
+          },
+          {
+            text: deleteText,
+            handler: () => {
+              this.timelineService.deleteFood(<DiaFood>this.food).subscribe(
+                (result) => {
+                  this.translate.get('Food deleted').subscribe(message => this.foodMessage.emit(message));
+                  this.foodChanges.emit();
+                }
+              );
+            }
           }
-        },
-        {
-          text: 'Delete',
-          handler: () => {
-            this.timelineService.deleteFood(<DiaFood>this.food).subscribe(
-              (result) => {
-                this.foodMessage.emit('Food deleted');
-                this.foodChanges.emit();
-              }
-            );
-          }
-        }
-      ]
-    });
-    alert.present();
+        ]
+      });
+      alert.present();
+    })
   }
 
   favorite(item:ItemSliding, fav:boolean) {
@@ -144,7 +157,7 @@ export class FoodComponent {
         this.foodChanges.emit();
       },
       (err) => {
-        console.log(err);
+        console.error(err);
       }
     )
   }
@@ -155,7 +168,7 @@ export class FoodComponent {
         this.foodMessage.emit('Food saved');
         this.foodChanges.emit();
       },
-      (err) => {console.log(err)}
+      (err) => {console.error(err)}
     );
   }
 

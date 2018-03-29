@@ -4,18 +4,14 @@
         <h2>{{ food.name }}</h2>
         <p>{{ food.manufacturer }}</p>
 
-        <ion-grid class="nutrition">
-            <ion-row>
-                <ng-container class="nutrition" *ngIf="food.carb_factor >= 0.0 && food.carb_factor <= 1.0" item-end>
-                    <ion-col><ion-badge *ngIf="showCarbs" color="light">Carb {{ round(food.carb_factor * 100.0) }}%</ion-badge></ion-col>
-                    <ion-col><ion-badge *ngIf="showProteins" color="light">Prot {{ round(food.protein_factor * 100.0) }}%</ion-badge></ion-col>
-                    <ion-col><ion-badge *ngIf="showFats" color="light">Fats {{ round(food.fat_factor * 100.0) }}%</ion-badge></ion-col>
-                    <ion-col><ion-badge *ngIf="showFiber" color="light">Fibe {{ round(food.fiber_factor * 100.0) }}%</ion-badge></ion-col>
-                    <ion-col><ion-badge *ngIf="showAlcohol" color="light">Alco {{ round(food.alcohol_factor * 100.0) }}%</ion-badge></ion-col>
-                </ng-container>
-            </ion-row>
+        <div class="nutrition-container">
+            <ion-badge *ngIf="showCarbs" color="light">{{ "Carb" | translate }} {{ round(food.carb_factor * 100.0) }}%</ion-badge>
+            <ion-badge *ngIf="showProteins" color="light">{{ "Prot" | translate }} {{ round(food.protein_factor * 100.0) }}%</ion-badge>
+            <ion-badge *ngIf="showFats" color="light">{{ "Fats" | translate }} {{ round(food.fat_factor * 100.0) }}%</ion-badge>
+            <ion-badge *ngIf="showFiber" color="light">{{ "Fibe" | translate }} {{ round(food.fiber_factor * 100.0) }}%</ion-badge>
+            <ion-badge *ngIf="showAlcohol" color="light">{{ "Alco" | translate }} {{ round(food.alcohol_factor * 100.0) }}%</ion-badge>
+        </div>
 
-        </ion-grid>
     </button>
 
 

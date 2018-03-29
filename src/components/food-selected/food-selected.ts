@@ -65,13 +65,17 @@ export class FoodSelectedComponent {
   }
 
   selectionFinishedCallback(foodSelected: FoodSelected) {
-    // food here it's a copy, not a reference
-    if(foodSelected !== null) {
-      this.foodMessage.emit('Selected food Modified');
-      this.foodChanges.emit();
-    }
-    setTimeout(() => { this.selectionMode = false; this.selectionModeFood = null; }, 100);
-    this.selectingFood.emit(false);
+    this.translate.get('Selected food Modified').subscribe(
+      (message) => {
+        // food here it's a copy, not a reference
+        if(foodSelected !== null) {
+          this.foodMessage.emit(message);
+          this.foodChanges.emit();
+        }
+        setTimeout(() => { this.selectionMode = false; this.selectionModeFood = null; }, 100);
+        this.selectingFood.emit(false);
+      }
+    );
   }
 
   // useful for templates. Maybe we can code a pipe for this

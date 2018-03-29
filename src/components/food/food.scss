@@ -1,23 +1,38 @@
+.food-item {
+    ion-label.label {
+        margin: 0px 10px 0px 0px;
+    }
 
-.nutrition {
-    color: green !important;
-}
-
-.nutrition ion-col {
-    padding: 0 !important;
-    font-size: 1em;
-    font-weight: 100 !important;
-}
-
-.food-item h2 {
-    font-weight: 600 !important;
-    font-size: 1.2em;
+    border-bottom: 1px solid #eee;
+    /* box-shadow: 10px 10px 5px grey; */
+    padding-bottom: 10px;
+    /* background: #f7f7f7; */
 }
 
 
-.nutrition ion-badge {
-    width: 70px;
-    margin: 0px 0px;
-    font-size: 0.7em;
-    font-weight: 400;
+.food-item {
+    h2 {
+        font-weight: 100 !important;
+        font-size: 1.2em;
+    }
+    p {
+        color: color($colors, primary-dark);
+    }
+}
+
+/* Nutritional badges */
+.nutrition-container {
+    margin: 6px 0px 0px 0px;
+    display: flex;
+
+    ion-badge {
+        flex: 1;
+        margin-right: 4px;
+        color: color($colors, primary-dark);
+        border-color: color($colors, dark);
+        background-color: color($colors, light);
+    }
+    ion-badge:last-child {
+        margin-right: 0px;
+    }
 }

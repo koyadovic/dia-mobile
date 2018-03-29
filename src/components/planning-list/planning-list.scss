@@ -5,11 +5,13 @@ ion-badge.enabled {
 ion-label.planning-hour {
     font-weight: 100;
     font-size: 1.3em;
+    margin: 5px 8px 5px 0;
 }
 
 
 ion-toggle.plannings-toggle {
     padding: 8px 0px 12px 16px !important;
+    margin: 2px !important;
 }
 
 .badge-weekday {
@@ -36,4 +38,14 @@ ion-toggle.plannings-toggle {
 .planning-item {
     border-top: 1px solid #eee;
     border-bottom: 1px solid #eee;
+}
+
+
+.planning-item .grid {
+    padding: 0px;
+
+    .row {
+        max-height: 3em;
+
+    }
 }

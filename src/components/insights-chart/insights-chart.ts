@@ -30,10 +30,11 @@ export class InsightsChartComponent {
       this.insightsService.getConcreteInsight(this.chartData['url']).subscribe(
         (resp) => {
           this.concreteChartData = resp;
+          console.log(resp);
           this.chartDataLoaded.emit();
         },
         (err) => {
-          console.log(err);
+          console.error(err);
         }
       )
     }
@@ -41,22 +42,17 @@ export class InsightsChartComponent {
 
   private static currentColor = 0;
   private static availableColors = [
-    'rgba(102,211,255,',
-    'rgba(255,102,211,',
-    'rgba(211,255,102,',
-    'rgba(102,135,255,',
+    'rgba(0, 118, 177,',
+    'rgba(252, 229, 124,',
+    'rgba(216, 17, 89,',
     'rgba(255,102,135,',
-    'rgba(135,255,102,'
+    'rgba(255, 188, 66,',
+    'rgba(143, 45, 86, '
   ]
-  public static getCurrentColor(alpha:string) {
-    return InsightsChartComponent.availableColors[InsightsChartComponent.currentColor] + alpha + ')';
-  }
 
-  public static increaseCurrentColor() {
-    if (InsightsChartComponent.currentColor >= InsightsChartComponent.availableColors.length - 1) {
-      InsightsChartComponent.currentColor = 0;
-    } else {
-      InsightsChartComponent.currentColor ++;
-    }
+  public static getCurrentColor(alpha:string, index:number) {
+    if (index >= InsightsChartComponent.availableColors.length)
+    index -= InsightsChartComponent.availableColors.length;
+    return InsightsChartComponent.availableColors[index] + alpha + ')';
   }
 }

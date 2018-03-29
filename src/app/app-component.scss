@@ -27,17 +27,17 @@
     background-color: map-get($colors, primary);
 }
 .toolbar-title {
-    color: map-get($colors, light);
+    color: map-get($colors, white);
     font-weight: 400;
 }
 .bar-buttons {
-    color: map-get($colors, light); 
+    color: map-get($colors, white); 
     font-weight: 400;
 }
 
 // This is for configuration page, arrow icons to be white.
 .bar-button {
-    color: map-get($colors, light);
+    color: map-get($colors, white);
     background-color: transparent;
     font-weight: 400;
 }
@@ -56,15 +56,52 @@ This is to remove ion-input underline
 /* fuck with the underline */
 
 
-/*
-.item-inner, ion-item {
-    border-bottom-color: transparent !important;
-    box-shadow: none !important;
+/* In Sliding items, Option Icons big, text little */
+ion-item-options button span {
+    font-size: 0.8em;
+    ion-icon {
+        font-size: 2.0em;
+    }
 }
-*/
-    
+/* Segments for insights and feedings page */
+ion-segment {
+    background: map-get($colors, primary-light);
+    color: map-get($colors, white);
+}
+.segment-button {
+    color: map-get($colors, white) !important;
+    background: map-get($colors, primary-light);
+}
+
+.segment-button.segment-activated {
+    border-color: map-get($colors, secondary) !important;
+    border-bottom-width: 3px;
+    color: map-get($colors, white) !important;
+}
 
 
+/* Default is 10px, this makes content inside input appear out of position (unaligned vertically)  with text outside the input
+   with 3px this effect is minimized */
+ion-input {
+    padding-left: 3px !important;
+}
+ion-datetime {
+    padding-left: 3px !important;
+}
+
+
+/* Fab icons bigger */
+button.fab ion-icon {
+    font-size: 2em;
+}
+
+/* list headers not too bigger */
+.list-header {
+    padding-top: 0px !important;
+    margin-bottom: 0px !important;
+    min-height: 2.5em;
+    height: 2.5em;
+}
 
 
 /*
@@ -83,15 +120,11 @@ select:-webkit-autofill:focus {
 }
 */
 
-/* Segments for insights and feedings page */
-/*
-.segment-button.segment-activated {
-    border-color: map-get($colors, primary-dark) !important;
-}
-*/
+
 
 /*
-.segment-button {
-    color: map-get($colors, primary-dark) !important;
+.item-inner, ion-item {
+    border-bottom-color: transparent !important;
+    box-shadow: none !important;
 }
 */
