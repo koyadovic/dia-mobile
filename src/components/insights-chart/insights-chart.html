@@ -5,24 +5,23 @@
   </h3>
 
   <div padding-left padding-right padding-bottom>
-
     <insights-chart-pie
-      *ngIf="!!concreteChartData && concreteChartData['type'] === 'pie'"
+      *ngIf="!!concreteChartData && concreteChartData.labels?.length > 0 && concreteChartData['type'] === 'pie'"
       [pieConcreteData]="concreteChartData">
     </insights-chart-pie>
   
     <insights-chart-lines
-      *ngIf="!!concreteChartData && concreteChartData['type'] === 'lines'"
+      *ngIf="!!concreteChartData && concreteChartData.labels?.length > 0 && concreteChartData['type'] === 'lines'"
       [linesConcreteData]="concreteChartData">
     </insights-chart-lines>
   
     <insights-chart-columns
-      *ngIf="!!concreteChartData && concreteChartData['type'] === 'columns'"
+      *ngIf="!!concreteChartData && concreteChartData.labels?.length > 0 && concreteChartData['type'] === 'columns'"
       [columnsConcreteData]="concreteChartData">
     </insights-chart-columns>
   
     <insights-chart-donut
-      *ngIf="!!concreteChartData && concreteChartData['type'] === 'donut'"
+      *ngIf="!!concreteChartData && concreteChartData.labels?.length > 0 && concreteChartData['type'] === 'donut'"
       [donutConcreteData]="concreteChartData">
     </insights-chart-donut>
   
@@ -35,6 +34,10 @@
       *ngIf="!!concreteChartData && concreteChartData['type'] === 'key-values'"
       [keyValuesConcreteData]="concreteChartData">
     </insights-chart-key-values>
+
+    <div class="empty-data" *ngIf="!concreteChartData || (concreteChartData.labels !== undefined && concreteChartData.labels.length === 0)">
+      <p>No data</p>
+    </div>
     
   </div>
 </ng-container>
