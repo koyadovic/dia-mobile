@@ -18,12 +18,13 @@ export class InsightsChartDonutComponent {
     if('donutConcreteData' in changes && !!this.donutConcreteData) {
       let bgColors = [];
       let colors = [];
+      let index = 0;
 
       for (let n = 0; n < this.donutConcreteData["datasets"].length; n ++) {
         for(let j = 0; j < this.donutConcreteData["datasets"][n]["data"].length; j ++) {
-          bgColors.push(InsightsChartComponent.getCurrentColor('0.5'));
-          colors.push(InsightsChartComponent.getCurrentColor('0.8'));
-          InsightsChartComponent.increaseCurrentColor();
+          bgColors.push(InsightsChartComponent.getCurrentColor('0.5', index));
+          colors.push(InsightsChartComponent.getCurrentColor('0.8', index));
+          index ++;
         }
       }
 

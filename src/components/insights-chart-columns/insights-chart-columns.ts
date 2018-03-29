@@ -18,15 +18,16 @@ export class InsightsChartColumnsComponent {
   ngOnChanges(changes) {
     if('columnsConcreteData' in changes && !!this.columnsConcreteData) {
 
+      let index = 0;
       let chartData = {
         type: 'bar',
         data: {
           labels: this.columnsConcreteData["labels"],
           datasets: this.columnsConcreteData["datasets"].map(
             (x) => {
-              let color = InsightsChartComponent.getCurrentColor('0.8');
-              let bgColor = InsightsChartComponent.getCurrentColor('0.5');
-              InsightsChartComponent.increaseCurrentColor();
+              let color = InsightsChartComponent.getCurrentColor('0.8', index);
+              let bgColor = InsightsChartComponent.getCurrentColor('0.5', index);
+              index ++;
               return {
                 data: x['data'],
                 label: x['label'],

@@ -5,7 +5,7 @@
   </div>
 
   <div class="row" *ngFor="let dataset of tableConcreteData['datasets']">
-    <div class="col">{{ dataset['label'] }}</div>
+    <div class="col"><b>{{ dataset['label'] }}</b></div>
     <div class="col" *ngFor="let data of dataset['data']">{{ data }}</div>
   </div>
 </div>

@@ -17,15 +17,16 @@ export class InsightsChartLinesComponent {
   ngOnChanges(changes) {
     if('linesConcreteData' in changes && !!this.linesConcreteData) {
       let xypoints = false;
+      let index = 0;
 
       let chartData = {
         type: 'line',
         data: {
           labels: this.linesConcreteData["labels"],
           datasets: this.linesConcreteData["datasets"].map((elem) => {
-            let color = InsightsChartComponent.getCurrentColor('0.8');
-            let bgColor = InsightsChartComponent.getCurrentColor('0.2');
-            InsightsChartComponent.increaseCurrentColor();
+            let color = InsightsChartComponent.getCurrentColor('0.8', index);
+            let bgColor = InsightsChartComponent.getCurrentColor('0.2', index);
+            index ++;
             xypoints = elem['data'].length > 0 && isNaN(elem['data'][0]) && 'x' in elem['data'][0];
             return {
               data: elem['data'],

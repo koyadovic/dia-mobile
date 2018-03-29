@@ -18,12 +18,13 @@ export class InsightsChartPieComponent {
     if('pieConcreteData' in changes && !!this.pieConcreteData) {
       let bgColors = [];
       let colors = [];
+      let index = 0;
 
       for (let n = 0; n < this.pieConcreteData["datasets"].length; n ++) {
         for(let j = 0; j < this.pieConcreteData["datasets"][n]["data"].length; j ++) {
-          bgColors.push(InsightsChartComponent.getCurrentColor('0.5'));
-          colors.push(InsightsChartComponent.getCurrentColor('0.8'));
-          InsightsChartComponent.increaseCurrentColor();
+          bgColors.push(InsightsChartComponent.getCurrentColor('0.5', index));
+          colors.push(InsightsChartComponent.getCurrentColor('0.8', index));
+          index ++;
         }
       }
 
@@ -40,7 +41,6 @@ export class InsightsChartPieComponent {
                 borderColor: colors,
                 borderWidth: 2
               }
-              InsightsChartComponent.increaseCurrentColor();
               return result;
           })
         },
