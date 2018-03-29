@@ -1,6 +1,22 @@
 <div class="summary-container">
-  <ion-badge color="primary">{{ "Carb" | translate }}<br/>{{ total_carb_g }}g</ion-badge>
-  <ion-badge color="primary">{{ "Prot" | translate }}<br/>{{ total_protein_g }}g</ion-badge>
-  <ion-badge color="primary">{{ "Fats" | translate }}<br/>{{ total_fat_g }}g</ion-badge>
-  <ion-badge color="primary">{{ "Kcal" | translate }}<br/>{{ total_kcal }}</ion-badge>
+
+  <ion-badge [ngClass]="{'maximum-value': carbsOverpassed()}">
+    {{ "Carb" | translate }}<br/>
+    {{ total_carb_g }}g<span *ngIf="!!maxCarb"> ({{maxCarb}}g)</span>
+  </ion-badge>
+
+  <ion-badge color="primary">
+    {{ "Prot" | translate }}<br/>
+    {{ total_protein_g }}g<span *ngIf="!!maxProt" class="maximum-value"> ({{maxProt}}g)</span>
+  </ion-badge>
+
+  <ion-badge color="primary">
+    {{ "Fats" | translate }}<br/>
+    {{ total_fat_g }}g<span *ngIf="!!maxFats" class="maximum-value"> ({{maxFats}}g)</span>
+  </ion-badge>
+
+  <ion-badge color="primary">
+    {{ "Kcal" | translate }}<br/>
+    {{ total_kcal }}<span *ngIf="!!maxKcal" class="maximum-value"> ({{maxKcal}})</span>
+  </ion-badge>
 </div>

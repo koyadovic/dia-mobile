@@ -164,5 +164,14 @@
 
     "Everything was good. Routine saved.": "Todo fue bien. Rutina guardada.",
 
-    "There is not data yet": "Aún no hay datos"
+    "There is not data yet": "Aún no hay datos",
+
+
+    "Warning! The carbohydrate limit": "¡Atención! El límite de carbohidratos",
+    "Warning! The protein limit": "¡Atención! El límite de proteínas",
+    "Warning! The fats limit": "¡Atención! El límite de grasas",
+    "Warning! The fiber limit": "¡Atención! El límite de fibra",
+    "Warning! The alcohol limit": "¡Atención! El límite de alcohol",
+    "Warning! The kcal limit": "¡Atención! El límite de kcal",
+    "has been overpassed": "ha sido sobrepasado"
 }
