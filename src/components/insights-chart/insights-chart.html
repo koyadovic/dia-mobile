@@ -36,7 +36,7 @@
     </insights-chart-key-values>
 
     <div class="empty-data" *ngIf="!concreteChartData || (concreteChartData.labels !== undefined && concreteChartData.labels.length === 0)">
-      <p>No data</p>
+      <p>{{ "There is not data yet" | translate }}<br>...</p>
     </div>
     
   </div>
