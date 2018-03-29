@@ -44,9 +44,9 @@ export class InsightsChartComponent {
   private static availableColors = [
     'rgba(0, 118, 177,',
     'rgba(252, 229, 124,',
-    'rgba(255, 188, 66,',
     'rgba(216, 17, 89,',
     'rgba(255,102,135,',
+    'rgba(255, 188, 66,',
     'rgba(143, 45, 86, '
   ]
 
