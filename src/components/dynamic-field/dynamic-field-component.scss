@@ -9,14 +9,14 @@
     ion-datetime {
         padding-left: 10px;
         border-radius: 5px;
-        background-color: #f7f7f7;
+        background-color: color($colors, light);
     }
 
     ion-input {
         padding: 5px 0px;
         padding-left: 10px;
         border-radius: 5px;
-        background-color: #f7f7f7;
+        background-color: color($colors, light);
     }
     ion-label {
         font-size: 1em;
@@ -32,12 +32,12 @@
 
 .item.dynamic-field-disabled {
     ion-datetime {
-        background-color: #f7f7f7;
+        background-color: color($colors, light);
         opacity: 1.0;
     }
 
     ion-input {
-        background-color: #f7f7f7;
+        background-color: color($colors, light);
         opacity: 1.0;
     }
     input {

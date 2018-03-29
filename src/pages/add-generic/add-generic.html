@@ -31,8 +31,8 @@
     <ion-row *ngIf="!!data['actions']">
 
       <ion-col *ngFor="let action of data['actions']">
-        <button (click)="doAction(action)" *ngIf="action.type === 'add'" [disabled]="! isValid()" ion-button full>{{ action['display'] }}</button>
-        <button (click)="doAction(action)" *ngIf="action.type !== 'add'" ion-button full>{{ action['display'] }}</button>
+        <button class="generic-button" (click)="doAction(action)" *ngIf="action.type === 'add'" [disabled]="! isValid()" ion-button full>{{ action['display'] }}</button>
+        <button class="generic-button" (click)="doAction(action)" *ngIf="action.type !== 'add'" ion-button full>{{ action['display'] }}</button>
       </ion-col>
 
     </ion-row>

@@ -15,16 +15,11 @@
 
 
 <ion-content *ngIf="planning">
-
   <ion-list>
-    <ion-list-header>
-      {{ "Name and definition" | translate }}
-    </ion-list-header>
-    
     <ion-item>
       <ion-icon color="primary" name="create" item-start></ion-icon>
       <ion-label stacked>{{ "Name for routine" | translate }}</ion-label>
-      <ion-input type="text" [(ngModel)]="planning.name"></ion-input>
+      <ion-input placeholder="{{ 'Give me a name' | translate }}" class="planning-name" type="text" [(ngModel)]="planning.name"></ion-input>
     </ion-item>
 
     <ion-item>
