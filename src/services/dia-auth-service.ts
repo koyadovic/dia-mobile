@@ -26,25 +26,27 @@ export class DiaAuthService {
         // here we get user groups
         this.loggedIn().subscribe(loggedIn => {
             if(loggedIn) {
-
-                let headers = new HttpHeaders({
-                    "Authorization":`token ${this.token}`,
-                    'Content-Type': 'application/json'
-                });
-
-                let url = `${this.backendURL.baseURL}/v1/accounts/self/`;
-
-                this.http.get(url, {headers: headers})
-                            .map((response: HttpResponse<any>) => { return response['groups']; })
-                            .subscribe(
-                                resp =>  this.groups = resp,
-                                err => console.error(err)
-                            );
-      
+                this.refreshGroups();
             } else {
                 this.groups = [];
             }
         });
+    }
+
+    refreshGroups() {
+        let headers = new HttpHeaders({
+            "Authorization":`token ${this.token}`,
+            'Content-Type': 'application/json'
+        });
+
+        let url = `${this.backendURL.baseURL}/v1/accounts/self/`;
+
+        this.http.get(url, {headers: headers})
+                    .map((response: HttpResponse<any>) => { return response['groups']; })
+                    .subscribe(
+                        resp => { this.groups = resp; console.log(this.groups); },
+                        err => console.error(err)
+                    );
     }
 
     // return only observable versions of the subject

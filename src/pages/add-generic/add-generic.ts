@@ -7,6 +7,7 @@ import { UserMedicationsPage } from '../user-medications/user-medications';
 import { DiaTimelineService } from '../../services/dia-timeline-service';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
+import { DiaAuthService } from '../../services/dia-auth-service';
 
 @Component({
   selector: 'page-add-generic',
@@ -27,7 +28,8 @@ export class AddGenericPage {
               private timelineService: DiaTimelineService,
               private modalCtrl: ModalController,
               private restBackendService: DiaRestBackendService,
-              public loadingCtrl: LoadingController) {
+              public loadingCtrl: LoadingController,
+              private authService: DiaAuthService) {
 
     // get data
     this.originalData = this.navParams.get("data");
@@ -212,6 +214,9 @@ export class AddGenericPage {
         loading.present();
 
         this.timelineService.refreshElementFields();
+
+        // refresh account groups too.
+        this.authService.refreshGroups();
 
         setTimeout(
           () => {

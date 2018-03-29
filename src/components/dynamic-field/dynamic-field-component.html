@@ -8,7 +8,7 @@
   </div>
   -->
 
-  <button ion-button round full icon-start *ngIf="field.type == 'action' && field.display" (click)="emitHaveChanges()">
+  <button ion-button round full icon-start color="primary-dark" *ngIf="field.type == 'action' && field.display" (click)="emitHaveChanges()">
     <ion-icon name="hand"></ion-icon>
     {{ field.display }}
   </button>

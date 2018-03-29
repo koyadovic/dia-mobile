@@ -98,7 +98,7 @@ export class TimeLinePage {
     let toast = this.toastCtrl.create({
       message: message,
       duration: 7000,
-      position: 'top'
+      position: 'bottom'
     });
   
     toast.onDidDismiss(() => {

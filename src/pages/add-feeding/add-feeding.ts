@@ -62,7 +62,7 @@ export class AddFeedingPage {
     let toast = this.toastCtrl.create({
       message: message,
       duration: 3000,
-      position: 'top'
+      position: 'bottom'
     });
     toast.onDidDismiss(() => {
     });
