@@ -30,7 +30,6 @@ export class InsightsChartComponent {
       this.insightsService.getConcreteInsight(this.chartData['url']).subscribe(
         (resp) => {
           this.concreteChartData = resp;
-          console.log(resp);
           this.chartDataLoaded.emit();
         },
         (err) => {
