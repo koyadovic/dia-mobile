@@ -4,6 +4,7 @@ import { ConfigurationPage } from '../configuration/configuration';
 import { TranslateService } from '@ngx-translate/core';
 import { DiaInsightsService } from '../../services/dia-insights-service';
 import { Content } from 'ionic-angular';
+import { Events } from 'ionic-angular';
 
 
 @Component({
@@ -20,8 +21,18 @@ export class InsightsPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private translate: TranslateService,
+              public events: Events,
               private insightsService: DiaInsightsService) {
 
+    this.refreshInsights();
+
+    // if there are changes in medications, we need to reload insights
+    this.events.subscribe('medications:medications-change', () =>  {
+      this.refreshInsights();
+    });
+  }
+
+  refreshInsights() {
     this.insightsService.getInsights().subscribe(
       (resp) => {
         this.insightsData = resp;
@@ -30,7 +41,7 @@ export class InsightsPage {
           this.activeInsightSegmentChartData = this.insightsData[0]['insights'];
         }
       }
-    )
+    );
   }
 
   ionViewWillLeave() {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular/components/modal/modal-controller';
 import { AddFoodPage } from '../add-feeding-search-food-add-food/add-food';
 import { ViewChild } from '@angular/core';
@@ -13,6 +13,7 @@ import { IonPullUpFooterState } from 'ionic-pullup';
 import { InternetFoodList, FoodSelected } from '../../models/food-model';
 import { TranslateService } from '@ngx-translate/core';
 import { FoodSummaryComponent } from '../../components/food-summary/food-summary';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 
 @Component({
   selector: 'page-add-feeding',
@@ -48,6 +49,8 @@ export class AddFeedingPage {
   private editingFood: boolean = false;
   private selectingFood: boolean = false;
 
+  private rawData;
+
   private maxCarb = null;
   private maxProt = null;
   private maxFats = null;
@@ -60,6 +63,7 @@ export class AddFeedingPage {
               private viewCtrl: ViewController,
               private timelineService: DiaTimelineService,
               public loadingCtrl: LoadingController,
+              public alertCtrl: AlertController,
               public toastCtrl: ToastController) {
 
     // get fixed fields.
@@ -71,6 +75,7 @@ export class AddFeedingPage {
         delete fixedFields['datetime'];
       }
     }
+    let la = this.translate.get('Warning!')
     for (let key of Object.keys(fixedFields)){
       if(key === 'carb_g') {
         this.maxCarb = fixedFields[key]['default_value'];
@@ -84,6 +89,35 @@ export class AddFeedingPage {
       if(key === 'kcal') {
         this.maxKcal = fixedFields[key]['default_value'];
       }
+    }
+    this.rawData = rawData;
+    console.log(JSON.stringify(rawData));
+
+    if(this.maxCarb !== null || this.maxProt !== null ||this.maxFats !== null ||this.maxKcal !== null) {
+      forkJoin(
+        this.translate.get('Warning!'),
+        this.translate.get('The following limits are established:'),
+        this.translate.get('of carbohydrates'),
+        this.translate.get('of protein'),
+        this.translate.get('of fats'),
+        this.translate.get('of kcal'),
+      ).subscribe(
+        ([title, subtitle, ofCarb, ofProt, ofFats, ofKcal]) => {
+          let sub = subtitle + '<br><br>';
+
+          if (this.maxCarb !== null) sub += ' · ' + this.maxCarb + 'g ' + ofCarb + '<br>';
+          if (this.maxProt !== null) sub += ' · ' + this.maxProt + 'g ' + ofProt + '<br>';
+          if (this.maxFats !== null) sub += ' · ' + this.maxFats + 'g ' + ofFats + '<br>';
+          if (this.maxKcal !== null) sub += ' · ' + this.maxKcal + ' ' + ofKcal + '<br>';
+
+          let alert = this.alertCtrl.create({
+            title: title,
+            subTitle: sub,
+            buttons: ['OK']
+          });
+          alert.present();
+        }
+      )
     }
 
     this.switchToRecent();
@@ -247,8 +281,20 @@ export class AddFeedingPage {
     this.timelineService.saveFeeding(this.foodSelected).subscribe(
       (resp) => {
         this.translate.get('Feeding added correctly').subscribe(mess => this.foodActionMessage(mess));
-        this.viewCtrl.dismiss({'add': true});
+        let addAction = null;
+        
+        if(this.rawData['actions'] !== undefined) {
+          for (let action of this.rawData['actions']){
+            if (action['type'] === 'add') {
+              addAction = action;
+            }
+          }
+        }
+        this.viewCtrl.dismiss({'add': true, 'action': addAction});
+      },
+      (err) => {
+        console.error(err);
       }
-    )
+    );
   }
 }

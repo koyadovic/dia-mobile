@@ -173,5 +173,36 @@
     "Warning! The fiber limit": "¡Atención! El límite de fibra",
     "Warning! The alcohol limit": "¡Atención! El límite de alcohol",
     "Warning! The kcal limit": "¡Atención! El límite de kcal",
-    "has been overpassed": "ha sido sobrepasado"
+    "has been overpassed": "ha sido sobrepasado",
+
+    "Warning!": "¡Atención!",
+    "The following limits are established:": "Están establecidos los siguientes límites:",
+    "of carbohydrates": "de carbohidratos",
+    "of protein": "de proteína",
+    "of fats": "de grasa",
+    "of kcal": "de kcal",
+
+    "Only recent instants can be deleted.": "Sólo pueden ser eliminados los instances recientes.",
+    "Detail of Instant": "Detalles del Instante",
+    "Do you really want to eliminate this instant?": "¿Realmente desea eliminar este instante?",
+    "Date": "Fecha",
+    "Hour": "Hora",
+    "Details": "Detalles",
+
+    "Your glucose level was": "Su nivel de glucosa fue",
+    "You spent": "Pasaste",
+    "at an": "a",
+    "intensity": "intensidad",
+    "in which you burned": "en la cual quemaste",
+    "You made a meal of": "Realizaste una comida de",
+    "grams of carbohydrate": "gramos de carbohidrato",
+    "grams of protein": "gramos de proteína",
+    "grams of fats": "gramos de grasas",
+    "grams of fiber": "gramos de fibra",
+    "grams of alcohol": "gramos de alcohol",
+    "Breakdown for the meal": "Desglose para la comida",
+    "You used": "Usaste",
+    "unit of": "unidad de",
+    "units of": "unidades de",
+    "You registered a change in your": "Registraste un cambio en tu"
 }

@@ -66,6 +66,11 @@ export class DiaTimelineService {
         return this.restBackendService.genericGet(url);
     }
 
+    deleteInstant(instantID: number, signature: string) {
+        let url = `${this.backendURL.baseURL}/v1/instants/timeline/${instantID}/?signature=${signature}`;
+        return this.restBackendService.genericDelete(url);
+    }
+
     getBackendNotices() {
         let url = `${this.backendURL.baseURL}/v1/notifications/notices/`;
         return this.restBackendService.genericGet(url);

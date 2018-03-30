@@ -39,7 +39,7 @@ import { AddFeedingPage } from '../pages/add-feeding/add-feeding';
 import { AddFoodPage } from '../pages/add-feeding-search-food-add-food/add-food';
 
 import { UserMedicationsPage } from '../pages/user-medications/user-medications';
-
+import { InstantCardDetailsPage } from '../pages/instant-card-details/instant-card-details';
 
 import { IonPullupModule } from 'ionic-pullup';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -72,6 +72,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 
     PlanningsEditorPage,
     UserMedicationsPage,
+    InstantCardDetailsPage,
   ],
   imports: [
     BrowserModule,
@@ -108,6 +109,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 
     PlanningsEditorPage,
     UserMedicationsPage,
+    InstantCardDetailsPage,
   ],
   providers: [
     FCM,

@@ -14,6 +14,7 @@ import { ConfigurationPage } from '../configuration/configuration';
 import { AddFeedingPage } from '../add-feeding/add-feeding';
 import { AddGenericPage } from '../add-generic/add-generic';
 import { DiaAuthService } from '../../services/dia-auth-service';
+import { InstantCardDetailsPage } from '../instant-card-details/instant-card-details';
 
 import * as moment from 'moment-timezone';
 import { forkJoin } from 'rxjs/observable/forkJoin';
@@ -374,8 +375,15 @@ export class TimeLinePage {
     let modal = this.modalCtrl.create(AddFeedingPage, {data: data});
 
     modal.onDidDismiss((data) => {
-      if(!!data && data["add"])
-        this.refreshTimeline();
+      if(!!data && data["add"]) {
+        if(data['action'] !== null) {
+          this.restBackendService.genericPost(data['action']['url'], {}).subscribe((resp) => {
+            this.refreshTimeline();
+          });
+        } else {
+          this.refreshTimeline();
+        }
+      }
     });
     modal.present();
   }
@@ -406,6 +414,24 @@ export class TimeLinePage {
         this.addFeeding(instant.content);
       } else {
         this.openGenericModal(instant.content);
+      }
+    } else {
+      if(instant.content.type !== 'action-request') {
+        let modal = this.modalCtrl.create(InstantCardDetailsPage, {instantCard: instant});
+
+        modal.onDidDismiss((response) => {
+          if(!!response && response["refresh"]) {
+            let deletedID = response["deletedID"];
+            // delete only the element with this ID
+            for(let n=0; n<this.timeline.length; n++){
+              if (this.timeline[n]['id'] === deletedID){
+                this.timeline.splice(n, 1);
+              }
+            }
+            this.completeInstants(this.timeline);
+          }
+        });
+        modal.present();
       }
     }
   }

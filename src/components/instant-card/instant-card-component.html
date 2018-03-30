@@ -6,12 +6,12 @@
         <ion-grid>
             <ion-row align-items-end>
                 <ion-col col-9>
-                    <h2 class="instant-card-title">{{ instant.content.level }}mg/dL</h2>
-                    <p class="instant-card-subtitle">{{ "Glucose Level" | translate }}</p>
+                    <h2 class="instant-card-title">{{ "Glucose Level" | translate }}</h2>
+                    <p class="instant-card-subtitle">{{ instant.content.level }}mg/dL</p>
                 </ion-col>
 
                 <ion-col col-3>
-                    <p class="time-passed">{{ instant.moment.format('HH:mm') }}</p>                
+                    <p class="time-passed">{{ instant.moment.format('HH:mm') }}</p>
                 </ion-col>
             </ion-row>
         </ion-grid>
@@ -25,7 +25,9 @@
             <ion-row align-items-end>
                 <ion-col col-9>
                     <h2 class="instant-card-title">{{ "Feeding" | translate }}</h2>
-                    <p class="instant-card-subtitle"></p>
+                    <p class="instant-card-subtitle">
+                        <ion-icon class="subtitle-icon" color="green" name="pizza"></ion-icon> {{ round(instant.content.kcal) }} kcal
+                    </p>
                 </ion-col>
 
                 <ion-col col-3>
@@ -41,8 +43,10 @@
         <ion-grid>
             <ion-row align-items-end>
                 <ion-col col-9>
-                    <h2 class="instant-card-title">{{activity_intensities[instant.content.intensity]}} {{ "Intensity" | translate }}. {{ instant.content.minutes }}m</h2>
-                    <p class="instant-card-subtitle">{{ "Physical Activity" | translate }}</p>
+                    <h2 class="instant-card-title">
+                        {{ "Intensity" | translate }} {{activity_intensities[instant.content.intensity]}},
+                        {{ instant.content.minutes }} {{ "minutes" | translate }}</h2>
+                    <ion-icon class="subtitle-icon" color="danger" name="flame"></ion-icon> <p class="instant-card-subtitle">{{ round(instant.content.kcal_burned) }} kcal</p>
                 </ion-col>
 
                 <ion-col col-3>
@@ -58,8 +62,8 @@
         <ion-grid>
             <ion-row align-items-end>
                 <ion-col col-9>
-                    <h2 class="instant-card-title">{{ trait_types[instant.content.trait_type] }} {{ instant.content.value }} {{ trait_types_measure[instant.content.trait_type] }}</h2> 
-                    <p class="instant-card-subtitle">{{ "Physical Trait Change" | translate }}</p> 
+                    <h2 class="instant-card-title">{{ "Physical Trait Change" | translate }}</h2> 
+                    <p class="instant-card-subtitle">{{ trait_types[instant.content.trait_type] }} {{ instant.content.value }} {{ trait_types_measure[instant.content.trait_type] }}</p> 
                 </ion-col>
 
                 <ion-col col-3>
@@ -76,8 +80,8 @@
         <ion-grid>
             <ion-row align-items-end>
                 <ion-col col-9>
-                    <h2 class="instant-card-title">{{ instant.content.medication }} {{ instant.content.amount }}u</h2>
-                    <p class="instant-card-subtitle">{{ "Medication Take" | translate }}</p>
+                    <h2 class="instant-card-title">{{ "Medication Take" | translate }}</h2>
+                    <p class="instant-card-subtitle">{{ instant.content.medication }} {{ instant.content.amount }}u</p>
                 </ion-col>
 
                 <ion-col col-3>

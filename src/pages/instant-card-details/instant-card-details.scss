@@ -1,0 +1,36 @@
+.unable-to-delete-message {
+    color: color($colors, danger);
+    text-align: center;
+}
+
+
+.table-brief {
+    width: 100%;
+}
+
+
+.table-brief tr td:first-child {
+    text-align: left;
+    width: 25%;
+}
+.table-brief tr td:last-child {
+    text-align: right;
+}
+
+.table-all-width {
+    width: 100%;
+    td, th {
+        text-align: right;
+    }
+
+    td:first-child, th:first-child {
+        text-align: left;
+    }
+}
+
+.text-centered {
+    text-align: center;
+}
+.paragraph-bigger {
+    font-size: 1.3em;
+}
