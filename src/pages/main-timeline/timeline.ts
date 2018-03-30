@@ -14,6 +14,7 @@ import { ConfigurationPage } from '../configuration/configuration';
 import { AddFeedingPage } from '../add-feeding/add-feeding';
 import { AddGenericPage } from '../add-generic/add-generic';
 import { DiaAuthService } from '../../services/dia-auth-service';
+import { InstantCardDetailsPage } from '../instant-card-details/instant-card-details';
 
 import * as moment from 'moment-timezone';
 import { forkJoin } from 'rxjs/observable/forkJoin';
@@ -413,6 +414,17 @@ export class TimeLinePage {
         this.addFeeding(instant.content);
       } else {
         this.openGenericModal(instant.content);
+      }
+    } else {
+      if(instant.content.type !== 'action-request') {
+        let modal = this.modalCtrl.create(InstantCardDetailsPage, {instantCard: instant});
+
+        modal.onDidDismiss((response) => {
+          if(!!response && response["refresh"]) {
+            this.refreshTimeline();
+          }
+        });
+        modal.present();
       }
     }
   }
