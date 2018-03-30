@@ -150,7 +150,7 @@ export class FoodComponent {
     this.timelineService.favoriteFood(<DiaFood>this.food, fav).subscribe(
       (resp) => {
         if(fav) {
-          this.foodMessage.emit('Food favorited');
+          this.translate.get('Food favorited').subscribe(message => this.foodMessage.emit(message));
         } else {
           this.foodMessage.emit('Food unfavorited');
         }
@@ -165,7 +165,7 @@ export class FoodComponent {
   private saveDiaFood(food: DiaFood) {
     this.timelineService.saveFood(<DiaFood>this.food).subscribe(
       (food) => {
-        this.foodMessage.emit('Food saved');
+        this.translate.get('Food saved').subscribe(message => this.foodMessage.emit(message));
         this.foodChanges.emit();
       },
       (err) => {console.error(err)}
