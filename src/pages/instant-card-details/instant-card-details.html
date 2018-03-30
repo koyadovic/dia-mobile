@@ -18,7 +18,7 @@
     <ion-row>
 
       <ion-col>
-        <button (click)="deleteInstant()" ion-button full>Delete</button>
+        <button (click)="deleteInstant()" [disabled]="instantCard.signature === ''" ion-button full>Delete</button>
       </ion-col>
       <ion-col>
         <button (click)="closeWithoutRefresh()" ion-button full>Close</button>

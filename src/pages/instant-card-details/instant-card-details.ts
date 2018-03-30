@@ -25,7 +25,7 @@ export class InstantCardDetailsPage {
   }
   deleteInstant() {
     // eliminarlo
-    this.timelineService.deleteInstant(this.instantCard.id).subscribe(
+    this.timelineService.deleteInstant(this.instantCard.id, this.instantCard.signature).subscribe(
       (resp) => {
         this.closeWithRefresh();
       },
