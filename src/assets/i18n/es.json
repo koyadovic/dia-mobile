@@ -180,5 +180,9 @@
     "of carbohydrates": "de carbohidratos",
     "of protein": "de proteína",
     "of fats": "de grasa",
-    "of kcal": "de kcal"
+    "of kcal": "de kcal",
+
+    "Instants with more than 3 hours since their addition, cannot be deleted.": "Los instances con más de tres horas desde su añadido, no pueden ser eliminados.",
+    "Detail of Instant": "Detalles del Instante",
+    "Do you really want to eliminate this instant?": "¿Realmente desea eliminar este instante?"
 }
