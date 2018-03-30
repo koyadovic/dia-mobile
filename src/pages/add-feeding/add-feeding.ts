@@ -282,9 +282,12 @@ export class AddFeedingPage {
       (resp) => {
         this.translate.get('Feeding added correctly').subscribe(mess => this.foodActionMessage(mess));
         let addAction = null;
-        for (let action of this.rawData['actions']){
-          if (action['type'] === 'add') {
-            addAction = action;
+        
+        if(this.rawData['actions'] !== undefined) {
+          for (let action of this.rawData['actions']){
+            if (action['type'] === 'add') {
+              addAction = action;
+            }
           }
         }
         this.viewCtrl.dismiss({'add': true, 'action': addAction});
