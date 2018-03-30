@@ -11,16 +11,107 @@
 <ion-content>
   <ion-grid>
 
-    <!-- Card content details -->
+    <!-- Card content brief -->
     <ion-row>
       <ion-col>
+        <table class="table-brief">
+          <tr>
+            <td><b>{{ "Type" | translate }}</b></td><td>:</td>
+            <td>
+              <span *ngIf="instantCard.content.type === 'glucose'">{{ "Glucose Level" | translate }}</span>
+              <span *ngIf="instantCard.content.type === 'activity'">{{ "Physical Activity" | translate }}</span>
+              <span *ngIf="instantCard.content.type === 'feeding'">{{ "Feeding" | translate }}</span>
+              <span *ngIf="instantCard.content.type === 'medication-take'">{{ "Medication Take" | translate }}</span>
+              <span *ngIf="instantCard.content.type === 'trait'">{{ "Physical Trait Change" | translate }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td><b>{{ "Date" | translate }}</b></td><td>:</td><td>{{ upper(instantCard.moment.format("dddd")) }}, {{ instantCard.moment.format("LL") }}</td>
+          </tr>
+          <tr>
+            <td><b>{{ "Hour" | translate }}</b></td><td>:</td><td>{{ instantCard.moment.format("HH:mm:ss.SSS") }}</td>
+          </tr>
+          <tr>
+            <td><b>{{ "Details" | translate }}</b></td><td>:</td><td></td>
+          </tr>
 
+        </table>
       </ion-col>
     </ion-row>
 
+    <!-- Card content details -->
+    <ion-row>
+      <ng-container [ngSwitch]="instantCard.content.type">
+
+        <!-- Glucose details -->
+        <ion-col *ngSwitchCase="'glucose'">
+          <p class="paragraph-bigger text-centered">{{ "Your glucose level was" | translate }} {{ instantCard.content.level }}mg/dL</p>
+        </ion-col>
+
+        <!-- Activity details -->
+        <ion-col *ngSwitchCase="'activity'">
+          <p class="paragraph-bigger text-centered">
+            {{ "You spent" | translate }} {{ instantCard.content.minutes }} {{ "minutes" | translate }} {{ "at an" | translate }}
+            {{ lower(activity_intensities[instantCard.content.intensity] | translate) }} {{ "intensity" | translate }}, {{ "in which you burned" | translate }}
+            {{ round(instantCard.content.kcal_burned) }} kcal.
+          </p>
+        </ion-col>
+
+        <!-- feeding details -->
+        <ion-col *ngSwitchCase="'feeding'">
+
+          <p class="paragraph-bigger">{{ "You made a meal of" | translate }}:</p>
+          <ul>
+            <li>{{ round(instantCard.content.carb_g, 1) }} {{ "grams of carbohydrate" | translate }}</li>
+            <li>{{ round(instantCard.content.protein_g, 1) }} {{ "grams of protein" | translate }}</li>
+            <li>{{ round(instantCard.content.fat_g, 1) }} {{ "grams of fats" | translate }}</li>
+            <li>{{ round(instantCard.content.fiber_g, 1) }} {{ "grams of fiber" | translate }}</li>
+            <li>{{ round(instantCard.content.alcohol_g, 1) }} {{ "grams of alcohol" | translate }}</li>
+            <li>{{ round(instantCard.content.kcal) }} kcal</li>
+          </ul>
+          <p class="paragraph-bigger">{{ "Breakdown for the meal" | translate }}:</p>
+      
+          <table class="table-all-width">
+            <thead>
+              <tr>
+                <th>{{ "Name" | translate }}</th><th>{{ "Weight" | translate }}</th><th>{{ "Car" | translate }}</th><th>{{ "Pro" | translate }}</th>
+                <th>{{ "Fat" | translate }}</th><th>{{ "Fib" | translate }}</th><th>{{ "Alc" | translate }}</th><th>{{ "Kcal" | translate }}</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let food of instantCard.content.breakdown">
+                <td>{{ food.name }}</td><td>{{ round(food.weight) }}g</td><td>{{ round(food.carb_g) }}g</td><td>{{ round(food.protein_g) }}g</td>
+                <td>{{ round(food.fat_g) }}g</td><td>{{ round(food.fiber_g) }}g</td><td>{{ round(food.alcohol_g) }}g</td><td>{{ round(food.kcal) }}kcal</td>
+              </tr>
+            </tbody>
+          </table>
+        </ion-col>
+
+        <!-- medication-take details -->
+        <ion-col *ngSwitchCase="'medication-take'">
+          <p class="paragraph-bigger text-centered" *ngIf="instantCard.content.amount == 1">
+            {{ "You used" | translate }} {{ instantCard.content.amount }} {{ "unit of" | translate }} {{ instantCard.content.medication }}
+          </p>
+          <p class="paragraph-bigger text-centered" *ngIf="instantCard.content.amount != 1">
+            {{ "You used" | translate }} {{ instantCard.content.amount }} {{ "units of" | translate }} {{ instantCard.content.medication }}
+          </p>
+        </ion-col>
+
+        <!-- trait details -->
+        <ion-col *ngSwitchCase="'trait'">
+          <p class="paragraph-bigger text-centered">
+            {{ "You registered a change in your" | translate }} {{ lower(trait_types[instantCard.content.trait_type] | translate) }}:<br>{{ instantCard.content.value }}{{ trait_types_measure[instantCard.content.trait_type] }}
+          </p>
+        </ion-col>
+        
+      </ng-container>
+    </ion-row>
+
+
     <!-- Unnable to delete message -->
     <ion-row *ngIf="instantCard.signature === ''">
-      <ion-col><p class="unable-to-delete-message">{{ "Instants with more than 3 hours since their addition, cannot be deleted." | translate }}</p></ion-col>
+      <ion-col><p class="unable-to-delete-message">{{ "Only recent instants can be deleted." | translate }}</p></ion-col>
     </ion-row>
 
     <!-- action buttons -->

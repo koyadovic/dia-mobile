@@ -12,6 +12,29 @@ import { TranslateService } from '@ngx-translate/core';
 export class InstantCardDetailsPage {
   instantCard;
 
+  activity_intensities = {
+    "1": "Soft",
+    "2": "Medium",
+    "3": "High",
+    "4": "Extreme",
+  };
+
+  trait_types = {
+    "2": "Height",
+    "3": "Weight",
+    "4": "Neck Perimeter",
+    "5": "Abdomen Perimeter",
+    "6": "Waist Perimeter",
+  };
+
+  trait_types_measure = {
+      "2": "cm",
+      "3": "kg",
+      "4": "cm",
+      "5": "cm",
+      "6": "cm",
+  };
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private viewCtrl: ViewController,
@@ -20,7 +43,6 @@ export class InstantCardDetailsPage {
               private alertCtrl: AlertController) {
 
     this.instantCard = this.navParams.get("instantCard");
-    console.log(this.instantCard);
   }
 
 
@@ -66,5 +88,21 @@ export class InstantCardDetailsPage {
 
   closeWithoutRefresh() {
     this.viewCtrl.dismiss({"refresh": false});
+  }
+
+  /* For text formating */
+  upper(text: string) {
+    return text.replace(/^(\w)/, s => s.toUpperCase());
+  }
+
+  lower(text: string) {
+    return text.toLowerCase();
+  }
+
+  round(n: number, decimals?:number){
+    if (decimals !== undefined) {
+      return Math.round(n * 10 * decimals) / 10 * decimals;
+    }
+    return Math.round(n);
   }
 }
