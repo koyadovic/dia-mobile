@@ -81,6 +81,10 @@ export class DiaInstantCard {
         }
     }
 
+    round(n) {
+        return Math.round(n);
+    }
+
     getInstantClass() {
         let classes:string = '';
 

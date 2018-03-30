@@ -41,8 +41,11 @@
         <ion-grid>
             <ion-row align-items-end>
                 <ion-col col-9>
-                    <h2 class="instant-card-title">{{activity_intensities[instant.content.intensity]}} {{ "Intensity" | translate }}. {{ instant.content.minutes }}m</h2>
-                    <p class="instant-card-subtitle">{{ "Physical Activity" | translate }}</p>
+                    <h2 class="instant-card-title">
+                        {{activity_intensities[instant.content.intensity]}}
+                        {{ "Intensity" | translate }},
+                        {{ instant.content.minutes }} {{ "minutes" | translate }}</h2>
+                    <ion-icon class="kcal-burned-icon" color="danger" name="flame"></ion-icon> <p class="instant-card-subtitle">{{ round(instant.content.kcal_burned) }} kcal</p>
                 </ion-col>
 
                 <ion-col col-3>
