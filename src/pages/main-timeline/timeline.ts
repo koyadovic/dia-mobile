@@ -421,7 +421,14 @@ export class TimeLinePage {
 
         modal.onDidDismiss((response) => {
           if(!!response && response["refresh"]) {
-            this.refreshTimeline();
+            let deletedID = response["deletedID"];
+            // delete only the element with this ID
+            for(let n=0; n<this.timeline.length; n++){
+              if (this.timeline[n]['id'] === deletedID){
+                this.timeline.splice(n, 1);
+              }
+            }
+            this.completeInstants(this.timeline);
           }
         });
         modal.present();
