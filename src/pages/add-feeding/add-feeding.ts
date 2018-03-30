@@ -49,6 +49,8 @@ export class AddFeedingPage {
   private editingFood: boolean = false;
   private selectingFood: boolean = false;
 
+  private rawData;
+
   private maxCarb = null;
   private maxProt = null;
   private maxFats = null;
@@ -88,6 +90,8 @@ export class AddFeedingPage {
         this.maxKcal = fixedFields[key]['default_value'];
       }
     }
+    this.rawData = rawData;
+    console.log(JSON.stringify(rawData));
 
     if(this.maxCarb !== null || this.maxProt !== null ||this.maxFats !== null ||this.maxKcal !== null) {
       forkJoin(
@@ -277,8 +281,17 @@ export class AddFeedingPage {
     this.timelineService.saveFeeding(this.foodSelected).subscribe(
       (resp) => {
         this.translate.get('Feeding added correctly').subscribe(mess => this.foodActionMessage(mess));
-        this.viewCtrl.dismiss({'add': true});
+        let addAction = null;
+        for (let action of this.rawData['actions']){
+          if (action['type'] === 'add') {
+            addAction = action;
+          }
+        }
+        this.viewCtrl.dismiss({'add': true, 'action': addAction});
+      },
+      (err) => {
+        console.error(err);
       }
-    )
+    );
   }
 }

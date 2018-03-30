@@ -374,8 +374,15 @@ export class TimeLinePage {
     let modal = this.modalCtrl.create(AddFeedingPage, {data: data});
 
     modal.onDidDismiss((data) => {
-      if(!!data && data["add"])
-        this.refreshTimeline();
+      if(!!data && data["add"]) {
+        if(data['action'] !== null) {
+          this.restBackendService.genericPost(data['action']['url'], {}).subscribe((resp) => {
+            this.refreshTimeline();
+          });
+        } else {
+          this.refreshTimeline();
+        }
+      }
     });
     modal.present();
   }
