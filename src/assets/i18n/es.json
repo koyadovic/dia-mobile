@@ -173,5 +173,12 @@
     "Warning! The fiber limit": "¡Atención! El límite de fibra",
     "Warning! The alcohol limit": "¡Atención! El límite de alcohol",
     "Warning! The kcal limit": "¡Atención! El límite de kcal",
-    "has been overpassed": "ha sido sobrepasado"
+    "has been overpassed": "ha sido sobrepasado",
+
+    "Warning!": "¡Atención!",
+    "The following limits are established:": "Están establecidos los siguientes límites:",
+    "of carbohydrates": "de carbohidratos",
+    "of protein": "de proteína",
+    "of fats": "de grasa",
+    "of kcal": "de kcal"
 }
