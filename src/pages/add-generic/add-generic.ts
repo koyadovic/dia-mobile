@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, Events } from 'ionic-angular';
 import { DiaRestBackendService } from '../../services/dia-rest-backend-service';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { ViewController } from 'ionic-angular/navigation/view-controller';
@@ -27,6 +27,7 @@ export class AddGenericPage {
               private viewCtrl: ViewController,
               private timelineService: DiaTimelineService,
               private modalCtrl: ModalController,
+              public events: Events,
               private restBackendService: DiaRestBackendService,
               public loadingCtrl: LoadingController,
               private authService: DiaAuthService) {
@@ -215,8 +216,7 @@ export class AddGenericPage {
 
         this.timelineService.refreshElementFields();
 
-        // refresh account groups too.
-        this.authService.refreshGroups();
+        this.events.publish('medications:medications-change');
 
         setTimeout(
           () => {

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs';
 import { DiaBackendURL } from './dia-backend-urls';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Events } from 'ionic-angular';
 
 
 @Injectable()
@@ -14,6 +15,7 @@ export class DiaAuthService {
 
     constructor(private http: HttpClient,
                 private storage: Storage,
+                public events: Events,
                 private backendURL: DiaBackendURL) {
 
         // in startup time we retrieve the token from the store.
@@ -30,6 +32,11 @@ export class DiaAuthService {
             } else {
                 this.groups = [];
             }
+        });
+
+        // if there are changes in medications, we need to reload groups
+        this.events.subscribe('medications:medications-change', () =>  {
+            this.refreshGroups();
         });
     }
 

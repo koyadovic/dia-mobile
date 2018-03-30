@@ -7,6 +7,7 @@ import { DiaAuthService } from './dia-auth-service';
 import { TranslateService } from '@ngx-translate/core';
 import { UserConfiguration } from '../utils/user-configuration';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Events } from 'ionic-angular';
 
 
 @Injectable()
@@ -19,6 +20,7 @@ export class DiaConfigurationService {
     constructor(private backendURL: DiaBackendURL,
                 private restBackendService: DiaRestBackendService,
                 private authenticationService: DiaAuthService,
+                public events: Events,
                 private translate: TranslateService) {
         
         this.authenticationService.loggedIn().subscribe(
@@ -28,6 +30,12 @@ export class DiaConfigurationService {
                 }
             }
         );
+
+        // if there are changes in medications, we need to reload configuration
+        this.events.subscribe('medications:medications-change', () =>  {
+            this.refreshConfiguration();
+        });
+        
     }
     
     saveConfiguration(configurationChanges) {
