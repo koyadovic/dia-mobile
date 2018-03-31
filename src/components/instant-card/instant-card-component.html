@@ -94,9 +94,9 @@
     <!-- Action Requests -->
     <ion-item no-lines class="instant-card item-text-wrap" [ngClass]="getInstantClass()" *ngSwitchCase="'action-request'">
 
-        <ion-icon item-start *ngIf="instant.content.status === 0" color="danger" name="ios-alert-outline"></ion-icon>
-        <ion-icon item-start *ngIf="instant.content.status === 1" color="secondary" name="ios-close-circle-outline"></ion-icon>
-        <ion-icon item-start *ngIf="instant.content.status === 2" color="primary" name="ios-checkmark-circle-outline"></ion-icon>
+        <ion-icon class="instant-card-recommendation-icon" item-start *ngIf="instant.content.status === 0" color="danger" name="ios-alert-outline"></ion-icon>
+        <ion-icon class="instant-card-recommendation-icon" item-start *ngIf="instant.content.status === 1" color="secondary" name="ios-close-circle-outline"></ion-icon>
+        <ion-icon class="instant-card-recommendation-icon" item-start *ngIf="instant.content.status === 2" color="primary" name="ios-checkmark-circle-outline"></ion-icon>
 
         <ion-grid>
             <ion-row align-items-end>
