@@ -92,7 +92,7 @@
     </ion-item>
 
     <!-- Action Requests -->
-    <ion-item no-lines class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'action-request'">
+    <ion-item no-lines class="instant-card item-text-wrap" [ngClass]="getInstantClass()" *ngSwitchCase="'action-request'">
 
         <ion-icon item-start *ngIf="instant.content.status === 0" color="danger" name="ios-alert-outline"></ion-icon>
         <ion-icon item-start *ngIf="instant.content.status === 1" color="secondary" name="ios-close-circle-outline"></ion-icon>
@@ -101,8 +101,12 @@
         <ion-grid>
             <ion-row align-items-end>
                 <ion-col>
-                    <h2 class="instant-card-title">{{ instant.content.title }}</h2>
-                    <p *ngIf="instant.content.status === 0">{{ instant.content.elements[0].info }}</p>
+                    <h2 class="instant-card-title">{{ instant?.content?.title }}</h2>
+                    <ng-container *ngIf="!!instant.content.elements && instant.content.elements.length > 0">
+                    <p class="instant-card-subtitle" *ngFor="let element of instant.content.elements">
+                        {{ element.info }}
+                    </p>
+                    </ng-container>
                 </ion-col>
             </ion-row>
         </ion-grid>
