@@ -8,8 +8,15 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content class="details-of-instant">
   <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div class="section">
+          <p>{{ "Instant" | translate }}</p>
+        </div>
+      </ion-col>
+    </ion-row>
 
     <!-- Card content brief -->
     <ion-row>
@@ -31,11 +38,15 @@
           <tr>
             <td><b>{{ "Hour" | translate }}</b></td><td>:</td><td>{{ instantCard.moment.format("HH:mm:ss.SSS") }}</td>
           </tr>
-          <tr>
-            <td><b>{{ "Details" | translate }}</b></td><td>:</td><td></td>
-          </tr>
-
         </table>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <div class="section">
+          <p>{{ "Details" | translate }}</p>
+        </div>
       </ion-col>
     </ion-row>
 
@@ -111,7 +122,7 @@
 
     <!-- Unnable to delete message -->
     <ion-row *ngIf="instantCard.signature === ''">
-      <ion-col><p class="unable-to-delete-message">{{ "Only recent instants can be deleted." | translate }}</p></ion-col>
+      <ion-col><p class="unable-to-delete-message">* {{ "Only recent instants can be deleted." | translate }}</p></ion-col>
     </ion-row>
 
     <!-- action buttons -->

@@ -1,5 +1,5 @@
 .unable-to-delete-message {
-    color: color($colors, danger);
+    color: color($colors, grey);
     text-align: center;
 }
 
@@ -11,7 +11,7 @@
 
 .table-brief tr td:first-child {
     text-align: left;
-    width: 25%;
+    width: 15%;
 }
 .table-brief tr td:last-child {
     text-align: right;
@@ -33,4 +33,18 @@
 }
 .paragraph-bigger {
     font-size: 1.3em;
+    color: color($colors, primary);
+}
+
+
+.details-of-instant {
+    .section {
+        border-bottom: 1px solid color($colors, primary-dark);
+        p {
+            color: color($colors, primary-dark);
+            font-size: 1.1em;
+            margin: 5px 0px;
+            font-weight: 800;
+        }
+    }
 }
