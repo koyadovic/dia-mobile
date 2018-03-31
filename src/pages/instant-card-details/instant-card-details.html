@@ -36,7 +36,7 @@
             <td><b>{{ "Date" | translate }}</b></td><td>{{ upper(instantCard.moment.format("dddd")) }}, {{ instantCard.moment.format("LL") }}</td>
           </tr>
           <tr>
-            <td><b>{{ "Hour" | translate }}</b></td><td>{{ instantCard.moment.format("HH:mm:ss.SSS") }}</td>
+            <td><b>{{ "Hour" | translate }}</b></td><td>{{ instantCard.moment.format("HH:mm:ss") }}<span class="milliseconds">{{ instantCard.moment.format(".SSS") }}</span></td>
           </tr>
         </table>
       </ion-col>
