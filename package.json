@@ -39,6 +39,7 @@
     "cordova-plugin-splashscreen": "^4.1.0",
     "cordova-plugin-whitelist": "^1.3.3",
     "cordova-sqlite-storage": "^2.2.0",
+    "font-awesome": "^4.7.0",
     "ionic-angular": "3.9.2",
     "ionic-plugin-keyboard": "^2.2.1",
     "ionic-pullup": "^3.0.1",
@@ -69,5 +70,11 @@
     "platforms": [
       "android"
     ]
+  },
+  "config": {
+    "ionic_bundler": "webpack",
+    "ionic_source_map": "source-map",
+    "ionic_copy": "./scripts/copy.config.js",
+    "ionic_sass": "./scripts/sass.config.js"
   }
 }

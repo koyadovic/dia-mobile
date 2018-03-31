@@ -8,15 +8,22 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content class="details-of-instant">
   <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div class="section">
+          <p>{{ "Instant" | translate }}</p>
+        </div>
+      </ion-col>
+    </ion-row>
 
     <!-- Card content brief -->
     <ion-row>
       <ion-col>
         <table class="table-brief">
           <tr>
-            <td><b>{{ "Type" | translate }}</b></td><td>:</td>
+            <td><b>{{ "Type" | translate }}</b></td>
             <td>
               <span *ngIf="instantCard.content.type === 'glucose'">{{ "Glucose Level" | translate }}</span>
               <span *ngIf="instantCard.content.type === 'activity'">{{ "Physical Activity" | translate }}</span>
@@ -26,16 +33,20 @@
             </td>
           </tr>
           <tr>
-            <td><b>{{ "Date" | translate }}</b></td><td>:</td><td>{{ upper(instantCard.moment.format("dddd")) }}, {{ instantCard.moment.format("LL") }}</td>
+            <td><b>{{ "Date" | translate }}</b></td><td>{{ upper(instantCard.moment.format("dddd")) }}, {{ instantCard.moment.format("LL") }}</td>
           </tr>
           <tr>
-            <td><b>{{ "Hour" | translate }}</b></td><td>:</td><td>{{ instantCard.moment.format("HH:mm:ss.SSS") }}</td>
+            <td><b>{{ "Hour" | translate }}</b></td><td>{{ instantCard.moment.format("HH:mm:ss") }}<span class="milliseconds">{{ instantCard.moment.format(".SSS") }}</span></td>
           </tr>
-          <tr>
-            <td><b>{{ "Details" | translate }}</b></td><td>:</td><td></td>
-          </tr>
-
         </table>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <div class="section">
+          <p>{{ "Details" | translate }}</p>
+        </div>
       </ion-col>
     </ion-row>
 
@@ -60,16 +71,28 @@
         <!-- feeding details -->
         <ion-col *ngSwitchCase="'feeding'">
 
-          <p class="paragraph-bigger">{{ "You made a meal of" | translate }}:</p>
-          <ul>
-            <li>{{ round(instantCard.content.carb_g, 1) }} {{ "grams of carbohydrate" | translate }}</li>
-            <li>{{ round(instantCard.content.protein_g, 1) }} {{ "grams of protein" | translate }}</li>
-            <li>{{ round(instantCard.content.fat_g, 1) }} {{ "grams of fats" | translate }}</li>
-            <li>{{ round(instantCard.content.fiber_g, 1) }} {{ "grams of fiber" | translate }}</li>
-            <li>{{ round(instantCard.content.alcohol_g, 1) }} {{ "grams of alcohol" | translate }}</li>
-            <li>{{ round(instantCard.content.kcal) }} kcal</li>
-          </ul>
-          <p class="paragraph-bigger">{{ "Breakdown for the meal" | translate }}:</p>
+          <table class="table-brief">
+            <tr>
+              <td><b>{{ "Carbohydrate" | translate }}</b></td><td>{{ round(instantCard.content.carb_g, 1) }}g</td>
+            </tr>
+            <tr>
+              <td><b>{{ "Protein" | translate }}</b></td><td>{{ round(instantCard.content.protein_g, 1) }}g</td>
+            </tr>
+            <tr>
+              <td><b>{{ "Fat" | translate }}</b></td><td>{{ round(instantCard.content.fat_g, 1) }}g</td>
+            </tr>
+            <tr>
+              <td><b>{{ "Fiber" | translate }}</b></td><td>{{ round(instantCard.content.fiber_g, 1) }}g</td>
+            </tr>
+            <tr>
+              <td><b>{{ "Alcohol" | translate }}</b></td><td>{{ round(instantCard.content.alcohol_g, 1) }}g</td>
+            </tr>
+            <tr>
+              <td><b>Kcal</b></td><td>{{ round(instantCard.content.kcal) }}Kcal</td>
+            </tr>
+          </table>
+
+          <p class="paragraph-bigger text-centered">{{ "Breakdown for the meal" | translate }}</p>
       
           <table class="table-all-width">
             <thead>

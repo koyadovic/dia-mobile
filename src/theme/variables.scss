@@ -100,15 +100,16 @@ $colors: (
 
 @import "ionic.ionicons";
 
+// Fontawesome icons
+//$fa-font-path: "../assets/fonts";
+@import "font-awesome";
+
 
 // Fonts
 // --------------------------------------------------
 
 @import "roboto";
 @import "noto-sans";
-
-
-
 
 
 // underline of ion-input elements transparent
