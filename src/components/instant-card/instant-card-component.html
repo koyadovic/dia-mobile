@@ -1,6 +1,6 @@
 <ng-container [ngSwitch]="instant.content.type" class="card">
     <!-- Glucose Levels -->
-    <button no-lines ion-item class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'glucose'">
+    <ion-item no-lines class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'glucose'">
 
         <ion-icon class="instant-card-icon" color="primary" item-start name="water"></ion-icon>
         <ion-grid>
@@ -15,11 +15,11 @@
                 </ion-col>
             </ion-row>
         </ion-grid>
-    </button>
+    </ion-item>
 
 
     <!-- Feedings -->
-    <button no-lines ion-item class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'feeding'">
+    <ion-item no-lines class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'feeding'">
         <ion-icon class="instant-card-icon" color="primary" item-start name="restaurant"></ion-icon>
         <ion-grid>
             <ion-row align-items-end>
@@ -35,10 +35,10 @@
                 </ion-col>
             </ion-row>
         </ion-grid>
-    </button>
+    </ion-item>
 
     <!-- Activity -->
-    <button no-lines ion-item class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'activity'">
+    <ion-item no-lines class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'activity'">
         <ion-icon class="instant-card-icon" color="primary" item-start name="bicycle"></ion-icon>
         <ion-grid>
             <ion-row align-items-end>
@@ -54,10 +54,10 @@
                 </ion-col>
             </ion-row>
         </ion-grid>
-    </button>
+    </ion-item>
 
     <!-- Trait Changes -->
-    <button no-lines ion-item class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'trait'">
+    <ion-item no-lines class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'trait'">
         <ion-icon class="instant-card-icon" color="primary" item-start name="body"></ion-icon>
         <ion-grid>
             <ion-row align-items-end>
@@ -71,11 +71,11 @@
                 </ion-col>
             </ion-row>
         </ion-grid>
-    </button>
+    </ion-item>
 
 
     <!-- Medication Takes -->
-    <button no-lines ion-item class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'medication-take'">
+    <ion-item no-lines class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'medication-take'">
         <ion-icon class="instant-card-icon" color="primary" item-start name="thermometer"></ion-icon>
         <ion-grid>
             <ion-row align-items-end>
@@ -89,10 +89,10 @@
                 </ion-col>
             </ion-row>
         </ion-grid>
-    </button>
+    </ion-item>
 
     <!-- Action Requests -->
-    <button no-lines ion-item class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'action-request'">
+    <ion-item no-lines class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'action-request'">
 
         <ion-icon item-start *ngIf="instant.content.status === 0" color="danger" name="ios-alert-outline"></ion-icon>
         <ion-icon item-start *ngIf="instant.content.status === 1" color="secondary" name="ios-close-circle-outline"></ion-icon>
@@ -106,7 +106,7 @@
                 </ion-col>
             </ion-row>
         </ion-grid>
-    </button>
+    </ion-item>
 
 </ng-container>
 
