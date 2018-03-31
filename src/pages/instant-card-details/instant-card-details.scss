@@ -19,12 +19,22 @@
 
 .table-all-width {
     width: 100%;
+    th {
+        background-color: color($colors, primary);
+        color: white;
+    }
+
     td, th {
         text-align: right;
+        padding: 5px 0px;
     }
 
     td:first-child, th:first-child {
         text-align: left;
+        padding-left: 5px;
+    }
+    td:last-child, th:last-child {
+        padding-right: 5px;
     }
 }
 
