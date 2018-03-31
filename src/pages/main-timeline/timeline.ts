@@ -371,7 +371,7 @@ export class TimeLinePage {
   }
 
   addFeeding(data){
-    this.fab.close();
+    if(this.fab !== undefined) this.fab.close();
     let modal = this.modalCtrl.create(AddFeedingPage, {data: data});
 
     modal.onDidDismiss((data) => {
@@ -389,7 +389,7 @@ export class TimeLinePage {
   }
 
   private openGenericModal(data){
-    this.fab.close();
+    if(this.fab !== undefined) this.fab.close();
 
     let modal = this.modalCtrl.create(AddGenericPage, {data: data});
 
@@ -408,7 +408,8 @@ export class TimeLinePage {
 
   // when a card is clicked must be shown details about it
   cardClicked(instant) {
-    this.fab.close();
+    if(this.fab !== undefined) this.fab.close();
+
     if(instant.content.type === 'action-request' && instant.content.status === 0) { // only if unattended
       if (instant.content.elements[0].type === 'feeding') {
         this.addFeeding(instant.content);

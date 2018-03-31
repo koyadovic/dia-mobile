@@ -148,7 +148,11 @@ export class PlanningsEditorPage {
           "title": activityTitle,
           "types": {},
           "elements": [
-            { "info": activityInfo, "type": "activity", "fields": { "datetime": { "default_value": "", "disabled": true }}}
+            {
+            //  "info": activityInfo,
+              "type": "activity",
+              "fields": { "datetime": { "default_value": "", "disabled": true }}
+            }
           ],
           "actions": [
             {"display": "Rechazar", "type": "dismiss", },
@@ -180,7 +184,11 @@ export class PlanningsEditorPage {
           "title": medicationTitle,
           "types": {},
           "elements": [
-            {"info": amountInfo, "type": "medication-take", "fields": {"datetime": {"default_value": "", "disabled": true}}}
+            {
+            //  "info": amountInfo,
+              "type": "medication-take",
+              "fields": {"datetime": {"default_value": "", "disabled": true}}
+            }
           ],
           "actions": [
             {"display": "Rechazar", "type": "dismiss",},
