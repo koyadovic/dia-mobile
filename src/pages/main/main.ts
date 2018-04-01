@@ -12,6 +12,8 @@ import { Platform } from 'ionic-angular/platform/platform';
 import { DiaRestBackendService } from '../../services/dia-rest-backend-service';
 import { DiaBackendURL } from '../../services/dia-backend-urls';
 import { Storage } from '@ionic/storage';
+import { UserMedicationsPage } from '../user-medications/user-medications';
+import { DiaAuthService } from '../../services/dia-auth-service';
 
 
 @Component({
@@ -22,12 +24,16 @@ export class MainPage {
   @ViewChild("mainTabs") mainTabs: Tabs;
 
   tab1 = TimeLinePage;
-  tab2 = PlanningsPage;
-  tab3 = InsightsPage;
+  tab2 = UserMedicationsPage;
+  tab3 = PlanningsPage;
+  tab4 = InsightsPage;
 
   timelineTitle = 'Timeline';
+  medicationsTitle = 'Medications';
   planningsTitle = 'Plannings';
   insightsTitle = 'Insights';
+
+  isDiabetic: boolean = false;
 
   constructor(private fcm: FCM,
               private platform: Platform,
@@ -37,19 +43,24 @@ export class MainPage {
               private translate: TranslateService,
               private events: Events,
               private backendURL: DiaBackendURL,
+              private authenticationService: DiaAuthService,
               private restBackendService: DiaRestBackendService) {
     
     forkJoin(
       this.translate.get('Timeline'),
+      this.translate.get('Medications'),
       this.translate.get('Routines'),
       this.translate.get('Insights'),
     ).subscribe(
-      ([timeline, plannings, insights]) => {
+      ([timeline, medications, plannings, insights]) => {
         this.timelineTitle = timeline;
+        this.medicationsTitle = medications;
         this.planningsTitle = plannings;
         this.insightsTitle = insights;
       }
     );
+
+    this.isDiabetic = this.authenticationService.isDiabetic();
 
     // only runs on real device and only if loggedin
     if(this.platform.is('cordova')) {

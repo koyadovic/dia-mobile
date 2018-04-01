@@ -22,6 +22,8 @@ export class MenuPage {
   private selectedIndex: number = 0;
   private email: string = '';
 
+  isDiabetic: boolean = false;
+
   constructor(public navCtrl: NavController,
               private appCtrl: App,
               public menuCtrl: MenuController,
@@ -36,6 +38,7 @@ export class MenuPage {
       this.selectedIndex = index;
     });
     this.storage.get('email').then((email) => this.email = email);
+    this.isDiabetic = this.authenticationService.isDiabetic();
   }
 
   goConfiguration() {
