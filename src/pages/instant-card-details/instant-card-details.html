@@ -2,7 +2,13 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{ "Detail of Instant" | translate }}</ion-title>
+    <ion-title>
+      <span *ngIf="instantCard.content.type === 'glucose'">{{ "Glucose Level" | translate }}</span>
+      <span *ngIf="instantCard.content.type === 'activity'">{{ "Physical Activity" | translate }}</span>
+      <span *ngIf="instantCard.content.type === 'feeding'">{{ "Feeding" | translate }}</span>
+      <span *ngIf="instantCard.content.type === 'medication-take'">{{ "Medication Take" | translate }}</span>
+      <span *ngIf="instantCard.content.type === 'trait'">{{ "Physical Trait Change" | translate }}</span>
+    </ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -22,16 +28,6 @@
     <ion-row>
       <ion-col>
         <table class="table-brief">
-          <tr>
-            <td><b>{{ "Type" | translate }}</b></td>
-            <td>
-              <span *ngIf="instantCard.content.type === 'glucose'">{{ "Glucose Level" | translate }}</span>
-              <span *ngIf="instantCard.content.type === 'activity'">{{ "Physical Activity" | translate }}</span>
-              <span *ngIf="instantCard.content.type === 'feeding'">{{ "Feeding" | translate }}</span>
-              <span *ngIf="instantCard.content.type === 'medication-take'">{{ "Medication Take" | translate }}</span>
-              <span *ngIf="instantCard.content.type === 'trait'">{{ "Physical Trait Change" | translate }}</span>
-            </td>
-          </tr>
           <tr>
             <td><b>{{ "Date" | translate }}</b></td><td>{{ upper(instantCard.moment.format("dddd")) }}, {{ instantCard.moment.format("LL") }}</td>
           </tr>
