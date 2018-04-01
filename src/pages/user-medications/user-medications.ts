@@ -6,6 +6,8 @@ import { ToastController } from 'ionic-angular/components/toast/toast-controller
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { DiaTimelineService } from '../../services/dia-timeline-service';
+import { DiaMessageService } from '../../services/dia-message-service';
+import { DiaMessage } from '../../models/messages-model';
 
 
 @Component({
@@ -45,6 +47,7 @@ export class UserMedicationsPage {
               public toastCtrl: ToastController,
               private translate: TranslateService,
               private timelineService: DiaTimelineService,
+              private messageService: DiaMessageService,
               public medicationsService: DiaMedicationsService) {
 
     this.translateStrings();
@@ -105,26 +108,50 @@ export class UserMedicationsPage {
     }
   }
 
-  addMedication(item, id: number) {
-    item.close();
+  addMedication(id: number) {
+    forkJoin(
+      this.translate.get('Need confirmation'),
+      this.translate.get('Add this medication?'),
+    ).subscribe(([title, message]) => {
 
-    this.medicationsService.addUserMedication(id).subscribe(
-      (resp) => {
-        // remove from one array and push it to the other
-        let index = this.indexOfID(id, this.searchMedicationsResult);
-        let medication = this.searchMedicationsResult[index];
-        this.searchMedicationsResult.splice(index, 1);
-        this.userMedications.push(medication);
+      let diaMessage = new DiaMessage(title, null, message);
+      this.messageService.confirmMessage(diaMessage).subscribe(
+        (ok) => {
+          if(ok) {
+            this.medicationsService.addUserMedication(id).subscribe(
+              (resp) => {
+                // remove from one array and push it to the other
+                let index = this.indexOfID(id, this.searchMedicationsResult);
+                let medication = this.searchMedicationsResult[index];
+                this.searchMedicationsResult.splice(index, 1);
+                this.userMedications.push(medication);
 
-        this.toastMessage(this.toastMedicationAdded);
-        UserMedicationsPage.hadChanges = true;
-        this.timelineService.refreshElementFields();
-      },
-      (err) => {
-        this.toastMessage(this.toastMedicationError);
-        console.error(err);
-      }
-    );
+                this.searchString = '';
+                this.searchMedicationsResult = [];
+                if(this.userMedications.length === 0) {
+                  this.viewStatusString = this.noMedications;
+                } else {
+                  this.viewStatusString = this.yesMedications;
+                }
+
+                this.toastMessage(this.toastMedicationAdded);
+                UserMedicationsPage.hadChanges = true;
+                this.timelineService.refreshElementFields();
+              },
+              (err) => {
+                this.toastMessage(this.toastMedicationError);
+                console.error(err);
+              }
+            );
+          }
+
+        },
+        (err) => {
+          console.error(err);
+        }
+      );
+    })
+
   }
 
   removeMedication(item, id: number) {

@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>{{ "Your Medications" | translate }}</ion-title>
+    <ion-title><i class="fa fa-capsules" aria-hidden="true"></i>{{ "Your Medications" | translate }}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -17,30 +17,32 @@
   <!-- Search result ! -->
   <ng-container *ngIf="searchString !== ''">
     <ion-list>
-      <ion-item-sliding #item *ngFor="let medication of searchMedicationsResult">
 
-        <button ion-item>
-          <h1>{{ medication['name'] }}</h1>
-          <p>{{ medication['administration_type'] }} {{ medication['type'] }} {{ medication['sub_type'] }}</p>
-        </button>
-
-        <ion-item-options>
-          <!-- add medication to user medications  -->
-          <button ion-button color="light" (click)="addMedication(item, medication['id'])"><ion-icon name="heart"></ion-icon>Add</button>
-  
-        </ion-item-options>
-      </ion-item-sliding>
+      <button ion-item *ngFor="let medication of searchMedicationsResult" (click)="addMedication(medication['id'])">
+        <h1>{{ medication['name'] }}</h1>
+        <p>{{ medication['administration_type'] }} {{ medication['type'] }} {{ medication['sub_type'] }}</p>
+      </button>
 
     </ion-list>
   </ng-container>
 
   <!-- User medications ! -->
   <ng-container *ngIf="searchString === ''">
+    <p>      <i class="far fa-capsules"></i>
+      <i class="fas fa-capsules"></i>
+      <i class="fal fa-capsules"></i>
+      <i class="fa fa-capsules" aria-hidden="true"></i>
+Caca</p>
+      <p>Caca2</p>
     <ion-list>
       <ion-item-sliding #item *ngFor="let medication of userMedications">
 
         <button ion-item>
-          <h1>{{ medication['name'] }}</h1>
+          <h1><i class="far fa-pills"></i>
+            <i *ngIf="medication['administration_type'] == 'injected'" class="far fa-syringe"></i>
+            <i *ngIf="medication['administration_type'] == 'oral'" class="far fa-pills"></i>
+            {{ medication['name'] }}
+          </h1>
           <p>{{ medication['administration_type'] }} {{ medication['type'] }} {{ medication['sub_type'] }}</p>
         </button>
 

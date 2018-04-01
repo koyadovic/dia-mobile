@@ -144,7 +144,10 @@
     "Your Medications": "Tus medicamentos",
     "Press to add your medications": "Pulsa para agregar tus medicamentos",
 
-    "Currently you don't have medications added. Try searching!": "Actualmente no tiene medicamentos añadidos. ¡Prueba buscando!",
+    "Need confirmation": "Necesitamos confirmación",
+    "Add this medication?": "¿Añadir este medicamento?",
+
+    "Currently you don't have medications added. Try searching!": "Actualmente no tienes medicamentos añadidos. ¡Prueba buscando!",
     "Your currently added medications. If you want, you can search for new ones": "Tus medicamentos actualmente añadidos. Si quieres, puedes buscar por nuevos",
     "There is no results ... Try with another name": "No hay resultados ... Prueba con otro nombre",
     "There is": "Hay",
