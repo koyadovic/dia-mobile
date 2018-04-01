@@ -1,4 +1,4 @@
-<ng-container [ngSwitch]="instant.content.type" class="card">
+<ng-container [ngSwitch]="instant.content.type" class="card wrapping-list">
     <!-- Glucose Levels -->
     <ion-item no-lines class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'glucose'">
 
@@ -92,7 +92,7 @@
     </ion-item>
 
     <!-- Action Requests -->
-    <ion-item no-lines class="instant-card item-text-wrap" [ngClass]="getInstantClass()" *ngSwitchCase="'action-request'">
+    <ion-item no-lines class="text-wrap instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'action-request'">
 
         <ion-icon class="instant-card-recommendation-icon" item-start *ngIf="instant.content.status === 0" color="danger" name="ios-alert-outline"></ion-icon>
         <ion-icon class="instant-card-recommendation-icon" item-start *ngIf="instant.content.status === 1" color="secondary" name="ios-close-circle-outline"></ion-icon>
@@ -107,6 +107,21 @@
                         {{ element.info }}
                     </p>
                     </ng-container>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-item>
+
+    <!-- Attention Requests -->
+    <ion-item no-lines class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'attention-request'">
+
+        <ion-icon class="instant-card-attention-icon" item-start color="secondary" name="ios-information-circle-outline"></ion-icon>
+
+        <ion-grid>
+            <ion-row align-items-end>
+                <ion-col>
+                    <h2 class="instant-card-title">{{ instant?.content?.title }}</h2>
+                    <p class="instant-card-subtitle wrap-text">{{ instant?.content?.message }}</p>
                 </ion-col>
             </ion-row>
         </ion-grid>
