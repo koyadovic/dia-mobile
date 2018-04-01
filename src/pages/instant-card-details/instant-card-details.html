@@ -8,6 +8,7 @@
       <span *ngIf="instantCard.content.type === 'feeding'">{{ "Feeding" | translate }}</span>
       <span *ngIf="instantCard.content.type === 'medication-take'">{{ "Medication Take" | translate }}</span>
       <span *ngIf="instantCard.content.type === 'trait'">{{ "Physical Trait Change" | translate }}</span>
+      <span *ngIf="instantCard.content.type === 'attention-request'">{{ "Attention Request" | translate }}</span>
     </ion-title>
   </ion-navbar>
 
@@ -124,18 +125,28 @@
           </p>
         </ion-col>
         
+        <!-- attention request details -->
+        <ion-col *ngSwitchCase="'attention-request'">
+          <p class="paragraph-bigger text-centered">
+            {{ instantCard.content.title }}
+          </p>
+          <p class="paragraph-bigger text-centered">
+            {{ instantCard.content.message }}
+          </p>
+        </ion-col>
+
       </ng-container>
     </ion-row>
 
 
     <!-- Unnable to delete message -->
-    <ion-row *ngIf="instantCard.signature === ''">
+    <ion-row *ngIf="instantCard.signature === '' && instantCard.content.type !== 'attention-request'">
       <ion-col><p class="unable-to-delete-message">{{ "Only recent instants can be deleted." | translate }}</p></ion-col>
     </ion-row>
 
     <!-- action buttons -->
     <ion-row>
-      <ion-col><button (click)="deleteInstant()" [disabled]="instantCard.signature === ''" ion-button full>{{ "Delete" | translate }}</button></ion-col>
+      <ion-col *ngIf="instantCard.content.type !== 'attention-request'"><button (click)="deleteInstant()" [disabled]="instantCard.signature === ''" ion-button full>{{ "Delete" | translate }}</button></ion-col>
       <ion-col><button (click)="closeWithoutRefresh()" ion-button full>{{ "Close" | translate }}</button></ion-col>
     </ion-row>
 
