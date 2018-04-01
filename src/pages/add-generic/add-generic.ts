@@ -90,7 +90,13 @@ export class AddGenericPage {
 
   haveChanges(event, element) {
     if(event.value === "medication_edition_request" && event.namespace_key === 'medication_edition_request') {
-      this.openMedications();
+
+      // tab 1 is user medications
+      this.events.publish('request:change:tab', 1);
+
+      // close this dialog.
+      this.viewCtrl.dismiss();
+  
     } else {
       element[event.namespace_key] = event.value;
     }
@@ -203,47 +209,4 @@ export class AddGenericPage {
     return true;
   }
 
-  openMedications() {
-    let modal = this.modalCtrl.create(UserMedicationsPage);
-    modal.onDidDismiss((data) => {
-      if (UserMedicationsPage.hadChanges) {
-
-        // this is to maintain users busy
-        let loading = this.loadingCtrl.create({
-          content: 'Please wait...'
-        });
-        loading.present();
-
-        this.timelineService.refreshElementFields();
-
-        this.events.publish('medications:medications-change');
-
-        setTimeout(
-          () => {
-            // refresh the original data
-            this.data = JSON.parse(JSON.stringify(this.originalData));
-            this.timelineService.completeAllGenericTypes(this.data);
-            this.data["elements"].forEach((element) => {
-            let computed_fields = Object.assign([], this.data["types"][element["type"]]["fields"]);
-      
-            for(let computed_field of computed_fields) {
-              for(let field in element["fields"]) {
-      
-                if (field === computed_field["key"]) {
-                  computed_field["value"] = element["fields"][field]["default_value"];
-                  computed_field["disabled"] = element["fields"][field]["disabled"];
-                }
-              }
-            }
-              element["computed_fields"] = computed_fields;
-            });
-
-            loading.dismiss();
-
-          }
-        ,1000);
-      }
-    });
-    modal.present();
-  }
 }

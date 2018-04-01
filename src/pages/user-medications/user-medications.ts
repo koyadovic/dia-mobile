@@ -5,6 +5,7 @@ import { DiaMedicationsService } from '../../services/dia-medications-service';
 import { ToastController } from 'ionic-angular/components/toast/toast-controller';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs/observable/forkJoin';
+import { DiaTimelineService } from '../../services/dia-timeline-service';
 
 
 @Component({
@@ -43,6 +44,7 @@ export class UserMedicationsPage {
               public navParams: NavParams,
               public toastCtrl: ToastController,
               private translate: TranslateService,
+              private timelineService: DiaTimelineService,
               public medicationsService: DiaMedicationsService) {
 
     this.translateStrings();
@@ -116,6 +118,7 @@ export class UserMedicationsPage {
 
         this.toastMessage(this.toastMedicationAdded);
         UserMedicationsPage.hadChanges = true;
+        this.timelineService.refreshElementFields();
       },
       (err) => {
         this.toastMessage(this.toastMedicationError);
@@ -137,6 +140,8 @@ export class UserMedicationsPage {
 
         this.toastMessage(this.toastRemoved);
         UserMedicationsPage.hadChanges = true;
+
+        this.timelineService.refreshElementFields();
 
         // for the message
         if(this.userMedications.length === 0) {
