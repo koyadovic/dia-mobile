@@ -13,13 +13,13 @@
     [showCancelButton]="false" [animated]="true" [debounce]="400"
     (ionInput)="onInput($event)"></ion-searchbar>
 
-  <p class="paragraph-bigger text-centered" padding-left padding-right>{{ viewStatusString }}</p>
+  <p class="status-text" padding-left padding-right>{{ viewStatusString }}</p>
   <!-- Search result ! -->
   <ng-container *ngIf="searchString !== ''">
     <ion-list>
 
       <button class="medication-item" ion-item *ngFor="let medication of searchMedicationsResult" (click)="addMedication(medication['id'])">
-        <h1>{{ medication['name'] }}</h1>
+        <h2>{{ medication['name'] }}</h2>
         <p class="subtitle">{{ upper(medication['administration_type'] | translate) }}</p>
       </button>
 
@@ -32,8 +32,7 @@
       <ion-item-sliding #item *ngFor="let medication of userMedications">
 
         <button class="medication-item" ion-item>
-          <h1>{{ medication['name'] }}
-          </h1>
+          <h2>{{ medication['name'] }}</h2>
           <p class="subtitle">{{ upper(medication['administration_type'] | translate) }}</p>
         </button>
 
