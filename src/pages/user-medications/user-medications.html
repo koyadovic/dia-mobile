@@ -13,14 +13,14 @@
     [showCancelButton]="false" [animated]="true" [debounce]="400"
     (ionInput)="onInput($event)"></ion-searchbar>
 
-  <h5 padding-left padding-right>{{ viewStatusString }}</h5>
+  <p class="paragraph-bigger text-centered" padding-left padding-right>{{ viewStatusString }}</p>
   <!-- Search result ! -->
   <ng-container *ngIf="searchString !== ''">
     <ion-list>
 
-      <button ion-item *ngFor="let medication of searchMedicationsResult" (click)="addMedication(medication['id'])">
+      <button class="medication-item" ion-item *ngFor="let medication of searchMedicationsResult" (click)="addMedication(medication['id'])">
         <h1>{{ medication['name'] }}</h1>
-        <p>{{ medication['administration_type'] }} {{ medication['type'] }} {{ medication['sub_type'] }}</p>
+        <p class="subtitle">{{ upper(medication['administration_type'] | translate) }}</p>
       </button>
 
     </ion-list>
@@ -28,22 +28,13 @@
 
   <!-- User medications ! -->
   <ng-container *ngIf="searchString === ''">
-    <p>      <i class="far fa-capsules"></i>
-      <i class="fas fa-capsules"></i>
-      <i class="fal fa-capsules"></i>
-      <i class="fa fa-capsules" aria-hidden="true"></i>
-Caca</p>
-      <p>Caca2</p>
     <ion-list>
       <ion-item-sliding #item *ngFor="let medication of userMedications">
 
-        <button ion-item>
-          <h1><i class="far fa-pills"></i>
-            <i *ngIf="medication['administration_type'] == 'injected'" class="far fa-syringe"></i>
-            <i *ngIf="medication['administration_type'] == 'oral'" class="far fa-pills"></i>
-            {{ medication['name'] }}
+        <button class="medication-item" ion-item>
+          <h1>{{ medication['name'] }}
           </h1>
-          <p>{{ medication['administration_type'] }} {{ medication['type'] }} {{ medication['sub_type'] }}</p>
+          <p class="subtitle">{{ upper(medication['administration_type'] | translate) }}</p>
         </button>
 
         <ion-item-options>

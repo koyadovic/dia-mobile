@@ -1,0 +1,28 @@
+.text-centered {
+    text-align: center;
+}
+.paragraph-bigger {
+    font-size: 1.3em;
+    color: color($colors, primary);
+}
+
+
+.subtitle {
+    font-size: 0.8em;
+    color: color($colors, primary) !important;
+}
+
+
+
+.item-md {
+    padding-top: 0px;
+}
+
+.medication-item {
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+
+    ion-label {
+        margin: 8px;
+    }
+}

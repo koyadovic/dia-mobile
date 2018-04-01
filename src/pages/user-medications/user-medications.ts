@@ -235,4 +235,9 @@ export class UserMedicationsPage {
         this.toastRemoved = toastRemoved;
     });
   }
+
+  /* For text formating */
+  upper(text: string) {
+    return text.replace(/^(\w)/, s => s.toUpperCase());
+  }
 }
