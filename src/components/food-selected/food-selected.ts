@@ -65,7 +65,7 @@ export class FoodSelectedComponent {
   }
 
   selectionFinishedCallback(foodSelected: FoodSelected) {
-    this.translate.get('Selected food Modified').subscribe(
+    this.translate.get('Modified the selected food').subscribe(
       (message) => {
         // food here it's a copy, not a reference
         if(foodSelected !== null) {

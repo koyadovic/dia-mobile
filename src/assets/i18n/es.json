@@ -6,7 +6,7 @@
     "Settings": "Configuración",
     "Logout": "Cerrar sesión",
     "Logout Confirmation": "Confirmar Cierre de Sesión",
-    "Are you sure to close your session?": "¿Está seguro de cerrar su sesión?",
+    "Are you sure to close your session?": "¿Seguro que quieres cerrar tu sesión?",
 
     "New Glucose": "Nueva Glucosa",
     "New Feeding": "Nueva Ingesta",
@@ -26,7 +26,7 @@
 
     "Instant": "Instante",
     "Level": "Nivel",
-    "Please, provide the following data.": "Por favor, provea los siguientes datos.",
+    "Please, provide the following data.": "Por favor, provee los siguientes datos.",
 
     "Intensity": "Intensidad",
     "Minutes": "Minutos",
@@ -65,7 +65,7 @@
     "Female": "Mujer",
 
     "Delete Planning?": "¿Eliminar Planning?",
-    "Are you sure to delete this planning?": "¿Está seguro de querer eliminar el Planning?",
+    "Are you sure to delete this planning?": "¿Seguro que quieres eliminar el Planning?",
 
     "Login": "Inicia sesión",
     "See next events":"Ver próximos eventos",
@@ -76,7 +76,7 @@
     "Planning Editor": "Editor de Rutina",
     "Name and definition": "Nombre y definición",
     "Name for routine": "Nombre para la rutina",
-    "What kind of event do you want to add?": "¿Qué tipo de evento quiere añadir?",
+    "What kind of event do you want to add?": "¿Qué tipo de evento quieres añadir?",
     "Not defined yet. Press me!": "No definido aún. ¡Púlsame!",
     "Defined! Click to redefine": "¡Definido! Click para redefinir",
     "Auto add at": "Auto añadir a las",
@@ -141,34 +141,35 @@
     "Search": "Búsqueda",
 
     "Medications": "Medicamentos",
+    "Your Medications": "Tus medicamentos",
     "Press to add your medications": "Pulsa para agregar tus medicamentos",
 
-    "Currently you don't have medications added. Try searching!": "Actualmente no tiene medicamentos añadidos. ¡Pruebe buscando!",
-    "Your currently added medications. If you want, you can search for new ones": "Sus medicamentos actualmente añadidos. Si quiere, puede buscar por nuevos",
-    "There is no results ... Try with another name": "No hay resultados ... Pruebe con otro nombre",
+    "Currently you don't have medications added. Try searching!": "Actualmente no tiene medicamentos añadidos. ¡Prueba buscando!",
+    "Your currently added medications. If you want, you can search for new ones": "Tus medicamentos actualmente añadidos. Si quieres, puedes buscar por nuevos",
+    "There is no results ... Try with another name": "No hay resultados ... Prueba con otro nombre",
     "There is": "Hay",
     "There are": "Hay",
     "result": "resultado",
     "results": "resultados",
     "I seems that there was an error ... Sorry!": "Parece que hubo un error ... ¡Lo siento!",
-    "Medication added correctly to your list": "Medicamento añadido correctamente a su lista",
+    "Medication added correctly to your list": "Medicamento añadido correctamente a tu lista",
     "There seem to was an error": "Parece que hubo un error",
-    "Medication removed correctly from your list": "Medicamento eliminado correctamente de su lista",
+    "Medication removed correctly from your list": "Medicamento eliminado correctamente de tu lista",
 
 
-    "Selected food Modified": "Modificado el alimento seleccionado",
+    "Modified the selected food": "Modificado el alimento seleccionado",
     "Removed from list": "Eliminado del listado",
     "Feeding added correctly": "Alimentación añadida correctamente",
     "No food selected yet": "Ningún alimento seleccionado aún",
-    "Finalize feeding add": "Finalice añadido de alimentación",
+    "Ends the add": "Finaliza el añadido",
     "Empty": "Vacío",
     "Added to food selected list": "Añadido a la lista de alimentos seleccionados",
     "Food deleted": "Alimento eliminado",
     "Confirm delete": "Confirme eliminado",
-    "Do you want to delete this food?": "¿Quiere eliminar este alimento?",
+    "Do you want to delete this food?": "¿Quieres eliminar este alimento?",
     "Cancel": "Cancelar",
 
-    "Give me a name": "Deme un nombre",
+    "Give me a name": "Dame un nombre",
 
     "Everything was good. Routine saved.": "Todo fue bien. Rutina guardada.",
 
@@ -192,12 +193,12 @@
 
     "Only recent instants can be deleted.": "Sólo pueden ser eliminados los instances recientes.",
     "Detail of Instant": "Detalles del Instante",
-    "Do you really want to eliminate this instant?": "¿Realmente desea eliminar este instante?",
+    "Do you really want to eliminate this instant?": "¿Realmente deseas eliminar este instante?",
     "Date": "Fecha",
     "Hour": "Hora",
     "Details": "Detalles",
 
-    "Your glucose level was": "Su nivel de glucosa fue",
+    "Your glucose level was": "Tu nivel de glucosa fue",
     "You spent": "Pasaste",
     "at an": "a",
     "intensity": "intensidad",
