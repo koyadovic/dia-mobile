@@ -30,6 +30,11 @@ export class InsightsPage {
     this.events.subscribe('medications:medications-change', () =>  {
       this.refreshInsights();
     });
+
+    this.events.subscribe('traits:body-trait-change', () => {
+      console.log('received');
+      this.refreshInsights();
+    });
   }
 
   refreshInsights() {

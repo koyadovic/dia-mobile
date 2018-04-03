@@ -16,6 +16,7 @@ import { DiaConfigurationService } from './dia-configuration-service';
 import { TranslateService } from '@ngx-translate/core';
 
 import { DiaFood, FoodListable, InternetFoodList, InternetFoodDetail, FoodSelected } from '../models/food-model';
+import { Events } from 'ionic-angular';
 
 
 @Injectable()
@@ -35,6 +36,7 @@ export class DiaTimelineService {
                 private restBackendService: DiaRestBackendService,
                 private configurationService: DiaConfigurationService,
                 public authenticationService: DiaAuthService,
+                public events: Events,
                 private translate: TranslateService) {
 
         this.userConfig = this.configurationService.getUserConfiguration();

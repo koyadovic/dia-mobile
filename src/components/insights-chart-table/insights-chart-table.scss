@@ -21,3 +21,8 @@
 .insights-table .row:last-child .col {
     border-bottom: solid 1px color($colors, primary-dark);
 }
+
+
+.col.right {
+    text-align: end;
+}
