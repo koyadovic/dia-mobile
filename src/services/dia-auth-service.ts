@@ -56,6 +56,14 @@ export class DiaAuthService {
                     );
     }
 
+    isDiabetic(): boolean {
+        return this.groups.indexOf('Diabetics') > -1;
+    }
+
+    isDietAndExercise(): boolean {
+        return this.groups.indexOf('Diet & Exercise') > -1;
+    }
+
     // return only observable versions of the subject
     loggedIn(): Observable<boolean> { return this.loggedIn$.asObservable(); }
 

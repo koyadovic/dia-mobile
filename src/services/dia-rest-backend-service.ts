@@ -11,7 +11,7 @@ export class DiaRestBackendService {
 
   constructor(private http: HttpClient,
               private authService: DiaAuthService,
-              public toastCtrl: ToastController,) {}
+              public toastCtrl: ToastController) {}
 
   private toastMessage(message: string){
     let toast = this.toastCtrl.create({
@@ -71,12 +71,15 @@ export class DiaRestBackendService {
           if(err.status === 401){
             this.authService.logout();
           } else {
+            observer.error(err);
+            /*
             let mess = err.error.detail;
             if (mess !== undefined){
               this.toastMessage(err.error.detail);
             } else {
               this.toastMessage(err.status + " " + err.message);
             }
+            */
           }
         }
       );

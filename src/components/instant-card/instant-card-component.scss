@@ -54,6 +54,16 @@ ion-item.item.instant-card {
         border-bottom-right-radius: 0%;
         
     }
+    .instant-card-attention-icon {
+        margin: 0;
+        padding: 16px 11px;
+        height: 60px;
+        background-color: map-get($colors, grey);
+        color: map-get($colors, white);
+        width: 50px;
+        border-top-right-radius: 0%;
+        border-bottom-right-radius: 0%;
+    }
     .instant-card-recommendation-icon {
         height: 60px;
         padding: 16px 11px;
@@ -161,4 +171,10 @@ ion-item.item.instant-card.future {
 
 .subtitle-icon + p {
     display: inline-block;
+}
+
+
+
+.wrap-text {
+    white-space: normal !important;
 }

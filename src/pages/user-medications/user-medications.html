@@ -1,7 +1,9 @@
 <ion-header>
-
   <ion-navbar>
-    <ion-title>{{ "Medications" | translate }}</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title><i class="fa fa-capsules" aria-hidden="true"></i>{{ "Your Medications" | translate }}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -11,23 +13,15 @@
     [showCancelButton]="false" [animated]="true" [debounce]="400"
     (ionInput)="onInput($event)"></ion-searchbar>
 
-  <h5 padding-left padding-right>{{ viewStatusString }}</h5>
+  <p class="status-text" padding-left padding-right>{{ viewStatusString }}</p>
   <!-- Search result ! -->
   <ng-container *ngIf="searchString !== ''">
     <ion-list>
-      <ion-item-sliding #item *ngFor="let medication of searchMedicationsResult">
 
-        <button ion-item>
-          <h1>{{ medication['name'] }}</h1>
-          <p>{{ medication['administration_type'] }} {{ medication['type'] }} {{ medication['sub_type'] }}</p>
-        </button>
-
-        <ion-item-options>
-          <!-- add medication to user medications  -->
-          <button ion-button color="light" (click)="addMedication(item, medication['id'])"><ion-icon name="heart"></ion-icon>Add</button>
-  
-        </ion-item-options>
-      </ion-item-sliding>
+      <button class="medication-item" ion-item *ngFor="let medication of searchMedicationsResult" (click)="addMedication(medication['id'])">
+        <h2>{{ medication['name'] }}</h2>
+        <p class="subtitle">{{ upper(medication['administration_type'] | translate) }}</p>
+      </button>
 
     </ion-list>
   </ng-container>
@@ -37,9 +31,9 @@
     <ion-list>
       <ion-item-sliding #item *ngFor="let medication of userMedications">
 
-        <button ion-item>
-          <h1>{{ medication['name'] }}</h1>
-          <p>{{ medication['administration_type'] }} {{ medication['type'] }} {{ medication['sub_type'] }}</p>
+        <button class="medication-item" ion-item>
+          <h2>{{ medication['name'] }}</h2>
+          <p class="subtitle">{{ upper(medication['administration_type'] | translate) }}</p>
         </button>
 
         <ion-item-options>

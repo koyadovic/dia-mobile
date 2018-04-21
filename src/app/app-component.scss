@@ -16,12 +16,6 @@
 // automatically applied to the <body> element in the app.
 
 
-// This remove colored underline indicator for ion-input elements validations
-.item-inner, ion-item { 
-    //border-bottom-color: transparent !important; 
-    //box-shadow: none !important; 
-}
-
 // This three is for the top toolbar
 .toolbar-background {
     background-color: map-get($colors, primary);

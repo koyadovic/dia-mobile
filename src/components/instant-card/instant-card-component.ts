@@ -102,6 +102,9 @@ export class DiaInstantCard {
                 classes = this.appendClass(classes, 'done');
             }
         }
+        if (this.instant.content.type === 'attention-request') {
+            classes = this.appendClass(classes, 'attention-request');
+        }
 
         // group of days
         if (this.instant.is_start) {

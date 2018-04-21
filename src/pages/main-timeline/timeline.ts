@@ -395,7 +395,16 @@ export class TimeLinePage {
 
     modal.onDidDismiss((requests) => {
       if(!!requests && requests["requests"] && requests["requests"].length > 0) {
-        let rs = requests["requests"].map(x => this.restBackendService.genericPost(x.url, x.data));
+        let rs = requests["requests"].map(
+          x => {
+            console.log(x.url);
+            if(x.url.indexOf('/instants/traits/') > -1) {
+              console.log('publish!');
+              this.events.publish('traits:body-trait-change');
+            }
+            return this.restBackendService.genericPost(x.url, x.data);
+          }
+        );
         forkJoin(...rs).subscribe(
           (resp) => {
             this.refreshTimeline();

@@ -41,4 +41,20 @@ export class DiaInsightsService {
     });
   }
 
+  requestReport():Observable<any> {
+    let url = `${this.backendURL.baseURL}/v1/insights/report/`;
+    return Observable.create((observer) => {
+      this.restBackendService
+      .genericPost(url, {})
+      .finally(() => observer.complete())
+      .subscribe(
+        (resp) => {
+          observer.next(resp);
+        },
+        (err) => {
+          observer.error(err)
+        });
+    });
+  }
+
 }

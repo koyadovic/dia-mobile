@@ -1,0 +1,26 @@
+.status-text {
+    font-size: 1.1em;
+    color: color($colors, primary);
+    text-align: center;
+}
+
+
+.subtitle {
+    font-size: 0.8em;
+    color: color($colors, primary) !important;
+}
+
+
+
+.item-md {
+    padding-top: 0px;
+}
+
+.medication-item {
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+
+    ion-label {
+        margin: 8px;
+    }
+}

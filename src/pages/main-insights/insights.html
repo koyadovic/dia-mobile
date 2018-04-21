@@ -5,6 +5,13 @@
     <ion-title>
       {{ 'Insights' | translate }}
     </ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="generateReport()">
+        <ion-icon name="copy"></ion-icon>
+      </button>
+    </ion-buttons>
+
   </ion-navbar>
 
   <ion-segment class="segments-parent" [(ngModel)]="activeInsightSegment" color="primary">
