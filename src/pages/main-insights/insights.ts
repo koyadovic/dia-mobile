@@ -1,10 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { ConfigurationPage } from '../configuration/configuration';
 import { TranslateService } from '@ngx-translate/core';
 import { DiaInsightsService } from '../../services/dia-insights-service';
 import { Content } from 'ionic-angular';
 import { Events } from 'ionic-angular';
+import { forkJoin } from 'rxjs/observable/forkJoin';
+import { DiaMessage } from '../../models/messages-model';
+import { DiaMessageService } from '../../services/dia-message-service';
 
 
 @Component({
@@ -21,7 +24,10 @@ export class InsightsPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private translate: TranslateService,
+              public toastCtrl: ToastController,
               public events: Events,
+              public loadingCtrl: LoadingController,
+              private messageService: DiaMessageService,
               private insightsService: DiaInsightsService) {
 
     this.refreshInsights();
@@ -61,5 +67,70 @@ export class InsightsPage {
     this.content.scrollToTop();
     this.activeInsightSegment = segment['title'];
     this.activeInsightSegmentChartData = segment['insights'];
+  }
+
+  generateReport() {
+    forkJoin(
+      this.translate.get('Request Report'),
+      this.translate.get('This will generate a PDF file with all the information shown here, in insights page and will send it to your email. Proceed?'),
+    ).subscribe(([title, message]) => {
+
+      let diaMessage = new DiaMessage(title, null, message);
+      this.messageService.confirmMessage(diaMessage).subscribe(
+        (ok) => {
+          if(ok) {
+            this.translate.get('Generating Report ...').subscribe(
+              generatingMessage => {
+                let loading = this.loadingCtrl.create({
+                  content: generatingMessage
+                });
+                loading.present();
+
+                this.insightsService.requestReport().subscribe(
+                  (resp) => {
+                    loading.dismiss();
+                    this.translate.get('Report was sent to your email address. Check your mailbox!').subscribe(
+                      message => {
+                        this.toastMessage(message);
+                      }
+                    );
+                  },
+                  (err) => {
+                    loading.dismiss();
+
+                    if(err.status === 405) {
+                      this.translate.get('Sorry but only report per day can be requested').subscribe(
+                        message => {
+                          this.toastMessage(message);
+                        }
+                      );
+                    } else {
+                      console.error(err);
+                    }
+                  }
+                );
+    
+              }
+            );
+
+          }
+        },
+        (err) => {
+          console.error(err);
+        }
+      );
+    })
+
+  }
+
+  private toastMessage(message: string){
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 7000,
+      position: 'bottom'
+    });
+    toast.onDidDismiss(() => {
+    });
+    toast.present();
   }
 }

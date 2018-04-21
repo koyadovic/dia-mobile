@@ -221,5 +221,11 @@
     "injected": "injectado",
     "oral": "oral",
 
-    "Attention Request": "Solicitud de Atención"
+    "Attention Request": "Solicitud de Atención",
+
+    "Request Report": "Solicitar informe",
+    "This will generate a PDF file with all the information shown here, in insights page and will send it to your email. Proceed?": "Esto generará un fichero PDF con toda la información que se muestra aquí, en la página de estadísticas y lo enviará a su correo electrónico. ¿Proceder?",
+    "Sorry but only report per day can be requested": "Lo siento pero sólo puede ser solicitado un informe por día",
+    "Report was sent to your email address. Check your mailbox!": "El informe fue enviado a tu dirección de correo. ¡Revisa tu bandeja de entrada!",
+    "Generating Report ...": "Generando informe ..."
 }
