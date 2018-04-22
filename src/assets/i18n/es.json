@@ -227,5 +227,11 @@
     "This will generate a PDF file with all the information shown here, in insights page and will send it to your email. Proceed?": "Esto generará un fichero PDF con toda la información que se muestra aquí, en la página de estadísticas y lo enviará a su correo electrónico. ¿Proceder?",
     "Sorry but only report per day can be requested": "Lo siento pero sólo puede ser solicitado un informe por día",
     "Report was sent to your email address. Check your mailbox!": "El informe fue enviado a tu dirección de correo. ¡Revisa tu bandeja de entrada!",
-    "Generating Report ...": "Generando informe ..."
+    "Generating Report ...": "Generando informe ...",
+
+    "It seems there are network problems. Check your Internet connection.": "Parece que hay problemas de red. Revisa tu conexión a Internet.",
+    "We were unable to log in with the email and/or password provided.": "Nos fue imposible iniciar sesión con el email/contraseña proporcionados.",
+    "Unexpected error.": "Error inesperado.",
+    "Session started correctly. Our most sincere welcome!": "Sesión iniciada correctamente. ¡Nuestra más sincera bienvenida!"
+
 }

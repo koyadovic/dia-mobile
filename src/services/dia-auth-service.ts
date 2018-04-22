@@ -5,6 +5,9 @@ import { BehaviorSubject } from 'rxjs';
 import { DiaBackendURL } from './dia-backend-urls';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Events } from 'ionic-angular';
+import { DiaMessageService } from './dia-message-service';
+import { TranslateService } from '@ngx-translate/core';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 
 
 @Injectable()
@@ -16,6 +19,8 @@ export class DiaAuthService {
     constructor(private http: HttpClient,
                 private storage: Storage,
                 public events: Events,
+                private translate: TranslateService,
+                private messageService: DiaMessageService,
                 private backendURL: DiaBackendURL) {
 
         // in startup time we retrieve the token from the store.
@@ -73,20 +78,42 @@ export class DiaAuthService {
 
     login(data: {email: string, password: string}) {
         let url = `${this.backendURL.baseURL}/v1/accounts/tokens/`;
-    
-        this.http.post(url, data)
-                 .map((resp) => resp["token"])
-                 .subscribe(
-                    (token) => {
-                        this.storage.set("token", token);
-                        this.storage.set("email", data.email);
-                        this.token = token;
-                        this.loggedIn$.next(!!token);
-                    },
-                    (err) => {
-                        this.logout();
-                    }
-                );
+
+        forkJoin(
+            this.translate.get('It seems there are network problems. Check your Internet connection.'),
+            this.translate.get('We were unable to log in with the email and/or password provided.'),
+            this.translate.get('Unexpected error.')
+        ).subscribe(([networkError, credentialsError, unexpectedError]) => {
+            this.http.post(url, data)
+            .map((resp) => resp["token"])
+            .subscribe(
+               (token) => {
+                   this.storage.set("token", token);
+                   this.storage.set("email", data.email);
+                   this.token = token;
+                   this.loggedIn$.next(!!token);
+
+                   setTimeout(() => {
+                      this.translate.get('Session started correctly. Our most sincere welcome!').subscribe((mess) => {
+                        this.messageService.toastMessage(mess);
+                      });
+                   }, 1000);
+                },
+               (err) => {
+                   if (err.status === 0) {
+                       // without connection
+                       this.messageService.toastMessage(networkError);
+                   }
+                   else if (err.status === 400) {
+                       // bad credentials
+                       this.messageService.toastMessage(credentialsError);
+                   } else {
+                       // unexpected error
+                       this.messageService.toastMessage(unexpectedError);
+                   }
+               }
+           );
+        });
     }
 
     logout(){

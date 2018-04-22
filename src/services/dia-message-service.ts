@@ -9,6 +9,7 @@ import { DiaAuthService } from './dia-auth-service';
 import { Subscription } from 'rxjs/Subscription';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { TranslateService } from '@ngx-translate/core';
+import { ToastController } from 'ionic-angular';
 
 
 @Injectable()
@@ -21,6 +22,7 @@ export class DiaMessageService {
 
     constructor(private alertCtrl: AlertController,
                 private translate: TranslateService,
+                public toastCtrl: ToastController,
                 private backendURLs: DiaBackendURL) {
 
         this._messages.subscribe((message: DiaMessage) => {
@@ -82,5 +84,16 @@ export class DiaMessageService {
 
     errorMessage(title: string, message: string) {
         this.publishMessage(new DiaMessage(title, "error", message));
+    }
+
+    toastMessage(message: string){
+        let toast = this.toastCtrl.create({
+          message: message,
+          duration: 7000,
+          position: 'bottom'
+        });
+        toast.onDidDismiss(() => {
+        });
+        toast.present();
     }
 }
