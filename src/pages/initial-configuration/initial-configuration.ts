@@ -35,9 +35,14 @@ export class InitialConfigurationPage {
   }
 
   languageChange(language){
+    // this is a special case. On language change need to restart this initial configuration page with new language
     this.data[UserConfiguration.LANGUAGE] = language;
     this.saveConfig();
-    setTimeout(() => window.location.href = '/', 500);
+    this.navCtrl.pop();
+  }
+
+  next() {
+    this.slides.slideNext();
   }
 
   finished() {

@@ -11,13 +11,14 @@
       <h2>{{ "Language and timezone" | translate }}</h2>
 
       <ion-item>
-        <ion-label>Language</ion-label>
+        <ion-label>{{ "Language" | translate }}</ion-label>
         <ion-select #l name="language" [(ngModel)]="data['dia_config__language']" (ionChange)="languageChange(l.value)">
-          <ion-option value="es">Spanish</ion-option>
-          <ion-option value="en">English</ion-option>
+          <ion-option value="es">{{ "Spanish" | translate }}</ion-option>
+          <ion-option value="en">{{ "English" | translate }}</ion-option>
         </ion-select>
       </ion-item>
 
+      <!-- <button class="finish-button" ion-button color="primary" block (click)="next()">{{ "Next" | translate }}</button> -->
     </ion-slide>
   
     <ion-slide>
@@ -26,6 +27,9 @@
       </div>
     
       <h2>Timezone</h2>
+
+      <!-- <button class="finish-button" ion-button color="primary" block (click)="next()">{{ "Next" | translate }}</button> -->
+
     </ion-slide>
   
     <ion-slide>
@@ -33,10 +37,11 @@
         <img src="assets/imgs/initial-config-1-language.png"/>
       </div>
   
-      <h2>Finished</h2>
-      <p>We're glad to give you <b>the most sincerely welcome</b> to Dia Mobile.</p>
+      <h2>{{ "Finished" | translate }}</h2>
+      <p>{{ "Remember to review the settings to change any of these options and more." | translate }}</p>
+      <p>{{ "We're glad to give you the welcome to Dia Mobile." | translate }}</p>
 
-      <button class="finish-button" ion-button color="primary" block (click)="finished()">Get started!</button>
+      <button class="finish-button" ion-button color="primary" block (click)="finished()">{{ "Get started!" | translate }}</button>
   
     </ion-slide>
   
