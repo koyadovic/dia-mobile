@@ -39,7 +39,7 @@ export class DiaConfigurationService {
     }
     
     saveConfiguration(configurationChanges) {
-        return this.restBackendService
+        this.restBackendService
             .genericPost(`${this.backendURL.baseURL}/v1/configurations/`, configurationChanges)
             .subscribe((configuration) => {
                 this.userConfig.updateValues(configurationChanges);

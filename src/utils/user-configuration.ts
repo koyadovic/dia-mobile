@@ -54,9 +54,7 @@ export class UserConfiguration {
         return undefined;
     }
 
-
     /* Helper methods */
-
     public utcSecondsToMoment(seconds: number){
         return moment.tz(seconds * 1000, "UTC");
     }
