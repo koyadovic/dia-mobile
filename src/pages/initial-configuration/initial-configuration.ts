@@ -33,6 +33,7 @@ export class InitialConfigurationPage {
           this.data[UserConfiguration.LANGUAGE] = userConfig.getValue(UserConfiguration.LANGUAGE);
           this.data[UserConfiguration.TIMEZONE] = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
+          /* TODO revisar esta mierda */
           this.configurationService.getConfiguration().subscribe(
             (configuration) => {
               for(let configurationElement of configuration['fields']) {
@@ -42,7 +43,13 @@ export class InitialConfigurationPage {
                 }
               }
             }
-          )
+          );
+
+          // Para coger el país de un timezone ==> GET v1/configurations/country-timezones/?timezone=Europe%2FMadrid
+          // Usa Intl.DateTimeFormat().resolvedOptions().timeZone
+
+          // Para coger diversos timezones de un país ==> GET /v1/configurations/country-timezones/ES/
+          
         }
       }
     );
