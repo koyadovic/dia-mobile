@@ -13,6 +13,7 @@ import { forkJoin } from 'rxjs/observable/forkJoin';
 import { Storage } from '@ionic/storage/dist/storage';
 import { DiaConfigurationService } from '../../services/dia-configuration-service';
 import { UserConfiguration } from '../../utils/user-configuration';
+import { InitialConfigurationPage } from '../initial-configuration/initial-configuration';
 
 
 @Component({
@@ -49,7 +50,10 @@ export class MenuPage {
         if(ready) {
           let userConfig = this.configService.getUserConfiguration();
           if(! userConfig.getValue(UserConfiguration.INITIAL_CONFIG_DONE)) {
-            // here we need to start initial configuration assistant to help users to configure their languages, medications, timezone, date formats, and so on.
+            
+            // here we need to start initial configuration assistant to help users to configure
+            // their languages, medications, timezone, date formats, and so on.
+            this.appCtrl.getRootNavs()[0].push(InitialConfigurationPage);
           }
         }
       }

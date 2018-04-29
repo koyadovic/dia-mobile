@@ -1,0 +1,36 @@
+
+<ion-content padding>
+
+  <ion-slides pager>
+
+    <ion-slide>
+      <img src="assets/imgs/initial-config-1-language.png"/>
+      <h2>{{ "Welcome to Dia Mobile" | translate }}</h2>
+
+      <ion-item>
+        <ion-label>Language</ion-label>
+        <ion-select>
+          <ion-option value="es">Spanish</ion-option>
+          <ion-option value="en">English</ion-option>
+        </ion-select>
+      </ion-item>
+
+    </ion-slide>
+  
+    <ion-slide>
+      <img src="assets/imgs/initial-config-1-language.png"/>
+      <h2>Timezone</h2>
+    </ion-slide>
+  
+    <ion-slide>
+      <img src="assets/imgs/initial-config-1-language.png"/>
+      <h2>Finished</h2>
+      <p>We're glad to give you the most sincerely welcome to Dia Mobile.</p>
+
+      <button class="finish-button" ion-button color="primary" block (click)="finished()">Get started!</button>
+  
+    </ion-slide>
+  
+  </ion-slides>
+
+</ion-content>

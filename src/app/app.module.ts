@@ -31,6 +31,7 @@ import { PlanningsPage } from '../pages/main-plannings/plannings';
 import { InsightsPage } from '../pages/main-insights/insights';
 
 import { ConfigurationPage } from '../pages/configuration/configuration';
+import { InitialConfigurationPage } from '../pages/initial-configuration/initial-configuration';
 import { LoginPage } from '../pages/login/login';
 
 import { AddGenericPage } from '../pages/add-generic/add-generic';
@@ -59,6 +60,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ConfigurationPage,
 
     MenuPage,
+    InitialConfigurationPage,
     MainPage,
     TimeLinePage,
     PlanningsPage,
@@ -96,6 +98,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ConfigurationPage,
 
     MenuPage,
+    InitialConfigurationPage,
     MainPage,
     TimeLinePage,
     PlanningsPage,

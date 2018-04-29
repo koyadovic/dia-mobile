@@ -1,0 +1,23 @@
+page-initial-configuration {
+    h2 {
+        color: color($colors, primary);
+    }
+
+    p {
+        color: color($colors, primary-dark);
+    }
+
+    /* This align all the page content up to the top */
+    ion-slide.swiper-slide {
+        align-items: flex-start;
+
+        .slide-zoom {
+            height: 100%;
+        }
+
+        .finish-button {
+            position: absolute;
+            bottom: 60px;
+        }
+    }
+}
