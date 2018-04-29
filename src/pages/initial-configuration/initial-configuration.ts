@@ -12,6 +12,10 @@ import { UserConfiguration } from '../../utils/user-configuration';
 })
 export class InitialConfigurationPage {
   @ViewChild(Slides) slides: Slides;
+
+  // this is for the timezone selector component
+  timezoneOptions = [];
+
   data = {};
 
   constructor(public navCtrl: NavController,
@@ -35,19 +39,24 @@ export class InitialConfigurationPage {
   }
 
   languageChange(language){
-    // this is a special case. On language change need to restart this initial configuration page with new language
+    // this is a special case. On language change, we need to restart this initial configuration page with new language
     this.data[UserConfiguration.LANGUAGE] = language;
     this.saveConfig();
     this.navCtrl.pop();
   }
 
   next() {
+    // used for a next button. Currently deprecated
     this.slides.slideNext();
   }
 
   finished() {
-    // here we save the configuration and window.location.href = '/';
-    window.location.href = '/';
+    // here we save the configuration and window.location.href = '/'; to restart all the aplication
+
+    //this.data[UserConfiguration.INITIAL_CONFIG_DONE] = true;
+    //this.saveConfig();
+    setTimeout(() => window.location.href = '/', 500);
+    
   }
 
   saveConfig() {
