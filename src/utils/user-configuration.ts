@@ -9,6 +9,7 @@ export class UserConfiguration {
     static LANGUAGE = "dia_config__language";
     static TIMEZONE = "dia_config__timezone";
     static DATE_FORMAT = "dia_config__date_format";
+    static INITIAL_CONFIG_DONE = "dia_config__initial_configuration_done";
 
     constructor() {}
 
