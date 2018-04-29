@@ -1,10 +1,26 @@
 page-initial-configuration {
+
+    /* This is for the top image, must have 16/10 aspect ratio */
+    /* Thus, there is no problem with selected image, it will be adjusted to the ratio */
+    .img-container {
+        padding-top: 62.5%;
+        width: 100%;
+        position: relative;
+        img {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+    }
+
     h2 {
         color: color($colors, primary);
     }
 
     p {
-        color: color($colors, primary-dark);
+        color: #666;
     }
 
     /* This align all the page content up to the top */
