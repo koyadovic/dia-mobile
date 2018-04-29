@@ -11,10 +11,17 @@
       <h2>{{ "Language and timezone" | translate }}</h2>
 
       <ion-item>
-        <ion-label>{{ "Language" | translate }}</ion-label>
+        <ion-label fixed>{{ "Language" | translate }}</ion-label>
         <ion-select #l name="language" [(ngModel)]="data['dia_config__language']" (ionChange)="languageChange(l.value)">
           <ion-option value="es">{{ "Spanish" | translate }}</ion-option>
           <ion-option value="en">{{ "English" | translate }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed>{{ "Timezone" | translate }}</ion-label>
+        <ion-select name="timezone" [(ngModel)]="data['dia_config__timezone']" (click)="onSelectClicked()">
+          <ion-option *ngFor="let option of timezoneOptions" [value]="option['value']">{{option['display']}}</ion-option>
         </ion-select>
       </ion-item>
 

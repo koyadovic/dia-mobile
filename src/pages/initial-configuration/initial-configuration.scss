@@ -1,4 +1,7 @@
 page-initial-configuration {
+    ion-select {
+        min-width: 60%;
+    }
 
     /* This is for the top image, must have 16/10 aspect ratio */
     /* Thus, there is no problem with selected image, it will be adjusted to the ratio */

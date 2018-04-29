@@ -14,6 +14,8 @@ export class TimezoneSelectorComponent {
   }
   set timezoneOptions(timezoneOptions){
     this._timezoneOptions = timezoneOptions;
+    console.log(Intl.DateTimeFormat().resolvedOptions().timeZone)
+    
     if(this._timezoneOptions === undefined) return;
 
     for(let n=0; n<this.timezoneOptions.length; n++){

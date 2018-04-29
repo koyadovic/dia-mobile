@@ -29,7 +29,20 @@ export class InitialConfigurationPage {
         if(ready) {
           // here we need to set up all the variables that will be modificable in this page
           let userConfig = this.configurationService.getUserConfiguration();
+
           this.data[UserConfiguration.LANGUAGE] = userConfig.getValue(UserConfiguration.LANGUAGE);
+          this.data[UserConfiguration.TIMEZONE] = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+          this.configurationService.getConfiguration().subscribe(
+            (configuration) => {
+              for(let configurationElement of configuration['fields']) {
+                if(configurationElement['namespace_key'] === 'dia_config__timezone') {
+                  this.timezoneOptions = configurationElement['options'];
+                  break;
+                }
+              }
+            }
+          )
         }
       }
     );
@@ -61,6 +74,22 @@ export class InitialConfigurationPage {
 
   saveConfig() {
     this.configurationService.saveConfiguration(this.data);
+  }
+
+  onSelectClicked (): void {
+    // This scroll to selected option in the timezone ion-select field.
+
+    // These classes come from the generated elements for the ion-select/ion-option
+    const options: HTMLCollectionOf<Element> = document.getElementsByClassName('alert-tappable alert-radio');
+    setTimeout(() => {
+      let i: number = 0
+      const len: number = options.length
+      for (i; i < len; i++) {
+        if ((options[i] as HTMLElement).attributes[3].nodeValue === 'true') {
+          options[i].scrollIntoView({ block: 'end', behavior: 'instant' })
+        }
+      }
+    }, 2000) // Leave enough time for the popup to render
   }
 
 }
