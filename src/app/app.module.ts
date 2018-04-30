@@ -49,6 +49,7 @@ import { DiaPlanningsService } from '../services/dia-plannings-service';
 import { PlanningsEditorPage } from '../pages/plannings-editor/plannings-editor';
 import { DiaInsightsService } from '../services/dia-insights-service';
 import { DiaMedicationsService } from '../services/dia-medications-service';
+import { TimezoneGuardService } from '../services/timezone-guard-service';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -129,6 +130,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DiaPlanningsService,
     DiaInsightsService,
     DiaMedicationsService,
+    TimezoneGuardService,
   ]
 })
 export class AppModule {}

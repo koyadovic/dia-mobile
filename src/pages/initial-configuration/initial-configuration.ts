@@ -45,11 +45,13 @@ export class InitialConfigurationPage {
             }
           );
 
-          // Para coger el país de un timezone ==> GET v1/configurations/country-timezones/?timezone=Europe%2FMadrid
-          // Usa Intl.DateTimeFormat().resolvedOptions().timeZone
+          // Para recoger los paises habilitados ==> GET /v1/configurations/available-countries/
 
-          // Para coger diversos timezones de un país ==> GET /v1/configurations/country-timezones/ES/
-          
+          // Para coger el país de un timezone ==> GET /v1/configurations/country/Europe-Madrid/
+          // Usa Intl.DateTimeFormat().resolvedOptions().timeZone hay que reemplazar los '/' por '-'
+
+          // Para coger diversos timezones de un país ==> GET /v1/configurations/timezones/ES/
+
         }
       }
     );

@@ -1,5 +1,5 @@
 {
-    "Language and timezone": "Idioma y huso horario",
+    "Country, language and timezone": "País, idioma y huso horario",
     "Language": "Idioma",
     "Spanish": "Español",
     "English": "Inglés",
@@ -9,6 +9,7 @@
     "Remember to review the settings to change any of these options and more.": "Recuerde revisar la configuración para cambiar cualquiera de estas opciones y más.",
     "Next": "Siguiente",
     "Timezone": "Huso horario",
+    "Diet and Exercise": "Dieta y Ejercicio",
 
     "Dia Mobile": "Dia Mobile",
     "Timeline": "Cronología",

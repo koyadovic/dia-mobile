@@ -26,7 +26,6 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from '../app/app.module';
 import { HttpClient } from '@angular/common/http';
 import { IonPullupModule } from 'ionic-pullup';
-import { TimezoneSelectorComponent } from './timezone-selector/timezone-selector';
 
 
 
@@ -48,7 +47,6 @@ import { TimezoneSelectorComponent } from './timezone-selector/timezone-selector
         InsightsChartDonutComponent,
         InsightsChartKeyValuesComponent,
         InsightsChartTableComponent,
-        TimezoneSelectorComponent,
     ],
 	imports: [
         BrowserModule,
@@ -82,7 +80,6 @@ import { TimezoneSelectorComponent } from './timezone-selector/timezone-selector
         InsightsChartDonutComponent,
         InsightsChartKeyValuesComponent,
         InsightsChartTableComponent,
-        TimezoneSelectorComponent,
     ]
 })
 export class ComponentsModule {}
