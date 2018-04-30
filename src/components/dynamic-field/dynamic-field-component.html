@@ -28,6 +28,8 @@
 
   <ion-datetime
     *ngIf="field.type == 'date'"
+    cancelText="{{'Cancel'|translate}}"
+    doneText="{{'Done'|translate}}"
     (ionChange)="emitHaveChanges()"
     displayFormat="{{ field.additional_options?.format }}"
     [disabled]="field.disabled !== undefined && field.disabled"
@@ -35,6 +37,7 @@
 
   <ion-select
     *ngIf="field.type == 'select'"
+    cancelText="{{'Cancel'|translate}}" okText="{{'OK'|translate}}"
     (ionChange)="emitHaveChanges()"
     [disabled]="field.disabled !== undefined && field.disabled"
     (click)="onSelectClicked()"
