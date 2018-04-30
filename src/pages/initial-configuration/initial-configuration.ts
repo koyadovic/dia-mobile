@@ -22,6 +22,8 @@ export class InitialConfigurationPage {
   dietAndExercise: boolean = false;
   dietAndExerciseFields = [];
 
+  birthDateField = null;
+
   // subscriptions
   configurationServiceSubscription = null;
 
@@ -40,16 +42,19 @@ export class InitialConfigurationPage {
         if(ready) {
           // here we need to set up all the variables that will be modificable in this page
           let userConfig = this.configurationService.getUserConfiguration();
-          this.data[UserConfiguration.LANGUAGE] = userConfig.getValue(UserConfiguration.LANGUAGE);
+          this.data = userConfig.getRawData();
+
+          //this.data[UserConfiguration.LANGUAGE] = userConfig.getValue(UserConfiguration.LANGUAGE);
           this.data[UserConfiguration.TIMEZONE] = timezoneGuard.getNewTimezone();
 
           // need to populate selects with data
           // first we try to get local timezone and with it, the country
           this.updateCountryByNewTimezone();
 
-          // check if we have diet and exercise config options
           this.configurationService.getConfiguration().subscribe(
             wholeConfig => {
+
+              // check if we have diet and exercise config options
               this.dietAndExercise = false;
               for(let childNode of wholeConfig['children_nodes']) {
                 if(childNode['namespace'] === 'diet_and_exercise') {
@@ -63,12 +68,30 @@ export class InitialConfigurationPage {
                   break;
                 }
               }
+
+              // here we get the birth date and run conversion
+              for(let field of wholeConfig['fields']) {
+                if(field['namespace_key'] === 'dia_config__birth_date') {
+                  this.birthDateField = field;
+                  let tzoffset = (new Date()).getTimezoneOffset() * 60000;
+                  if (!this.birthDateField.value || this.birthDateField.value === "invalid") {
+                    this.birthDateField.value  = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
+                  } else {
+                    this.birthDateField.value  = (new Date(new Date(this.birthDateField.value).getTime() - tzoffset)).toISOString().slice(0, -1);
+                  }
+                  break;
+                }
+              }
             }
           )
         }
       }
     );
 
+  }
+
+  updateBirthDateValue() {
+    this.data['dia_config__birth_date'] = new Date(this.birthDateField.value).valueOf();
   }
 
   updateAvailableCountryOptions() {

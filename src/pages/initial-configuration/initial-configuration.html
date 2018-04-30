@@ -43,15 +43,19 @@
 
       <ion-item text-wrap>
         <ion-label fixed>{{ "Gender" | translate }}</ion-label>
-        <ion-select name="" [(ngModel)]="data['lo_que_sea']">
-          <ion-option [value]="male">{{ "Male" | translate }}</ion-option>
-          <ion-option [value]="female">{{ "Female" | translate }}</ion-option>
+        <ion-select name="gender" [(ngModel)]="data['dia_config__gender']">
+          <ion-option [value]="'male'">{{ "Male" | translate }}</ion-option>
+          <ion-option [value]="'female'">{{ "Female" | translate }}</ion-option>
         </ion-select>
       </ion-item>
 
       <ion-item text-wrap>
         <ion-label fixed>{{ "Birth date" | translate }}</ion-label>
-        <ion-datetime displayFormat=""></ion-datetime>
+        <ion-datetime *ngIf="!!birthDateField"
+        (ionChange)="updateBirthDateValue()"
+        displayFormat="{{ birthDateField.additional_options?.format }}"
+        [(ngModel)]="birthDateField.value"></ion-datetime>
+
       </ion-item>
 
       <!-- <button class="finish-button" ion-button color="primary" block (click)="next()">{{ "Next" | translate }}</button> -->

@@ -78,4 +78,8 @@ export class UserConfiguration {
             return m.format("MM/DD/YYYY HH:mm:ss");
         }
     }
+
+    public getRawData() {
+        return this.data;
+    }
 }
