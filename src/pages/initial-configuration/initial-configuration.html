@@ -33,10 +33,34 @@
 
       <!-- <button class="finish-button" ion-button color="primary" block (click)="next()">{{ "Next" | translate }}</button> -->
     </ion-slide>
+
+    <ion-slide>
+      <div class="img-container">
+        <img src="assets/imgs/initial-config-2-about-you.png"/>
+      </div>
+    
+      <h2>{{ "About you" | translate }}</h2>
+
+      <ion-item text-wrap>
+        <ion-label fixed>{{ "Gender" | translate }}</ion-label>
+        <ion-select name="" [(ngModel)]="data['lo_que_sea']">
+          <ion-option [value]="male">{{ "Male" | translate }}</ion-option>
+          <ion-option [value]="female">{{ "Female" | translate }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item text-wrap>
+        <ion-label fixed>{{ "Birth date" | translate }}</ion-label>
+        <ion-datetime displayFormat=""></ion-datetime>
+      </ion-item>
+
+      <!-- <button class="finish-button" ion-button color="primary" block (click)="next()">{{ "Next" | translate }}</button> -->
+
+    </ion-slide>
   
     <ion-slide *ngIf="dietAndExercise">
       <div class="img-container">
-        <img src="assets/imgs/initial-config-1-language.png"/>
+        <img src="assets/imgs/initial-config-3-diet-exercise.png"/>
       </div>
     
       <h2>{{ "Diet and Exercise" | translate }}</h2>
@@ -54,10 +78,10 @@
   
     <ion-slide>
       <div class="img-container">
-        <img src="assets/imgs/initial-config-1-language.png"/>
+        <img src="assets/imgs/initial-config-99-finished.png"/>
       </div>
   
-      <h2>{{ "Finished" | translate }}</h2>
+      <h2>{{ "Our welcome!" | translate }}</h2>
       <p>{{ "Remember to review the settings to change any of these options and find some more." | translate }}</p>
       <p>{{ "We're glad to give you the welcome to Dia Mobile." | translate }}</p>
 

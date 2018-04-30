@@ -3,7 +3,7 @@
     "Language": "Idioma",
     "Spanish": "Español",
     "English": "Inglés",
-    "Finished": "Finalizado",
+    "Our welcome!": "¡Nuestra bienvenida!",
     "Get started!": "¡Empezar!",
     "We're glad to give you the welcome to Dia Mobile.": "Nos complace darle la bienvenida a Dia Mobile.",
     "Remember to review the settings to change any of these options and find some more.": "Recuerde revisar la configuración para cambiar cualquiera de estas opciones y encontrar algunas más.",
@@ -11,6 +11,9 @@
     "Timezone": "Huso horario",
     "Diet and Exercise": "Dieta y Ejercicio",
     "Country": "País",
+    "About you": "Sobre usted",
+    "Gender": "Género",
+    "Birth date": "Fecha de nacimiento",
 
     "Dia Mobile": "Dia Mobile",
     "Timeline": "Cronología",
