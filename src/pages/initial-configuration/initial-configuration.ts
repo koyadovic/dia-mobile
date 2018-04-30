@@ -5,6 +5,7 @@ import { Slides } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DiaConfigurationService } from '../../services/dia-configuration-service';
 import { UserConfiguration } from '../../utils/user-configuration';
+import { TimezoneGuardService } from '../../services/timezone-guard-service';
 
 @Component({
   selector: 'page-initial-configuration',
@@ -13,7 +14,7 @@ import { UserConfiguration } from '../../utils/user-configuration';
 export class InitialConfigurationPage {
   @ViewChild(Slides) slides: Slides;
 
-  // this is for the timezone selector component
+  countryOptions = [];
   timezoneOptions = [];
 
   data = {};
@@ -21,7 +22,11 @@ export class InitialConfigurationPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public translate: TranslateService,
-              private configurationService: DiaConfigurationService) {
+              private configurationService: DiaConfigurationService,
+              private timezoneGuard: TimezoneGuardService) {
+
+
+    this.updateAvailableCountryOptions();
 
     this.configurationService.isReady().subscribe(
       (ready) => {
@@ -31,34 +36,44 @@ export class InitialConfigurationPage {
           let userConfig = this.configurationService.getUserConfiguration();
 
           this.data[UserConfiguration.LANGUAGE] = userConfig.getValue(UserConfiguration.LANGUAGE);
-          this.data[UserConfiguration.TIMEZONE] = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          this.data[UserConfiguration.TIMEZONE] = timezoneGuard.getNewTimezone();
 
-          /* TODO revisar esta mierda */
-          this.configurationService.getConfiguration().subscribe(
-            (configuration) => {
-              for(let configurationElement of configuration['fields']) {
-                if(configurationElement['namespace_key'] === 'dia_config__timezone') {
-                  this.timezoneOptions = configurationElement['options'];
-                  break;
-                }
-              }
-            }
-          );
-
-          // Para recoger los paises habilitados ==> GET /v1/configurations/available-countries/
-
-          // Para coger el país de un timezone ==> GET /v1/configurations/country/Europe-Madrid/
-          // Usa Intl.DateTimeFormat().resolvedOptions().timeZone hay que reemplazar los '/' por '-'
-
-          // Para coger diversos timezones de un país ==> GET /v1/configurations/timezones/ES/
-
+          // need to populate selects with data
+          // first we try to get local timezone and with it, the country
+          this.updateCountryByNewTimezone();
         }
+      }
+    );
+
+  }
+
+  updateAvailableCountryOptions() {
+    // get all available countries
+    this.timezoneGuard.getAvailableCountries().subscribe(
+      (countries) => {
+        this.countryOptions = countries;
       }
     );
   }
 
-  ionViewDidLoad() {
+  updateTimezoneOptionsByCountry() {
+    this.timezoneGuard.getTimezones(this.data['dia_config__foods__country_for_searches']).subscribe(
+      (timezones) => {
+        this.timezoneOptions = timezones;
+        this.data[UserConfiguration.TIMEZONE] = timezones.length > 0 ? timezones[0]['value'] : undefined;
+      }
+    );
   }
+
+  updateCountryByNewTimezone() {
+    this.timezoneGuard.getCountry(this.data[UserConfiguration.TIMEZONE]).subscribe(
+      (country) => {
+        this.data['dia_config__foods__country_for_searches'] = country['value'];
+        this.updateTimezoneOptionsByCountry();
+      }
+    );
+  }
+
 
   languageChange(language){
     // this is a special case. On language change, we need to restart this initial configuration page with new language

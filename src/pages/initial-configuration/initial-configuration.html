@@ -9,6 +9,12 @@
       </div>
       
       <h2>{{ "Country, language and timezone" | translate }}</h2>
+      <ion-item>
+        <ion-label fixed>{{ "Country" | translate }}</ion-label>
+        <ion-select name="country" [(ngModel)]="data['dia_config__foods__country_for_searches']" (ionChange)="updateTimezoneOptionsByCountry()">
+          <ion-option *ngFor="let option of countryOptions" [value]="option['value']">{{option['display']}}</ion-option>
+        </ion-select>
+      </ion-item>
 
       <ion-item>
         <ion-label fixed>{{ "Language" | translate }}</ion-label>
@@ -20,7 +26,7 @@
 
       <ion-item>
         <ion-label fixed>{{ "Timezone" | translate }}</ion-label>
-        <ion-select name="timezone" [(ngModel)]="data['dia_config__timezone']" (click)="onSelectClicked()">
+        <ion-select name="timezone" [(ngModel)]="data['dia_config__timezone']">
           <ion-option *ngFor="let option of timezoneOptions" [value]="option['value']">{{option['display']}}</ion-option>
         </ion-select>
       </ion-item>
