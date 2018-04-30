@@ -19,6 +19,9 @@ export class InitialConfigurationPage {
 
   data = {};
 
+  // subscriptions
+  configurationServiceSubscription = null;
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public translate: TranslateService,
@@ -28,7 +31,7 @@ export class InitialConfigurationPage {
 
     this.updateAvailableCountryOptions();
 
-    this.configurationService.isReady().subscribe(
+    this.configurationServiceSubscription = this.configurationService.isReady().subscribe(
       (ready) => {
 
         if(ready) {
@@ -79,6 +82,9 @@ export class InitialConfigurationPage {
     // this is a special case. On language change, we need to restart this initial configuration page with new language
     this.data[UserConfiguration.LANGUAGE] = language;
     this.saveConfig();
+
+    // clear subscriptions
+    this.configurationServiceSubscription.unsubscribe();
     this.navCtrl.pop();
   }
 
@@ -100,9 +106,9 @@ export class InitialConfigurationPage {
     this.configurationService.saveConfiguration(this.data);
   }
 
+  // Useful for long select widgets to scroll down to current selected item.
   onSelectClicked (): void {
     // This scroll to selected option in the timezone ion-select field.
-
     // These classes come from the generated elements for the ion-select/ion-option
     const options: HTMLCollectionOf<Element> = document.getElementsByClassName('alert-tappable alert-radio');
     setTimeout(() => {
