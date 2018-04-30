@@ -1,38 +1,40 @@
 import { Injectable } from '@angular/core';
 import { DiaConfigurationService } from './dia-configuration-service';
-import { Events } from 'ionic-angular';
 import { DiaBackendURL } from './dia-backend-urls';
 import { DiaRestBackendService } from './dia-rest-backend-service';
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs';
+import { UserConfiguration } from '../utils/user-configuration';
 
 
 @Injectable()
 export class TimezoneGuardService {
-  public static HAS_HANGED_EVENT:string = 'timezoneGuard:timezoneHasChanged';
-
+  private changed$ = new BehaviorSubject<boolean>(false);
   private currentTimezone:string = '';
   private newTimezone: string = '';
 
   constructor(public configService: DiaConfigurationService,
               public backendURL: DiaBackendURL,
-              public restBackendService: DiaRestBackendService,
-              public events: Events) {
+              public restBackendService: DiaRestBackendService) {
 
     this.checkIfTimezoneChanged();
+  }
+
+  public getChanged(){
+    return this.changed$.asObservable();
   }
 
   private checkIfTimezoneChanged(){
     this.configService.isReady().subscribe(
       (ready) => {
         if(ready) {
-          this.currentTimezone = this.configService.getUserConfiguration().getValue('dia_mobile__timezone');
+          this.currentTimezone = this.configService.getUserConfiguration().getValue(UserConfiguration.TIMEZONE);
           this.newTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
           let hasChanged = this.newTimezone !== this.currentTimezone;
 
-          // if has changed, emit event
           if(hasChanged) {
-            this.events.publish(TimezoneGuardService.HAS_HANGED_EVENT);
+            this.changed$.next(true);
           }
         }
       }

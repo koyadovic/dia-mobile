@@ -11,14 +11,15 @@
       <h2>{{ "Country, language and timezone" | translate }}</h2>
       <ion-item>
         <ion-label fixed>{{ "Country" | translate }}</ion-label>
-        <ion-select name="country" [(ngModel)]="data['dia_config__foods__country_for_searches']" (ionChange)="updateTimezoneOptionsByCountry()">
+        <ion-select name="country" [(ngModel)]="data['dia_config__foods__country_for_searches']" (ionChange)="updateTimezoneOptionsByCountry()"
+        cancelText="{{'Cancel'|translate}}" okText="{{'OK'|translate}}">
           <ion-option *ngFor="let option of countryOptions" [value]="option['value']">{{option['display']}}</ion-option>
         </ion-select>
       </ion-item>
 
       <ion-item>
         <ion-label fixed>{{ "Language" | translate }}</ion-label>
-        <ion-select #l name="language" [(ngModel)]="data['dia_config__language']" (ionChange)="languageChange(l.value)">
+        <ion-select #l name="language" [(ngModel)]="data['dia_config__language']" (ionChange)="languageChange(l.value)" cancelText="{{'Cancel'|translate}}" okText="{{'OK'|translate}}">
           <ion-option value="es">{{ "Spanish" | translate }}</ion-option>
           <ion-option value="en">{{ "English" | translate }}</ion-option>
         </ion-select>
@@ -26,7 +27,7 @@
 
       <ion-item>
         <ion-label fixed>{{ "Timezone" | translate }}</ion-label>
-        <ion-select name="timezone" [(ngModel)]="data['dia_config__timezone']">
+        <ion-select name="timezone" [(ngModel)]="data['dia_config__timezone']" cancelText="{{'Cancel'|translate}}" okText="{{'OK'|translate}}">
           <ion-option *ngFor="let option of timezoneOptions" [value]="option['value']">{{option['display']}}</ion-option>
         </ion-select>
       </ion-item>
@@ -43,7 +44,7 @@
 
       <ion-item text-wrap>
         <ion-label fixed>{{ "Gender" | translate }}</ion-label>
-        <ion-select name="gender" [(ngModel)]="data['dia_config__gender']">
+        <ion-select name="gender" [(ngModel)]="data['dia_config__gender']" cancelText="{{'Cancel'|translate}}" okText="{{'OK'|translate}}">
           <ion-option [value]="'male'">{{ "Male" | translate }}</ion-option>
           <ion-option [value]="'female'">{{ "Female" | translate }}</ion-option>
         </ion-select>
@@ -52,6 +53,8 @@
       <ion-item text-wrap>
         <ion-label fixed>{{ "Birth date" | translate }}</ion-label>
         <ion-datetime *ngIf="!!birthDateField"
+        cancelText="{{'Cancel'|translate}}"
+        doneText="{{'Done'|translate}}"
         (ionChange)="updateBirthDateValue()"
         displayFormat="{{ birthDateField.additional_options?.format }}"
         [(ngModel)]="birthDateField.value"></ion-datetime>
@@ -71,7 +74,7 @@
 
       <ion-item text-wrap *ngFor="let field of dietAndExerciseFields">
         <ion-label fixed>{{field['display']}}</ion-label>
-        <ion-select name="field_{{field['namespace']}}" [(ngModel)]="data[field['namespace_key']]">
+        <ion-select name="field_{{field['namespace']}}" [(ngModel)]="data[field['namespace_key']]" cancelText="{{'Cancel'|translate}}" okText="{{'OK'|translate}}">
           <ion-option *ngFor="let option of field['options']" [value]="option['value']">{{option['display']}}</ion-option>
         </ion-select>
       </ion-item>
