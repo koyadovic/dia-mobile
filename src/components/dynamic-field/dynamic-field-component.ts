@@ -155,4 +155,21 @@ export class DynamicField {
       f.valid = f.value in [true, false];
     }
   }
+
+  // Useful for long ion-select widgets to scroll down to current selected item.
+  onSelectClicked(): void {
+    // This scroll to selected option in the timezone ion-select field.
+    // These classes come from the generated elements for the ion-select/ion-option
+    const options: HTMLCollectionOf<Element> = document.getElementsByClassName('alert-tappable alert-radio');
+    setTimeout(() => {
+      let i: number = 0;
+      const len: number = options.length;
+      for (i; i < len; i++) {
+        if ((options[i] as HTMLElement).attributes[3].nodeValue === 'true') {
+          options[i].scrollIntoView({ block: 'end', behavior: 'instant' });
+        }
+      }
+    }, 2000); // Leave enough time for the popup to render
+  }
+  
 }

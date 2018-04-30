@@ -9,6 +9,7 @@ export class UserConfiguration {
     static LANGUAGE = "dia_config__language";
     static TIMEZONE = "dia_config__timezone";
     static DATE_FORMAT = "dia_config__date_format";
+    static INITIAL_CONFIG_DONE = "dia_config__initial_configuration_done";
 
     constructor() {}
 
@@ -53,9 +54,7 @@ export class UserConfiguration {
         return undefined;
     }
 
-
     /* Helper methods */
-
     public utcSecondsToMoment(seconds: number){
         return moment.tz(seconds * 1000, "UTC");
     }
@@ -78,5 +77,9 @@ export class UserConfiguration {
         } else {
             return m.format("MM/DD/YYYY HH:mm:ss");
         }
+    }
+
+    public getRawData() {
+        return this.data;
     }
 }

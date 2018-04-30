@@ -1,4 +1,20 @@
 {
+    "Country, language and timezone": "País, idioma y huso horario",
+    "Language": "Idioma",
+    "Spanish": "Español",
+    "English": "Inglés",
+    "Our welcome!": "¡Nuestra bienvenida!",
+    "Get started!": "¡Empezar!",
+    "We're glad to give you the welcome to Dia Mobile.": "Nos complace darle la bienvenida a Dia Mobile.",
+    "Remember to review the settings to change any of these options and find some more.": "Recuerde revisar la configuración para cambiar cualquiera de estas opciones y encontrar algunas más.",
+    "Next": "Siguiente",
+    "Timezone": "Huso horario",
+    "Diet and Exercise": "Dieta y Ejercicio",
+    "Country": "País",
+    "About you": "Sobre usted",
+    "Gender": "Género",
+    "Birth date": "Fecha de nacimiento",
+
     "Dia Mobile": "Dia Mobile",
     "Timeline": "Cronología",
     "Routines": "Rutinas",
@@ -61,8 +77,8 @@
     "Abdomen Perimeter (cm)": "Perímetro de abdomen (cm)",
     "Waist Perimeter (cm)": "Perímetro de cadera (cm)",
     
-    "Male": "Hombre",
-    "Female": "Mujer",
+    "Male": "Masculino",
+    "Female": "Femenino",
 
     "Delete Planning?": "¿Eliminar Planning?",
     "Are you sure to delete this planning?": "¿Seguro que quieres eliminar el Planning?",

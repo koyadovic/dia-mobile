@@ -1,0 +1,44 @@
+page-initial-configuration {
+    ion-select {
+        min-width: 60%;
+    }
+
+    /* This is for the top image, must have 16/10 aspect ratio */
+    /* Thus, there is no problem with selected image, it will be adjusted to the ratio */
+    .img-container {
+        padding-top: 62.5%;
+        width: 100%;
+        position: relative;
+        img {
+            margin: auto;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+    }
+
+    h2 {
+        color: color($colors, primary);
+    }
+
+    p {
+        color: #666;
+        text-align: left;
+    }
+
+    /* This align all the page content up to the top */
+    ion-slide.swiper-slide {
+        align-items: flex-start;
+
+        .slide-zoom {
+            height: 100%;
+        }
+
+        .finish-button {
+            position: absolute;
+            bottom: 60px;
+        }
+    }
+}

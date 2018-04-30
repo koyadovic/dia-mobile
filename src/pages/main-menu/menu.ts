@@ -11,6 +11,10 @@ import { DiaMessageService } from '../../services/dia-message-service';
 import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs/observable/forkJoin';
 import { Storage } from '@ionic/storage/dist/storage';
+import { DiaConfigurationService } from '../../services/dia-configuration-service';
+import { UserConfiguration } from '../../utils/user-configuration';
+import { InitialConfigurationPage } from '../initial-configuration/initial-configuration';
+import { TimezoneGuardService } from '../../services/timezone-guard-service';
 
 
 @Component({
@@ -31,14 +35,40 @@ export class MenuPage {
               public events: Events,
               private authenticationService: DiaAuthService,
               private messageService: DiaMessageService,
+              private configService: DiaConfigurationService,
               private translate: TranslateService,
+              private timezoneGuard: TimezoneGuardService,
               private storage: Storage) {
 
     this.events.subscribe('response:change:tab', (index) => {
       this.selectedIndex = index;
     });
+
     this.storage.get('email').then((email) => this.email = email);
     this.isDiabetic = this.authenticationService.isDiabetic();
+
+    // this checks if initial configuration was executed, if not, start initial configuration screen
+    this.configService.isReady().subscribe(
+      ready => {
+        if(ready) {
+          let userConfig = this.configService.getUserConfiguration();
+          if(! userConfig.getValue(UserConfiguration.INITIAL_CONFIG_DONE)) {
+
+            // here we need to start initial configuration assistant to help users to configure
+            // their languages, medications, timezone, date formats, and so on.
+            this.appCtrl.getRootNavs()[0].push(InitialConfigurationPage);
+          }
+        }
+      }
+    );
+
+    this.events.subscribe(TimezoneGuardService.HAS_HANGED_EVENT, () => {
+      let userConfig = this.configService.getUserConfiguration();
+      if(userConfig.getValue(UserConfiguration.INITIAL_CONFIG_DONE)) {
+        // TODO need to start timezone changed page
+        // this.appCtrl.getRootNavs()[0].push(InitialConfigurationPage);
+      }
+    })
   }
 
   goConfiguration() {

@@ -56,7 +56,7 @@ export class ConfigurationPage {
     // this is because into the main page, tabs labels at the bottom of the page does not refresh its texts
     // so with this method, we force the reload.
     if(Object.keys(this.configurationChanges).indexOf('dia_config__language') > -1) {
-      document.location.href = '';
+      setTimeout(() => document.location.href = '', 500);
     }
   }
 
