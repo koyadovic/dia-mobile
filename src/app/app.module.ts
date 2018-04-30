@@ -50,6 +50,7 @@ import { PlanningsEditorPage } from '../pages/plannings-editor/plannings-editor'
 import { DiaInsightsService } from '../services/dia-insights-service';
 import { DiaMedicationsService } from '../services/dia-medications-service';
 import { TimezoneGuardService } from '../services/timezone-guard-service';
+import { CountryAndTimezoneReviewPage } from '../pages/country-and-timezone-review/country-and-timezone-review';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -76,6 +77,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PlanningsEditorPage,
     UserMedicationsPage,
     InstantCardDetailsPage,
+    CountryAndTimezoneReviewPage,
   ],
   imports: [
     BrowserModule,
@@ -114,6 +116,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PlanningsEditorPage,
     UserMedicationsPage,
     InstantCardDetailsPage,
+    CountryAndTimezoneReviewPage,
   ],
   providers: [
     FCM,

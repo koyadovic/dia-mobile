@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, ToastController } from 'ionic-angular';
 import { MainPage } from '../main/main';
 import { App } from 'ionic-angular/components/app/app';
 import { ConfigurationPage } from '../configuration/configuration';
@@ -15,6 +15,7 @@ import { DiaConfigurationService } from '../../services/dia-configuration-servic
 import { UserConfiguration } from '../../utils/user-configuration';
 import { InitialConfigurationPage } from '../initial-configuration/initial-configuration';
 import { TimezoneGuardService } from '../../services/timezone-guard-service';
+import { CountryAndTimezoneReviewPage } from '../country-and-timezone-review/country-and-timezone-review';
 
 
 @Component({
@@ -33,10 +34,12 @@ export class MenuPage {
               public menuCtrl: MenuController,
               public navParams: NavParams,
               public events: Events,
+              private modalCtrl: ModalController,
               private authenticationService: DiaAuthService,
               private messageService: DiaMessageService,
               private configService: DiaConfigurationService,
               private translate: TranslateService,
+              public toastCtrl: ToastController,
               private timezoneGuard: TimezoneGuardService,
               private storage: Storage) {
 
@@ -62,13 +65,30 @@ export class MenuPage {
       }
     );
 
-    this.events.subscribe(TimezoneGuardService.HAS_HANGED_EVENT, () => {
-      let userConfig = this.configService.getUserConfiguration();
-      if(userConfig.getValue(UserConfiguration.INITIAL_CONFIG_DONE)) {
-        // TODO need to start timezone changed page
-        // this.appCtrl.getRootNavs()[0].push(InitialConfigurationPage);
+    this.timezoneGuard.getChanged().subscribe(
+      changed => {
+        if(changed) {
+          let userConfig = this.configService.getUserConfiguration();
+          if(userConfig.getValue(UserConfiguration.INITIAL_CONFIG_DONE)) {
+            // TODO need to start timezone changed page
+            this.openCountryAndTimezoneReview();
+          }
+        }
       }
-    })
+    )
+  }
+
+  openCountryAndTimezoneReview() {
+    let modal = this.modalCtrl.create(CountryAndTimezoneReviewPage, {newTimezone: this.timezoneGuard.getNewTimezone()});
+    modal.onDidDismiss((data) => {
+      if(!!data) {
+        // toast message, los datos fueron actualizados
+        this.translate.get('The configuration was updated correctly').subscribe(message => {
+          this.toastMessage(message);
+        });
+      }
+    });
+    modal.present();
   }
 
   goConfiguration() {
@@ -87,6 +107,19 @@ export class MenuPage {
       let diamessage = new DiaMessage(title, "info", message)
       this.messageService.confirmMessage(diamessage).subscribe((ok) => { if (ok) this.authenticationService.logout(); });
     });
+  }
+
+  toastMessage(message: string){
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 7000,
+      position: 'bottom'
+    });
+  
+    toast.onDidDismiss(() => {
+    });
+  
+    toast.present();
   }
 
 }

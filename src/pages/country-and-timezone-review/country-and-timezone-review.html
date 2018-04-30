@@ -1,0 +1,33 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{"New Timezone"|translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <h2 margin>{{"It was detected a change in your timezone."|translate}}</h2>
+  <p margin>{{"This information is important so we need that you confirm your current country and new time zone."|translate}}</p>
+  <p margin>{{"The changes will be saved automatically."|translate}}</p>
+
+  <ion-item>
+    <ion-label fixed>{{ "Country" | translate }}</ion-label>
+    <ion-select name="country" [(ngModel)]="data['dia_config__foods__country_for_searches']" (ionChange)="updateTimezoneOptionsByCountry()"
+    cancelText="{{'Cancel'|translate}}" okText="{{'OK'|translate}}">
+      <ion-option *ngFor="let option of countryOptions" [value]="option['value']">{{option['display']}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label fixed>{{ "Timezone" | translate }}</ion-label>
+    <ion-select name="timezone" [(ngModel)]="data['dia_config__timezone']" cancelText="{{'Cancel'|translate}}" okText="{{'OK'|translate}}">
+      <ion-option *ngFor="let option of timezoneOptions" [value]="option['value']">{{option['display']}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <button margin class="finish-button" ion-button color="primary" block (click)="closeAndConfirm()">{{ "Confirm!" | translate }}</button>
+
+</ion-content>
