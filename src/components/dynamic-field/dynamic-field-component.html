@@ -1,4 +1,4 @@
-<ion-item class="dynamic-field" [ngClass]="{'dynamic-field-disabled': field['disabled']}" *ngIf="field && field.type != 'radio' && field.show !== false">
+<ion-item class="dynamic-field" [ngClass]="{'dynamic-field-disabled': field['disabled']}" *ngIf="field && field.type != 'radio' && field.type != 'hidden' && field.show !== false">
 
   <!--
   <div class="action-type-field"
@@ -37,6 +37,7 @@
     *ngIf="field.type == 'select'"
     (ionChange)="emitHaveChanges()"
     [disabled]="field.disabled !== undefined && field.disabled"
+    (click)="onSelectClicked()"
     [(ngModel)]="field.value">
 
     <ion-option *ngFor="let option of field.options" [value]="option.value">
