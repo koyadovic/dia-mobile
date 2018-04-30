@@ -34,12 +34,19 @@
       <!-- <button class="finish-button" ion-button color="primary" block (click)="next()">{{ "Next" | translate }}</button> -->
     </ion-slide>
   
-    <ion-slide>
+    <ion-slide *ngIf="dietAndExercise">
       <div class="img-container">
         <img src="assets/imgs/initial-config-1-language.png"/>
       </div>
     
       <h2>{{ "Diet and Exercise" | translate }}</h2>
+
+      <ion-item text-wrap *ngFor="let field of dietAndExerciseFields">
+        <ion-label fixed>{{field['display']}}</ion-label>
+        <ion-select name="field_{{field['namespace']}}" [(ngModel)]="data[field['namespace_key']]">
+          <ion-option *ngFor="let option of field['options']" [value]="option['value']">{{option['display']}}</ion-option>
+        </ion-select>
+      </ion-item>
 
       <!-- <button class="finish-button" ion-button color="primary" block (click)="next()">{{ "Next" | translate }}</button> -->
 

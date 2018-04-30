@@ -19,6 +19,9 @@ export class InitialConfigurationPage {
 
   data = {};
 
+  dietAndExercise: boolean = false;
+  dietAndExerciseFields = [];
+
   // subscriptions
   configurationServiceSubscription = null;
 
@@ -37,13 +40,32 @@ export class InitialConfigurationPage {
         if(ready) {
           // here we need to set up all the variables that will be modificable in this page
           let userConfig = this.configurationService.getUserConfiguration();
-
           this.data[UserConfiguration.LANGUAGE] = userConfig.getValue(UserConfiguration.LANGUAGE);
           this.data[UserConfiguration.TIMEZONE] = timezoneGuard.getNewTimezone();
 
           // need to populate selects with data
           // first we try to get local timezone and with it, the country
           this.updateCountryByNewTimezone();
+
+          // check if we have diet and exercise config options
+          this.configurationService.getConfiguration().subscribe(
+            wholeConfig => {
+              this.dietAndExercise = false;
+              console.log(wholeConfig['children_nodes']);
+              for(let childNode of wholeConfig['children_nodes']) {
+                if(childNode['namespace'] === 'diet_and_exercise') {
+                  this.dietAndExercise = true;
+                  this.dietAndExerciseFields = childNode['fields'];
+
+                  // set defaults
+                  for(let field of this.dietAndExerciseFields) {
+                    this.data[field['namespace_key']] = field['value'];
+                  }
+                  break;
+                }
+              }
+            }
+          )
         }
       }
     );
@@ -98,7 +120,8 @@ export class InitialConfigurationPage {
 
     //this.data[UserConfiguration.INITIAL_CONFIG_DONE] = true;
     //this.saveConfig();
-    setTimeout(() => window.location.href = '/', 500);
+    console.log(JSON.stringify(this.data));
+    //setTimeout(() => window.location.href = '/', 500);
     
   }
 
