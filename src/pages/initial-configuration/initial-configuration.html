@@ -12,7 +12,7 @@
       <ion-item>
         <ion-label fixed>{{ "Country" | translate }}</ion-label>
         <ion-select name="country" [(ngModel)]="data['dia_config__foods__country_for_searches']" (ionChange)="updateTimezoneOptionsByCountry()"
-        cancelText="{{'Cancel'|translate}}" okText="{{'OK'|translate}}">
+        cancelText="{{'Cancel'|translate}}" okText="{{'OK'|translate}}" (click)="onSelectClicked()">
           <ion-option *ngFor="let option of countryOptions" [value]="option['value']">{{option['display']}}</ion-option>
         </ion-select>
       </ion-item>

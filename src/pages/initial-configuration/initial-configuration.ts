@@ -138,14 +138,30 @@ export class InitialConfigurationPage {
   }
 
   finished() {
-    // here we save the configuration and window.location.href = '/'; to restart all the aplication
+    // here we save the configuration and document.location.href = '/'; to restart all the aplication
     this.data[UserConfiguration.INITIAL_CONFIG_DONE] = true;
     this.saveConfig();
-    setTimeout(() => window.location.href = '/', 500);
+    setTimeout(() => document.location.href = '/', 500); 
   }
 
   saveConfig() {
     this.configurationService.saveConfiguration(this.data);
+  }
+
+  // Useful for long ion-select widgets to scroll down to current selected item.
+  onSelectClicked(): void {
+    // This scroll to selected option in the timezone ion-select field.
+    // These classes come from the generated elements for the ion-select/ion-option
+    const options: HTMLCollectionOf<Element> = document.getElementsByClassName('alert-tappable alert-radio');
+    setTimeout(() => {
+      let i: number = 0;
+      const len: number = options.length;
+      for (i; i < len; i++) {
+        if ((options[i] as HTMLElement).attributes[3].nodeValue === 'true') {
+          options[i].scrollIntoView({ block: 'end', behavior: 'instant' });
+        }
+      }
+    }, 2000); // Leave enough time for the popup to render
   }
 
 }

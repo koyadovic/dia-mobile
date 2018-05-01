@@ -88,4 +88,5 @@
     <plugin name="cordova-plugin-badge" spec="https://github.com/katzer/cordova-plugin-badge" />
     <plugin name="cordova-plugin-fcm" spec="^2.1.2" />
     <engine name="android" spec="6.3.0" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
 </widget>

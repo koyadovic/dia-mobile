@@ -93,11 +93,6 @@ export class DiaAuthService {
                    this.token = token;
                    this.loggedIn$.next(!!token);
 
-                   setTimeout(() => {
-                      this.translate.get('Session started correctly. Our most sincere welcome!').subscribe((mess) => {
-                        this.messageService.toastMessage(mess);
-                      });
-                   }, 1000);
                 },
                (err) => {
                    if (err.status === 0) {
