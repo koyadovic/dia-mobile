@@ -87,9 +87,9 @@
     <allow-navigation href="http://192.168.1.150:8100" />
     <plugin name="cordova-plugin-badge" spec="https://github.com/katzer/cordova-plugin-badge" />
     <plugin name="cordova-plugin-fcm" spec="^2.1.2" />
-    <engine name="android" spec="6.3.0" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To update automatically the country of food searches and the time zone information" />
     </plugin>
+    <engine name="android" spec="6.3.0" />
 </widget>

@@ -37,6 +37,7 @@ export class TimezoneGuardService {
       (ready) => {
         if(ready) {
           this.geolocation.getCurrentPosition().then((resp) => {
+            console.log("GPS response: " + JSON.stringify(resp));
             this.getGPSCoordinatesInfo(resp.coords.latitude, resp.coords.longitude).subscribe(
               (info) => {
                 /*

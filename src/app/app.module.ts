@@ -54,11 +54,16 @@ import { CountryAndTimezoneReviewPage } from '../pages/country-and-timezone-revi
 
 import { Geolocation, Geoposition, GeolocationOptions } from '@ionic-native/geolocation';
 import { GeolocationMock } from '@ionic-native-mocks/geolocation';
+import { Observable } from 'rxjs/Observable';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
+
+
+const isBrowser = document.URL.includes('https://') || document.URL.includes('http://');
+
 
 export class DiaGeolocationMock extends GeolocationMock {
   here = <Geoposition>{
@@ -81,7 +86,6 @@ export class DiaGeolocationMock extends GeolocationMock {
   }
   watchPosition(options?: GeolocationOptions): Observable<Geoposition> {
     return Observable.create((obs) => obs.next(this.here))
-
   }
 }
 
@@ -163,7 +167,7 @@ export class DiaGeolocationMock extends GeolocationMock {
     DiaInsightsService,
     DiaMedicationsService,
     TimezoneGuardService,
-    { provide: Geolocation, useClass: DiaGeolocationMock}
+    (isBrowser ? { provide: Geolocation, useClass: DiaGeolocationMock} : Geolocation)
   ]
 })
 export class AppModule {}

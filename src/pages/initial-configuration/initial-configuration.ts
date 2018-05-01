@@ -7,6 +7,7 @@ import { DiaConfigurationService } from '../../services/dia-configuration-servic
 import { UserConfiguration } from '../../utils/user-configuration';
 import { TimezoneGuardService } from '../../services/timezone-guard-service';
 import { forkJoin } from 'rxjs/observable/forkJoin';
+import { Platform } from 'ionic-angular';
 
 @Component({
   selector: 'page-initial-configuration',
@@ -26,12 +27,15 @@ export class InitialConfigurationPage {
   birthDateField = null;
 
   // subscriptions
-  configurationServiceSubscription = null;
+  subscriptions = [];
 
   configReady = false;
   timezoneReady = false;
 
-  constructor(public navCtrl: NavController,
+  completed = false;
+
+  constructor(public platform: Platform,
+              public navCtrl: NavController,
               public navParams: NavParams,
               public translate: TranslateService,
               private configurationService: DiaConfigurationService,
@@ -40,20 +44,21 @@ export class InitialConfigurationPage {
 
     this.updateAvailableCountryOptions();
 
-    this.configurationService.isReady().subscribe(ready => {
+    this.subscriptions.push(this.configurationService.isReady().subscribe(ready => {
       if(ready) {
         this.configReady = ready;
         this.initializePage();
       }
-    });
-    this.timezoneGuard.getReady().subscribe(ready => {
+    }));
+
+    this.subscriptions.push(this.timezoneGuard.getReady().subscribe(ready => {
       if(ready) {
         this.timezoneReady = ready;
         this.initializePage();
       }
-    })
+    }));
 
-    this.configurationService.getConfiguration().subscribe(
+    this.subscriptions.push(this.configurationService.getConfiguration().subscribe(
       wholeConfig => {
         // check if we have diet and exercise config options
         this.dietAndExercise = false;
@@ -84,8 +89,14 @@ export class InitialConfigurationPage {
           }
         }
       }
-    )
+    ));
 
+  }
+
+  ionViewWillLeave() {
+    if(!this.completed) {
+      this.platform.exitApp();
+    }
   }
 
   initializePage() {
@@ -128,7 +139,10 @@ export class InitialConfigurationPage {
     this.saveConfig();
 
     // clear subscriptions
-    this.configurationServiceSubscription.unsubscribe();
+    for(let sub of this.subscriptions){
+      sub.unsubscribe();
+    }
+
     this.navCtrl.pop();
   }
 
@@ -141,6 +155,7 @@ export class InitialConfigurationPage {
     // here we save the configuration and document.location.href = ''; to restart all the aplication
     this.data[UserConfiguration.INITIAL_CONFIG_DONE] = true;
     this.saveConfig();
+    this.completed = true;
     setTimeout(() => document.location.href = '', 500);  
   }
 

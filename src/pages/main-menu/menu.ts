@@ -79,7 +79,7 @@ export class MenuPage {
   }
 
   openCountryAndTimezoneReview() {
-    let modal = this.modalCtrl.create(CountryAndTimezoneReviewPage, {newTimezone: this.timezoneGuard.getNewTimezone()});
+    let modal = this.modalCtrl.create(CountryAndTimezoneReviewPage, {newGPSInfo: this.timezoneGuard.getNewGPSInfo()});
     modal.onDidDismiss((data) => {
       if(!!data) {
         // toast message, los datos fueron actualizados

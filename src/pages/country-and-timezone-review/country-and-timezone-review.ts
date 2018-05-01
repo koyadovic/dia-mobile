@@ -29,7 +29,11 @@ export class CountryAndTimezoneReviewPage {
               public configurationService: DiaConfigurationService) {
 
     this.updateAvailableCountryOptions();
-    this.data[UserConfiguration.TIMEZONE] = this.navParams.get("newTimezone");
+    
+    let newGPSInfo = this.navParams.get("newGPSInfo");
+    this.data[UserConfiguration.TIMEZONE] = newGPSInfo['timezone'];
+    this.data['dia_config__foods__country_for_searches'] = newGPSInfo['country']['code'];
+    this.updateTimezoneOptionsByCountry();
   }
 
   updateAvailableCountryOptions() {
