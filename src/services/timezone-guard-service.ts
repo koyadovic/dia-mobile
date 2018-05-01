@@ -5,17 +5,22 @@ import { DiaRestBackendService } from './dia-rest-backend-service';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs';
 import { UserConfiguration } from '../utils/user-configuration';
+import { Geolocation } from '@ionic-native/geolocation';
 
 
 @Injectable()
 export class TimezoneGuardService {
   private changed$ = new BehaviorSubject<boolean>(false);
-  private currentTimezone:string = '';
+  private ready$ = new BehaviorSubject<boolean>(false);
+
+  private lastTimezone:string = '';
   private newTimezone: string = '';
+  private newGPSInfo = {};
 
   constructor(public configService: DiaConfigurationService,
               public backendURL: DiaBackendURL,
-              public restBackendService: DiaRestBackendService) {
+              public restBackendService: DiaRestBackendService,
+              public geolocation: Geolocation) {
 
     this.checkIfTimezoneChanged();
   }
@@ -23,30 +28,62 @@ export class TimezoneGuardService {
   public getChanged(){
     return this.changed$.asObservable();
   }
+  public getReady(){
+    return this.ready$.asObservable();
+  }
 
   private checkIfTimezoneChanged(){
     this.configService.isReady().subscribe(
       (ready) => {
         if(ready) {
-          this.currentTimezone = this.configService.getUserConfiguration().getValue(UserConfiguration.TIMEZONE);
-          this.newTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          this.geolocation.getCurrentPosition().then((resp) => {
+            this.getGPSCoordinatesInfo(resp.coords.latitude, resp.coords.longitude).subscribe(
+              (info) => {
+                /*
+                {
+                    "timezone": "Europe/Madrid",
+                    "gps": {
+                        "latitude": 40.4478587,
+                        "longitude": -3.6654879
+                    },
+                    "country": {
+                        "code": "ES",
+                        "name": "Spain"
+                    }
+                }
+                */
+                this.newGPSInfo = info;
+                this.lastTimezone = this.configService.getUserConfiguration().getValue(UserConfiguration.TIMEZONE);
+                this.newTimezone = info['timezone'];
+    
+                let hasChanged = !!this.newTimezone && this.newTimezone !== this.lastTimezone;
+                if(hasChanged) {
+                  console.log("tz changed!, old: " + this.lastTimezone + ", new: " + this.newTimezone);
+                  this.changed$.next(true);
+                }
 
-          let hasChanged = this.newTimezone !== this.currentTimezone;
+                this.ready$.next(true);
+              }
+            );
+          }).catch((error) => {
+            console.log('Error getting location', error);
+          });
 
-          if(hasChanged) {
-            this.changed$.next(true);
-          }
         }
       }
     );
   }
 
   getCurrentTimezone(){
-    return this.currentTimezone;
+    return this.lastTimezone;
   }
 
   getNewTimezone() {
     return this.newTimezone;
+  }
+
+  getNewGPSInfo() {
+    return this.newGPSInfo;
   }
 
   getAvailableCountries():Observable<any[]> {
@@ -59,11 +96,9 @@ export class TimezoneGuardService {
     });
   }
 
-  getCountry(timezone:string):Observable<any[]> {
-    // timezone example could be "Europe/Madrid"
-    // it will return the country information about this timezone
-    timezone = timezone.replace('/', '-');
-    let url = `${this.backendURL.baseURL}/v1/configurations/country/${timezone}/`;
+  getGPSCoordinatesInfo(latitude:number, longitude:number):Observable<any[]> {
+    // this query to the backend about the available countries for it is configured to.
+    let url = `${this.backendURL.baseURL}/v1/utils/gps-info/${latitude}/${longitude}/`;
     return Observable.create((observer) => {
       this.restBackendService.genericGet(url).finally(() => observer.complete()).subscribe((resp) => {
           observer.next(resp);
@@ -75,7 +110,7 @@ export class TimezoneGuardService {
     // country code is the two character ISO 3166-1 alfa-2 code for the country
     // will be returned the list of timezones of this country in the form:
     // [{'display': 'Timezone Name', 'value': 'Timezone value'}, ...]
-    let url = `${this.backendURL.baseURL}/v1/configurations/timezones/${countryCode}/`;
+    let url = `${this.backendURL.baseURL}/v1/utils/timezones/${countryCode}/`;
     return Observable.create((observer) => {
       if(countryCode.length !== 2) {
         observer.next([]);

@@ -30,7 +30,6 @@ export class CountryAndTimezoneReviewPage {
 
     this.updateAvailableCountryOptions();
     this.data[UserConfiguration.TIMEZONE] = this.navParams.get("newTimezone");
-    this.updateCountryByNewTimezone();
   }
 
   updateAvailableCountryOptions() {
@@ -50,14 +49,6 @@ export class CountryAndTimezoneReviewPage {
     );
   }
 
-  updateCountryByNewTimezone() {
-    this.timezoneGuard.getCountry(this.data[UserConfiguration.TIMEZONE]).subscribe(
-      (country) => {
-        this.data['dia_config__foods__country_for_searches'] = country['value'];
-        this.updateTimezoneOptionsByCountry();
-      }
-    );
-  }
 
   closeAndConfirm() {
     forkJoin(

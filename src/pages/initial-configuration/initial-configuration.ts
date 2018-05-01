@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { DiaConfigurationService } from '../../services/dia-configuration-service';
 import { UserConfiguration } from '../../utils/user-configuration';
 import { TimezoneGuardService } from '../../services/timezone-guard-service';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 
 @Component({
   selector: 'page-initial-configuration',
@@ -27,6 +28,9 @@ export class InitialConfigurationPage {
   // subscriptions
   configurationServiceSubscription = null;
 
+  configReady = false;
+  timezoneReady = false;
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public translate: TranslateService,
@@ -36,58 +40,64 @@ export class InitialConfigurationPage {
 
     this.updateAvailableCountryOptions();
 
-    this.configurationServiceSubscription = this.configurationService.isReady().subscribe(
-      (ready) => {
+    this.configurationService.isReady().subscribe(ready => {
+      if(ready) {
+        this.configReady = ready;
+        this.initializePage();
+      }
+    });
+    this.timezoneGuard.getReady().subscribe(ready => {
+      if(ready) {
+        this.timezoneReady = ready;
+        this.initializePage();
+      }
+    })
 
-        if(ready) {
-          // here we need to set up all the variables that will be modificable in this page
-          let userConfig = this.configurationService.getUserConfiguration();
-          this.data = userConfig.getRawData();
+    this.configurationService.getConfiguration().subscribe(
+      wholeConfig => {
+        // check if we have diet and exercise config options
+        this.dietAndExercise = false;
+        for(let childNode of wholeConfig['children_nodes']) {
+          if(childNode['namespace'] === 'diet_and_exercise') {
+            this.dietAndExercise = true;
+            this.dietAndExerciseFields = childNode['fields'];
 
-          //this.data[UserConfiguration.LANGUAGE] = userConfig.getValue(UserConfiguration.LANGUAGE);
-          this.data[UserConfiguration.TIMEZONE] = timezoneGuard.getNewTimezone();
-
-          // need to populate selects with data
-          // first we try to get local timezone and with it, the country
-          this.updateCountryByNewTimezone();
-
-          this.configurationService.getConfiguration().subscribe(
-            wholeConfig => {
-
-              // check if we have diet and exercise config options
-              this.dietAndExercise = false;
-              for(let childNode of wholeConfig['children_nodes']) {
-                if(childNode['namespace'] === 'diet_and_exercise') {
-                  this.dietAndExercise = true;
-                  this.dietAndExerciseFields = childNode['fields'];
-
-                  // set defaults
-                  for(let field of this.dietAndExerciseFields) {
-                    this.data[field['namespace_key']] = field['value'];
-                  }
-                  break;
-                }
-              }
-
-              // here we get the birth date and run conversion
-              for(let field of wholeConfig['fields']) {
-                if(field['namespace_key'] === 'dia_config__birth_date') {
-                  this.birthDateField = field;
-                  let tzoffset = (new Date()).getTimezoneOffset() * 60000;
-                  if (!this.birthDateField.value || this.birthDateField.value === "invalid") {
-                    this.birthDateField.value  = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
-                  } else {
-                    this.birthDateField.value  = (new Date(new Date(this.birthDateField.value).getTime() - tzoffset)).toISOString().slice(0, -1);
-                  }
-                  break;
-                }
-              }
+            // set defaults
+            for(let field of this.dietAndExerciseFields) {
+              this.data[field['namespace_key']] = field['value'];
             }
-          )
+            break;
+          }
+        }
+
+        // here we get the birth date and run conversion
+        for(let field of wholeConfig['fields']) {
+          if(field['namespace_key'] === 'dia_config__birth_date') {
+            this.birthDateField = field;
+            let tzoffset = (new Date()).getTimezoneOffset() * 60000;
+            if (!this.birthDateField.value || this.birthDateField.value === "invalid") {
+              this.birthDateField.value  = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
+            } else {
+              this.birthDateField.value  = (new Date(new Date(this.birthDateField.value).getTime() - tzoffset)).toISOString().slice(0, -1);
+            }
+            break;
+          }
         }
       }
-    );
+    )
 
+  }
+
+  initializePage() {
+    if(this.timezoneReady && this.configReady) {
+      let newGPSInfo = this.timezoneGuard.getNewGPSInfo();
+      let userConfig = this.configurationService.getUserConfiguration();
+      this.data = userConfig.getRawData();
+      this.data[UserConfiguration.TIMEZONE] = newGPSInfo['timezone'];
+      this.data['dia_config__foods__country_for_searches'] = newGPSInfo['country']['code'];
+  
+      this.updateTimezoneOptionsByCountry();
+    }
   }
 
   updateBirthDateValue() {
@@ -112,16 +122,6 @@ export class InitialConfigurationPage {
     );
   }
 
-  updateCountryByNewTimezone() {
-    this.timezoneGuard.getCountry(this.data[UserConfiguration.TIMEZONE]).subscribe(
-      (country) => {
-        this.data['dia_config__foods__country_for_searches'] = country['value'];
-        this.updateTimezoneOptionsByCountry();
-      }
-    );
-  }
-
-
   languageChange(language){
     // this is a special case. On language change, we need to restart this initial configuration page with new language
     this.data[UserConfiguration.LANGUAGE] = language;
@@ -138,10 +138,10 @@ export class InitialConfigurationPage {
   }
 
   finished() {
-    // here we save the configuration and document.location.href = '/'; to restart all the aplication
+    // here we save the configuration and document.location.href = ''; to restart all the aplication
     this.data[UserConfiguration.INITIAL_CONFIG_DONE] = true;
     this.saveConfig();
-    setTimeout(() => document.location.href = '/', 500); 
+    setTimeout(() => document.location.href = '', 500);  
   }
 
   saveConfig() {

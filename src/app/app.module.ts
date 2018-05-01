@@ -52,8 +52,37 @@ import { DiaMedicationsService } from '../services/dia-medications-service';
 import { TimezoneGuardService } from '../services/timezone-guard-service';
 import { CountryAndTimezoneReviewPage } from '../pages/country-and-timezone-review/country-and-timezone-review';
 
+import { Geolocation, Geoposition, GeolocationOptions } from '@ionic-native/geolocation';
+import { GeolocationMock } from '@ionic-native-mocks/geolocation';
+
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
+
+export class DiaGeolocationMock extends GeolocationMock {
+  here = <Geoposition>{
+    coords: <Coordinates>{
+      latitude: 40.4443821,
+      longitude: -3.6714569,
+      accuracy: 15.0,
+      altitude: 0,
+      altitudeAccuracy: 0,
+      heading: 0,
+      speed: 0
+    },
+    timestamp: 0
+  }
+  getCurrentPosition(options?: GeolocationOptions): Promise<Geoposition> {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {resolve(this.here);}, 500);
+      
+    });
+  }
+  watchPosition(options?: GeolocationOptions): Observable<Geoposition> {
+    return Observable.create((obs) => obs.next(this.here))
+
+  }
 }
 
 @NgModule({
@@ -134,6 +163,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DiaInsightsService,
     DiaMedicationsService,
     TimezoneGuardService,
+    { provide: Geolocation, useClass: DiaGeolocationMock}
   ]
 })
 export class AppModule {}

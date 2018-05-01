@@ -21,8 +21,10 @@
     "@angular/http": "^5.2.0",
     "@angular/platform-browser": "^5.2.0",
     "@angular/platform-browser-dynamic": "^5.2.0",
+    "@ionic-native-mocks/geolocation": "^2.0.7",
     "@ionic-native/core": "4.5.2",
     "@ionic-native/fcm": "^4.5.2",
+    "@ionic-native/geolocation": "^4.7.0",
     "@ionic-native/splash-screen": "4.5.2",
     "@ionic-native/status-bar": "4.5.2",
     "@ionic/storage": "^2.1.3",
@@ -33,6 +35,7 @@
     "cordova-plugin-badge": "git+https://github.com/katzer/cordova-plugin-badge.git",
     "cordova-plugin-device": "^1.1.7",
     "cordova-plugin-fcm": "^2.1.2",
+    "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-globalization": "^1.11.0",
     "cordova-plugin-ionic-webview": "^1.2.0",
     "cordova-plugin-local-notifications": "^1.0.0",
@@ -67,7 +70,10 @@
       "cordova-plugin-globalization": {},
       "cordova-plugin-badge": {},
       "cordova-plugin-fcm": {},
-      "cordova-plugin-statusbar": {}
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-geolocation": {
+        "GEOLOCATION_USAGE_DESCRIPTION": "To update automatically the country of food searches and the time zone information"
+      }
     },
     "platforms": [
       "android"
