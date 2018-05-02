@@ -57,14 +57,17 @@ export class TimeLinePage {
     this.loggedinSubscription = this.authService.loggedIn().subscribe((loggedin) => {
       if(loggedin === null) return;
 
-      this.timelineService.getBackendNotices().subscribe(resp => {
+      forkJoin(
+        this.timelineService.getBackendNotices(),
+        this.timelineService.getUserMessages()  
+      ).subscribe(([backendNotices, userMessages]) => {
         let timeout = 0;
-        for(let notice of resp) {
-          
+        let allMessages = backendNotices.concat(userMessages);
+        for(let notice of allMessages) {
           setTimeout(() => {
             this.toastMessage(notice.message);
           }, timeout);
-          timeout += 7000;
+          timeout += 5000;
         }
       });
 
@@ -98,7 +101,7 @@ export class TimeLinePage {
   toastMessage(message: string){
     let toast = this.toastCtrl.create({
       message: message,
-      duration: 7000,
+      duration: 4000,
       position: 'bottom'
     });
   
@@ -188,7 +191,6 @@ export class TimeLinePage {
 
     }
 
-
     // avoiding future errors
     if (!!lastInstant)
       lastInstant.minutes_diff = 0;
@@ -205,6 +207,17 @@ export class TimeLinePage {
       this.now = moment();
       this.completeInstants(instants);
     });
+
+    this.timelineService.getUserMessages().subscribe((userMessages) => {
+      let timeout = 0;
+      for(let notice of userMessages) {
+        setTimeout(() => {
+          this.toastMessage(notice.message);
+        }, timeout);
+        timeout += 5000;
+      }
+    });
+
   }
 
   // refresh timeline

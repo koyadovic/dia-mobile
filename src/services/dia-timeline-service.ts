@@ -78,6 +78,11 @@ export class DiaTimelineService {
         return this.restBackendService.genericGet(url);
     }
 
+    getUserMessages() {
+        let url = `${this.backendURL.baseURL}/v1/notifications/user-messages/`;
+        return this.restBackendService.genericGet(url);
+    }
+
     deleteFood(food: DiaFood):Observable<any> {
         if(!!food.id) {
             let url = `${this.backendURL.baseURL}/v1/foods/${food.id}/`;

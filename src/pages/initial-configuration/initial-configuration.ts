@@ -135,6 +135,7 @@ export class InitialConfigurationPage {
 
   languageChange(language){
     // this is a special case. On language change, we need to restart this initial configuration page with new language
+    this.data = {};
     this.data[UserConfiguration.LANGUAGE] = language;
     this.saveConfig();
 
