@@ -54,16 +54,6 @@ ion-item.item.instant-card {
         border-bottom-right-radius: 0%;
         
     }
-    .instant-card-attention-icon {
-        margin: 0;
-        padding: 16px 11px;
-        height: 60px;
-        background-color: map-get($colors, grey);
-        color: map-get($colors, white);
-        width: 50px;
-        border-top-right-radius: 0%;
-        border-bottom-right-radius: 0%;
-    }
     .instant-card-recommendation-icon {
         height: 60px;
         padding: 16px 11px;
@@ -177,4 +167,31 @@ ion-item.item.instant-card.future {
 
 .wrap-text {
     white-space: normal !important;
+}
+
+
+
+.instant-card.attention-request {
+    .instant-card-attention-icon {
+        text-align: center;
+        margin: 0;
+        padding: 16px 11px;
+        height: 60px;
+        background-color: map-get($colors, white);
+        color: map-get($colors, white);
+        width: 50px;
+    }
+
+    h2.instant-card-title {
+        text-align: end;
+        color: map-get($colors, tertiary-dark);
+        font-weight: 800;
+    }
+    p.instant-card-subtitle {
+        text-align: end;
+        color: map-get($colors, tertiary-dark);
+        margin-left: 50px;
+    }
+    padding: 12px 0px;
+
 }

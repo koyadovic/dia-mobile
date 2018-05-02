@@ -113,12 +113,12 @@
     </ion-item>
 
     <!-- Attention Requests -->
-    <ion-item no-lines class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'attention-request'">
+    <ion-item no-lines class="instant-card attention-request" [ngClass]="getInstantClass()" *ngSwitchCase="'attention-request'">
 
-        <ion-icon class="instant-card-attention-icon" item-start color="secondary" name="ios-information-circle-outline"></ion-icon>
+        <!-- <ion-icon class="instant-card-attention-icon" item-start color="secondary" name="ios-information-circle-outline"></ion-icon> -->
 
         <ion-grid>
-            <ion-row align-items-end>
+            <ion-row>
                 <ion-col>
                     <h2 class="instant-card-title">{{ instant?.content?.title }}</h2>
                     <p class="instant-card-subtitle wrap-text">{{ instant?.content?.message }}</p>
