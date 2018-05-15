@@ -7,7 +7,7 @@ export class DiaBackendURL {
   private apiHostProduction = 'https://api.diamobile.com';
   
   // Change this line for production
-  public baseURL = this.apiHostLocal;
+  public baseURL = this.apiHostPreProduction;
 
   constructor() {}
 }
