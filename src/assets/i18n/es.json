@@ -55,10 +55,10 @@
     "Amount of medication": "Cantidad de Medicamento",
     "Introduce what medication and units administered.": "Introduzca qué medicamento y las unidades administradas.",
 
-    "Soft": "Ligera",
-    "Medium": "Media",
-    "High": "Elevada",
-    "Extreme": "Extrema",
+    "Soft (Walk)": "Ligera (Caminar)",
+    "Medium (Heavy walk)": "Media (Caminar rápido)",
+    "High (Run, weightlifting)": "Elevada (Correr, pesas)",
+    "Extreme (Sprints, HIIT)": "Extrema (Sprints, HIIT)",
 
     "Type": "Tipo",
 

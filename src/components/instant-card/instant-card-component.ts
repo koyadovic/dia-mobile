@@ -15,10 +15,10 @@ export class DiaInstantCard {
     now = new Date().getTime() / 1000;
 
     activity_intensities = {
-        "1": "Soft",
-        "2": "Medium",
-        "3": "High",
-        "4": "Extreme",
+        "1": "Soft (Walk)",
+        "2": "Medium (Heavy walk)",
+        "3": "High (Run, weightlifting)",
+        "4": "Extreme (Sprints, HIIT)",
     };
 
     trait_types = {
@@ -38,12 +38,11 @@ export class DiaInstantCard {
     }
 
     constructor(private translate: TranslateService) {
-        //this.translate
         forkJoin(
-            this.translate.get("Soft"),
-            this.translate.get("Medium"),
-            this.translate.get("High"),
-            this.translate.get("Extreme"),
+            this.translate.get("Soft (Walk)"),
+            this.translate.get("Medium (Heavy walk)"),
+            this.translate.get("High (Run, weightlifting)"),
+            this.translate.get("Extreme (Sprints, HIIT)"),
 
             this.translate.get("Birth Date"),
             this.translate.get("Height"),

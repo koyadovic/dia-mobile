@@ -13,10 +13,10 @@ export class InstantCardDetailsPage {
   instantCard;
 
   activity_intensities = {
-    "1": "Soft",
-    "2": "Medium",
-    "3": "High",
-    "4": "Extreme",
+    "1": "Soft (Walk)",
+    "2": "Medium (Heavy walk)",
+    "3": "High (Run, weightlifting)",
+    "4": "Extreme (Sprints, HIIT)",
   };
 
   trait_types = {

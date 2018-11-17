@@ -313,10 +313,10 @@ export class DiaTimelineService {
             this.translate.get("Intensity"),
             this.translate.get("Minutes"),
             this.translate.get("Number of minutes"),
-            this.translate.get("Soft"),
-            this.translate.get("Medium"),
-            this.translate.get("High"),
-            this.translate.get("Extreme"),
+            this.translate.get("Soft (Walk)"),
+            this.translate.get("Medium (Heavy walk)"),
+            this.translate.get("High (Run, weightlifting)"),
+            this.translate.get("Extreme (Sprints, HIIT)"),
           ).subscribe(([instant, intensity, minutes, numberMinutes,
           soft, medium, high, extreme]) => {
       
