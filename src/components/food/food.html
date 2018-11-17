@@ -4,7 +4,7 @@
         <h2>{{ food.name }}</h2>
         <p>{{ food.manufacturer }}</p>
 
-        <div class="nutrition-container">
+        <div class="nutrition-container" *ngIf="isDetailedFood()">
             <ion-badge *ngIf="showCarbs" color="light">{{ "Carb" | translate }} {{ round(food.carb_factor * 100.0) }}%</ion-badge>
             <ion-badge *ngIf="showProteins" color="light">{{ "Prot" | translate }} {{ round(food.protein_factor * 100.0) }}%</ion-badge>
             <ion-badge *ngIf="showFats" color="light">{{ "Fats" | translate }} {{ round(food.fat_factor * 100.0) }}%</ion-badge>
