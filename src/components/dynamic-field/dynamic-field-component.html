@@ -32,8 +32,8 @@
     doneText="{{'Done'|translate}}"
     (ionChange)="emitHaveChanges()"
     displayFormat="{{ field.additional_options?.format }}"
-    [disabled]="field.disabled !== undefined && field.disabled"
     [(ngModel)]="field.value"></ion-datetime>
+    <!--    [disabled]="field.disabled !== undefined && field.disabled" -->
 
   <ion-select
     *ngIf="field.type == 'select'"
