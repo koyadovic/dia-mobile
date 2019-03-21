@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title><i class="fa fa-capsules" aria-hidden="true"></i>{{ "Your Medications" | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar
+    placeholder="{{ 'Search' | translate }}"
+    [showCancelButton]="false" [animated]="true" [debounce]="400"
+    (ionInput)="onInput($event)"></ion-searchbar>
+
+  <p class="status-text" padding-left padding-right>{{ viewStatusString }}</p>
+  <!-- Search result ! -->
+  <ng-container *ngIf="searchString !== ''">
+    <ion-list>
+
+      <button class="medication-item" ion-item *ngFor="let medication of searchMedicationsResult" (click)="addMedication(medication['id'])">
+        <h2>{{ medication['name'] }}</h2>
+        <p class="subtitle">{{ upper(medication['administration_type'] | translate) }}</p>
+      </button>
+
+    </ion-list>
+  </ng-container>
+
+  <!-- User medications ! -->
+  <ng-container *ngIf="searchString === ''">
+    <ion-list>
+      <ion-item-sliding #item *ngFor="let medication of userMedications">
+
+        <button class="medication-item" ion-item>
+          <h2>{{ medication['name'] }}</h2>
+          <p class="subtitle">{{ upper(medication['administration_type'] | translate) }}</p>
+        </button>
+
+        <ion-item-options>
+
+          <!-- remove medication from user medications -->
+          <button ion-button color="danger" (click)="removeMedication(item, medication['id'])"><ion-icon name="trash"></ion-icon>{{ "Remove" | translate }}</button> 
+
+        </ion-item-options>
+      </ion-item-sliding>
+
+    </ion-list>
+  </ng-container>
+      
+</ion-content>

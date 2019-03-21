@@ -1,0 +1,64 @@
+.root-container {
+    background-color: color($colors, primary);
+}
+
+.img-logo {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.login-container {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.5s linear;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  height: 100%;
+}
+
+.visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+.login-box {
+  max-width: 280px;
+  width: 100%;
+  margin: 0 auto;
+  color: white;
+  //transition: opacity 200ms linear;
+}
+
+.login-group {
+  margin: 20px 0px;
+}
+
+.login-group input.login-input {
+
+  background-color: transparentize(#000, 0.7) !important;
+  // background-color: map-get($colors, primary-dark); FCE57C
+  border: 0;
+  outline: 2;
+  box-shadow: 2;
+  padding: 0.75em;
+  width: 100%;
+  border-radius: 2px;
+}
+
+.z-label {
+  //color: white;
+  font-size: 0.90em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.login-button {
+  margin-top: 40px;
+  //background-color: white;
+  //color: color($colors, dark);
+}

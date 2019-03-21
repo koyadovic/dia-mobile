@@ -1,0 +1,28 @@
+.insights-table > .header .col {
+    background-color:color($colors, primary);
+    color: color($colors, white);
+
+}
+
+.insights-table .row:nth-child(even) {
+    background-color: color($colors, light);
+}
+
+.insights-table .col {
+    border: solid 1px color($colors, primary-dark);
+    border-bottom-style: none;
+    border-right-style: none;
+}
+
+.insights-table .col:last-child {
+    border-right: solid 1px color($colors, primary-dark);
+}
+
+.insights-table .row:last-child .col {
+    border-bottom: solid 1px color($colors, primary-dark);
+}
+
+
+.col.right {
+    text-align: end;
+}

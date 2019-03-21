@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar>
+
+    <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
+
+    <ion-title>
+      {{ 'Routines' | translate }}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <planning-list
+    (editRequestEvent)="editPlanning(planning)"
+    (deleteRequestEvent)="deletePlanning(planning)"
+    (saveRequestEvent)="savePlanning(planning)"
+    *ngFor="let planning of plannings" [planning]="planning"></planning-list>
+  </ion-list>
+
+  <ion-fab bottom right #fab>
+    <button ion-fab color="primary" (click)="editPlanning(null)"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+
+</ion-content>

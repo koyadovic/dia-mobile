@@ -1,0 +1,132 @@
+<ng-container [ngSwitch]="instant.content.type" class="card wrapping-list">
+    <!-- Glucose Levels -->
+    <ion-item no-lines class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'glucose'">
+
+        <ion-icon class="instant-card-icon" color="primary" item-start name="water"></ion-icon>
+        <ion-grid>
+            <ion-row align-items-end>
+                <ion-col col-9>
+                    <h2 class="instant-card-title">{{ "Glucose Level" | translate }}</h2>
+                    <p class="instant-card-subtitle">{{ instant.content.level }}mg/dL</p>
+                </ion-col>
+
+                <ion-col col-3>
+                    <p class="time-passed">{{ instant.moment.format('HH:mm') }}</p>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-item>
+
+
+    <!-- Feedings -->
+    <ion-item no-lines class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'feeding'">
+        <ion-icon class="instant-card-icon" color="primary" item-start name="restaurant"></ion-icon>
+        <ion-grid>
+            <ion-row align-items-end>
+                <ion-col col-9>
+                    <h2 class="instant-card-title">{{ "Feeding" | translate }}</h2>
+                    <p class="instant-card-subtitle">
+                        <ion-icon class="subtitle-icon" color="green" name="pizza"></ion-icon> {{ round(instant.content.kcal) }} kcal
+                    </p>
+                </ion-col>
+
+                <ion-col col-3>
+                    <p class="time-passed">{{ instant.moment.format('HH:mm') }}</p>                
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-item>
+
+    <!-- Activity -->
+    <ion-item no-lines class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'activity'">
+        <ion-icon class="instant-card-icon" color="primary" item-start name="bicycle"></ion-icon>
+        <ion-grid>
+            <ion-row align-items-end>
+                <ion-col col-9>
+                    <h2 class="instant-card-title">
+                        {{ "Intensity" | translate }} {{activity_intensities[instant.content.intensity]}},
+                        {{ instant.content.minutes }} {{ "minutes" | translate }}</h2>
+                    <ion-icon class="subtitle-icon" color="danger" name="flame"></ion-icon> <p class="instant-card-subtitle">{{ round(instant.content.kcal_burned) }} kcal</p>
+                </ion-col>
+
+                <ion-col col-3>
+                    <p class="time-passed">{{ instant.moment.format('HH:mm') }}</p>                
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-item>
+
+    <!-- Trait Changes -->
+    <ion-item no-lines class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'trait'">
+        <ion-icon class="instant-card-icon" color="primary" item-start name="body"></ion-icon>
+        <ion-grid>
+            <ion-row align-items-end>
+                <ion-col col-9>
+                    <h2 class="instant-card-title">{{ "Physical Trait Change" | translate }}</h2> 
+                    <p class="instant-card-subtitle">{{ trait_types[instant.content.trait_type] }} {{ instant.content.value }} {{ trait_types_measure[instant.content.trait_type] }}</p> 
+                </ion-col>
+
+                <ion-col col-3>
+                    <p class="time-passed">{{ instant.moment.format('HH:mm') }}</p>                
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-item>
+
+
+    <!-- Medication Takes -->
+    <ion-item no-lines class="instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'medication-take'">
+        <ion-icon class="instant-card-icon" color="primary" item-start name="thermometer"></ion-icon>
+        <ion-grid>
+            <ion-row align-items-end>
+                <ion-col col-9>
+                    <h2 class="instant-card-title">{{ "Medication Take" | translate }}</h2>
+                    <p class="instant-card-subtitle">{{ instant.content.medication }} {{ instant.content.amount }}u</p>
+                </ion-col>
+
+                <ion-col col-3>
+                    <p class="time-passed">{{ instant.moment.format('HH:mm') }}</p>                
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-item>
+
+    <!-- Action Requests -->
+    <ion-item no-lines class="text-wrap instant-card" [ngClass]="getInstantClass()" *ngSwitchCase="'action-request'">
+
+        <ion-icon class="instant-card-recommendation-icon" item-start *ngIf="instant.content.status === 0" color="danger" name="ios-alert-outline"></ion-icon>
+        <ion-icon class="instant-card-recommendation-icon" item-start *ngIf="instant.content.status === 1" color="secondary" name="ios-close-circle-outline"></ion-icon>
+        <ion-icon class="instant-card-recommendation-icon" item-start *ngIf="instant.content.status === 2" color="primary" name="ios-checkmark-circle-outline"></ion-icon>
+
+        <ion-grid>
+            <ion-row align-items-end>
+                <ion-col>
+                    <h2 class="instant-card-title">{{ instant?.content?.title }}</h2>
+                    <ng-container *ngIf="!!instant.content.elements && instant.content.elements.length > 0">
+                    <p class="instant-card-subtitle" *ngFor="let element of instant.content.elements">
+                        {{ element.info }}
+                    </p>
+                    </ng-container>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-item>
+
+    <!-- Attention Requests -->
+    <ion-item no-lines class="instant-card attention-request" [ngClass]="getInstantClass()" *ngSwitchCase="'attention-request'">
+
+        <!-- <ion-icon class="instant-card-attention-icon" item-start color="secondary" name="ios-information-circle-outline"></ion-icon> -->
+
+        <ion-grid>
+            <ion-row>
+                <ion-col>
+                    <h2 class="instant-card-title">{{ instant?.content?.title }}</h2>
+                    <p class="instant-card-subtitle wrap-text">{{ instant?.content?.message }}</p>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-item>
+
+</ng-container>
+
+

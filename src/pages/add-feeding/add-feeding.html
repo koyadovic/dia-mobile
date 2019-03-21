@@ -1,0 +1,99 @@
+<ion-header>
+
+  <ion-toolbar color="primary">
+
+    <ion-searchbar
+    placeholder="{{ 'Search' | translate }}"
+    [(ngModel)]="resultSearchString"
+    [showCancelButton]="false" [animated]="true" [debounce]="400"
+    (ionInput)="onInput($event)"
+    (ionCancel)="onCancel($event)"></ion-searchbar>
+
+  </ion-toolbar>
+
+  <ion-segment [(ngModel)]="food_tab" color="primary">
+    <ion-segment-button value="recent" (ionSelect)="switchToRecent()">
+      {{ "Normal" | translate }}
+    </ion-segment-button>
+        
+    <ion-segment-button value="favorite" (ionSelect)="switchToFavorite()">
+        {{ "Favorites" | translate }}
+    </ion-segment-button>
+
+    <ion-segment-button value="internet" (ionSelect)="switchToInternet()">
+      {{ "From Internet" | translate }}
+    </ion-segment-button>
+
+  </ion-segment>
+</ion-header>
+
+
+<ion-content padding-top>
+
+  <p text-center *ngIf="resultFoods.length === 0">{{ "Empty" | translate }}</p>
+
+  <ion-list class="result-food-list">
+    <food-component *ngFor="let food of resultFoods"
+      (foodSelection)="selectedFood($event)" (foodChanges)="refresh(food)" (foodMessage)="foodActionMessage($event)"
+      (selectingFood)="selectingFood = $event" (editingFood)="editingFood = $event"
+      [showCarbs]="true" [showProteins]="true" [showFats]="true" [showKCal]="true"
+      [food]="food">
+    </food-component>
+  </ion-list>
+
+  <ion-fab *ngIf="food_tab == 'recent' && !selectingFood && !editingFood" padding-right bottom right [class.fabextramargin]="true">
+    <button ion-fab (click)="addFood()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+
+</ion-content>
+
+
+
+<ion-pullup
+  (onExpand)="footerExpanded()" (onCollapse)="footerCollapsed()" [(state)]="footerState">
+
+  <ion-toolbar color="primary-light" (tap)="toggleFooter()">
+      
+    <ion-title text-center>
+      <ion-badge color="tertiary" *ngIf="foodSelected.length > 0 && !footerCurrentlyExpanded" item-start>{{ foodSelected.length }}</ion-badge>
+      <ion-icon class="toolbar-icon" name="more"></ion-icon>
+    </ion-title>
+
+  </ion-toolbar>
+
+  <ion-content>
+
+    <p text-center *ngIf="foodSelected.length === 0">{{ "No food selected yet" | translate }}</p>
+
+    <ion-list class="food-list">
+
+      <food-selected
+        *ngFor="let food of foodSelected" [foodSelected]="food"
+        (unselectFood)="unselectedFood(food)" (selectingFood)="selectingFood = $event"
+        [showCarbs]="true" [showProteins]="true" [showFats]="true" [showKCal]="true"
+        (foodMessage)="foodActionMessage($event)"
+        (foodChanges)="foodSummary?.recalculateTotals()"
+        (foodUnSelection)="unselectedFood($event)">
+      </food-selected>
+
+    </ion-list>
+    
+  </ion-content>
+
+  <ion-footer class="feeding-footer">
+
+    <ion-toolbar transparent [ngClass]="{'hide': foodSelected.length === 0}">
+
+      <food-summary #foodSummary
+        [foodSelected]="foodSelected"
+        [maxCarb]="maxCarb" [maxProt]="maxProt" [maxFats]="maxFats" [maxKcal]="maxKcal">
+      </food-summary>
+
+      <button ion-button full round class="button-finalize-feeding" (click)="finishFeeding()">
+        {{ "Ends the add" | translate }}
+      </button>
+    </ion-toolbar>
+  </ion-footer>
+
+</ion-pullup>
+  

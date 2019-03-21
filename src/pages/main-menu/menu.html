@@ -1,0 +1,45 @@
+<ion-menu [content]="mainPage">
+    <ion-content class="menu-root-container">
+      <ion-list>
+        <ion-item padding-top class="profile-container">
+          <img class="profile-image" src="assets/imgs/profile.png">
+          <h2>{{ email }}</h2>
+          <p>via diamobile.com</p>
+        </ion-item>
+        <button ion-item (click)="menuCtrl.close(); eventGoTab(0);" [ngClass]="{'selected': selectedIndex === 0}">
+            {{ "Timeline" | translate }}
+            <ion-icon item-start class="settings-icon" name="time"></ion-icon>
+        </button>
+
+        <button *ngIf="isDiabetic" ion-item (click)="menuCtrl.close(); eventGoTab(1);" [ngClass]="{'selected': selectedIndex === 1}">
+            {{ "Medications" | translate }}
+            <ion-icon item-start class="settings-icon" name="thermometer"></ion-icon>
+        </button>
+
+        <button ion-item (click)="menuCtrl.close(); eventGoTab(2);" [ngClass]="{'selected': selectedIndex === 2}">
+            {{ "Routines" | translate }}
+            <ion-icon item-start class="settings-icon" name="list"></ion-icon>
+        </button>
+      
+        <button ion-item (click)="menuCtrl.close(); eventGoTab(3);" [ngClass]="{'selected': selectedIndex === 3}">
+            {{ "Insights" | translate }}
+            <ion-icon item-start class="settings-icon" name="stats"></ion-icon>
+        </button>
+
+        <ion-item-divider></ion-item-divider>
+
+        <button ion-item (click)="menuCtrl.close(); goConfiguration()">
+            {{ "Settings" | translate }}
+            <ion-icon item-start class="settings-icon" name="settings"></ion-icon>
+        </button>
+
+        <button (click)="logout()" ion-item>
+          {{ "Logout" | translate }}
+          <ion-icon item-start name="log-out"></ion-icon>
+        </button>
+
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  
+  <ion-nav #mainPage [root]="rootPage"></ion-nav>

@@ -1,0 +1,36 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle><ion-icon name="menu"></ion-icon></button>
+    <ion-title>
+      {{ 'Insights' | translate }}
+    </ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="generateReport()">
+        <ion-icon name="copy"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+
+  <ion-segment class="segments-parent" [(ngModel)]="activeInsightSegment" color="primary">
+    <ion-segment-button *ngFor="let segment of insightsData" value="{{ segment['title'] }}" (ionSelect)="tabChanged(segment)">
+      {{ segment['title'] }}
+    </ion-segment-button>
+  </ion-segment>
+    
+</ion-header>
+
+<ion-content #content>
+
+  <ng-container *ngFor="let segment of insightsData" padding>
+    <insights-chart
+      (chartDataLoaded)="resize()"
+      *ngFor="let insightData of segment['insights']"
+      [chartData]="insightData"
+      [show]="activeInsightSegment === segment['title']">
+    </insights-chart>
+  </ng-container>
+
+</ion-content>

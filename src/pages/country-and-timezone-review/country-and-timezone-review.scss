@@ -1,0 +1,18 @@
+page-country-and-timezone-review {
+    ion-select {
+        min-width: 60%;
+    }
+
+    p {
+        color: #666;
+        text-align: left;
+    }
+    h2 {
+        color: color($colors, primary);
+    }
+
+    .finish-button {
+        position: absolute;
+        bottom: 15px;
+    }
+}

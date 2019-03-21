@@ -1,0 +1,21 @@
+<ion-list *ngIf="!!configurationRoot && configurationRoot.fields?.length > 0" padding-left padding-right>
+
+  <dynamic-field
+    *ngFor="let field of configurationRoot.fields"
+    [field]="field"
+    (haveChanges)="emitHaveChanges($event)"></dynamic-field>
+
+</ion-list>
+
+<!-- submenus as the latters -->
+<ion-item-divider *ngIf="!!configurationRoot && configurationRoot.children_nodes?.length > 0 && configurationRoot.fields?.length > 0"></ion-item-divider>
+
+<ion-list *ngIf="!!configurationRoot">
+
+  <button ion-item
+    *ngFor="let submenu of configurationRoot.children_nodes"
+    (click)="requestRootChange(submenu)">
+      {{ submenu.display }}<ion-icon item-end name="build"></ion-icon>
+  </button>
+
+</ion-list>

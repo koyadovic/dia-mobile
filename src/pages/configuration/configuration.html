@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar>
+      <ion-title *ngIf="configurationPointer?.length > 0 && configurationPointer[configurationPointer.length - 1]">
+      {{ configurationPointer[configurationPointer.length - 1].display }}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+  
+<ion-content>
+
+  <dynamic-root
+  [configurationRoot]="configurationPointer[configurationPointer.length - 1]"
+  (changeRootRequest)="changeRoot($event)"
+  (haveChanges)="haveChanges($event)">
+  </dynamic-root>
+
+</ion-content>

@@ -34,11 +34,31 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #488aff,
-  secondary:  #32db64,
-  danger:     #f53d3d,
+  primary:    #0076b1, // 224460 #0076b1 <-- linkedin
+  primary-dark:  #004b81,
+  primary-light:  #55a5e3,
+
+  secondary:  #FCE57C, // #32db64
+  secondary-light:  #ffffad, // #32db64
+  secondary-dark:  #c7b34d, // #32db64
+
+  tertiary:     #FF263B, // #f53d3d
+  tertiary-dark: #991623,
+  tertiary-light: #ffa8b0,
+
+  green: #78c9af,
+
   light:      #f4f4f4,
-  dark:       #222
+  white:      #ffffff,
+  yellow-light: #78c9af,
+  dark:       #222, // #222
+  grey:       #999, // #222
+
+  textcolor: #FCE57C,
+
+  danger:     #FF263B, // #f53d3d
+  success: #78c9af,
+  ignored: #999
 );
 
 
@@ -81,8 +101,21 @@ $colors: (
 @import "ionic.ionicons";
 
 
+// Fontawesome icons
+$fa-font-path: "../assets/fonts";
+@import "font-awesome";
+
+
 // Fonts
 // --------------------------------------------------
 
 @import "roboto";
 @import "noto-sans";
+
+
+// underline of ion-input elements transparent
+$text-input-md-highlight-color-invalid: transparent;
+$text-input-md-highlight-color-valid: transparent;
+$text-input-md-show-invalid-highlight: transparent;
+$text-input-md-highlight-color: transparent;
+$text-input-md-show-valid-highlight: transparent;

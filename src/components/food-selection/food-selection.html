@@ -1,0 +1,32 @@
+<ion-card>
+  <ion-card-content>
+    <ion-card-title text-center>
+      {{ food.food.name }}<br>{{ food.food.manufacturer }}
+    </ion-card-title>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item text-center *ngIf="!food?.food?.g_or_ml_per_unit">
+            <ion-label stacked color="primary">{{ "Weight" | translate }}</ion-label>
+            <ion-input text-center type="number" placeholder="{{ 'In grams' | translate }}" name="g_or_ml_selected" [(ngModel)]="food.selection" (ionChange)='updateValues()' required></ion-input>
+          </ion-item>
+  
+          <ion-item text-center *ngIf="food?.food?.g_or_ml_per_unit > 0">
+            <ion-label stacked color="primary">Units</ion-label>
+            <ion-input text-center type="number" placeholder="Introduce units of food" name="units_selected" [(ngModel)]="food.selection" (ionChange)='updateValues()' required></ion-input>
+          </ion-item>
+  
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <button (click)="closeSelection()" ion-button full>{{ "Close" | translate }}</button>
+        </ion-col> 
+        <ion-col> 
+          <button (click)="finishSelection()" [disabled]="!valid()" ion-button full>{{ "Save" | translate }}</button>
+        </ion-col>
+      </ion-row> 
+    </ion-grid>
+  </ion-card-content>
+</ion-card>

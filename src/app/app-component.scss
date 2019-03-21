@@ -1,0 +1,124 @@
+// http://ionicframework.com/docs/theming/
+
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+
+
+// This three is for the top toolbar
+.toolbar-background {
+    background-color: map-get($colors, primary);
+}
+.toolbar-title {
+    color: map-get($colors, white);
+    font-weight: 400;
+}
+.bar-buttons {
+    color: map-get($colors, white); 
+    font-weight: 400;
+}
+
+// This is for configuration page, arrow icons to be white.
+.bar-button {
+    color: map-get($colors, white);
+    background-color: transparent;
+    font-weight: 400;
+}
+
+/*
+This is to remove ion-input underline
+*/
+.item-input::after {
+    border-bottom-color: transparent !important;
+}
+.item-input.ng-valid.input-has-value::after{ border-bottom-color: transparent; }
+.item-inner {
+    border-bottom-color: transparent !important;
+    box-shadow: none !important;
+}
+/* fuck with the underline */
+
+
+/* In Sliding items, Option Icons big, text little */
+ion-item-options button span {
+    font-size: 0.8em;
+    ion-icon {
+        font-size: 2.0em;
+    }
+}
+/* Segments for insights and feedings page */
+ion-segment {
+    background: map-get($colors, primary-light);
+    color: map-get($colors, white);
+}
+.segment-button {
+    color: map-get($colors, white) !important;
+    background: map-get($colors, primary-light);
+}
+
+.segment-button.segment-activated {
+    border-color: map-get($colors, secondary) !important;
+    border-bottom-width: 3px;
+    color: map-get($colors, white) !important;
+}
+
+
+/* Default is 10px, this makes content inside input appear out of position (unaligned vertically)  with text outside the input
+   with 3px this effect is minimized */
+ion-input {
+    padding-left: 5px !important;
+}
+ion-datetime {
+    padding-left: 5px !important;
+}
+
+
+/* Fab icons bigger */
+button.fab ion-icon {
+    font-size: 2em;
+}
+
+/* list headers not too bigger */
+.list-header {
+    padding-top: 0px !important;
+    margin-bottom: 0px !important;
+    min-height: 2.5em;
+    height: 2.5em;
+}
+
+
+/*
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus
+input:-webkit-autofill, 
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px map-get($colors, primary-dark) inset;
+  -webkit-text-fill-color: map-get($colors, light);
+}
+*/
+
+
+
+/*
+.item-inner, ion-item {
+    border-bottom-color: transparent !important;
+    box-shadow: none !important;
+}
+*/

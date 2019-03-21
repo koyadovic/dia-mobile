@@ -1,0 +1,11 @@
+<div class="insights-table">
+  <div class="row header">
+    <div class="col"></div>
+    <div class="col right"*ngFor="let hlabel of tableConcreteData['labels']">{{ hlabel }}</div>
+  </div>
+
+  <div class="row" *ngFor="let dataset of tableConcreteData['datasets']">
+    <div class="col"><b>{{ dataset['label'] }}</b></div>
+    <div class="col right" *ngFor="let data of dataset['data']">{{ data }}</div>
+  </div>
+</div>

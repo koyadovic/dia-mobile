@@ -1,0 +1,40 @@
+<ion-header>
+
+  <ion-navbar *ngIf="!!data">
+    <ion-title>{{ data['title'] }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+      
+    <ion-row> 
+      <ion-col> 
+
+        <ng-container *ngFor="let element of data.elements; let i = index">
+
+          <p *ngIf="!!element.info">{{ element.info }}</p>
+          <ng-container *ngFor="let field of element.computed_fields">
+
+            <dynamic-field *ngIf="isConditionalTrue(element, field) && (data.type !== 'action-request' || field.type !== 'action')"
+              [dateFormat]="dateFormat || 'MM DD, YYYY HH:mm'"
+              [timezone]="timezone || 'UTC'"
+              [field]="field" (haveChanges)="haveChanges($event, element)">
+            </dynamic-field>
+          
+          </ng-container>
+        </ng-container>
+      </ion-col>
+    </ion-row> 
+    <hr>
+    <ion-row *ngIf="!!data['actions']">
+
+      <ion-col *ngFor="let action of data['actions']">
+        <button class="generic-button" (click)="doAction(action)" *ngIf="action.type === 'add'" [disabled]="! isValid()" ion-button full>{{ action['display'] }}</button>
+        <button class="generic-button" (click)="doAction(action)" *ngIf="action.type !== 'add'" ion-button full>{{ action['display'] }}</button>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid> 
+</ion-content>

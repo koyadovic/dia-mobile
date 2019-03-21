@@ -1,0 +1,6 @@
+<div class="insights-key-value" *ngIf="!!keyValuesConcreteData">
+    <div class="row" *ngFor="let element of keyValuesConcreteData['data']">
+        <div class="col col-key"><b>{{ element['label'] }}</b></div>
+        <div class="col col-value">{{ element['value'] }}</div>
+    </div>
+</div>

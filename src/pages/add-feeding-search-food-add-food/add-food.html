@@ -1,0 +1,102 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ "New Food" | translate }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding-bottom>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label stacked color="primary">{{ "Name" | translate }}</ion-label>
+          <ion-input type="text" placeholder="{{ 'Name of new Food' | translate }}" name="name" [(ngModel)]="food.name" (ionChange)='updateResult()' required></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label stacked color="primary">{{ "Manufacturer" | translate }}</ion-label>
+          <ion-input type="text" placeholder="{{ 'Brand or Manufacturer' | translate }}" name="manufacturer" [(ngModel)]="food.manufacturer" (ionChange)='updateResult()' required></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    
+  <ion-row>
+    <ion-col>
+    <hr/>
+  </ion-col>
+  </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label stacked color="primary">{{ "Grams or ml" | translate }}</ion-label>
+          <ion-input type="number" placeholder="{{ 'Grams or ml' | translate }}" name="g_or_ml" [(ngModel)]="food.g_or_ml" (ionChange)='updateResult()' required></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label stacked color="primary">{{ "Carbs" | translate }}</ion-label>
+          <ion-input type="number" placeholder="{{ 'In Grams' | translate }}" name="carb_g" [(ngModel)]="food.carb_g" (ionChange)='updateResult()' required></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label stacked color="primary">{{ "Proteins" | translate }}</ion-label>
+          <ion-input type="number" placeholder="{{ 'In Grams' | translate }}" name="protein_g" [(ngModel)]="food.protein_g" (ionChange)='updateResult()' required></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label stacked color="primary">{{ "Fats" | translate }}</ion-label>
+          <ion-input type="number" placeholder="{{ 'In Grams' | translate }}" name="fat_g" [(ngModel)]="food.fat_g" (ionChange)='updateResult()' required></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label stacked color="primary">{{ "Fiber" | translate }}</ion-label>
+          <ion-input type="number" placeholder="{{ 'In Grams' | translate }}" name="fiber_g" [(ngModel)]="food.fiber_g" (ionChange)='updateResult()' required></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label stacked color="primary">{{ "Alcohol" | translate }}</ion-label>
+          <ion-input type="number" placeholder="{{ 'In Grams' | translate }}" name="alcohol_g" [(ngModel)]="food.alcohol_g" (ionChange)='updateResult()' required></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+        
+      <ion-col>
+        <ion-item>
+          <ion-label stacked color="primary">{{ "Weight per unit" | translate }}</ion-label>
+          <ion-input type="number" placeholder="{{ 'For cookies, slices of bread, and so on' | translate }}" name="g_or_ml_per_unit" [(ngModel)]="food.g_or_ml_per_unit" (ionChange)='updateResult()' required></ion-input>
+        </ion-item>
+      </ion-col>
+  
+    </ion-row>
+
+    <ion-row> 
+      <ion-col> 
+        <button (click)="dismiss()" ion-button full>{{ "Close" | translate }}</button>
+      </ion-col> 
+
+      <ion-col> 
+        <button (click)="save()" [disabled]="!valid()" ion-button full>{{ "Save" | translate }}</button>
+      </ion-col> 
+    </ion-row> 
+  
+  </ion-grid>
+</ion-content>

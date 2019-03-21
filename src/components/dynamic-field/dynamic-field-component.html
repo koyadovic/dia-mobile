@@ -1,0 +1,61 @@
+<ion-item text-wrap class="dynamic-field" [ngClass]="{'dynamic-field-disabled': field['disabled']}" *ngIf="field && field.type != 'radio' && field.type != 'hidden' && field.show !== false">
+
+  <!--
+  <div class="action-type-field"
+    *ngIf="field.type == 'action' && field.display" (click)="emitHaveChanges()">
+    <ion-icon name="add"></ion-icon>
+    {{ field.display }}
+  </div>
+  -->
+
+  <button ion-button round full icon-start color="primary-dark" *ngIf="field.type == 'action' && field.display" (click)="emitHaveChanges()">
+    {{ field.display }}
+  </button>
+
+  <ion-label *ngIf="field.type != 'action' && field.display" stacked class="title-label" color="primary">{{ field.display }}</ion-label>
+
+  <ion-input
+    *ngIf="field.type == 'text' || field.type == 'number'"
+    type="{{ field.type }}" [pattern]="field.regex" [(ngModel)]="field.value" placeholder="{{ field.hint }}"
+    [disabled]="field['disabled'] !== undefined && field['disabled']"
+    (ionChange)="emitHaveChanges()" [required]="field.required"></ion-input>
+
+  <ion-toggle
+    *ngIf="field.type == 'boolean'"
+    (ionChange)="emitHaveChanges()"
+    [disabled]="field.disabled !== undefined && field.disabled"
+    [(ngModel)]="field.value">{{ field.display }}</ion-toggle>
+
+  <ion-datetime
+    *ngIf="field.type == 'date'"
+    cancelText="{{'Cancel'|translate}}"
+    doneText="{{'Done'|translate}}"
+    (ionChange)="emitHaveChanges()"
+    displayFormat="{{ field.additional_options?.format }}"
+    [(ngModel)]="field.value"></ion-datetime>
+    <!--    [disabled]="field.disabled !== undefined && field.disabled" -->
+
+  <ion-select
+    *ngIf="field.type == 'select'"
+    cancelText="{{'Cancel'|translate}}" okText="{{'OK'|translate}}"
+    (ionChange)="emitHaveChanges()"
+    [disabled]="field.disabled !== undefined && field.disabled"
+    (click)="onSelectClicked()"
+    [(ngModel)]="field.value">
+
+    <ion-option *ngFor="let option of field.options" [value]="option.value">
+      {{ option.display }}
+    </ion-option>
+
+  </ion-select>
+
+</ion-item>
+
+<div *ngIf="field && field.type == 'radio' && field.show !== false" radio-group
+  [(ngModel)]="field.value">
+
+  <ion-item class="dynamic-field" [ngClass]="{'dynamic-field-disabled': field['disabled']}" *ngFor="let option of field.options">
+    <ion-label>{{ option.display }}</ion-label>
+    <ion-radio value="{{ option.value }}" (ionSelect)="emitHaveChanges()" checked></ion-radio>
+  </ion-item>
+</div>

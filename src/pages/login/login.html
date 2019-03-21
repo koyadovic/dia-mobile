@@ -1,0 +1,22 @@
+<ion-content padding class="root-container">
+    <!-- login -->
+    <div class="login-container" #loginContainer>
+      <div class="login-box">
+
+        <div class="login-group">
+          <img class="img-logo" src="assets/imgs/icon.png"/>
+        </div>
+    
+        <div class="login-group">
+          <ion-label class="z-label">Email</ion-label>
+          <input type="url" spellcheck="false" [(ngModel)]="email" class="login-input" />
+        </div>
+        <div class="login-group">
+          <ion-label class="z-label">Password</ion-label>
+          <input type="password" [(ngModel)]="password" class="login-input"/>
+        </div>
+
+        <button ion-button ion-button color="light" block (click)="tryLogin()" class="login-button">{{ "Login" | translate }}</button>
+      </div>
+    </div>
+  </ion-content>

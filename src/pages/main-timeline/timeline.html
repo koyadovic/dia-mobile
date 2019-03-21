@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{ 'Timeline' | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list class="instants-list">
+
+    <!-- FUTURE -->
+    <button class="future-ion-button" ion-item text-center (click)="showFuture=!showFuture" *ngIf="futureTimeline.length > 0">
+        <ion-label *ngIf="!showFuture" color="primary">{{ "See next events" | translate }}</ion-label>
+        <ion-label *ngIf="showFuture" color="primary">{{ "Hide next events" | translate }}</ion-label>
+    </button>
+
+    <ng-container *ngIf="showFuture">
+      <ng-container *ngFor="let instant of futureTimeline; let i = index">
+
+        <instant-card
+          [ngClass]="instant.event_type" [instant]="instant" [userConfig]="userConfig"
+          (click)="cardClicked(instant)">
+        </instant-card>
+
+      </ng-container>
+    </ng-container>
+    <!-- FUTURE END -->
+
+
+    <ng-container *ngFor="let instant of timeline; let i = index">
+
+      <ion-list-header class="instant-date-info" text-right *ngIf="!!dateInfo(i)">{{ dateInfo(i) }}
+      </ion-list-header>
+
+      <instant-card
+        [ngClass]="instant.event_type" [instant]="instant" [userConfig]="userConfig"
+        (click)="cardClicked(instant)">
+      </instant-card>
+
+      <!-- <div class="space" *ngIf="instant.minutes_diff > 60"></div> -->
+    </ng-container>
+  </ion-list>
+    
+  <ion-fab bottom right #fab *ngIf="diabeticGroup() || dietAndExercise()"> <!-- Diet & Exercise -->
+    <button ion-fab color="primary"><ion-icon name="add"></ion-icon></button>
+    <ion-fab-list side="top">
+      <button ion-fab color="primary" (click)="addPhysicalTraitChange()" *ngIf="diabeticGroup() || dietAndExercise()"><ion-icon name="body"></ion-icon></button> <!-- Trait Change -->
+      <button ion-fab color="primary" (click)="addMedicationTake()" *ngIf="diabeticGroup()"><ion-icon name="thermometer"></ion-icon></button> <!-- Medication Take -->
+      <button ion-fab color="primary" (click)="addPhysicalActivity()" *ngIf="diabeticGroup() || dietAndExercise()"><ion-icon name="bicycle"></ion-icon></button> <!-- Activity -->
+      <button ion-fab color="primary" (click)="addFeeding({})" *ngIf="diabeticGroup() || dietAndExercise()"><ion-icon name="restaurant"></ion-icon></button> <!-- Feeding -->
+      <button ion-fab color="primary" (click)="addGlucose()" *ngIf="diabeticGroup()"><ion-icon name="water"></ion-icon></button> <!-- Glucose -->
+    </ion-fab-list>
+  </ion-fab>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content  loadingText="{{ 'Loading more data...' | translate }}">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

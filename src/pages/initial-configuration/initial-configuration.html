@@ -1,0 +1,101 @@
+
+<ion-content padding>
+
+  <ion-slides pager>
+
+    <ion-slide>
+      <div class="img-container">
+        <img src="assets/imgs/initial-config-1-language.png"/>
+      </div>
+      
+      <h2>{{ "Country, language and timezone" | translate }}</h2>
+      <ion-item>
+        <ion-label fixed>{{ "Country" | translate }}</ion-label>
+        <ion-select name="country" [(ngModel)]="data['dia_config__foods__country_for_searches']" (ionChange)="updateTimezoneOptionsByCountry()"
+        cancelText="{{'Cancel'|translate}}" okText="{{'OK'|translate}}" (click)="onSelectClicked()">
+          <ion-option *ngFor="let option of countryOptions" [value]="option['value']">{{option['display']}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed>{{ "Language" | translate }}</ion-label>
+        <ion-select #l name="language" [(ngModel)]="data['dia_config__language']" (ionChange)="languageChange(l.value)" cancelText="{{'Cancel'|translate}}" okText="{{'OK'|translate}}">
+          <ion-option value="es">{{ "Spanish" | translate }}</ion-option>
+          <ion-option value="en">{{ "English" | translate }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed>{{ "Timezone" | translate }}</ion-label>
+        <ion-select name="timezone" [(ngModel)]="data['dia_config__timezone']" cancelText="{{'Cancel'|translate}}" okText="{{'OK'|translate}}">
+          <ion-option *ngFor="let option of timezoneOptions" [value]="option['value']">{{option['display']}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- <button class="finish-button" ion-button color="primary" block (click)="next()">{{ "Next" | translate }}</button> -->
+    </ion-slide>
+
+    <ion-slide>
+      <div class="img-container">
+        <img src="assets/imgs/initial-config-2-about-you.png"/>
+      </div>
+    
+      <h2>{{ "About you" | translate }}</h2>
+
+      <ion-item text-wrap>
+        <ion-label fixed>{{ "Gender" | translate }}</ion-label>
+        <ion-select name="gender" [(ngModel)]="data['dia_config__gender']" cancelText="{{'Cancel'|translate}}" okText="{{'OK'|translate}}">
+          <ion-option [value]="'male'">{{ "Male" | translate }}</ion-option>
+          <ion-option [value]="'female'">{{ "Female" | translate }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item text-wrap>
+        <ion-label fixed>{{ "Birth date" | translate }}</ion-label>
+        <ion-datetime *ngIf="!!birthDateField"
+        cancelText="{{'Cancel'|translate}}"
+        doneText="{{'Done'|translate}}"
+        (ionChange)="updateBirthDateValue()"
+        displayFormat="{{ birthDateField.additional_options?.format }}"
+        [(ngModel)]="birthDateField.value"></ion-datetime>
+
+      </ion-item>
+
+      <!-- <button class="finish-button" ion-button color="primary" block (click)="next()">{{ "Next" | translate }}</button> -->
+
+    </ion-slide>
+  
+    <ion-slide *ngIf="dietAndExercise">
+      <div class="img-container">
+        <img src="assets/imgs/initial-config-3-diet-exercise.png"/>
+      </div>
+    
+      <h2>{{ "Diet and Exercise" | translate }}</h2>
+
+      <ion-item text-wrap *ngFor="let field of dietAndExerciseFields">
+        <ion-label fixed>{{field['display']}}</ion-label>
+        <ion-select name="field_{{field['namespace']}}" [(ngModel)]="data[field['namespace_key']]" cancelText="{{'Cancel'|translate}}" okText="{{'OK'|translate}}">
+          <ion-option *ngFor="let option of field['options']" [value]="option['value']">{{option['display']}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- <button class="finish-button" ion-button color="primary" block (click)="next()">{{ "Next" | translate }}</button> -->
+
+    </ion-slide>
+  
+    <ion-slide>
+      <div class="img-container">
+        <img src="assets/imgs/initial-config-99-finished.png"/>
+      </div>
+  
+      <h2>{{ "Our welcome!" | translate }}</h2>
+      <p>{{ "Remember to review the settings to change any of these options and find some more." | translate }}</p>
+      <p>{{ "We're glad to give you the welcome to Dia Mobile." | translate }}</p>
+
+      <button class="finish-button" ion-button color="primary" block (click)="finished()">{{ "Get started!" | translate }}</button>
+  
+    </ion-slide>
+  
+  </ion-slides>
+
+</ion-content>

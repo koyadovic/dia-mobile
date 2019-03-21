@@ -1,0 +1,263 @@
+{
+    "Country, language and timezone": "País, idioma y huso horario",
+    "Language": "Idioma",
+    "Spanish": "Español",
+    "English": "Inglés",
+    "Our welcome!": "¡Nuestra bienvenida!",
+    "Get started!": "¡Empezar!",
+    "We're glad to give you the welcome to Dia Mobile.": "Nos complace darle la bienvenida a Dia Mobile.",
+    "Remember to review the settings to change any of these options and find some more.": "Recuerde revisar la configuración para cambiar cualquiera de estas opciones y encontrar algunas más.",
+    "Next": "Siguiente",
+    "Timezone": "Huso horario",
+    "Diet and Exercise": "Dieta y Ejercicio",
+    "Country": "País",
+    "About you": "Sobre usted",
+    "Gender": "Género",
+    "Birth date": "Fecha de nacimiento",
+
+    "Dia Mobile": "Dia Mobile",
+    "Timeline": "Cronología",
+    "Routines": "Rutinas",
+    "Insights": "Gráficos",
+    "Settings": "Configuración",
+    "Logout": "Cerrar sesión",
+    "Logout Confirmation": "Confirmar Cierre de Sesión",
+    "Are you sure to close your session?": "¿Seguro que quieres cerrar tu sesión?",
+
+    "New Glucose": "Nueva Glucosa",
+    "New Feeding": "Nueva Ingesta",
+    "New Medication Take": "Nueva Toma de Medicación",
+    "New Physical Activity": "Nueva Actividad Física",
+    "New Trait Change": "Nuevo Cambio Físico",
+
+    "Loading more data...": "Cargando más datos...",
+
+    "Save": "Guardar",
+    "Dismiss": "Desechar",
+
+    "Glucose Level": "Nivel de Glucosa",
+    "Physical Activity": "Actividad Física",
+    "Physical Trait Change": "Cambio en Rasgo Físico",
+    "Feeding": "Alimentación",
+
+    "Instant": "Instante",
+    "Level": "Nivel",
+    "Please, provide the following data.": "Por favor, provee los siguientes datos.",
+
+    "Intensity": "Intensidad",
+    "Minutes": "Minutos",
+    "Number of minutes": "Número de minutos",
+    "Introduce intensity and minutes that have spent with the activity.": "Introduzca la intensidad y minutos que pasaste con la actividad.",
+
+    "Medication Take": "Toma de Medicamento",
+    "Medication": "Medicamento",
+    "Amount": "Cantidad",
+    "Amount of medication": "Cantidad de Medicamento",
+    "Introduce what medication and units administered.": "Introduzca qué medicamento y las unidades administradas.",
+
+    "Soft (Walk)": "Ligera (Caminar)",
+    "Medium (Heavy walk)": "Media (Caminar rápido)",
+    "High (Run, weightlifting)": "Elevada (Correr, pesas)",
+    "Extreme (Sprints, HIIT)": "Extrema (Sprints, HIIT)",
+
+    "Type": "Tipo",
+
+    "Select date": "Seleccione Fecha",
+    "Date of birth": "Fecha de nacimiento",
+    "Sex": "Sexo",
+    "Value": "Valor",
+    "Introduce a value": "Introduzca un valor",
+    "Select type of trait and complete the value.": "Seleccione tipo de rasgo y complete el valor.",
+
+    "Birth Date": "Fecha de nacimiento",
+
+    "Height (cm)": "Altura (cm)",
+    "Weight (kg)": "Peso (kg)",
+    "Neck Perimeter (cm)": "Perímetro de cuello (cm)",
+    "Abdomen Perimeter (cm)": "Perímetro de abdomen (cm)",
+    "Waist Perimeter (cm)": "Perímetro de cadera (cm)",
+    
+    "Male": "Masculino",
+    "Female": "Femenino",
+
+    "Delete Planning?": "¿Eliminar Planning?",
+    "Are you sure to delete this planning?": "¿Seguro que quieres eliminar el Planning?",
+
+    "Login": "Inicia sesión",
+    "See next events":"Ver próximos eventos",
+    "Hide next events":"Ocultar próximos eventos",
+
+    "Edit": "Editar",
+    "Delete": "Eliminar",
+    "Planning Editor": "Editor de Rutina",
+    "Name and definition": "Nombre y definición",
+    "Name for routine": "Nombre para la rutina",
+    "What kind of event do you want to add?": "¿Qué tipo de evento quieres añadir?",
+    "Not defined yet. Press me!": "No definido aún. ¡Púlsame!",
+    "Defined! Click to redefine": "¡Definido! Click para redefinir",
+    "Auto add at": "Auto añadir a las",
+    "Time": "Hora",
+    "Auto add every": "Auto añadir cada",
+    "Monday": "Lunes",
+    "Tuesday": "Martes",
+    "Wednesday": "Miércoles",
+    "Thursday": "Jueves",
+    "Friday": "Viernes",
+    "Saturday": "Sábado",
+    "Sunday": "Domingo",
+
+
+    "Normal": "Normales",
+    "Favorites": "Favoritos",
+    "From Internet": "Desde Internet",
+
+
+    "New Food": "Nuevo Alimento",
+    "Name": "Nombre",
+    "Name of new Food": "Nombre del nuevo alimento",
+    "Manufacturer": "Fabricante",
+    "Brand or Manufacturer": "Marca o fabricante",
+    "Grams or ml": "Gramos o ml",
+    "In Grams": "En gramos",
+    "Carbs": "Carbohidratos",
+    "Carbohydrate": "Carbohidrato",
+    "Protein": "Proteína",
+    "Proteins": "Proteínas",
+    "Fats": "Grasas",
+    "Fat": "Grasa",
+    "Fiber": "Fibra",
+    "Alcohol": "Alcohol",
+    "Weight per unit": "Peso por unidad",
+    "For cookies, slices of bread, and so on": "Para galletas, rebanadas de pan, etcétera",
+    "Close": "Cerrar",
+
+    "Food favorited": "Alimento favorito",
+    "Food saved": "Alimento guardado",
+
+    "In grams": "En gramos",
+
+
+    "minutes": "minutos",
+    
+    "Height": "Altura",
+    "Weight": "Peso",
+    "Neck Perimeter": "Perímetro Cuello",
+    "Abdomen Perimeter": "Perímetro Abdomen",
+    "Waist Perimeter": "Perímetro Cadera",
+
+    "Summary": "Sumario",
+    "Carb": "Carb",
+    "Prot": "Prot",
+    "Kcal": "Kcal",
+    "Add": "Añadir",
+
+
+    "Remove": "Eliminar",
+
+    "Search": "Búsqueda",
+
+    "Medications": "Medicamentos",
+    "Your Medications": "Tus medicamentos",
+    "Press to add your medications": "Pulsa para agregar tus medicamentos",
+
+    "Need confirmation": "Necesitamos confirmación",
+    "Add this medication?": "¿Añadir este medicamento?",
+
+    "Currently you don't have medications added. Try searching!": "Actualmente no tienes medicamentos añadidos. ¡Prueba buscando!",
+    "Your currently added medications. If you want, you can search for new ones": "Tus medicamentos actualmente añadidos. Si quieres, puedes buscar por nuevos",
+    "There is no results ... Try with another name": "No hay resultados ... Prueba con otro nombre",
+    "There is": "Hay",
+    "There are": "Hay",
+    "result": "resultado",
+    "results": "resultados",
+    "I seems that there was an error ... Sorry!": "Parece que hubo un error ... ¡Lo siento!",
+    "Medication added correctly to your list": "Medicamento añadido correctamente a tu lista",
+    "There seem to was an error": "Parece que hubo un error",
+    "Medication removed correctly from your list": "Medicamento eliminado correctamente de tu lista",
+
+
+    "Modified the selected food": "Modificado el alimento seleccionado",
+    "Removed from list": "Eliminado del listado",
+    "Feeding added correctly": "Alimentación añadida correctamente",
+    "No food selected yet": "Ningún alimento seleccionado aún",
+    "Ends the add": "Finaliza el añadido",
+    "Empty": "Vacío",
+    "Added to food selected list": "Añadido a la lista de alimentos seleccionados",
+    "Food deleted": "Alimento eliminado",
+    "Confirm delete": "Confirme eliminado",
+    "Do you want to delete this food?": "¿Quieres eliminar este alimento?",
+    "Cancel": "Cancelar",
+    "Done": "Hecho",
+
+    "Give me a name": "Dame un nombre",
+
+    "Everything was good. Routine saved.": "Todo fue bien. Rutina guardada.",
+
+    "There is not data yet": "Aún no hay datos",
+
+
+    "Warning! The carbohydrate limit": "¡Atención! El límite de carbohidratos",
+    "Warning! The protein limit": "¡Atención! El límite de proteínas",
+    "Warning! The fats limit": "¡Atención! El límite de grasas",
+    "Warning! The fiber limit": "¡Atención! El límite de fibra",
+    "Warning! The alcohol limit": "¡Atención! El límite de alcohol",
+    "Warning! The kcal limit": "¡Atención! El límite de kcal",
+    "has been overpassed": "ha sido sobrepasado",
+
+    "Warning!": "¡Atención!",
+    "The following limits are established:": "Están establecidos los siguientes límites:",
+    "of carbohydrates": "de carbohidratos",
+    "of protein": "de proteína",
+    "of fats": "de grasa",
+    "of kcal": "de kcal",
+
+    "Only recent instants can be deleted.": "Sólo pueden ser eliminados los instances recientes.",
+    "Detail of Instant": "Detalles del Instante",
+    "Do you really want to eliminate this instant?": "¿Realmente deseas eliminar este instante?",
+    "Date": "Fecha",
+    "Hour": "Hora",
+    "Details": "Detalles",
+
+    "Your glucose level was": "Tu nivel de glucosa fue",
+    "You spent": "Pasaste",
+    "at an": "a",
+    "intensity": "intensidad",
+    "in which you burned": "en la cual quemaste",
+    "You made a meal of": "Realizaste una comida de",
+    "grams of carbohydrate": "gramos de carbohidrato",
+    "grams of protein": "gramos de proteína",
+    "grams of fats": "gramos de grasas",
+    "grams of fiber": "gramos de fibra",
+    "grams of alcohol": "gramos de alcohol",
+    "Breakdown for the meal": "Desglose para la comida",
+    "You used": "Usaste",
+    "unit of": "unidad de",
+    "units of": "unidades de",
+    "You registered a change in your": "Registraste un cambio en tu",
+
+    "injected": "injectado",
+    "oral": "oral",
+
+    "Attention Request": "Solicitud de Atención",
+
+    "Request Report": "Solicitar informe",
+    "This will generate a PDF file with all the information shown here, in insights page and will send it to your email. Proceed?": "Esto generará un fichero PDF con toda la información que se muestra aquí, en la página de estadísticas y lo enviará a su correo electrónico. ¿Proceder?",
+    "Sorry but only report per day can be requested": "Lo siento pero sólo puede ser solicitado un informe por día",
+    "Report was sent to your email address. Check your mailbox!": "El informe fue enviado a tu dirección de correo. ¡Revisa tu bandeja de entrada!",
+    "Generating Report ...": "Generando informe ...",
+
+    "It seems there are network problems. Check your Internet connection.": "Parece que hay problemas de red. Revisa tu conexión a Internet.",
+    "We were unable to log in with the email and/or password provided.": "Nos fue imposible iniciar sesión con el email/contraseña proporcionados.",
+    "Unexpected error.": "Error inesperado.",
+    "Session started correctly. Our most sincere welcome!": "Sesión iniciada correctamente. ¡Nuestra más sincera bienvenida!",
+
+
+    "New Timezone": "Nuevo Huso Horario",
+    "It was detected a change in your timezone.": "Se detectó un cambio en tu zona horaria.",
+    "This information is important so we need that you confirm your current country and new time zone.": "Esta información es importante, por lo que necesitamos que confirme su país actual y la nueva zona horaria.",
+    "The changes will be saved automatically.": "Los cambios serán guardados automáticamente.",
+    "Confirm!": "¡Confirmar!",
+    "The configuration was updated correctly": "La configuración se actualizó correctamente",
+    "Save changes?": "¿Guardar cambios?"
+
+}
