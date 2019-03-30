@@ -58,6 +58,16 @@ export class DiaTimelineService {
         );
     }
 
+    adjustRecommendations() {
+        let url = `${this.backendURL.baseURL}/v1/instants/adjust-recommendations/`;
+        return this.restBackendService.genericPost(url, {});
+    }
+
+    getRecommendation() {
+        let url = `${this.backendURL.baseURL}/v1/instants/get-recommendation/`;
+        return this.restBackendService.genericPost(url, {});
+    }
+
     getTimeline(before?:number) {
         let url = '';
         if(!!before) {

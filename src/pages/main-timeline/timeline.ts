@@ -243,7 +243,9 @@ export class TimeLinePage {
       let diamessage = new DiaMessage(title, "info", message)
       this.messageService.confirmMessage(diamessage).subscribe((ok) => {
         if (ok) {
-          console.log('TODO adjustRecommendations!');
+          this.timelineService.adjustRecommendations().subscribe(resp => {
+            // requested!
+          });
         };
       });
     });
@@ -257,7 +259,9 @@ export class TimeLinePage {
       let diamessage = new DiaMessage(title, "info", message)
       this.messageService.confirmMessage(diamessage).subscribe((ok) => {
         if (ok) {
-          console.log('TODO getRecommendation!');
+          this.timelineService.getRecommendation().subscribe(resp => {
+            // requested!
+          });
         };
       });
     });
