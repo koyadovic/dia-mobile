@@ -258,6 +258,11 @@
     "The changes will be saved automatically.": "Los cambios serán guardados automáticamente.",
     "Confirm!": "¡Confirmar!",
     "The configuration was updated correctly": "La configuración se actualizó correctamente",
-    "Save changes?": "¿Guardar cambios?"
+    "Save changes?": "¿Guardar cambios?",
+
+    "Adjust recommendations": "Ajustar recomendaciones",
+    "This will adjust your recommendations with all the data available right now. Proceed?": "Esto ajustará sus recomendaciones con todos los datos disponibles en este momento. ¿Proceder?",
+    "Recommendation request": "Petición de recomendación",
+    "Proceed to query a recommendation?": "¿Proceder a consultar por una recomendación?"
 
 }

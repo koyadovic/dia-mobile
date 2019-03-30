@@ -4,6 +4,16 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>{{ 'Timeline' | translate }}</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="adjustRecommendations()">
+        <ion-icon name="sync"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="getRecommendation()">
+        <ion-icon name="medkit"></ion-icon>
+      </button>
+    </ion-buttons>
+
   </ion-navbar>
 </ion-header>
 

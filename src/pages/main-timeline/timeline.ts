@@ -21,6 +21,8 @@ import { forkJoin } from 'rxjs/observable/forkJoin';
 import { DiaRestBackendService } from '../../services/dia-rest-backend-service';
 import { UserMedicationsPage } from '../user-medications/user-medications';
 import { ToastController } from 'ionic-angular/components/toast/toast-controller';
+import { DiaMessageService } from '../../services/dia-message-service';
+import { DiaMessage } from '../../models/messages-model';
 
 
 @Component({
@@ -47,6 +49,7 @@ export class TimeLinePage {
               private timelineService: DiaTimelineService,
               private modalCtrl: ModalController,
               private authService: DiaAuthService,
+              private messageService: DiaMessageService,
               private translate: TranslateService,
               public toastCtrl: ToastController,
               private restBackendService: DiaRestBackendService,
@@ -229,6 +232,34 @@ export class TimeLinePage {
       this.now = moment();
       this.completeInstants(instants);
       refresher.complete();
+    });
+  }
+
+  adjustRecommendations() {
+    forkJoin(
+      this.translate.get("Adjust recommendations"),
+      this.translate.get("This will adjust your recommendations with all the data available right now. Proceed?")
+    ).subscribe(([title, message]) => {
+      let diamessage = new DiaMessage(title, "info", message)
+      this.messageService.confirmMessage(diamessage).subscribe((ok) => {
+        if (ok) {
+          console.log('TODO adjustRecommendations!');
+        };
+      });
+    });
+  }
+
+  getRecommendation() {
+    forkJoin(
+      this.translate.get("Recommendation request"),
+      this.translate.get("Proceed to query a recommendation?")
+    ).subscribe(([title, message]) => {
+      let diamessage = new DiaMessage(title, "info", message)
+      this.messageService.confirmMessage(diamessage).subscribe((ok) => {
+        if (ok) {
+          console.log('TODO getRecommendation!');
+        };
+      });
     });
   }
 
