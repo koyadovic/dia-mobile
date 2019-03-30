@@ -22,19 +22,19 @@ export class DiaInstantCard {
     };
 
     trait_types = {
+        "1": "Weight",
         "2": "Height",
-        "3": "Weight",
-        "4": "Neck Perimeter",
-        "5": "Abdomen Perimeter",
-        "6": "Waist Perimeter",
+        "3": "Neck Perimeter",
+        "4": "Abdomen/Waist Perimeter",
+        "5": "Hip Perimeter",
     }
 
     trait_types_measure = {
+        "1": "kg",
         "2": "cm",
-        "3": "kg",
+        "3": "cm",
         "4": "cm",
         "5": "cm",
-        "6": "cm",
     }
 
     constructor(private translate: TranslateService) {
@@ -48,23 +48,21 @@ export class DiaInstantCard {
             this.translate.get("Height"),
             this.translate.get("Weight"),
             this.translate.get("Neck Perimeter"),
-            this.translate.get("Abdomen Perimeter"),
-            this.translate.get("Waist Perimeter"),
+            this.translate.get("Abdomen/Waist Perimeter"),
+            this.translate.get("Hip Perimeter"),
             this.translate.get("Sex"),
           ).subscribe(([textSoft, textMedium, textHigh, textExtreme, textBirthDate, textHeight, textWeight,
-            textNeckPerimeter, textAbdomenPerimeter, textWaistPerimeter, textSex]) => {
+            textNeckPerimeter, textAbdomenWaistPerimeter, textHipPerimeter, textSex]) => {
                 this.activity_intensities["1"] = textSoft;
                 this.activity_intensities["2"] = textMedium;
                 this.activity_intensities["3"] = textHigh;
                 this.activity_intensities["4"] = textExtreme;
 
-                this.trait_types["1"] = textBirthDate;
+                this.trait_types["1"] = textWeight;
                 this.trait_types["2"] = textHeight;
-                this.trait_types["3"] = textWeight;
-                this.trait_types["4"] = textNeckPerimeter;
-                this.trait_types["5"] = textAbdomenPerimeter;
-                this.trait_types["6"] = textWaistPerimeter;
-                this.trait_types["7"] = textSex;
+                this.trait_types["3"] = textNeckPerimeter;
+                this.trait_types["4"] = textAbdomenWaistPerimeter;
+                this.trait_types["5"] = textHipPerimeter;
           });
     }
 

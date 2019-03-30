@@ -10,30 +10,30 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: 'instant-card-details.html',
 })
 export class InstantCardDetailsPage {
-  instantCard;
+    instantCard;
 
-  activity_intensities = {
-    "1": "Soft (Walk)",
-    "2": "Medium (Heavy walk)",
-    "3": "High (Run, weightlifting)",
-    "4": "Extreme (Sprints, HIIT)",
-  };
+    activity_intensities = {
+        "1": "Soft (Walk)",
+        "2": "Medium (Heavy walk)",
+        "3": "High (Run, weightlifting)",
+        "4": "Extreme (Sprints, HIIT)",
+    };
 
-  trait_types = {
-    "2": "Height",
-    "3": "Weight",
-    "4": "Neck Perimeter",
-    "5": "Abdomen Perimeter",
-    "6": "Waist Perimeter",
-  };
+    trait_types = {
+        "1": "Weight",
+        "2": "Height",
+        "3": "Neck Perimeter",
+        "4": "Abdomen/Waist Perimeter",
+        "5": "Hip Perimeter",
+    };
 
-  trait_types_measure = {
-      "2": "cm",
-      "3": "kg",
-      "4": "cm",
-      "5": "cm",
-      "6": "cm",
-  };
+    trait_types_measure = {
+        "1": "kg",
+        "2": "cm",
+        "3": "cm",
+        "4": "cm",
+        "5": "cm",
+    };
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,

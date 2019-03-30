@@ -74,8 +74,8 @@
     "Height (cm)": "Altura (cm)",
     "Weight (kg)": "Peso (kg)",
     "Neck Perimeter (cm)": "Perímetro de cuello (cm)",
-    "Abdomen Perimeter (cm)": "Perímetro de abdomen (cm)",
-    "Waist Perimeter (cm)": "Perímetro de cadera (cm)",
+    "Abdomen/Waist Perimeter (cm)": "Perímetro de abdomen (cm)",
+    "Hip Perimeter (cm)": "Perímetro de cadera (cm)",
     
     "Male": "Masculino",
     "Female": "Femenino",
@@ -142,8 +142,8 @@
     "Height": "Altura",
     "Weight": "Peso",
     "Neck Perimeter": "Perímetro Cuello",
-    "Abdomen Perimeter": "Perímetro Abdomen",
-    "Waist Perimeter": "Perímetro Cadera",
+    "Abdomen/Waist Perimeter": "Perímetro Abdomen",
+    "Hip Perimeter": "Perímetro Cadera",
 
     "Summary": "Sumario",
     "Carb": "Carb",
